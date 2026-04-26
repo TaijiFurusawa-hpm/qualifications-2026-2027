@@ -56,3 +56,20 @@
 
 - 年間スケジュール: [2026年](schedule/2026.md) / [2027年](schedule/2027.md)
 - 教材・参考書リンク集: [resources/](resources/)
+
+### GitHub
+- **リポジトリ**: https://github.com/TaijiFurusawa-hpm/qualifications-2026-2027
+- **Issues**: https://github.com/TaijiFurusawa-hpm/qualifications-2026-2027/issues
+- **Project（カンバン）**: https://github.com/users/TaijiFurusawa-hpm/projects/3
+
+### Issue 一覧
+| # | タイトル | 資格 |
+|---|---|---|
+| #1 | 🚨 CFP第1回 ネット出願（〜2026/5/8） | CFP |
+| #2 | 📚 CFP第1回 学習計画実行（タックス・ライフ・不動産） | CFP |
+| #3 | 🎤 キャリコン第32回 学科・実技（論述）対策 | キャリコン |
+| #4 | 🎭 キャリコン第32回 実技（面接）対策 | キャリコン |
+| #5 | 📝 CFP第2回 出願（2026/9/1〜10/1） | CFP |
+| #6 | 📚 CFP第2回 学習計画実行（金融・リスク・相続） | CFP |
+| #7 | 🎫 JAMI 2級 受験資格取得（入会＋9単位） | JAMI |
+| #8 | 🧠 JAMI 2級 試験対策戦略立案・実行 | JAMI |
