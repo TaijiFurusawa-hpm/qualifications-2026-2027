@@ -18,11 +18,12 @@ if ! grep -qF "$MARKER" "$PROGRESS_FILE"; then
   exit 1
 fi
 
-DATE=$(date +"%Y/%-m/%-d")
+TODAY=$(date +"%Y/%-m/%-d")
 
 echo "==== 📝 論述対策 1日1問 ログ ===="
-echo "日付: $DATE"
 echo ""
+read -rp "📅 日付（Enterで今日 → ${TODAY}）: " DATE
+DATE="${DATE:-$TODAY}"
 read -rp "📚 過去問の年度・回（例: 第31回 問1）: " QUESTION
 read -rp "⏱️  所要時間（例: 25分）: " DURATION
 read -rp "💭 所感・気づき（1行）: " NOTE
