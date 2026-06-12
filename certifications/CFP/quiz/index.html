@@ -31,8 +31,11 @@
       radial-gradient(42% 52% at 88% 6%, rgba(167,139,250,.22), transparent 60%),
       radial-gradient(60% 60% at 50% 104%, rgba(13,148,136,.24), transparent 60%),
       radial-gradient(40% 40% at 82% 78%, rgba(99,102,241,.16), transparent 60%);
-    filter:saturate(1.15); animation:mesh 26s ease-in-out infinite alternate}
-  @keyframes mesh{from{transform:translate3d(-1.5%,-1%,0) scale(1)}to{transform:translate3d(1.5%,1.5%,0) scale(1.07)}}
+    filter:saturate(1.15); animation:mesh 16s ease-in-out infinite alternate; will-change:transform}
+  @keyframes mesh{
+    0%{transform:translate3d(-6%,-4%,0) scale(1.04)}
+    50%{transform:translate3d(6%,3%,0) scale(1.18)}
+    100%{transform:translate3d(-3%,7%,0) scale(1.06)}}
   /* ビネット */
   body::after{content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
     background:radial-gradient(125% 95% at 50% -5%, transparent 52%, rgba(0,0,0,.6) 100%)}
@@ -136,7 +139,10 @@
   @keyframes glow{0%{box-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 24px 50px -30px rgba(0,0,0,.85)}
     28%{box-shadow:0 0 44px -4px var(--cyanglow), 0 0 0 1px rgba(34,211,238,.45)}
     100%{box-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 24px 50px -30px rgba(0,0,0,.85)}}
-  @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important; transition:none!important}}
+  /* Reduce Motion時: 入場/フィードバックの強い動きは止めるが、背景メッシュとアバターの環境ドリフトは残す */
+  @media (prefers-reduced-motion:reduce){
+    .pop,#app,.glow,.fb{animation:none!important}
+    .btn,.subcard,.bar>i{transition:none!important}}
 </style>
 </head>
 <body>
