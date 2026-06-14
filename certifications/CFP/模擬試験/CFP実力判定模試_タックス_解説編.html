@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFP実力判定模試 タックスプランニング — 解答・解説編（学習再構成版）</title>
+<style>
+:root{--ink:#1a1a1a;--line:#333;--sub:#555;--bg:#eef0f3;--paper:#fff;--tab:#475569;--ok:#15803d;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hiragino Mincho ProN","Yu Mincho",serif;line-height:1.75;}
+.sheet{max-width:880px;margin:24px auto;background:var(--paper);padding:34px 40px 60px;box-shadow:0 2px 14px rgba(0,0,0,.12);position:relative;}
+.runhead{font-size:12.5px;letter-spacing:.5px;text-align:right;border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:8px;}
+.titleblock{text-align:center;margin:18px 0 22px;}
+.titleblock h1{font-size:22px;margin:0 0 6px;letter-spacing:1px;}
+.titleblock .sub{font-size:13px;color:var(--sub);}
+.tab{position:fixed;top:90px;right:0;background:var(--tab);color:#fff;writing-mode:vertical-rl;padding:14px 7px;font-size:13px;letter-spacing:3px;border-radius:6px 0 0 6px;}
+.keytable{margin:14px 0 30px;}
+.keytable table{border-collapse:collapse;font-size:12.5px;width:100%;}
+.keytable th,.keytable td{border:1px solid #555;padding:3px 6px;text-align:center;}
+.keytable th{background:#e7ebf0;}
+.keytable td.ans{font-weight:700;color:#b91c1c;font-family:"Hiragino Sans",sans-serif;}
+.dai{margin:32px 0 8px;border-left:6px solid #334155;background:#e7ebf0;padding:7px 12px;font-weight:700;font-size:16px;}
+.item{margin:16px 0;padding:12px 14px;border:1px solid #d6dae0;border-radius:8px;background:#fcfcfd;}
+.ihead{font-weight:700;font-size:14px;margin-bottom:2px;}
+.ihead .topic{font-weight:400;color:var(--sub);font-size:12.5px;}
+.correct{display:inline-block;font-family:"Hiragino Sans",sans-serif;font-size:13px;font-weight:700;color:#fff;background:var(--ok);border-radius:5px;padding:1px 10px;margin:4px 0;}
+.stem{font-size:12.5px;color:#444;text-align:justify;margin:2px 0 8px;}
+.exp{font-size:13.5px;text-align:justify;}
+table.t{border-collapse:collapse;margin:8px 0;font-size:12.5px;}
+table.t th,table.t td{border:1px solid #555;padding:3px 9px;}
+table.t th{background:#eee;}
+td.r{text-align:right;} td.c{text-align:center;}
+.note{font-size:11.5px;color:var(--sub);}
+.disclaimer{font-size:11px;color:#888;border-top:1px solid #ccc;margin-top:40px;padding-top:10px;}
+.toolbar{max-width:880px;margin:14px auto 0;text-align:right;}
+.toolbar a{font-family:sans-serif;font-size:12.5px;color:#2563eb;text-decoration:none;background:#fff;border:1px solid #ddd;border-radius:6px;padding:6px 12px;}
+@media print{.tab,.toolbar{display:none;}body{background:#fff;}.sheet{box-shadow:none;margin:0;}}
+</style>
+</head>
+<body>
+<div class="tab">模試・解答編</div>
+<div class="toolbar"><a href="CFP実力判定模試_タックス_問題編.html">◀ 問題編へ</a></div>
+<div class="sheet">
+  <div class="runhead">CFP® 実力判定模試 タックスプランニング ／ 解答・解説編（学習再構成版）</div>
+  <div class="titleblock">
+    <h1>解答・解説</h1>
+    <div class="sub">＜正解一覧＞と各設問の正解・計算過程（再構成版）</div>
+  </div>
+  <div class="keytable" id="keytable"></div>
+  <div id="body"></div>
+  <div class="disclaimer">
+    ※本資料は市販教材（FPK研修センター）の模試の正解・解説を、個人学習用に再構成した「学習再構成版」です。解説・計算過程は要点を私（学習補助）の言葉で再表現しており、原本の逐語複製ではありません。一部の正解番号は原本に準拠していますが、最新制度・原本での確認を必ず行ってください。
+  </div>
+</div>
+<script src="tax_mock_data.js"></script>
+<script>
+/* 正解一覧 */
+const all=[];TAX_MOCK.forEach(g=>g.items.forEach(it=>all.push(it)));
+function grid(){
+  let h='<table>';
+  for(let r=0;r<Math.ceil(all.length/10);r++){
+    h+='<tr>';for(let c=0;c<10;c++){const it=all[r*10+c];h+= it?`<th>問${it.no}</th>`:'<th></th>';}h+='</tr>';
+    h+='<tr>';for(let c=0;c<10;c++){const it=all[r*10+c];h+= it?`<td class="ans">${it.a+1}</td>`:'<td></td>';}h+='</tr>';
+  }
+  return h+'</table>';
+}
+document.getElementById('keytable').innerHTML='<div style="font-weight:700;margin-bottom:6px;font-size:14px;">＜正解一覧＞</div>'+grid();
+
+/* 各解説 */
+document.getElementById('body').innerHTML=TAX_MOCK.map(g=>
+  `<div class="dai">【問${g.dai}】 ${g.bunya}</div>`+g.items.map(it=>
+    `<div class="item"><div class="ihead">（問題${it.no}）${it.setsu} <span class="topic">— ${it.topic}</span></div>`+
+    `<div class="stem">${it.stem}</div>`+
+    `<div class="correct">正解 ${it.a+1}（${it.c[it.a]}）</div>`+
+    `<div class="exp">${it.exp}</div></div>`
+  ).join('')
+).join('');
+</script>
+</body>
+</html>

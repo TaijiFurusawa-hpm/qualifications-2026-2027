@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFP実力判定模試 タックスプランニング — 問題編（学習再構成版）</title>
+<style>
+:root{--ink:#1a1a1a;--line:#333;--sub:#555;--bg:#f3f1ea;--paper:#fff;--tab:#6b7280;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hiragino Mincho ProN","Yu Mincho",serif;line-height:1.7;}
+.sheet{max-width:880px;margin:24px auto;background:var(--paper);padding:34px 40px 60px;box-shadow:0 2px 14px rgba(0,0,0,.12);position:relative;}
+.runhead{font-size:12.5px;letter-spacing:.5px;text-align:right;border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:8px;}
+.titleblock{text-align:center;margin:18px 0 28px;}
+.titleblock h1{font-size:22px;margin:0 0 6px;letter-spacing:1px;}
+.titleblock .sub{font-size:13px;color:var(--sub);}
+.tab{position:fixed;top:90px;right:0;background:var(--tab);color:#fff;writing-mode:vertical-rl;padding:14px 7px;font-size:13px;letter-spacing:3px;border-radius:6px 0 0 6px;}
+.dai{margin:34px 0 10px;border-left:6px solid #333;background:#ececec;padding:7px 12px;font-weight:700;font-size:16px;}
+.q{margin:20px 0 6px;font-weight:700;font-size:14.5px;}
+.q .topic{font-weight:400;color:var(--sub);font-size:12.5px;margin-left:8px;}
+.stem{font-size:13.5px;text-align:justify;margin:4px 0 10px;}
+.choices{margin:8px 0 4px;}
+.choices div{font-size:13.5px;padding:2px 0 2px 20px;text-indent:-20px;}
+table.t{border-collapse:collapse;margin:10px 0;font-size:12.5px;width:auto;}
+table.t caption{font-size:12.5px;text-align:left;margin-bottom:3px;font-weight:700;}
+table.t th,table.t td{border:1px solid #444;padding:3px 9px;}
+table.t th{background:#eee;font-weight:600;}
+td.r{text-align:right;} td.c{text-align:center;}
+.note{font-size:11.5px;color:var(--sub);margin:3px 0 0;}
+.fig{border:1px solid #444;padding:8px 12px;font-size:12.5px;margin:8px 0;background:#fafafa;}
+.disclaimer{font-size:11px;color:#888;border-top:1px solid #ccc;margin-top:40px;padding-top:10px;}
+.toolbar{max-width:880px;margin:14px auto 0;text-align:right;}
+.toolbar a{font-family:sans-serif;font-size:12.5px;color:#2563eb;text-decoration:none;background:#fff;border:1px solid #ddd;border-radius:6px;padding:6px 12px;}
+hr.sok{border:none;border-top:1px dashed #bbb;margin:14px 0;}
+@media print{.tab,.toolbar{display:none;}body{background:#fff;}.sheet{box-shadow:none;margin:0;}}
+</style>
+</head>
+<body>
+<div class="tab">模試・問題編</div>
+<div class="toolbar"><a href="CFP実力判定模試_タックス_解説編.html">▶ 解説編へ</a></div>
+<div class="sheet">
+  <div class="runhead">CFP® 実力判定模試 タックスプランニング ／ 問題編（学習再構成版）</div>
+  <div class="titleblock">
+    <h1>タックスプランニング 実力判定模試</h1>
+    <div class="sub">全19大問・50設問 ／ 各設問の答えを 1〜4 の中から1つ選択</div>
+  </div>
+  <div id="body"></div>
+  <div class="disclaimer">
+    ※本資料は市販教材（FPK研修センター）の模試内容を、個人学習用に要点を再構成した「学習再構成版」です。問題文は要約・再表現しており原本の逐語複製ではありません。数値・選択肢・正解は学習のため収録しています。実際の受験対策では必ず原本・最新制度を確認してください。
+  </div>
+</div>
+<script src="tax_mock_data.js"></script>
+<script>
+const body=document.getElementById('body');
+let html='';
+TAX_MOCK.forEach(g=>{
+  html+=`<div class="dai">【問${g.dai}】 ${g.bunya}</div>`;
+  if(g.soku) html+=`<hr class="sok">${SOKU}<hr class="sok">`;
+  g.items.forEach(it=>{
+    html+=`<div class="q">（問題${it.no}）${it.setsu}<span class="topic">— ${it.topic}</span></div>`;
+    html+=`<div class="stem">${it.stem}</div>`;
+    if(it.tbl) html+=it.tbl;
+    if(it.fig) html+=`<div class="fig">${it.fig}</div>`;
+    html+=`<div class="choices">`+it.c.map((c,i)=>`<div>${i+1}．${c}</div>`).join('')+`</div>`;
+  });
+});
+body.innerHTML=html;
+</script>
+</body>
+</html>
