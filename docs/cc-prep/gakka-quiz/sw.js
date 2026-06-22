@@ -1,5 +1,5 @@
 /* CC学科クイズ Service Worker */
-const VERSION = 'cc-gakka-quiz-v1';
+const VERSION = 'cc-gakka-quiz-v2';
 const CORE = [
   './index.html',
   './manifest.webmanifest',
