@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#06060e">
+<title>CC学科 弱点克服クイズ（キャリア理論／カウンセリング／法令制度／統計白書）</title>
+<!-- PWA（オフライン対応・ホーム画面アプリ化） -->
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CC学科クイズ">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#06060e;
+    --ink:#eef2f8; --sub:#9aa7bf; --faint:#6b7793;
+    --cyan:#22d3ee; --cyan-d:#0e7490; --cyanglow:rgba(34,211,238,.55);
+    --violet:#a78bfa;
+    --ok:#34d399; --ng:#fb7185; --amber:#fbbf24;
+    --line:rgba(255,255,255,.09);
+    --num:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+    --r:18px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0; min-height:100vh; font-family:var(--sans); color:var(--ink);
+    line-height:1.7; background:var(--bg); position:relative; overflow-x:hidden}
+  /* メッシュ＝個別に画面内を動き回る発光ブロブ */
+  .bg{position:fixed; inset:0; z-index:-3; pointer-events:none; overflow:hidden}
+  .blob{position:absolute; top:50%; left:50%; width:30vmax; height:30vmax; margin:-15vmax;
+    border-radius:50%; mix-blend-mode:screen; filter:blur(26px); will-change:transform,opacity}
+  .b1{background:radial-gradient(circle at center, rgba(34,211,238,.65), transparent 62%);  animation:roam1 46s ease-in-out infinite, tw 10s ease-in-out infinite}
+  .b2{background:radial-gradient(circle at center, rgba(167,139,250,.58), transparent 62%); animation:roam2 54s ease-in-out infinite, tw 12s ease-in-out -3s infinite}
+  .b3{background:radial-gradient(circle at center, rgba(20,184,166,.62), transparent 62%);  animation:roam3 60s ease-in-out infinite, tw 9s ease-in-out -5s infinite}
+  .b4{background:radial-gradient(circle at center, rgba(99,102,241,.55), transparent 62%);  animation:roam4 50s ease-in-out infinite, tw 11s ease-in-out -2s infinite}
+  /* 画面外周をゆっくり周回（中心を横切らない）＋ゆっくり明滅 */
+  @keyframes roam1{0%{transform:translate(-42vw,-40vh)}25%{transform:translate(40vw,-44vh)}50%{transform:translate(44vw,40vh)}75%{transform:translate(-40vw,44vh)}100%{transform:translate(-42vw,-40vh)}}
+  @keyframes roam2{0%{transform:translate(42vw,-42vh)}25%{transform:translate(-40vw,-40vh)}50%{transform:translate(-44vw,42vh)}75%{transform:translate(40vw,40vh)}100%{transform:translate(42vw,-42vh)}}
+  @keyframes roam3{0%{transform:translate(44vw,42vh)}25%{transform:translate(-42vw,40vh)}50%{transform:translate(-40vw,-44vh)}75%{transform:translate(42vw,-40vh)}100%{transform:translate(44vw,42vh)}}
+  @keyframes roam4{0%{transform:translate(-42vw,44vh)}25%{transform:translate(44vw,42vh)}50%{transform:translate(40vw,-42vh)}75%{transform:translate(-44vw,-40vh)}100%{transform:translate(-42vw,44vh)}}
+  @keyframes tw{0%,100%{opacity:.32}50%{opacity:.8}}
+  /* ビネット */
+  body::after{content:""; position:fixed; inset:0; z-index:-2; pointer-events:none;
+    background:radial-gradient(125% 95% at 50% -5%, transparent 52%, rgba(0,0,0,.6) 100%)}
+  /* フィルムグレイン */
+  .grain{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E")}
+  .wrap{max-width:720px; margin:0 auto; padding:18px 14px 56px}
+
+  header{display:flex; align-items:center; gap:12px; margin:6px 2px 6px}
+  .avatar{width:46px; height:46px; flex:0 0 46px; border-radius:14px; position:relative; display:grid; place-items:center;
+    background:radial-gradient(120% 120% at 30% 20%, rgba(34,211,238,.38), rgba(167,139,250,.2) 60%, rgba(255,255,255,.04));
+    border:1px solid rgba(255,255,255,.16);
+    box-shadow:0 0 0 1px rgba(34,211,238,.12), 0 0 26px -4px var(--cyanglow), inset 0 1px 0 rgba(255,255,255,.3);
+    animation:bob 4.5s ease-in-out infinite}
+  .avatar svg{color:#cffafe; filter:drop-shadow(0 0 6px var(--cyanglow))}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  header h1{font-family:var(--num); font-weight:700; letter-spacing:.4px; font-size:21px; margin:0; line-height:1.2}
+  header p{color:var(--sub); font-size:12.5px; margin:2px 0 0}
+
+  .card{position:relative; border-radius:var(--r); padding:18px 16px; margin:14px 0;
+    background:linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.022));
+    border:1px solid var(--line);
+    backdrop-filter:blur(16px) saturate(1.25); -webkit-backdrop-filter:blur(16px) saturate(1.25);
+    box-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 24px 50px -30px rgba(0,0,0,.85)}
+  /* 縁のスペキュラ */
+  .card::before{content:""; position:absolute; inset:0; border-radius:inherit; padding:1px; pointer-events:none;
+    background:linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,0) 42%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude}
+  .subcard{cursor:pointer; display:flex; align-items:center; gap:14px; transition:transform .15s ease, box-shadow .15s ease}
+  @media (hover:hover){
+    .subcard:hover{transform:translateY(-2px); box-shadow:0 1px 0 rgba(255,255,255,.08) inset, 0 30px 60px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(34,211,238,.18)}
+    .subcard:hover .chev{color:var(--cyan); transform:translateX(3px)}}
+  .subcard h2{margin:0 0 3px; font-size:17.5px; font-weight:700; letter-spacing:.2px}
+  .stile{width:46px; height:46px; border-radius:13px; display:grid; place-items:center; flex:0 0 46px;
+    border:1px solid rgba(255,255,255,.14);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.18), 0 8px 18px -10px rgba(0,0,0,.7)}
+  .stile.s0{background:radial-gradient(120% 120% at 30% 20%, rgba(167,139,250,.4), rgba(167,139,250,.07)); color:#ddd6fe}
+  .stile.s1{background:radial-gradient(120% 120% at 30% 20%, rgba(34,211,238,.38), rgba(34,211,238,.06)); color:#a5f3fc}
+  .chev{margin-left:auto; color:var(--faint); flex:0 0 auto; transition:.15s ease}
+  .scard-meta{color:var(--sub); font-size:12.5px; display:flex; flex-wrap:wrap; gap:4px 10px; align-items:center}
+  .scard-meta .dot{width:3px; height:3px; border-radius:50%; background:var(--faint)}
+  .mini{height:4px; background:rgba(2,6,23,.6); border-radius:4px; overflow:hidden; margin-top:9px; border:1px solid rgba(255,255,255,.04)}
+  .mini i{display:block; height:100%; border-radius:4px; background:linear-gradient(90deg,#0ea5b7,#67e8f9); box-shadow:0 0 8px rgba(34,211,238,.5)}
+
+  .btn{position:relative; display:block; width:100%; text-align:left; color:var(--ink);
+    border:1px solid var(--line); border-radius:12px; padding:13px 14px; margin:9px 0; font-size:15px;
+    background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
+    cursor:pointer; transition:.14s ease; -webkit-tap-highlight-color:transparent;
+    box-shadow:0 1px 0 rgba(255,255,255,.04) inset, inset 0 -8px 18px -12px rgba(0,0,0,.6)}
+  @media (hover:hover){.btn:hover{border-color:rgba(34,211,238,.5); transform:translateY(-1px)}}
+  .btn:active{transform:translateY(0) scale(.985)}
+  .btn:focus-visible{outline:2px solid var(--cyan); outline-offset:2px}
+  .btn .num{display:inline-grid; place-items:center; width:26px; height:26px; margin-right:11px; vertical-align:-7px;
+    background:rgba(2,6,23,.6); border:1px solid var(--line); border-radius:8px;
+    font-family:var(--num); font-weight:700; color:var(--cyan); font-size:13px}
+  .btn.ok{background:linear-gradient(180deg, rgba(52,211,153,.22), rgba(52,211,153,.06)); border-color:var(--ok); box-shadow:0 0 22px -6px rgba(52,211,153,.55)}
+  .btn.ng{background:linear-gradient(180deg, rgba(251,113,133,.2), rgba(251,113,133,.05)); border-color:var(--ng)}
+  .btn.ok .num{color:var(--ok); border-color:var(--ok)} .btn.ng .num{color:var(--ng); border-color:var(--ng)}
+  .btn:disabled{cursor:default}
+  /* CTA 上方光源グラデ＋内側ハイライト */
+  .btn.primary{text-align:center; font-weight:700; color:#04141a; border:1px solid rgba(34,211,238,.7);
+    background:linear-gradient(180deg, #7deff6, #22d3ee 45%, #0ea5b7);
+    box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 0 0 1px rgba(34,211,238,.25), 0 14px 30px -12px var(--cyanglow)}
+  .btn.primary:hover{filter:brightness(1.06); border-color:rgba(34,211,238,.9)}
+  .btn.ghost{background:transparent; text-align:center; color:var(--sub); box-shadow:none; border-color:transparent}
+  .btn.ghost:hover{color:var(--ink); border-color:var(--line)}
+  .ic{vertical-align:-4px; margin-right:8px}
+
+  .row{display:flex; gap:10px; flex-wrap:wrap}
+  .row .btn{flex:1; min-width:140px; margin:0}
+  .meta{display:flex; justify-content:space-between; align-items:center; font-size:12.5px; color:var(--sub); margin-bottom:8px}
+  .meta a{display:inline-flex; align-items:center; gap:5px}
+  .meta .ic{margin-right:0}
+
+  /* 計器盤KPI */
+  .qno{font-family:var(--num); font-variant-numeric:tabular-nums; letter-spacing:.5px}
+  .qno b{font-size:16px; color:var(--ink); font-weight:700}
+  .qno i{font-style:normal; color:var(--faint); font-size:12px; font-weight:600}
+  .kpis{display:flex; gap:10px; margin:12px 0 4px}
+  .kpi{flex:1; text-align:center; padding:11px 6px 9px; border-radius:13px;
+    background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.012));
+    border:1px solid var(--line); box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+  .kpi b{display:block; font-family:var(--num); font-size:24px; font-weight:700; line-height:1.15; letter-spacing:.5px; font-variant-numeric:tabular-nums}
+  .kpi small{display:block; margin-top:2px; font-family:var(--num); font-size:9.5px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:var(--faint)}
+  .kpi.accent b{color:var(--cyan); text-shadow:0 0 16px rgba(34,211,238,.45)}
+  .kpi.warn b{color:#fda4af}
+  .dist{display:flex; height:6px; border-radius:6px; overflow:hidden; margin:12px 0 7px; background:rgba(2,6,23,.5); border:1px solid rgba(255,255,255,.04)}
+  .dist i{height:100%}
+  .legend{display:flex; gap:14px; font-size:11px; color:var(--sub); font-family:var(--num)}
+  .legend i{display:inline-block; width:7px; height:7px; border-radius:2px; margin-right:5px}
+
+  .tier{font-family:var(--num); font-size:10.5px; font-weight:700; letter-spacing:.3px; padding:3px 10px; border-radius:20px; border:1px solid transparent; white-space:nowrap}
+  .tier::before{content:""; display:inline-block; width:5px; height:5px; border-radius:50%; margin-right:5px; vertical-align:1px; background:currentColor; box-shadow:0 0 7px currentColor}
+  .t1{background:rgba(251,113,133,.16); color:#fda4af; border-color:rgba(251,113,133,.35)}
+  .t2{background:rgba(251,191,36,.15); color:#fcd34d; border-color:rgba(251,191,36,.3)}
+  .t3{background:rgba(52,211,153,.15); color:#6ee7b7; border-color:rgba(52,211,153,.3)}
+
+  .qtext{font-size:16.5px; font-weight:600; margin:6px 0 14px; letter-spacing:.1px}
+  .bar{height:6px; background:rgba(2,6,23,.6); border-radius:8px; overflow:hidden; margin:6px 0 16px; border:1px solid rgba(255,255,255,.05)}
+  .bar>i{display:block; height:100%; width:0; border-radius:8px; transition:width .45s cubic-bezier(.2,.8,.2,1);
+    background:linear-gradient(90deg, #0ea5b7, #22d3ee, #67e8f9); box-shadow:0 0 14px var(--cyanglow)}
+
+  .fb{border-radius:12px; padding:13px 14px; margin-top:8px; font-size:14px; animation:fbIn .35s ease both}
+  .fb.ok{background:linear-gradient(180deg, rgba(52,211,153,.14), rgba(52,211,153,.04)); border:1px solid rgba(52,211,153,.5)}
+  .fb.ng{background:linear-gradient(180deg, rgba(251,113,133,.13), rgba(251,113,133,.04)); border:1px solid rgba(251,113,133,.5)}
+  .fb b{font-family:var(--num)}
+  .fb .src{color:var(--sub); font-size:12px; margin-top:7px}
+  .fbh{display:flex; align-items:center; gap:8px; font-family:var(--num); font-weight:700; font-size:14.5px; margin-bottom:7px}
+  .fbi{width:24px; height:24px; border-radius:50%; display:grid; place-items:center; flex:0 0 24px}
+  .fb.ok .fbi{background:rgba(52,211,153,.18); color:var(--ok); box-shadow:0 0 12px -2px rgba(52,211,153,.7)}
+  .fb.ng .fbi{background:rgba(251,113,133,.18); color:var(--ng); box-shadow:0 0 12px -3px rgba(251,113,133,.6)}
+  .fb .ans{color:var(--sub); font-size:13px; margin-bottom:7px}
+  .fb .ans b{color:var(--ink)}
+  .fb .exp{border-top:1px solid rgba(255,255,255,.08); padding-top:8px}
+  @keyframes fbIn{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+
+  .big{font-family:var(--num); font-size:54px; font-weight:700; text-align:center; margin:6px 0 2px; letter-spacing:1px;
+    background:linear-gradient(180deg,#e8feff,#67e8f9); -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 0 18px rgba(34,211,238,.35))}
+  /* スコアリング */
+  .ring{position:relative; width:158px; height:158px; margin:8px auto 4px}
+  .ring svg{display:block; transform:rotate(-90deg)}
+  .ring circle{fill:none; stroke-width:9}
+  .ring .trk{stroke:rgba(255,255,255,.07)}
+  .ring .val{stroke:url(#ringGrad); stroke-linecap:round; filter:drop-shadow(0 0 10px rgba(34,211,238,.5));
+    transition:stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)}
+  .ring .ctr{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center}
+  .newbest{display:inline-flex; align-items:center; gap:6px; font-family:var(--num); font-size:11.5px; font-weight:700; color:#fde68a;
+    background:rgba(251,191,36,.13); border:1px solid rgba(251,191,36,.4); border-radius:20px; padding:3px 12px; margin:6px 0 0;
+    box-shadow:0 0 18px -6px rgba(251,191,36,.6)}
+  .stile .ic,.chev .ic,.fbi .ic,.newbest .ic{margin-right:0}
+  .center{text-align:center}
+  .chip{display:inline-flex; align-items:center; font-family:var(--num); font-size:11px; color:var(--sub); border:1px solid var(--line); border-radius:20px; padding:2px 9px; margin:2px 6px 2px 0}
+  .badge{font-family:var(--num); background:rgba(251,113,133,.2); color:#fda4af; font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:6px; border:1px solid rgba(251,113,133,.35)}
+
+  .rev{border-left:2px solid var(--ng); padding:8px 0 8px 12px; margin:12px 0; background:linear-gradient(90deg, rgba(251,113,133,.06), transparent); border-radius:0 8px 8px 0}
+  .rev .q{font-weight:600; font-size:14px}
+  .rev .a{font-size:13px; color:var(--sub); margin-top:4px}
+  .rev .a .you{color:#fda4af} .rev .a .cor{color:#6ee7b7}
+
+  footer{color:var(--faint); font-size:11.5px; text-align:center; margin-top:26px}
+  a{color:var(--cyan); text-decoration:none}
+
+  /* モーション */
+  #app{animation:stageIn .4s ease both}
+  @keyframes stageIn{from{opacity:0; transform:translateY(8px)}to{opacity:1; transform:none}}
+  .pop{animation:pop .42s cubic-bezier(.2,.9,.2,1) both}
+  @keyframes pop{0%{opacity:0; transform:translateY(10px)}100%{opacity:1; transform:none}}
+  .glow{animation:glow 1.1s ease}
+  @keyframes glow{0%{box-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 24px 50px -30px rgba(0,0,0,.85)}
+    28%{box-shadow:0 0 44px -4px var(--cyanglow), 0 0 0 1px rgba(34,211,238,.45)}
+    100%{box-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 24px 50px -30px rgba(0,0,0,.85)}}
+  /* Reduce Motion時: 入場/フィードバックの強い動きは止めるが、背景メッシュとアバターの環境ドリフトは残す */
+  @media (prefers-reduced-motion:reduce){
+    .pop,#app,.glow,.fb{animation:none!important}
+    .btn,.subcard,.bar>i,.ring .val{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bg"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><i class="blob b4"></i></div>
+<div class="grain"></div>
+<div class="wrap">
+  <header>
+    <div class="avatar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 15.5A2 2 0 0 0 8.5 14L2.4 12.5a.5.5 0 0 1 0-1L8.5 10A2 2 0 0 0 9.9 8.5l1.6-6.1a.5.5 0 0 1 1 0L14.1 8.5A2 2 0 0 0 15.5 9.9l6.1 1.6a.5.5 0 0 1 0 1L15.5 14a2 2 0 0 0-1.4 1.4l-1.6 6.1a.5.5 0 0 1-1 0z"/></svg></div>
+    <div>
+      <h1>CC学科 弱点克服クイズ</h1>
+      <p>キャリア理論／カウンセリング／法令制度／統計白書 ・ 1回30問 ・ 第1ティア9割＋苦手ブースト出題</p>
+    </div>
+  </header>
+  <div id="app"></div>
+  <footer>個人学習用 · キャリアコンサルタント学科試験過去問の論点を基に作成 · 制度は受験年度の最新を要確認</footer>
+</div>
+
+<script>
+/* ===== 設定 ===== */
+const SESSION_SIZE = 30;          // 1回の出題数
+const TIER1_RATIO = 0.9;          // 第1ティアの出題割合（9割。残り1割を第2・第3ティアから）
+const TIER_BASE = {1:5, 2:3, 3:2}; // 同一ティア内の重み（苦手ブースト用）。ティア間の割合はTIER1_RATIOで制御
+const MISS_BOOST = 2;             // 間違えた回数1回につき重みに加算する倍率
+const TIER_LABEL = {1:"第1ティア 最優先", 2:"第2ティア 重要", 3:"第3ティア 定着確認"};
+const TIER_CLASS = {1:"t1",2:"t2",3:"t3"};
+
+/* ===== 問題データ =====
+   id: 永続キー（localStorageの苦手記録に使用） t: ティア
+   q: 問題 c: 選択肢 a: 正解index(0始まり) e: 解説 s: 出典/論点 */
+const DATA = {
+"キャリア理論":[
+ {id:"GT1",t:1,q:"キャリアの理論に関する次の記述のうち、適切なものはどれか。",c:["ハンセン（Hansen, L.S.）は、仕事をほかの生活上の役割との関係や人生の中で捉え、人生や仕事を統合する枠組みとして「統合的人生設計」の概念を構築した","ホール（Hall, D.T.）は、キャリア形成の主体者は組織であり、働く個人にとって重要な態度側面は組織コミットメントであると述べた","シュロスバーグ（Schlossberg, N.K.）は「Self」「Support」「Standard（基準）」「Strategies」の4Sモデルを提唱した","ジェラット（Gelatt, H.B.）は積極的不確実性を提唱し、不確実性を排除することでより合理的なキャリア選択が可能になると主張した"],a:0,e:"ハンセンILP（統合的人生設計）が正解。✗選択肢3はStandard(基準)ではなく【Situation(状況)】が正しい。4S=Self/Situation/Support/Strategies。✗ジェラットは不確実性を『排除』ではなく『受容・活用』する。",s:"第31回 問8★キャリア理論"},
+],
+"カウンセリング":[
+ {id:"GC1",t:1,q:"「セルフ・キャリアドック導入の方針と展開」（厚生労働省、2017年）で示された、キャリアコンサルタントの役割として最も適切なものはどれか。",c:["全体報告書には面談ごとに対象者の年齢と職位、職務、詳細な相談事項の記載が欠かせない","面談結果を上司にフィードバックする際は、直接のコンタクトは避け、人事部門を通じて当該上司の上司から伝えてもらう","キャリアコンサルタントは、従業員の「職業生活の設計とそのための能力開発」を支援するとともに、それが組織の活性化につながるという視点を持つことも必要である","セルフ・キャリアドック導入の大前提となる就業規則などの社内規程が整備されていなければ、当該企業での活動はできない"],a:2,e:"選択肢3正解。CCは個人の職業生活設計支援＋組織活性化の視点も必要。✗社内規程がなくても活動は可能（選択肢4が誤り）。",s:"第31回 問3★CC役割"},
+ {id:"GC2",t:1,q:"カウンセリングの理論や心理療法の名称とその提唱者・関連用語の組み合わせとして最も適切なものはどれか。",c:["認知行動療法、ロジャーズ（Rogers, C.R.）、認知の歪み","森田療法、森田正馬、してもらったこと・してかえしたこと・迷惑かけたこと","構成的グループ・エンカウンター、バーン（Berne, E.）、シェアリング","自律訓練法、シュルツ（Schultz, J.H.）、身体の弛緩"],a:3,e:"選択肢4正解。自律訓練法はシュルツが開発・身体の弛緩が特徴。✗バーン（Berne）＝交流分析（TA）の提唱者。構成的GEは【國分康孝】。✗ロジャーズ＝来談者中心療法。",s:"第31回 問10★提唱者の組み合わせ"},
+ {id:"GC3",t:1,q:"「治療と職業生活の両立支援技法」の治療段階に応じた支援内容として最も適切なものはどれか。",c:["疾病の診断・検査フェーズ「第1段階」では、就労への内的動機づけの醸成支援を行う","治療開始後フェーズ「第2段階」では、キャリアの再構築の支援および受入環境への働きかけを行う","職場へ復帰する直前フェーズ「第3段階」では、復帰後のイメージ作りの支援を行う","職場へ復帰した後フェーズ「第4段階」では、ショック離職防止等の個別対応を行う"],a:2,e:"選択肢3正解。第3段階（復帰直前）＝【復帰後のイメージ作りの支援】。第4段階（復帰後）＝フォローアップ・環境適応支援が中心。",s:"第31回 問33★両立支援フェーズ"},
+ {id:"GC4",t:1,q:"アイビイ（Ivey, A.E.）が提唱したマイクロカウンセリングの「フィードバック」の説明として最も適切なものはどれか。",c:["カウンセラーの考えや感じたことをクライエントに伝えること","カウンセラーが、人生状況に対するひとつの観点をクライエントに与えること","カウンセラーあるいは第三者が、クライエントをどうみているかというデータを与えること","カウンセラーが、クライエントにどのような行動をとってほしいかを明確に指示すること"],a:2,e:"フィードバック＝【第三者がクライエントをどう見ているかというデータを与えること】。✗選択肢1「考えや感じたことを伝える」＝【自己開示】。混同注意。",s:"第31回 問34★マイクロカウンセリング技法"},
+ {id:"GC5",t:1,q:"グループアプローチに関する次の記述のうち、最も適切なものはどれか。",c:["グループアプローチは、健康な人を対象に行われる","構成的グループ・エンカウンターはパーソン・センタード・アプローチの理念に基づいてロジャーズ（Rogers, C.R.）によって開発された","ソーシャルスキルトレーニング（SST）は、学習理論に基づく認知行動療法の一つに位置づけられる","グループアプローチは、組織開発や課題解決ではなく、参加者の人間的成長を目的に行われる"],a:2,e:"SST＝【学習理論に基づく認知行動療法の一つ】が正解。✗グループアプローチは健康者だけでなく疾患者も対象。✗構成的GEは【國分康孝】が開発（ロジャーズではない）。✗グループアプローチは組織開発・課題解決も目的になりうる。",s:"第31回 問36★グループアプローチ"},
+ {id:"GC6",t:1,q:"観察法の留意点に関する次の記述のうち、最も適切なものはどれか。",c:["論理的過誤は、「あの特徴があるのだから、この特徴もあるはずである」とする傾向のことである","同一化は、「自分のなかにある感情や欲求を他人が自分へ向けている」と捉える傾向のことである","ハロー効果は、意識的・無意識的に甘く判断しがちになる傾向のことである","寛容効果は、一部の特徴や印象で全体を判断する傾向のことである"],a:0,e:"論理的過誤＝【「あの特徴→この特徴もあるはず」という連想による誤り】が正解。✗選択肢2「自分の感情を他人が向けていると捉える」＝【投影（Projection）】の説明。✗ハロー効果＝一部の印象で全体を判断（→選択肢4の説明が正しい）。✗寛容効果＝甘く判断しがちになる傾向（→選択肢3の説明が正しい）。選択肢3と4が入替になっている。",s:"第31回 問40★観察法用語混同"},
+ {id:"GC7",t:1,q:"キャリアコンサルティングにおける方策の実行の支援に関する次の記述のうち、最も適切なものはどれか。",c:["方策がクライエントの欲求・価値観に反するとわかった場合でも、変更をせずに継続するよう促す","方策の実行の前に、方策の内容、目的、原理、プロセス、結果、利点と損失などをクライエントに説明する","クライエントが方策のすべてを行ったかを確認し、実行していない場合はただちに別の方策の実行を求める","可能性のある方策をいくつか考え、その中から適切な方策について複数の選択肢を選ばせる"],a:1,e:"選択肢2正解。方策実行前に【内容・目的・原理・プロセス・結果・利点と損失を説明】する。✗価値観に反すれば方策は変更する（選択肢1誤り）。✗複数選ばせるのではなく合意した1つを実行する（選択肢4誤り）。",s:"第31回 問44★方策の実行支援"},
+],
+"法令制度":[
+ {id:"GL1",t:1,q:"労働契約にかかる法制度に関する次の記述のうち、正しいものはどれか。",c:["有期労働契約で雇用され、契約期間が5年を超えた労働者が無期転換申し込みをした場合、使用者は当該労働者をいわゆる正社員として雇用しなければならない","使用者は、有期労働契約について、やむを得ない事由がある場合でなければ、その契約期間が満了するまでの間において、労働者を解雇することができない","使用者の安全配慮義務は労働契約法上のものであるから、国家公務員については国の安全配慮義務は存在しない","就業規則では5万円支給とされている手当について、特定の労働者のみ10万円支給する労働契約を締結することは就業規則違反として無効とされる"],a:1,e:"選択肢2正解。有期労働契約の期間中途解雇はやむを得ない事由がある場合のみ可。✗無期転換しても【正社員になる義務はない】。現在の有期と同一条件で無期雇用に転換される（別段の定めがない限り）。",s:"第31回 問22★無期転換≠正社員"},
+ {id:"GL2",t:1,q:"インターンシップに関する記述のうち、最も不適切なものはどれか。",c:["産学協議会で議論されたうえで、学生のキャリア形成支援に係る産学協同の取組みは4つのタイプに整理された","「タイプ2 キャリア教育」と「タイプ3 汎用型能力・専門活用型インターンシップ」及び「タイプ4 高度専門型インターンシップ」は、すべて「インターンシップ」と称される","「タイプ1 オープン・カンパニー」は、主に企業・就職情報会社や大学キャリアセンターが主催するイベント・説明会を想定している","「タイプ2 キャリア教育」において就業体験は任意であり、企業が取得した学生情報の採用活動への活用は不可である"],a:1,e:"選択肢2が最も不適切。タイプ2キャリア教育は【インターンシップと称されない】。インターンシップと称されるのはタイプ3・タイプ4のみ。選択肢4は正しい（タイプ2は就業体験任意・採用活用不可）。",s:"第31回 問26★インターンシップ分類"},
+ {id:"GL3",t:1,q:"トライアル雇用制度に関する次の記述のうち、最も適切なものはどれか。",c:["トライアル雇用は、職業経験の不足などから就職が困難な求職者等を原則6ヶ月試行雇用することである","ハローワークに求人を提出していなくても、事業主が希望すればトライアル雇用制度が利用できる","トライアル雇用期間終了時点で、企業が求める業務遂行能力を満たした場合には有期雇用となる","自ら事業を営んでいる人または役員に就いている人で、1週間当たりの実働時間が30時間以上の人は、トライアル雇用の対象者にはならない"],a:3,e:"選択肢4正解。自営業者・役員で週30時間以上就労中の人はトライアル雇用対象外。✗試行期間は【原則3ヶ月】（最長6ヶ月）（選択肢1誤り）。✗ハローワーク経由の求人が必要（選択肢2誤り）。✗通常は常用（無期）雇用への移行が前提（選択肢3誤り）。",s:"第31回 問42★トライアル雇用期間"},
+],
+"統計白書":[
+ {id:"GS1",t:1,q:"完全失業率の値の求め方として、正しいものはどれか。",c:["（労働力人口ー就業者）÷労働力人口×100","（労働力人口ー就業者）÷就業者×100","（労働者人口ー就業者）÷15歳以上人口×100","（労働者人口ー就業者）÷総人口×100"],a:0,e:"完全失業率＝【（労働力人口－就業者）÷労働力人口×100】。分母は必ず【労働力人口】。✗分母を15歳以上人口・就業者・総人口にしない。",s:"第31回 問18★失業率の計算式"},
+ {id:"GS2",t:1,q:"有効求人倍率を毎月公表しているものとして、適切なものはどれか。",c:["一般職業紹介状況（職業安定業務統計）","毎月勤労統計調査","労働経済動向調査","労働経済分析レポート"],a:0,e:"有効求人倍率＝【一般職業紹介状況（職業安定業務統計）】が毎月公表。✗毎月勤労統計調査＝賃金・労働時間・雇用指数（求人倍率は出ない）。",s:"第31回 問19★有効求人倍率の出典"},
+ {id:"GS3",t:1,q:"「令和7年版労働経済の分析」で述べられた、社会インフラ関連職の人材確保に関する記述のうち、最も適切なものはどれか。",c:["社会インフラ関連職の就業者は、就業者全体の約65%となっている","社会インフラ関連職の賃金は、非社会インフラ関連職と比較すると、月額で約5万円高い","社会インフラ関連職は、スキルや経験の蓄積に応じて賃金が上昇する仕組みが相対的に弱い可能性がある","賃金プロファイルを見ると、社会インフラ関連職の賃金上昇のピークは60-64歳である"],a:2,e:"選択肢3正解。社会インフラ関連職は【スキル・経験蓄積に応じた賃金上昇の仕組みが相対的に弱い可能性がある】。これが人材確保困難の背景。",s:"第31回 問20★社会インフラ関連職"},
+ {id:"GS4",t:1,q:"「令和6年版労働経済の分析」で述べられた、国際化するわが国の労働市場に関する記述のうち、最も適切なものはどれか。",c:["「特定技能」で就労する外国人労働者数は、2023年12月時点で約200万人である","わが国で就労する外国人労働者の主な送出国との平均賃金の差は、ここ10年ほどで拡大傾向にある","外国人を雇用する事業所数は、東京都・神奈川県・愛知県・大阪府ではここ10年ほどで増加したものの、他の道府県では減少した","外国人は、比較的月額賃金が高い求人や、年間休日日数の多い求人に応募しているが、残業時間が多い求人にも多く応募している"],a:3,e:"選択肢4正解。✗特定技能での就労者数は【約20万人程度】（200万人は誤り）（選択肢1誤り）。✗賃金差は拡大ではなく縮小傾向（選択肢2誤り）。✗他道府県でも増加傾向（選択肢3誤り）。",s:"第31回 問21★外国人労働者統計"},
+],
+};
+
+/* ===== localStorage（累積の苦手・ベスト） ===== */
+const MISS_KEY="ccgakka_miss_v1", BEST_KEY="ccgakka_best_v1";
+function loadJSON(k){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+function saveJSON(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function missMap(){return loadJSON(MISS_KEY)}
+function missOf(sub,id){const m=missMap();return (m[sub]&&m[sub][id])||0}
+function bumpMiss(sub,id,d){const m=missMap();m[sub]=m[sub]||{};m[sub][id]=Math.max(0,(m[sub][id]||0)+d);if(m[sub][id]===0)delete m[sub][id];saveJSON(MISS_KEY,m)}
+function weakCount(sub){const m=missMap();return m[sub]?Object.keys(m[sub]).length:0}
+function bestOf(sub){const b=loadJSON(BEST_KEY);return b[sub]}
+function setBest(sub,n){const b=loadJSON(BEST_KEY);b[sub]=n;saveJSON(BEST_KEY,b)}
+
+/* ===== 出題ロジック ===== */
+let SUB="", pool=[], idx=0, score=0, wrong=[], answered=false, mode="";
+
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function weightOf(sub,q){ return TIER_BASE[q.t] * (1 + MISS_BOOST*missOf(sub,q.id)); }
+
+// 重み付き非復元抽出（同一プール内で苦手ブースト）
+function weightedSampleFrom(sub, items, n){
+  const p = items.map(it=>({it,w:weightOf(sub,it)}));
+  const res=[];
+  while(res.length<n && p.length){
+    const total=p.reduce((s,x)=>s+x.w,0);
+    let r=Math.random()*total, k=0;
+    while(k<p.length-1 && r>p[k].w){ r-=p[k].w; k++; }
+    res.push(p[k].it); p.splice(k,1);
+  }
+  return res;
+}
+
+// 第1ティア9割で層化抽出（不足分は他方のティアで補完）＋苦手ブースト
+function weightedSample(sub, items, n){
+  const t1 = items.filter(q=>q.t===1);
+  const rest = items.filter(q=>q.t!==1);
+  let nr = Math.min(rest.length, n - Math.min(t1.length, Math.round(n*TIER1_RATIO)));
+  let n1 = Math.min(t1.length, n - nr); // 第1ティアを優先充当（残り枠は他ティア）
+  nr = Math.min(rest.length, n - n1);   // 第1ティアが少ない科目では他ティアで補完
+  const res = weightedSampleFrom(sub, t1, n1).concat(weightedSampleFrom(sub, rest, nr));
+  // 出題順は優先順位（ティア昇順）で。同ティア内はシャッフル
+  return res.sort((a,b)=> a.t-b.t || (Math.random()-.5));
+}
+
+function startSession(sub){
+  SUB=sub; mode="session";
+  const items=DATA[sub];
+  pool = weightedSample(sub, items, Math.min(SESSION_SIZE, items.length));
+  idx=0; score=0; wrong=[]; render();
+}
+function startWeak(sub){
+  SUB=sub; mode="weak";
+  const m=missMap()[sub]||{};
+  const items=DATA[sub].filter(q=>m[q.id]>0).sort((a,b)=>(m[b.id]-m[a.id])||(a.t-b.t));
+  if(!items.length){ home(); return; }
+  pool=items.slice(0, SESSION_SIZE);
+  idx=0; score=0; wrong=[]; render();
+}
+
+/* ===== アイコン（lucide系インラインSVG）＆モーション ===== */
+const ICONS={
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+  play:'<polygon points="6 3 20 12 6 21 6 3"/>',
+  flame:'<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  heart:'<path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"/>',
+  building:'<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>',
+  layers:'<path d="m12.8 2.2a2 2 0 0 0-1.6 0L2.6 6.1a1 1 0 0 0 0 1.8l8.6 3.9a2 2 0 0 0 1.6 0l8.6-3.9a1 1 0 0 0 0-1.8Z"/><path d="m22 17.6-9.2 4.2a2 2 0 0 1-1.6 0L2 17.6"/><path d="m22 12.6-9.2 4.2a2 2 0 0 1-1.6 0L2 12.6"/>',
+  reset:'<path d="M3 12a9 9 0 1 0 9-9 9.8 9.8 0 0 0-6.7 2.7L3 8"/><path d="M3 3v5h5"/>',
+  back:'<path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>',
+  chev:'<path d="m9 18 6-6-6-6"/>',
+  check:'<path d="M20 6 9 17l-5-5"/>',
+  x:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  refresh:'<path d="M21 12a9 9 0 1 1-2.6-6.4L21 8"/><path d="M21 3v5h-5"/>',
+  trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.7V17c0 .6-.5 1-1 1.2C7.9 18.8 7 20.2 7 22"/><path d="M14 14.7V17c0 .6.5 1 1 1.2 1.1.6 2 2 2 4.8"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+  flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/>',
+  receipt:'<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/>'
+};
+const SUBJECT_ICON={"キャリア理論":"target","カウンセリング":"heart","法令制度":"receipt","統計白書":"layers"};
+function ic(n,s){s=s||18;return `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]||''}</svg>`;}
+function countUp(el,to,dur){dur=dur||700;const t0=performance.now();(function f(t){let p=Math.min(1,(t-t0)/dur);p=1-Math.pow(1-p,3);el.textContent=Math.round(to*p);if(p<1)requestAnimationFrame(f);})(t0);}
+function animBar(pct){requestAnimationFrame(()=>{const b=document.querySelector('.bar>i');if(b)b.style.width=pct+'%';});}
+
+/* ===== 画面 ===== */
+const app=document.getElementById('app');
+
+function home(){
+  SUB="";
+  const subs=Object.keys(DATA);
+  app.innerHTML = `
+   <div class="card" style="padding:14px 16px"><p style="margin:0;font-size:13.5px">科目を選んでスタート。回答後すぐに正誤と解説が出ます。<br>
+   <span style="color:var(--sub);font-size:12.5px">第1ティア9割で出題（残り1割が第2・第3ティア）。間違えた問題は次回以降の優先度が上がります。</span></p></div>
+   ${subs.map((s,si)=>{
+     const best=bestOf(s), wc=weakCount(s), n=DATA[s].length, max=Math.min(SESSION_SIZE,n);
+     return `<div class="card subcard" onclick="subjectMenu('${s}')">
+        <div class="stile s${si%2}">${ic(SUBJECT_ICON[s]||'target',22)}</div>
+        <div style="flex:1;min-width:0">
+          <h2>${s}${wc?`<span class="badge">苦手 ${wc}</span>`:''}</h2>
+          <div class="scard-meta"><span>全${n}問</span><span class="dot"></span><span>1回30問・優先度抽出</span>${best!=null?`<span class="dot"></span><span>ベスト <b style="font-family:var(--num);color:var(--ink)">${best}</b>/${max}</span>`:''}</div>
+          ${best!=null?`<div class="mini"><i style="width:${Math.round(best/max*100)}%"></i></div>`:''}
+        </div>
+        <span class="chev">${ic('chev',18)}</span>
+     </div>`;
+   }).join('')}
+   <div class="card" style="font-size:13px;color:var(--sub)">
+     <b style="color:var(--ink);display:inline-flex;align-items:center">${ic('info',16)}ティアの意味</b><br>
+     <span class="tier t1">第1</span> 繰り返し失点の継続弱点・改正・計算事故（最優先で多く出る）<br>
+     <span class="tier t2">第2</span> 模試・過去問で集中失点した重要論点<br>
+     <span class="tier t3">第3</span> 克服傾向だが油断すると落とす定着確認
+   </div>`;
+}
+
+function subjectMenu(s){
+  const wc=weakCount(s), n=DATA[s].length, best=bestOf(s), max=Math.min(SESSION_SIZE,n);
+  const tc={1:0,2:0,3:0}; DATA[s].forEach(q=>tc[q.t]++);
+  const si=Object.keys(DATA).indexOf(s);
+  app.innerHTML = `
+   <div class="meta"><span><a href="#" onclick="home();return false;">${ic('back',15)}科目選択へ</a></span><span>${s}</span></div>
+   <div class="card">
+     <div style="display:flex;align-items:center;gap:12px;margin-bottom:4px">
+       <div class="stile s${si%2}" style="width:40px;height:40px;flex-basis:40px;border-radius:11px">${ic(SUBJECT_ICON[s]||'target',19)}</div>
+       <h2 style="margin:0">${s}</h2>
+     </div>
+     <div class="kpis">
+       <div class="kpi"><b>${n}</b><small>Pool</small></div>
+       <div class="kpi ${wc?'warn':''}"><b>${wc}</b><small>Weak</small></div>
+       <div class="kpi accent"><b>${best!=null?best:'–'}</b><small>Best /${max}</small></div>
+     </div>
+     <div class="dist">
+       <i style="width:${tc[1]/n*100}%;background:linear-gradient(90deg,rgba(251,113,133,.9),rgba(251,113,133,.55))"></i>
+       <i style="width:${tc[2]/n*100}%;background:linear-gradient(90deg,rgba(251,191,36,.85),rgba(251,191,36,.5))"></i>
+       <i style="width:${tc[3]/n*100}%;background:linear-gradient(90deg,rgba(52,211,153,.85),rgba(52,211,153,.5))"></i>
+     </div>
+     <div class="legend">
+       <span><i style="background:#fb7185"></i>第1 ${tc[1]}</span>
+       <span><i style="background:#fbbf24"></i>第2 ${tc[2]}</span>
+       <span><i style="background:#34d399"></i>第3 ${tc[3]}</span>
+     </div>
+     <div style="height:14px"></div>
+     <button class="btn primary" onclick="startSession('${s}')">${ic('play',16)}30問にチャレンジ（優先度ランダム）</button>
+     <button class="btn" onclick="startWeak('${s}')" ${wc?'':'disabled style="opacity:.45"'}>${ic('flame',17)}苦手だけ復習${wc?`（${wc}問）`:'（なし）'}</button>
+     <button class="btn ghost" onclick="if(confirm('${s}の苦手記録をリセットします。よろしいですか？')){clearWeak('${s}')}">${ic('reset',16)}苦手記録をリセット</button>
+   </div>`;
+}
+function clearWeak(s){const m=missMap();delete m[s];saveJSON(MISS_KEY,m);subjectMenu(s);}
+
+function render(){
+  const q=pool[idx]; answered=false;
+  const pct=Math.round(idx/pool.length*100);
+  const pad=n=>String(n).padStart(2,'0');
+  app.innerHTML = `
+   <div class="meta">
+     <span class="qno">${SUB}${mode==='weak'?'・苦手復習':''}　<b>${pad(idx+1)}</b><i>/${pad(pool.length)}</i></span>
+     <span class="tier ${TIER_CLASS[q.t]}">${TIER_LABEL[q.t]}</span>
+   </div>
+   <div class="bar"><i></i></div>
+   <div class="card">
+     <div class="qtext">${q.q}</div>
+     <div id="choices">${q.c.map((c,i)=>`<button class="btn pop" style="animation-delay:${i*60}ms" onclick="answer(${i})"><span class="num">${i+1}</span>${c}</button>`).join('')}</div>
+     <div id="fb"></div><div id="nextWrap"></div>
+   </div>
+   <div class="meta"><span class="qno">正解 <b style="color:var(--ok)">${score}</b></span><span><a href="#" onclick="quit();return false;">${ic('flag',15)}中断</a></span></div>`;
+  animBar(pct);
+}
+
+function answer(i){
+  if(answered)return; answered=true;
+  const q=pool[idx], correct=q.a, isOk=(i===correct);
+  document.querySelectorAll('#choices .btn').forEach((b,bi)=>{b.disabled=true;
+    if(bi===correct)b.classList.add('ok'); if(bi===i&&!isOk)b.classList.add('ng');});
+  if(isOk){ score++; bumpMiss(SUB,q.id,-1);          // 正解：苦手度を下げる＋Cyanグロー
+    const c=document.querySelector('.card'); if(c){c.classList.remove('glow'); void c.offsetWidth; c.classList.add('glow');} }
+  else { wrong.push({q:q.q,you:q.c[i],cor:q.c[correct],e:q.e,s:q.s}); bumpMiss(SUB,q.id,+1); } // 不正解：優先度UP
+  document.getElementById('fb').innerHTML =
+    `<div class="fb ${isOk?'ok':'ng'}">
+      <div class="fbh"><span class="fbi">${ic(isOk?'check':'x',14)}</span>${isOk?'正解':'不正解'}</div>
+      <div class="ans">正解は <b>${correct+1}. ${q.c[correct]}</b></div>
+      <div class="exp">${q.e}<div class="src">論点：${q.s}</div></div>
+    </div>`;
+  document.getElementById('nextWrap').innerHTML =
+    `<button class="btn primary" onclick="next()">${idx+1<pool.length?'次の問題':'結果を見る'}<svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin:0 0 0 7px">${ICONS.chev}</svg></button>`;
+}
+function next(){ idx++; if(idx<pool.length)render(); else result(); }
+function quit(){ if(confirm('中断して科目メニューに戻りますか？'))subjectMenu(SUB); }
+
+function result(){
+  const pctScore=Math.round(score/pool.length*100);
+  let newBest=false;
+  if(mode==='session' && pool.length===Math.min(SESSION_SIZE,DATA[SUB].length)){
+    const b=bestOf(SUB); if(b==null||score>b){ setBest(SUB,score); newBest=(b!=null); }
+  }
+  const msg=pctScore>=90?'素晴らしい！取りこぼしなし。':pctScore>=70?'good。間違えた論点を復習しましょう。':'弱点が明確。苦手だけ復習が有効です。';
+  const wrongHtml=wrong.length?wrong.map(w=>`
+     <div class="rev"><div class="q">${w.q}</div>
+       <div class="a"><span class="cor">正：${w.cor}</span> ／ <span class="you">あなた：${w.you}</span><br>${w.e}<br><span style="font-size:12px">論点：${w.s}</span></div></div>`).join('')
+     :`<p class="center" style="color:var(--ok);display:flex;align-items:center;justify-content:center;gap:6px">${ic('trophy',20)}全問正解！お見事です。</p>`;
+  const R=66, C=(2*Math.PI*R).toFixed(1);
+  app.innerHTML=`
+   <div class="card center">
+     <div class="ring">
+       <svg width="158" height="158" viewBox="0 0 158 158">
+         <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+           <stop offset="0" stop-color="#0ea5b7"/><stop offset=".55" stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/>
+         </linearGradient></defs>
+         <circle class="trk" cx="79" cy="79" r="${R}"/>
+         <circle class="val" id="ringVal" cx="79" cy="79" r="${R}" stroke-dasharray="${C}" stroke-dashoffset="${C}"/>
+       </svg>
+       <div class="ctr">
+         <div class="big" style="font-size:38px;margin:0"><span id="bigN">0</span><span style="font-size:17px;color:var(--sub);-webkit-text-fill-color:var(--sub)">/${pool.length}</span></div>
+         <div style="font-family:var(--num);font-size:10px;font-weight:600;letter-spacing:2px;color:var(--faint)">SCORE</div>
+       </div>
+     </div>
+     ${newBest?`<div class="newbest">${ic('trophy',13)}自己ベスト更新！</div>`:''}
+     <div class="kpis">
+       <div class="kpi accent"><b>${pctScore}<span style="font-size:13px">%</span></b><small>正答率</small></div>
+       <div class="kpi"><b>${score}</b><small>正解</small></div>
+       <div class="kpi ${wrong.length?'warn':''}"><b>${wrong.length}</b><small>ミス</small></div>
+     </div>
+     <p style="margin:10px 0 14px">${msg}</p>
+     <div class="row">
+       <button class="btn primary" onclick="startSession('${SUB}')">${ic('refresh')}もう一度（30問）</button>
+       ${weakCount(SUB)?`<button class="btn" onclick="startWeak('${SUB}')">${ic('flame',17)}苦手だけ復習（${weakCount(SUB)}）</button>`:''}
+     </div>
+     <button class="btn ghost" onclick="home()">${ic('back',16)}科目選択へ戻る</button>
+   </div>
+   <div class="card"><b style="display:inline-flex;align-items:center">${ic(wrong.length?'flag':'trophy',17)}${wrong.length?'復習（間違えた問題）':'結果'}</b>${wrongHtml}</div>`;
+  const bn=document.getElementById('bigN'); if(bn)countUp(bn,score,1100);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const rv=document.getElementById('ringVal'); if(rv)rv.style.strokeDashoffset=(C*(1-score/pool.length)).toFixed(1);
+  }));
+}
+
+home();
+
+/* Service Worker 登録（オフライン対応） */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('./sw.js').catch(()=>{});
+  });
+}
+</script>
+</body>
+</html>

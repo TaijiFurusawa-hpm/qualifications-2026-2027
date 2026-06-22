@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "CC学科 弱点克服クイズ",
+  "short_name": "CC学科クイズ",
+  "description": "キャリアコンサルタント学科試験 弱点克服クイズ（キャリア理論／カウンセリング／法令制度／統計白書）。オフライン対応。",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#06060e",
+  "theme_color": "#06060e",
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
