@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CC学科 弱点克服レポート</title>
+<style>
+  :root {
+    --theory:  #2563eb;
+    --counsel: #db2777;
+    --law:     #16a34a;
+    --stats:   #d97706;
+    --bg:      #f8fafc;
+    --card:    #ffffff;
+    --border:  #e2e8f0;
+    --text:    #1e293b;
+    --muted:   #64748b;
+    --new-bg:  #fef3c7;
+    --new-bd:  #f59e0b;
+    --ng-bg:   #fef2f2;
+    --ok-bg:   #f0fdf4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+  a { color: var(--theory); }
+
+  /* ヘッダー */
+  .page-header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    color: #fff;
+    padding: 32px 24px 28px;
+  }
+  .page-header h1 { font-size: 22px; font-weight: 700; letter-spacing: 0.03em; }
+  .page-header .meta { font-size: 13px; opacity: .85; margin-top: 6px; }
+  .page-header .note {
+    background: rgba(255,255,255,.15);
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 13px;
+    margin-top: 14px;
+    display: inline-block;
+  }
+
+  /* レイアウト */
+  .container { max-width: 860px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* セクション見出し */
+  h2.sec {
+    font-size: 17px; font-weight: 700;
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin: 36px 0 14px;
+    color: #fff;
+  }
+  h2.sec.theory  { background: var(--theory); }
+  h2.sec.counsel { background: var(--counsel); }
+  h2.sec.law     { background: var(--law); }
+  h2.sec.stats   { background: var(--stats); }
+  h2.sec.summary { background: #334155; }
+
+  h3.pattern {
+    font-size: 14px; font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin: 20px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* カード */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .card.new {
+    border-color: var(--new-bd);
+    background: var(--new-bg);
+  }
+  .card-title {
+    font-size: 14px; font-weight: 700;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .badge {
+    font-size: 11px; font-weight: 700;
+    padding: 2px 7px; border-radius: 20px;
+    background: var(--new-bd); color: #fff;
+    white-space: nowrap;
+  }
+  .card ul { padding-left: 18px; }
+  .card li { margin-bottom: 4px; font-size: 14px; }
+  .card p  { font-size: 14px; margin-bottom: 6px; }
+
+  /* 強調 */
+  .hl  { color: #be123c; font-weight: 700; }
+  .ng  { color: #dc2626; }
+  .ok  { color: #15803d; }
+  .ng::before { content: "✗ "; }
+  .ok::before { content: "◯ "; }
+
+  /* テーブル */
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13.5px; margin: 8px 0 4px;
+  }
+  th {
+    background: #334155; color: #fff;
+    text-align: left; padding: 7px 10px;
+    font-size: 13px; font-weight: 600;
+  }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  td strong { color: #1e3a5f; }
+
+  /* 到達度 */
+  .progress-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .prog-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .prog-card .round { font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 4px; }
+  .prog-card .score { font-size: 28px; font-weight: 800; line-height: 1; }
+  .prog-card .pct   { font-size: 15px; font-weight: 700; margin: 2px 0 6px; }
+  .prog-card .bar-wrap { background: #e2e8f0; border-radius: 4px; height: 6px; overflow: hidden; }
+  .prog-card .bar     { height: 100%; border-radius: 4px; transition: width .3s; }
+  .prog-card .status  { font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+  .prog-card.best { border-color: #f59e0b; background: #fffbeb; }
+  .prog-card.best .score { color: #b45309; }
+
+  /* 分野バッジ */
+  .tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 12px;
+    margin-right: 4px;
+    color: #fff;
+  }
+  .tag.theory  { background: var(--theory); }
+  .tag.counsel { background: var(--counsel); }
+  .tag.law     { background: var(--law); }
+  .tag.stats   { background: var(--stats); }
+
+  /* 失点インデックス */
+  .loss-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .loss-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .loss-card .domain { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+  .loss-card .count  { font-size: 24px; font-weight: 800; }
+  .loss-card .count span { font-size: 13px; font-weight: 400; color: var(--muted); }
+  .loss-card .qs     { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* 区切り */
+  hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+  .disclaimer { font-size: 12px; color: var(--muted); margin-top: 40px; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>CC学科 弱点克服レポート</h1>
+  <div class="meta">対象: 国家資格キャリアコンサルタント 学科試験（四肢択一 50問）　更新: 2026-06-26</div>
+  <div class="note">
+    関連クイズ: quiz/index.html（キャリア理論 / カウンセリング / 法令制度 / 統計白書）　|　本番: <strong>2026/7/5</strong>　|　合格ライン: 35/50（70%）
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===== 到達度の推移 ===== -->
+<h2 class="sec summary">📈 到達度の推移</h2>
+
+<div class="progress-grid">
+  <div class="prog-card">
+    <div class="round">第31回</div>
+    <div class="score" style="color:#ef4444;">35<small style="font-size:16px;font-weight:400;">/50</small></div>
+    <div class="pct" style="color:#ef4444;">70%</div>
+    <div class="bar-wrap"><div class="bar" style="width:70%;background:#ef4444;"></div></div>
+    <div class="status">ギリギリ合格ライン</div>
+  </div>
+  <div class="prog-card">
+    <div class="round">第30回</div>
+    <div class="score" style="color:#f97316;">38<small style="font-size:16px;font-weight:400;">/50</small></div>
+    <div class="pct" style="color:#f97316;">76%</div>
+    <div class="bar-wrap"><div class="bar" style="width:76%;background:#f97316;"></div></div>
+    <div class="status">合格 ↑ 法令制度全問正解</div>
+  </div>
+  <div class="prog-card">
+    <div class="round">第29回</div>
+    <div class="score" style="color:#f97316;">38<small style="font-size:16px;font-weight:400;">/50</small></div>
+    <div class="pct" style="color:#f97316;">76%</div>
+    <div class="bar-wrap"><div class="bar" style="width:76%;background:#f97316;"></div></div>
+    <div class="status">合格 ↑ CC1問のみ失点</div>
+  </div>
+  <div class="prog-card best">
+    <div class="round">第28回 🏆</div>
+    <div class="score">42<small style="font-size:16px;font-weight:400;">/50</small></div>
+    <div class="pct" style="color:#b45309;">84%</div>
+    <div class="bar-wrap"><div class="bar" style="width:84%;background:#f59e0b;"></div></div>
+    <div class="status"><strong>合格 ↑↑ 自己最高得点</strong></div>
+  </div>
+  <div class="prog-card">
+    <div class="round">第27回</div>
+    <div class="score" style="color:#ef4444;">35<small style="font-size:16px;font-weight:400;">/50</small></div>
+    <div class="pct" style="color:#ef4444;">70%</div>
+    <div class="bar-wrap"><div class="bar" style="width:70%;background:#ef4444;"></div></div>
+    <div class="status">ギリギリ合格ライン（CC6問・法令5問）</div>
+  </div>
+</div>
+
+<!-- ===== 分野別失点推移テーブル ===== -->
+<div class="card">
+  <div class="card-title">分野別 失点数の推移</div>
+  <table>
+    <thead><tr>
+      <th>分野</th><th>第31回</th><th>第30回</th><th>第29回</th><th>第28回</th><th>第27回</th><th>主な繰り返し論点</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="tag stats">統計</span>統計白書</td>
+        <td>4問</td><td><strong>6問</strong></td><td><strong>5問</strong></td><td>3問</td><td>3問</td>
+        <td>政府統計の用途区別・高年齢者雇用・CC効果調査</td>
+      </tr>
+      <tr>
+        <td><span class="tag counsel">CC</span>カウンセリング</td>
+        <td><strong>7問</strong></td><td>3問</td><td>1問</td><td>2問</td><td><strong>6問</strong></td>
+        <td>多文化CC・ひきこもり・CC目的・job tag検索・啓発的経験・意思決定支援</td>
+      </tr>
+      <tr>
+        <td><span class="tag law">法令</span>法令制度</td>
+        <td>3問</td><td>0問</td><td>3問</td><td>1問</td><td><strong>5問</strong></td>
+        <td>キャリアアップ助成金・教育訓練給付3種・法定休日割増・職業能力開発促進法・出向転籍</td>
+      </tr>
+      <tr>
+        <td><span class="tag theory">理論</span>キャリア理論</td>
+        <td>1問</td><td>3問</td><td>3問</td><td>2問</td><td>1問</td>
+        <td>スーパー役割の3要素・サビカス自己の構築・マーシャ「拡散」</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:var(--muted);margin-top:8px;">
+    重要トレンド: 第27回は70%でギリギリ合格ライン（CC6問・法令5問が課題）。統計白書は5回合計21問失点で最重点継続。
+  </p>
+</div>
+
+
+<!-- ===== カウンセリング ===== -->
+<h2 class="sec counsel">💬 カウンセリング 分野（第31回7問・第30回3問・第29回1問・第28回2問・第27回6問）</h2>
+
+<h3 class="pattern">繰り返す失点パターン</h3>
+
+<div class="card">
+  <div class="card-title">① 技法の名称と定義の混同（問34・問40）</div>
+  <table>
+    <thead><tr><th>技法</th><th>定義</th></tr></thead>
+    <tbody>
+      <tr><td><strong>フィードバック</strong>（アイビイ）</td><td>第三者がクライエントをどう見ているかというデータを与えること<br><span style="font-size:12px;color:var(--muted);">⚠ 積極技法に分類</span></td></tr>
+      <tr><td>自己開示</td><td>カウンセラーの考えや感じたことを伝えること</td></tr>
+      <tr><td><strong>ハロー効果</strong></td><td>一部の特徴・印象で<em>全体</em>を判断する傾向</td></tr>
+      <tr><td><strong>寛容効果</strong></td><td>意識的・無意識的に<em>甘く</em>判断しがちになる傾向</td></tr>
+      <tr><td>論理的過誤</td><td>「あの特徴があるからこの特徴もあるはず」という連想</td></tr>
+      <tr><td>投影（Projection）</td><td>自分の感情・欲求を他人が向けていると捉える傾向（「同一化」とは別）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-title">② 提唱者・開発者の混同（問10・問36）</div>
+  <table>
+    <thead><tr><th>理論・技法</th><th>提唱者</th></tr></thead>
+    <tbody>
+      <tr><td>構成的グループ・エンカウンター（GE）</td><td><strong>國分康孝</strong>（ロジャーズ・バーンではない）</td></tr>
+      <tr><td>交流分析（TA）</td><td><strong>バーン（Berne, E.）</strong></td></tr>
+      <tr><td>自律訓練法</td><td><strong>シュルツ（Schultz, J.H.）</strong>・身体の弛緩</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-title">③ 両立支援フェーズの段階取り違い（問33）</div>
+  <table>
+    <thead><tr><th>段階</th><th>時期</th><th>支援内容</th></tr></thead>
+    <tbody>
+      <tr><td>第1段階</td><td>診断・検査</td><td>就労への内的動機づけ醸成</td></tr>
+      <tr><td>第2段階</td><td>治療開始後</td><td>キャリア再構築の支援・受入環境への働きかけ</td></tr>
+      <tr><td><strong>第3段階</strong></td><td><strong>職場復帰直前</strong></td><td><span class="hl">復帰後のイメージ作りの支援</span>←正答</td></tr>
+      <tr><td>第4段階</td><td>職場復帰後</td><td>フォローアップ・環境適応支援</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-title">④ 方策実行支援の原則（問44）</div>
+  <ul>
+    <li>実行<strong>前</strong>に「内容・目的・原理・プロセス・結果・<span class="hl">利点と損失</span>」を説明</li>
+    <li>価値観に反すれば方策は<strong>変更する</strong></li>
+    <li>方策は<strong>複数選ばせず</strong>、合意した1つを実行</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title">⑤ セルフ・キャリアドックのCC役割（問3）</div>
+  <ul>
+    <li>社内規程が<strong>なくても</strong>活動可能</li>
+    <li>個人の職業生活設計支援 ＋ <strong>組織の活性化</strong>という視点</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑥ job tagの「自己診断ツール」各テストの受検法（第28回 問39）<span class="badge">★新規</span></div>
+  <table>
+    <thead><tr><th>テスト名</th><th>回答のポイント</th></tr></thead>
+    <tbody>
+      <tr><td><strong>職業興味検査</strong></td><td>就職の可能性・労働条件を考えずに<span class="hl">直感的に思ったまま回答</span></td></tr>
+      <tr><td>しごとの価値観</td><td>「できるかどうか」で判断せず、<span class="hl">重要と感じるか</span>で回答</td></tr>
+      <tr><td>職業適性テスト（Gテスト）</td><td>電卓使用<strong>不可</strong>（暗算で受検）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑦ 各理論・アプローチ別の方策実行介入（第28回 問45）<span class="badge">★新規</span></div>
+  <table>
+    <thead><tr><th>アプローチ</th><th>介入の焦点</th></tr></thead>
+    <tbody>
+      <tr><td><strong>認知行動的アプローチ</strong></td><td><span class="hl">自動思考を明確にし、より適切な思考を検討</span>させる</td></tr>
+      <tr><td>応用行動分析（ABA）</td><td><strong>行動</strong>に焦点（感情・思考への介入は行わない）</td></tr>
+      <tr><td>精神分析</td><td><strong>過去・無意識</strong>の探索が中心</td></tr>
+      <tr><td>クライエント中心療法</td><td>共感・自己理解の促進（情報提供よりも受容）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="card new">
+  <div class="card-title">⑧ 多文化キャリアカウンセリングの基礎（第27回 問32）<span class="badge">★新規</span></div>
+  <ul>
+    <li class="ng">「クライエントのバイアスを意識させることが多文化CCの基礎」→ <strong>誤り</strong></li>
+    <li class="ok"><span class="hl">カウンセラー自身の内にある「バイアス」を十分に意識すること</span>が基礎</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑨ ひきこもりの定義（第27回 問33）<span class="badge">★新規</span></div>
+  <ul>
+    <li class="ng">「ひきこもりはDSM-IVで定義された病名である」→ <strong>最も不適切</strong></li>
+    <li class="ok">ひきこもりは<span class="hl">状態を示す概念</span>。特定の診断名・疾病名ではない</li>
+    <li class="ok">定義：社会的参加を回避し、<span class="hl">6か月以上</span>家庭にとどまり続けている状態</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑩ カウンセリングの目的（第27回 問38）<span class="badge">★新規</span></div>
+  <ul>
+    <li class="ng">「カウンセリングの目的は傾聴を通して温かい人間関係をつくること」→ <strong>最も不適切</strong></li>
+    <li class="ok">カウンセリングの目的は<span class="hl">問題解決・自律・成長</span>。傾聴や人間関係の構築は手段</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑪ job tagの検索機能（第27回 問41）<span class="badge">★新規</span></div>
+  <ul>
+    <li class="ng">「住所情報や駅名から事業所を検索できる」→ <strong>不適切</strong>（job tagにそのような機能はない）</li>
+    <li class="ok">事業所検索はハローワークインターネットサービスの機能</li>
+    <li class="ok">job tagの検索：イメージ検索（地図）・仕事の性質で検索・免許資格で検索</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑫ 啓発的経験（第27回 問42）<span class="badge">★新規</span></div>
+  <ul>
+    <li>啓発的経験＝実際に職場・職業を<span class="hl">体験</span>することで職業理解を深めるもの</li>
+    <li class="ng">「キャリア開発ワークショップ」→ <strong>最も不適切</strong>（研修・訓練的性格であり体験ではない）</li>
+    <li class="ok">インターンシップ・職場見学・トライアル雇用は啓発的経験に含まれる</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑬ 意思決定支援・不協和に着目（第27回 問43）<span class="badge">★新規</span></div>
+  <ul>
+    <li class="ng">「不協和ではなく調和（一致点）に着目する」→ <strong>最も不適切</strong></li>
+    <li class="ok">意思決定支援では<span class="hl">不協和（不一致・ギャップ）に着目</span>させ、新たな選択肢を検討させる</li>
+  </ul>
+</div>
+
+
+<!-- ===== 統計白書 ===== -->
+<h2 class="sec stats">📊 統計白書 分野（第31回4問・第30回6問・第29回5問・第28回3問・第27回3問 ← 最重点）</h2>
+
+<h3 class="pattern">繰り返す失点パターン</h3>
+
+<div class="card">
+  <div class="card-title">① 各定義の分母・分子を混同しない（第31回問18・第30回問19）</div>
+  <table>
+    <thead><tr><th>指標</th><th>計算式 / 定義</th></tr></thead>
+    <tbody>
+      <tr><td><strong>完全失業率</strong></td><td>（労働力人口－就業者）÷<span class="hl">労働力人口</span>×100</td></tr>
+      <tr><td><strong>労働力人口比率</strong></td><td>労働力人口÷<span class="hl">15歳以上人口</span>×100（全人口ではない）</td></tr>
+      <tr><td><strong>完全失業者</strong></td><td>15歳以上・仕事なし・求職活動中・就業可能（3条件すべて必要）</td></tr>
+      <tr><td><strong>非労働力人口</strong></td><td>15歳以上・仕事なし・求職活動もしていない人</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-title">② 統計の出典を正確に覚える（第31回問19）</div>
+  <table>
+    <thead><tr><th>調査名</th><th>主な内容</th></tr></thead>
+    <tbody>
+      <tr><td><strong>一般職業紹介状況（職業安定業務統計）</strong></td><td><span class="hl">有効求人倍率</span>・新規求人数（毎月）</td></tr>
+      <tr><td>毎月勤労統計調査</td><td>賃金・労働時間・雇用指数</td></tr>
+      <tr><td>労働力調査</td><td>就業者数・完全失業率（毎月）</td></tr>
+      <tr><td>就業構造基本調査</td><td>就業・不就業の実態（5年ごと）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-title">③ 能力開発基本調査の数値（第30回問2・問12）</div>
+  <ul>
+    <li>CC相談先：正社員・正社員以外ともに「<span class="hl">職場の上司・管理者</span>」が最多</li>
+    <li>令和5年度：人材育成の問題点最多＝「<span class="hl">人材を育成しても辞めてしまう</span>」（「技術革新で無駄になる」は誤り）</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title">④ 女性労働力率・就業率の国際比較（第30回問16・17・18）</div>
+  <ul>
+    <li>日本女性の年齢階級別労働力率＝<span class="hl">M字カーブ</span>（U字でもL字でもない）</li>
+    <li>65歳以上男性の労働力率：欧米は1985→2022で<strong>大幅上昇</strong>、日本は<strong>わずかに低下</strong></li>
+    <li>就業希望者数（非求職者）<strong>＞</strong>完全失業者数（女性）</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title">⑤ 白書の数値系は「桁」に注意（第31回問21）</div>
+  <ul>
+    <li>特定技能での外国人就労者数：約<span class="hl">20万人</span>（200万人は誤り）</li>
+    <li>社会インフラ関連職：スキル・経験に応じた賃金上昇の仕組みが<strong>相対的に弱い</strong>可能性</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑥ 雇用動向調査の業種別入職率・離職率（第28回 問2）<span class="badge">★新規</span></div>
+  <ul>
+    <li><strong>一般労働者の離職率最高</strong>：「<span class="hl">生活関連サービス業、娯楽業</span>」</li>
+    <li class="ng">パートタイム労働者の入職率最高＝宿泊業・飲食サービス業（誤りとして選択）</li>
+    <li>入職率と離職率、一般労働者とパートタイム労働者の<strong>組み合わせ</strong>を正確に区別すること</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑦ 人材開発の役割とCDP（第28回 問18）<span class="badge">★新規</span></div>
+  <ul>
+    <li><strong>人材開発の役割</strong>：経営戦略遂行に必要な能力と<span class="hl">既存人材の能力とのギャップを埋める</span></li>
+    <li><strong>CDP（キャリア・ディベロップメント・プログラム）</strong>：<span class="hl">OJT+Off-JT両方</span>を含む体系的な育成計画（Off-JTのみではない）</li>
+    <li>OJTは担当者（上司・先輩）によって成果に<strong>差が生じる</strong>（差がないは誤り）</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑧ 男女共同参画白書・女性就業の数値（第28回 問22）<span class="badge">★新規</span></div>
+  <table>
+    <thead><tr><th>論点</th><th>正しい内容</th></tr></thead>
+    <tbody>
+      <tr><td>正社員女性の所定内給与</td><td>男性を100としたとき<span class="hl">女性は70%台</span></td></tr>
+      <tr><td>第1子出産後の就業継続率</td><td>50%を<span class="hl">超えている</span>（下回っていない）</td></tr>
+      <tr><td>M字カーブの定義</td><td>「年齢階級別<span class="hl">労働力率</span>」の特徴（正規雇用比率とは別）</td></tr>
+      <tr><td>管理職女性比率（2023年）</td><td><span class="hl">20%未満</span>（30%以上は誤り）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div class="card new">
+  <div class="card-title">⑨ 政府統計の用途区別（第27回 問21）<span class="badge">★新規</span></div>
+  <table>
+    <thead><tr><th>統計名</th><th>主な調査内容</th></tr></thead>
+    <tbody>
+      <tr><td><strong>毎月勤労統計調査</strong></td><td><span class="hl">総実労働時間</span>・賃金・雇用の月次変動</td></tr>
+      <tr><td>就労条件総合調査</td><td>休日・休暇・労働時間制度・賃金制度（年1回）</td></tr>
+      <tr><td>一般職業紹介状況</td><td>有効求人倍率・求人・求職</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:var(--muted);margin-top:6px;">✗「総実労働時間→就労条件総合調査」は誤り。正しくは毎月勤労統計調査。</p>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑩ 高年齢者雇用状況（第27回 問1）<span class="badge">★新規</span></div>
+  <ul>
+    <li class="ok"><span class="hl">60歳以上の常用労働者数</span>は平成26年（2014年）以降、<strong>一貫して増加</strong></li>
+    <li class="ng">70歳就業確保措置の実施率：大企業の方が高い → <strong>誤り</strong></li>
+    <li class="ok">70歳就業確保措置の実施率：<span class="hl">中小企業の方が高い</span></li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑪ CC効果（企業調査・正社員以外）（第27回 問3）<span class="badge">★新規</span></div>
+  <ul>
+    <li class="ok">正社員以外で最多：<span class="hl">「労働者の仕事への意欲が高まった」</span></li>
+    <li class="ng">「自己啓発する労働者が増えた」が最多 → <strong>誤り</strong>（正社員でも異なる可能性）</li>
+  </ul>
+</div>
+
+
+<!-- ===== 法令制度 ===== -->
+<h2 class="sec law">⚖️ 法令制度 分野（第31回3問・第30回0問・第29回3問・第28回1問・第27回5問）</h2>
+
+<h3 class="pattern">繰り返す失点パターン</h3>
+
+<div class="card">
+  <div class="card-title">① 無期転換ルールの正確な理解（問22）</div>
+  <ul>
+    <li class="ng">無期転換申込み後は正社員として雇用しなければならない</li>
+    <li class="ok"><strong>現在の有期と同一条件で無期雇用</strong>に転換（別段の定めがない限り）</li>
+    <li>有期労働契約の途中解雇：<strong>やむを得ない事由</strong>がある場合のみ可</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title">② インターンシップの4タイプ分類（問26）</div>
+  <table>
+    <thead><tr><th>タイプ</th><th>名称</th><th>インターンシップ？</th><th>採用活用</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>オープン・カンパニー</td><td style="color:#dc2626;">×</td><td>不可</td></tr>
+      <tr><td>2</td><td>キャリア教育</td><td style="color:#dc2626;">×</td><td>不可</td></tr>
+      <tr><td><strong>3</strong></td><td><strong>汎用型・専門活用型インターンシップ</strong></td><td style="color:#16a34a;"><strong>○</strong></td><td>可（5日以上）</td></tr>
+      <tr><td><strong>4</strong></td><td><strong>高度専門型インターンシップ</strong></td><td style="color:#16a34a;"><strong>○</strong></td><td>可</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:var(--muted);margin-top:6px;">⚠ インターンシップと称されるのはタイプ3・4のみ。タイプ2はキャリア教育。</p>
+</div>
+
+<div class="card">
+  <div class="card-title">③ トライアル雇用の期間（問42）</div>
+  <ul>
+    <li>試行期間：原則<span class="hl">3ヶ月</span>（最長6ヶ月）</li>
+    <li>ハローワーク経由の求人が<strong>必要</strong></li>
+    <li>自営業者・役員で週<strong>30時間以上</strong>就労中の人は対象外</li>
+    <li>目標は<strong>常用（無期）雇用</strong>への移行（有期雇用化ではない）</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">④ ハロートレーニングの種別と対象者（第28回 問16）<span class="badge">★新規</span></div>
+  <table>
+    <thead><tr><th>訓練種別</th><th>主な対象者</th><th>実施機関</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>離職者訓練</strong></td>
+        <td><span class="hl">雇用保険受給者</span></td>
+        <td>国（ポリテクセンター）・都道府県（職業能力開発校）</td>
+      </tr>
+      <tr>
+        <td><strong>求職者支援訓練</strong></td>
+        <td><span class="hl">雇用保険を受給できない求職者</span></td>
+        <td>認定を受けた<strong>民間機関等</strong></td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="margin-top:8px;font-size:14px;"><strong>受講費用は基本的に無料</strong>（両訓練とも）</p>
+</div>
+
+
+<div class="card new">
+  <div class="card-title">⑤ キャリアアップ助成金（第27回 問15）<span class="badge">★新規</span></div>
+  <ul>
+    <li class="ok"><span class="hl">非正規雇用労働者の正規転換・処遇改善等</span>を行う事業主を助成</li>
+    <li class="ng">「正規雇用労働者の処遇改善」を実施した事業主への助成 → <strong>誤り</strong></li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑥ 教育訓練給付3種類の比較（第27回 問17）<span class="badge">★新規</span></div>
+  <table>
+    <thead><tr><th>種別</th><th>支給率</th><th>上限</th><th>目的</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>一般教育訓練給付</td>
+        <td><strong>20%</strong></td><td>10万円</td>
+        <td>雇用の安定・就職促進</td>
+      </tr>
+      <tr>
+        <td><span class="hl"><strong>特定一般教育訓練給付</strong></span></td>
+        <td><strong>40%</strong></td><td>20万円</td>
+        <td><span class="hl">速やかな再就職・早期キャリア形成</span></td>
+      </tr>
+      <tr>
+        <td>専門実践教育訓練給付</td>
+        <td><strong>50%</strong></td><td>年間40万円</td>
+        <td>中長期的キャリア形成</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:#dc2626;margin-top:6px;">⚠ 「特定一般＝中長期的キャリア形成」は誤り。中長期は専門実践。</p>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑦ 職業能力開発促進法の労働者定義（第27回 問23）<span class="badge">★新規</span></div>
+  <ul>
+    <li class="ok">職業能力開発促進法の「<span class="hl">労働者</span>」には<strong>求職者も含まれる</strong></li>
+    <li class="ng">「求職者は含まれない」→ <strong>誤り</strong>（最も不適切）</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑧ 出向・転籍の法的違い（第27回 問24）<span class="badge">★新規</span></div>
+  <table>
+    <thead><tr><th>区分</th><th>内容</th><th>個別同意</th></tr></thead>
+    <tbody>
+      <tr><td>在籍出向</td><td>出向元に籍を置きつつ出向先で勤務</td><td>就業規則・包括合意で可</td></tr>
+      <tr><td><strong>出向元復帰</strong></td><td>出向元に戻る命令</td><td><span class="hl"><strong>不要</strong></span>（出向命令の範囲内）</td></tr>
+      <tr><td><strong>転籍</strong></td><td>出向元を退職し出向先の社員になる</td><td><span class="hl" style="color:#dc2626;"><strong>個別同意必須</strong></span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑨ 法定休日労働の割増賃金（第27回 問25）<span class="badge">★新規</span></div>
+  <ul>
+    <li class="ok">法定休日の労働：<span class="hl">全時間が「休日労働割増（35%以上）」のみ</span>適用</li>
+    <li class="ng">法定休日の8時間超で時間外労働割増も重複発生 → <strong>誤り</strong></li>
+    <li>所定休日（法定外）の時間外は通常の時間外割増ルールに従う</li>
+  </ul>
+</div>
+
+
+<!-- ===== キャリア理論 ===== -->
+<h2 class="sec theory">🎯 キャリア理論 分野（第31回1問・第30回3問・第29回3問・第28回2問・第27回1問）</h2>
+
+<h3 class="pattern">繰り返す失点パターン</h3>
+
+<div class="card">
+  <div class="card-title">① シュロスバーグ4Sの正確な4要素（第31回問8）</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">
+    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;text-align:center;min-width:100px;flex:1;">
+      <div style="font-size:20px;font-weight:800;color:var(--theory);">Self</div><div style="font-size:12px;color:var(--muted);">自己</div>
+    </div>
+    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;text-align:center;min-width:100px;flex:1;">
+      <div style="font-size:20px;font-weight:800;color:var(--theory);">Situation</div><div style="font-size:12px;color:var(--muted);">状況</div>
+    </div>
+    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;text-align:center;min-width:100px;flex:1;">
+      <div style="font-size:20px;font-weight:800;color:var(--theory);">Support</div><div style="font-size:12px;color:var(--muted);">支援</div>
+    </div>
+    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;text-align:center;min-width:100px;flex:1;">
+      <div style="font-size:20px;font-weight:800;color:var(--theory);">Strategies</div><div style="font-size:12px;color:var(--muted);">戦略</div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:#dc2626;margin-top:8px;">⚠ Standard（基準）は存在しない</p>
+</div>
+
+<div class="card">
+  <div class="card-title">② 社会認知的キャリア理論（SCCT）の概念（第30回問4）</div>
+  <ul>
+    <li>SCCT（レント・ブラウン・ハケット）の主要概念：<span class="hl">学習経験・自己効力感・結果期待</span></li>
+    <li class="ng">自我同一性（アイデンティティ）はSCCTに含まれる → <strong>エリクソン</strong>の概念</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title">③ ホランドのアセスメント（第30回問6）</div>
+  <ul>
+    <li>ホランド開発：<span class="hl">VPI（職業選好性検査）・SDS（自己探索検索）</span></li>
+    <li class="ng">YG性格検査（矢田部ギルフォード）はホランドと無関係</li>
+    <li>職務満足・安定性・業績は<strong>個人のパーソナリティ×環境の一致度</strong>に依拠</li>
+  </ul>
+</div>
+
+<div class="card">
+  <div class="card-title">④ 転機論の提唱者の整理（第30回問31）</div>
+  <table>
+    <thead><tr><th>提唱者</th><th>転機論の特徴</th></tr></thead>
+    <tbody>
+      <tr><td><strong>シュロスバーグ</strong></td><td>始まり→<span class="hl">ニュートラルゾーン</span>→終わりのプロセス・4Sリソース</td></tr>
+      <tr><td>シャイン</td><td>組織内キャリア発達：生物学的・社会的サイクル、仕事・キャリアサイクル、家族関係サイクルの3つ</td></tr>
+      <tr><td>クランボルツ</td><td>転機を「予測/予測していなかった/期待していたものが起こらなかった」の3種に整理</td></tr>
+      <tr><td><strong>ブリッジズ</strong></td><td>終焉→中立圏→開始のプロセス（「過渡期」はブリッジズの概念）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <div class="card-title">⑤ ハンセン（Hansen, L.S.）</div>
+  <ul>
+    <li>統合的人生設計（ILP）：仕事を人生の他役割と統合する枠組み</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑥ サビカスのキャリア構築理論（第28回 問4）<span class="badge">★新規</span></div>
+  <ul>
+    <li><strong>キャリア・アダプタビリティ4C</strong>：Concern・Control・<span class="hl">Curiosity・Confidence</span></li>
+    <li class="ng">「クライエントの内面に既に存在する自己を<em>実現</em>する」</li>
+    <li class="ok">自己は<span class="hl">ナラティブ（物語）を通じて「構築」</span>するもの（構成主義的アプローチ）</li>
+  </ul>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑦ マーシャのアイデンティティ・ステイタス4分類（第28回 問10）<span class="badge">★新規</span></div>
+  <table>
+    <thead><tr><th>ステイタス</th><th>特徴</th></tr></thead>
+    <tbody>
+      <tr><td><strong>達成</strong></td><td>危機を経て自分なりの解決に達し行動している</td></tr>
+      <tr><td><strong>早期完了</strong></td><td>親の目標と不協和がなく幼児期の信念を補強するだけ（硬さが特徴）</td></tr>
+      <tr><td><strong>モラトリアム</strong></td><td>いくつかの選択肢に迷い不確かさを克服しようと<em>努力中</em>（←拡散と混同注意）</td></tr>
+      <tr style="background:#fef3c7;">
+        <td><strong>拡散</strong> ⚠</td>
+        <td>危機前＝何者かである経験がなく想像できない、危機後＝<span class="hl">すべて可能なままにしておかなければならない</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="card new">
+  <div class="card-title">⑧ スーパーのライフステージと役割の重要性（第27回 問8）<span class="badge">★新規</span></div>
+  <ul>
+    <li class="ok">マキシサイクル（ライフステージ）は<span class="hl">5段階</span>：成長期・探索期・確立期・維持期・解放期</li>
+    <li class="ng">「6段階（開始・探索・確立・維持・解放・下降）」→ <strong>誤り</strong></li>
+    <li>役割の重要性は<span class="hl">3つの側面</span>で多重的に決定：
+      <ul>
+        <li><strong>情意的側面</strong>（役割へのコミットメント・関与の感情）</li>
+        <li><strong>行動的側面</strong>（時間・エネルギーの投入量）</li>
+        <li><strong>認知的側面</strong>（自己概念における役割の位置づけ）</li>
+      </ul>
+    </li>
+    <li class="ng">「成人期を四季に例えたライフサイクル」＝スーパー → <strong>誤り</strong>（レビンソンの理論）</li>
+  </ul>
+</div>
+
+<hr>
+<p class="disclaimer">CC学科 弱点克服レポート｜本番: 2026/7/5｜合格ライン 35/50（70%）　目標 40/50（80%）</p>
+
+</div>
+</body>
+</html>
