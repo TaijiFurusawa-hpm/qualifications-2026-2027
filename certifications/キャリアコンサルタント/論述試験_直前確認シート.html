@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>論述試験 直前確認シート｜古澤泰治</title>
+<style>
+  :root{
+    --navy:#1f3a5f; --accent:#1f5f8b; --good:#1f7a4d; --good-l:#e6f4ec;
+    --bad:#c0392b; --bad-l:#fbeae7; --amber:#b5651d; --amber-l:#fbf1e4;
+    --ink:#22303f; --muted:#5a6b7b; --line:#d8e0e8; --bg:#f4f7fa;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Hiragino Kaku Gothic ProN','Yu Gothic','Meiryo',sans-serif;
+    margin:0; background:var(--bg); color:var(--ink); line-height:1.7;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{max-width:900px; margin:0 auto; padding:0 16px 60px;}
+  header{
+    background:linear-gradient(135deg,var(--navy),var(--accent));
+    color:#fff; padding:26px 22px; border-radius:0 0 16px 16px;
+    box-shadow:0 4px 14px rgba(31,58,95,.25);
+  }
+  header .kicker{font-size:13px; letter-spacing:.14em; opacity:.85; margin:0;}
+  header h1{font-size:26px; margin:6px 0 4px; line-height:1.3;}
+  header .date{font-size:15px; font-weight:700; background:rgba(255,255,255,.16);
+    display:inline-block; padding:3px 12px; border-radius:20px; margin-top:6px;}
+  header p.lead{font-size:14px; opacity:.92; margin:12px 0 0;}
+  section{margin-top:26px;}
+  h2{font-size:19px; color:var(--navy); border-left:6px solid var(--accent);
+    padding:2px 0 2px 12px; margin:0 0 14px;}
+  .card{background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:16px 18px; box-shadow:0 1px 4px rgba(0,0,0,.04);}
+
+  /* あゆみ */
+  .summary{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:14px;}
+  .stat{flex:1 1 150px; background:#fff; border:1px solid var(--line);
+    border-radius:10px; padding:12px 14px; text-align:center;}
+  .stat .n{font-size:26px; font-weight:800; color:var(--good);}
+  .stat .l{font-size:12px; color:var(--muted);}
+  .bars{margin-top:6px;}
+  .bar-row{display:flex; align-items:center; gap:8px; margin:5px 0; font-size:13px;}
+  .bar-row .lbl{width:74px; flex:none; color:var(--muted); font-weight:600;}
+  .track{flex:1; background:#eef2f6; border-radius:6px; height:20px; position:relative; overflow:hidden;}
+  .fill{height:100%; border-radius:6px; display:flex; align-items:center;
+    justify-content:flex-end; padding-right:7px; color:#fff; font-size:11px; font-weight:700;}
+  .g40{background:var(--good);} .g38{background:#3f9268;} .g37{background:#6bb08c;}
+  .best{background:linear-gradient(90deg,#c9911f,#e0a92e);}
+  .note-line{font-size:12px; color:var(--muted); margin-top:8px;}
+
+  /* Do / Don't トップ */
+  .duo{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:640px){.duo{grid-template-columns:1fr;}}
+  .box{border-radius:12px; padding:16px 18px;}
+  .box.do{background:var(--good-l); border:2px solid var(--good);}
+  .box.dont{background:var(--bad-l); border:2px solid var(--bad);}
+  .box h3{margin:0 0 10px; font-size:17px;}
+  .box.do h3{color:var(--good);}
+  .box.dont h3{color:var(--bad);}
+  .box ol{margin:0; padding-left:20px;}
+  .box li{margin:9px 0; font-size:14.5px; font-weight:600;}
+  .box li span{display:block; font-weight:400; font-size:12.5px; color:var(--muted); margin-top:2px;}
+
+  /* 設問カード */
+  .q{margin-bottom:14px;}
+  .q .head{display:flex; align-items:center; gap:10px; margin-bottom:8px;}
+  .q .badge{background:var(--navy); color:#fff; font-weight:800; font-size:14px;
+    padding:3px 11px; border-radius:8px; flex:none;}
+  .q .head .t{font-size:15px; font-weight:700; color:var(--navy);}
+  .q .head .pt{margin-left:auto; font-size:12px; color:var(--muted); font-weight:700;}
+  .q ul{list-style:none; margin:0; padding:0;}
+  .q li{padding:4px 0 4px 26px; position:relative; font-size:14px;}
+  .q li.y::before{content:"✅"; position:absolute; left:0;}
+  .q li.n::before{content:"🚫"; position:absolute; left:0;}
+  .q li.o::before{content:"△"; position:absolute; left:2px; color:var(--amber); font-weight:800;}
+  .q li.n{color:var(--bad);}
+  .q li b{color:var(--navy);}
+
+  /* 時間・理論 */
+  .timeline{display:flex; flex-wrap:wrap; gap:6px;}
+  .tchip{background:#fff; border:1px solid var(--line); border-radius:8px;
+    padding:7px 11px; font-size:13px; text-align:center; flex:1 1 auto;}
+  .tchip b{display:block; color:var(--accent); font-size:15px;}
+  .theory{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{background:var(--amber-l); border:1px solid #e6cfa8; color:var(--amber);
+    border-radius:20px; padding:6px 13px; font-size:13px; font-weight:600;}
+  .chip b{color:var(--ink);}
+
+  .magic{background:#fff; border:2px dashed var(--accent); border-radius:12px;
+    padding:16px 18px; text-align:center;}
+  .magic .q{font-size:19px; font-weight:800; color:var(--accent); margin:0;}
+  .magic p{font-size:13px; color:var(--muted); margin:6px 0 0;}
+
+  footer.msg{margin-top:28px; background:linear-gradient(135deg,var(--good),#2a9d63);
+    color:#fff; border-radius:14px; padding:22px 24px; text-align:center;}
+  footer.msg .big{font-size:20px; font-weight:800; margin:0 0 8px;}
+  footer.msg p{margin:6px 0; font-size:14.5px; opacity:.96;}
+  footer.msg .num{font-size:30px; font-weight:800;}
+
+  @media print{
+    body{background:#fff;} .wrap{max-width:100%;}
+    header,footer.msg{box-shadow:none;} section{break-inside:avoid;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">国家資格キャリアコンサルタント ／ 実技（論述）</p>
+  <h1>論述試験 直前確認シート</h1>
+  <div class="date">本番 2026年7月5日（日）｜古澤 泰治</div>
+  <p class="lead">新しいことはしない。いつも通りの型で書けば大丈夫。まず深呼吸して、事例をよく読むところから。</p>
+</header>
+
+<!-- 学習のあゆみ -->
+<section>
+  <h2>📈 これまでの歩み（2周目・13回）</h2>
+  <div class="summary">
+    <div class="stat"><div class="n">39.6</div><div class="l">2周目 平均点 /50</div></div>
+    <div class="stat"><div class="n">+3.7</div><div class="l">1周目(35.9)からの伸び</div></div>
+    <div class="stat"><div class="n">13/13</div><div class="l">連続で合格圏</div></div>
+    <div class="stat"><div class="n">🏆44</div><div class="l">自己ベスト(第18回)</div></div>
+  </div>
+  <div class="card bars">
+    <div class="bar-row"><span class="lbl">第15回</span><div class="track"><div class="fill g37" style="width:74%">37</div></div></div>
+    <div class="bar-row"><span class="lbl">第16回</span><div class="track"><div class="fill g38" style="width:76%">38</div></div></div>
+    <div class="bar-row"><span class="lbl">第17回</span><div class="track"><div class="fill g38" style="width:76%">38</div></div></div>
+    <div class="bar-row"><span class="lbl">第18回</span><div class="track"><div class="fill best" style="width:88%">44 🏆</div></div></div>
+    <div class="bar-row"><span class="lbl">第19回</span><div class="track"><div class="fill g40" style="width:80%">40</div></div></div>
+    <div class="bar-row"><span class="lbl">第20回</span><div class="track"><div class="fill g40" style="width:84%">42</div></div></div>
+    <div class="bar-row"><span class="lbl">第21回</span><div class="track"><div class="fill g38" style="width:76%">38</div></div></div>
+    <div class="bar-row"><span class="lbl">第22回</span><div class="track"><div class="fill g40" style="width:80%">40</div></div></div>
+    <div class="bar-row"><span class="lbl">第23回</span><div class="track"><div class="fill g38" style="width:78%">39</div></div></div>
+    <div class="bar-row"><span class="lbl">第24回</span><div class="track"><div class="fill g40" style="width:80%">40</div></div></div>
+    <div class="bar-row"><span class="lbl">第25回</span><div class="track"><div class="fill g38" style="width:78%">39</div></div></div>
+    <div class="bar-row"><span class="lbl">第26回</span><div class="track"><div class="fill g40" style="width:80%">40</div></div></div>
+    <div class="bar-row"><span class="lbl">第27回</span><div class="track"><div class="fill g40" style="width:80%">40</div></div></div>
+    <p class="note-line">※ 全回が合格圏で安定。あなたは「受かる書き方」を既に身につけている。</p>
+  </div>
+</section>
+
+<!-- 本番の鉄則 -->
+<section>
+  <h2>⚡ 本番の鉄則（これだけは！）</h2>
+  <div class="duo">
+    <div class="box do">
+      <h3>✅ 必ずやる TOP3</h3>
+      <ol>
+        <li>事例を正確に読む＋構造化メモを先に
+          <span>固有名詞・数字・続柄・退職理由を取り違えない。書き出す前に全体像をメモ。</span></li>
+        <li>設問1に「軸＋感情＋核」を入れる
+          <span>相談者の“本当はどうしたい”（軸）＋感情2〜3語＋主訴の核キーワード（本人の言葉）。</span></li>
+        <li>設問3は2つに絞り、根拠は本人の言動から
+          <span>2×10点＝2つを深く。根拠は必ず相談者の発言を「引用」する。</span></li>
+      </ol>
+    </div>
+    <div class="box dont">
+      <h3>🚫 絶対やらない TOP3</h3>
+      <ol>
+        <li>事実誤認・取り違え
+          <span>過去の失点：「総務←税務」「夫の転勤←倒産」「年齢の誤記」。見直しで必ず確認。</span></li>
+        <li>根拠の弱いラベル／他者の発言を根拠に
+          <span>前向き動機を「自己効力感低下」に、父の発言を相談者の根拠にしない。</span></li>
+        <li>時間切れ
+          <span>50分厳守。見直し5分を必ず残す（あなたは35〜40分ペースで書ける）。</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 設問別チェック -->
+<section>
+  <h2>📝 設問別 クイックチェック（固定ルーブリック）</h2>
+
+  <div class="card q">
+    <div class="head"><span class="badge">設問1</span><span class="t">相談したいこと（主訴）</span><span class="pt">10点</span></div>
+    <ul>
+      <li class="y"><b>主訴の核</b>：相談者の言葉そのまま（例「どうしたらいいか分からない」）</li>
+      <li class="y"><b>感情2〜3語</b>：不安／焦り／情けない／迷い／戸惑い 等</li>
+      <li class="y"><b>相談者の軸</b>：やりたいこと・ありたい姿・価値観を必ず入れる</li>
+      <li class="y"><b>葛藤</b>：「Aしたい × Bという事情」の対立軸で具体的に</li>
+      <li class="n">原因分析（自己理解不足 等の理論ラベル）は書かない＝設問3の仕事</li>
+    </ul>
+  </div>
+
+  <div class="card q">
+    <div class="head"><span class="badge">設問2</span><span class="t">CCの応答意図（下線B）</span><span class="pt">10点</span></div>
+    <ul>
+      <li class="y"><b>直前の感情を受容・共感</b>（下線Bの前の相談者の気持ち）</li>
+      <li class="y"><b>下線Bの“直接の狙い”</b>：伝え返し／明確化／焦点化して何を確認したか</li>
+      <li class="y"><b>目的</b>：ラポール形成／問題の明確化／展開</li>
+      <li class="o">技法名は<b>任意</b>。入れるなら機能とセット（クローズド=明確化・焦点化）。無理に入れない</li>
+    </ul>
+  </div>
+
+  <div class="card q">
+    <div class="head"><span class="badge">設問3</span><span class="t">問題（①）と根拠（②）</span><span class="pt">20点 = 2×10</span></div>
+    <ul>
+      <li class="y"><b>2つに絞る</b>（各10点を深く。3つ詰めると薄まる）</li>
+      <li class="y"><b>理論ラベル</b>：自己理解／仕事理解／コミュ ＋ 自己効力感／情報不足／イラショナルビリーフ</li>
+      <li class="y"><b>根拠は本人の言動を「引用」</b>／ラベルは相談者の“現在の状態”に合わせる</li>
+      <li class="n">他者（父・家族）の発言を根拠にしない</li>
+      <li class="n">「アンビバレンス（自分の中の葛藤）」と「他者との対立」を混同しない</li>
+    </ul>
+  </div>
+
+  <div class="card q">
+    <div class="head"><span class="badge">設問4</span><span class="t">今後の方針・方策</span><span class="pt">10点</span></div>
+    <ul>
+      <li class="y"><b>コンプリメントは事実ベース</b>（「◯年続けた」「◯◯を取得」等の具体的事実）</li>
+      <li class="y"><b>設問3の各問題に1対1対応</b>で方策を書く</li>
+      <li class="y"><b>転機リフレーミング</b>（ネガティブ→転機・成長機会）</li>
+      <li class="y"><b>気づきを促す協働の型</b>：「一緒に◯◯を整理し、相談者自身が気づけるよう支援」← 信念を貫く</li>
+      <li class="y"><b>クロージング</b>：「納得して選択できるよう支援」で締める</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 迷ったら -->
+<section>
+  <h2>🧭 設問1で手が止まったら</h2>
+  <div class="magic">
+    <p class="q">「この人は “本当はどうしたい” のか？」</p>
+    <p>それを1語で。＝ 相談者の<strong>軸</strong>。そこに感情と葛藤を足せば主訴になる。</p>
+  </div>
+</section>
+
+<!-- 時間配分 -->
+<section>
+  <h2>⏱ 時間配分（50分）</h2>
+  <div class="timeline">
+    <div class="tchip"><b>8分</b>読解＋メモ</div>
+    <div class="tchip"><b>5分</b>設問1</div>
+    <div class="tchip"><b>5分</b>設問2</div>
+    <div class="tchip"><b>17分</b>設問3</div>
+    <div class="tchip"><b>10分</b>設問4</div>
+    <div class="tchip"><b>5分</b>見直し</div>
+  </div>
+  <p class="note-line">見直しでは「固有名詞・数字・続柄」を最優先チェック（誤記が唯一の“もったいない失点”）。</p>
+</section>
+
+<!-- 理論の引き出し -->
+<section>
+  <h2>🎒 理論の引き出し（設問3・4で使える）</h2>
+  <div class="theory">
+    <span class="chip"><b>自己効力感</b>（バンデューラ）＝過去の成功体験を掘る</span>
+    <span class="chip"><b>転機</b>（4S／ブリッジズ）＝終わり→中立→始まり</span>
+    <span class="chip"><b>計画的偶発性</b>（クランボルツ）＝“なんとなく”を“主体的に選んだ”へ</span>
+    <span class="chip"><b>イラショナルビリーフ／二分法</b>＝「〜でなければ」の思い込み</span>
+    <span class="chip"><b>キャリアアンカー</b>（シャイン）＝譲れない中核</span>
+    <span class="chip"><b>ジョブカード</b>＝棚卸し（学生用もあり）</span>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
