@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFP第2回 学習計画マスター（後半戦2026）</title>
+<style>
+  :root{
+    --bg:#fbfaf7; --fg:#232323; --muted:#6b6b6b; --line:#e3ddd2; --card:#ffffff;
+    --accent:#2c5f7c; --accent2:#3a7a4a; --hl:#fff6e6; --warn:#c0392b;
+    --s:#c0392b; --a:#d97a1a; --b:#7a8a99;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1c1d1f; --fg:#e8e6e2; --muted:#9a9a9a; --line:#34363a; --card:#25272b;
+           --accent:#7fb3d0; --accent2:#7fbf8f; --hl:#2c2a24; --warn:#e57373;
+           --s:#e57373; --a:#f0a860; --b:#9fb0bf; }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.7;font-size:15px;}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 20px 80px;}
+  h1{font-size:24px;margin:0 0 4px;letter-spacing:.02em;}
+  h2{font-size:19px;margin:36px 0 12px;padding:8px 12px;background:var(--accent);color:#fff;border-radius:6px;}
+  h3{font-size:16px;margin:22px 0 8px;border-left:4px solid var(--accent);padding-left:9px;}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:14px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0;}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;}
+  th{background:rgba(44,95,124,.10);font-weight:700;}
+  .tbl-scroll{overflow-x:auto;}
+  .num{font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap;}
+  ul{margin:6px 0;padding-left:20px;} li{margin:4px 0;}
+  code{background:rgba(127,127,127,.14);padding:1px 5px;border-radius:4px;font-size:13px;font-family:"SF Mono",Consolas,monospace;}
+  .kpi{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0;}
+  .kpi>div{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 13px;text-align:center;}
+  .kpi .big{font-size:21px;font-weight:800;color:var(--accent);}
+  .kpi .lbl{font-size:12px;color:var(--muted);}
+  .warn{color:var(--warn);font-weight:700;}
+  .gantt{font-family:"SF Mono",Consolas,monospace;font-size:12.5px;background:var(--card);
+    border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;white-space:pre;line-height:1.5;color:var(--fg);}
+  .phase{border:1px solid var(--line);border-radius:8px;padding:12px 15px;margin:12px 0;background:var(--card);}
+  .phase .ttl{font-weight:800;font-size:15.5px;color:var(--accent);}
+  .phase .meta{font-size:12.5px;color:var(--muted);margin-left:6px;}
+  .done{color:var(--accent2);font-weight:700;} .todo{color:var(--muted);}
+  .badge{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:10px;color:#fff;margin-right:4px;}
+  .bK{background:var(--accent);} .bR{background:#a0562c;} .bS{background:#6a4a8a;}
+  .rank{display:inline-block;min-width:18px;text-align:center;font-weight:800;color:#fff;border-radius:4px;padding:1px 6px;font-size:12px;}
+  .rS{background:var(--s);} .rA{background:var(--a);} .rB{background:var(--b);}
+  .log{border-left:3px solid var(--line);padding:4px 0 4px 13px;margin:10px 0;}
+  .log .d{font-weight:700;color:var(--accent);}
+  a{color:var(--accent);}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:30px;border-top:1px solid var(--line);padding-top:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>CFP® 第2回 学習計画マスター</h1>
+<p class="sub">後半戦2026（金融・リスク・相続）｜策定 2026-07-06／更新 2026-07-08</p>
+
+<div class="card">
+CFP第2回（<b>金融・リスク・相続</b>）の学習を<b>単一ソースで管理</b>する計画。前半戦の型（<code>final-prep-2026.md</code>）を後半戦に踏襲。運用の原本は <code>phase2-plan-2026.md</code>（進捗ログはそちらに追記）、本HTMLは閲覧用スナップショット。
+</div>
+
+<div class="kpi">
+  <div><div class="big">11/8</div><div class="lbl">試験1日目（金融）</div></div>
+  <div><div class="big">11/15</div><div class="lbl">試験2日目（リスク・相続）</div></div>
+  <div><div class="big">約18週</div><div class="lbl">本番まで</div></div>
+  <div><div class="big">48</div><div class="lbl">過去問セット（3科目×16回）</div></div>
+</div>
+
+<!-- サマリ -->
+<h2>サマリ</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th>項目</th><th>状態</th></tr>
+<tr><td>試験1日目</td><td>2026/11/8（日）｜約18週</td></tr>
+<tr><td>試験2日目</td><td>2026/11/15（日）</td></tr>
+<tr><td>ネット出願</td><td><span class="warn">2026/9/1〜10/1（未実施・要対応）</span></td></tr>
+<tr><td>受験票発送</td><td>2026/10/23（金）→ <b>日割り確定はここで</b></td></tr>
+<tr><td>最重点科目</td><td><b>金融</b>（土台・1日目想定）を最初に固める</td></tr>
+<tr><td>現状</td><td>金融の器＋傾向分析 完成／リスク・相続は器・分析これから</td></tr>
+</table>
+</div>
+
+<!-- 前提 -->
+<h2>前提・制約</h2>
+<ul>
+<li><b>学習時間</b>：週実働 約10h（平日1.5h／休日1.5h）。7月はキャリコン面接優先で低負荷。</li>
+<li><b>直近の競合</b>：キャリコン面接 <b>7/12</b>（面接期間7/10〜20）が最優先／合格発表8/20。JAMI 2級は受験資格取得を7月から並行着手予定。</li>
+<li><b>試験日割り（推定＝標準時間割ベース）</b>：<b>1日目11/8＝金融</b>／<b>2日目11/15＝リスク・相続</b>。<span class="warn">受験票（10/23）で要確定</span>。</li>
+<li><b>過去問素材</b>：3科目とも<b>16回分</b>（2018①②〜2026①・2020①のみ欠）＝計48セット。模試は無し。</li>
+</ul>
+
+<!-- 器 -->
+<h2>器（演習前に作成／前半テンプレを流用）</h2>
+<ul>
+<li><span class="done">✅</span> <code>間違いノート_金融.md</code> ／ <code>弱点克服レポート_金融.md</code>（2026-07-06）</li>
+<li><span class="todo">☐</span> リスク版・相続版の3ファイル（各科目着手時に作成）</li>
+<li><span class="done">✅</span> <code>quiz/index.html</code> に金融キー <b>K1〜K25</b> 投入済（<span class="badge bR">R</span>リスク・<span class="badge bS">S</span>相続は各初回演習で投入）</li>
+</ul>
+
+<!-- 重要問題マップ -->
+<h2>重要問題マップ（時間荷重・出題傾向分析）</h2>
+<div class="card">
+<b>金融 → <a href="金融_重要問題マップ_2026後半戦.html">金融_重要問題マップ_2026後半戦.html</a></b>（2026-07-08）<br>
+全16回800問を母集団に時間荷重（直近×3・中×2・遠×1）で計算テーマを <span class="rank rS">S</span>/<span class="rank rA">A</span>/<span class="rank rB">B</span> ランク化。直近7回の各設問に重みを投影した見直しチェックリスト付き。
+<ul>
+<li><b>12大問構成が7回完全固定</b>／計算は毎回約44%。<b>Sランク計算9テーマ</b>だけで毎回8〜9問が定型で拾える＝取りこぼしゼロが目標。</li>
+<li><b>新傾向ウォッチ</b>：C7為替予約・C8購買力平価・C12益利回り（直近で浮上）。</li>
+<li>過去問見直しは各回 <span class="rank rS">S</span>→<span class="rank rA">A</span>→<span class="rank rB">B</span> の順。リスク・相続も同枠組みで横展開予定。</li>
+</ul>
+</div>
+
+<!-- ロードマップ -->
+<h2>全体ロードマップ</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th>フェーズ</th><th>期間</th><th class="num">実働目安</th><th>内容</th></tr>
+<tr><td><b>0. 助走・器作り</b></td><td>7/7〜7/20</td><td class="num">約6h</td><td>面接優先。金融の器作成＋過去問1本目</td></tr>
+<tr><td><b>1. 基礎1巡</b></td><td>7/21〜8/31</td><td class="num">約60h</td><td>金融→リスク→相続を各7回分で1巡（金融厚め）</td></tr>
+<tr><td>（出願）</td><td>9/1〜10/1</td><td class="num">—</td><td><span class="warn">❗ネット出願を必ず実施</span></td></tr>
+<tr><td><b>2. 弱点補強2巡</b></td><td>9/1〜9/30</td><td class="num">約40h</td><td>3科目2巡＝弱点ピンポイント・クイズ蓄積</td></tr>
+<tr><td><b>3. 直前フォーカス</b></td><td>10/1〜11/7</td><td class="num">約35h</td><td>時間制限演習・複数回ミス補強・直前PDF</td></tr>
+<tr><td class="num">🎯</td><td><b>11/8</b></td><td class="num">—</td><td><b>試験1日目（金融）</b></td></tr>
+<tr><td><b>C. 中日ブースト</b></td><td>11/9〜11/14</td><td class="num">約9h</td><td>リスク・相続 総仕上げ（前半のタックス中日型）</td></tr>
+<tr><td class="num">🎯</td><td><b>11/15</b></td><td class="num">—</td><td><b>試験2日目（リスク・相続）</b></td></tr>
+</table>
+</div>
+<div class="gantt">7/7      7/20        8/31    9/30       11/7  11/8      11/15
+├0:助走┤
+        ├──1:基礎1巡──┤
+                      ├2:2巡┤
+                            ├─3:直前─┤試1
+                                      ├C:中日┤試2
+       (出願 9/1〜10/1)</div>
+
+<!-- 各フェーズ -->
+<h2>各フェーズ詳細</h2>
+
+<div class="phase">
+<div class="ttl">フェーズ0：助走・器作り<span class="meta">7/7〜7/20・約6h</span></div>
+キャリコン面接（7/12）が最優先のため低負荷。金融の立ち上げに絞る。
+<ul>
+<li><span class="done">✅</span> 間違いノート・弱点克服レポート（金融）作成</li>
+<li><span class="done">✅</span> 金融 過去問1本目（2026①）＝22/50・弱点分析・クイズ投入</li>
+<li>面接期間中はCFPを無理に進めず、面接後(7/20〜)に加速</li>
+</ul>
+</div>
+
+<div class="phase">
+<div class="ttl">フェーズ1：基礎1巡<span class="meta">7/21〜8/31・約60h</span></div>
+金融→リスク→相続の順で、<b>各科目7回分（2023①〜2026①）</b>を1巡し論点を棚卸し。
+<ul>
+<li>金融（7回）を先行して厚めに → リスク（7回）→ 相続（7回）</li>
+<li>リスク／相続の器（3ファイル・クイズキー）はこの段階で作成</li>
+<li><b>重要問題マップの <span class="rank rS">S</span>→<span class="rank rA">A</span>→<span class="rank rB">B</span> 順</b>で見直し。Sランク計算は「ロジック集の型」で解けるか毎回確認</li>
+</ul>
+</div>
+
+<div class="phase">
+<div class="ttl">フェーズ2：弱点補強2巡<span class="meta">9/1〜9/30・約40h</span></div>
+<ul>
+<li><span class="warn">❗ネット出願（9/1〜10/1）を最優先で完了</span>（書面は9/1〜9/15）</li>
+<li>3科目を2巡。1巡目対比で継続失点／後退／改善を判定</li>
+<li>クイズTier蓄積（継続失点=Tier1）。Tier降格は「別問題でも再現できて初めて」</li>
+</ul>
+</div>
+
+<div class="phase">
+<div class="ttl">フェーズ3：直前フォーカス<span class="meta">10/1〜11/7・約35h</span></div>
+<ul>
+<li>時間制限演習（本番同条件）で時間配分を固める</li>
+<li>複数回ミスした計算問題を抽出し直前PDF生成</li>
+<li>10/23 受験票で日割り確定 → 中日ブースト対象を最終確定</li>
+</ul>
+</div>
+
+<div class="phase">
+<div class="ttl">中日ブースト<span class="meta">11/9〜11/14・約9h</span></div>
+<ul>
+<li>2日目科目（想定＝リスク・相続）を全振りで総仕上げ</li>
+<li>計算・頻出論点の最終確認、間違いノート総ざらい</li>
+</ul>
+</div>
+
+<!-- 進捗ログ -->
+<h2>進捗ログ</h2>
+<div class="log"><span class="d">2026-07-06</span> 後半戦マスター計画を策定。金融を軸に決定。日割りを標準時間割から推定。器（金融）スケルトン作成。</div>
+<div class="log"><span class="d">2026-07-07</span> 金融2026① 1周目 <b>22/50</b> 実施・弱点分析（元本払戻金の判定ミスが最重要）。過去問を全16回に拡充（3科目とも2018〜2022追加）。2025②も全6科目ありと訂正。</div>
+<div class="log"><span class="d">2026-07-08</span> 金融の出題傾向分析（全16回800問・時間荷重）→ <b>重要問題マップHTML</b>作成・計画へ組み込み。本プランをHTML化。</div>
+
+<p class="foot">
+運用原本：<code>phase2-plan-2026.md</code>（進捗ログの追記先）。関連：<code>progress.md</code>／<code>金融_重要問題マップ_2026後半戦.html</code>／<code>間違いノート_金融.md</code>／<code>弱点克服レポート_金融.md</code>／<code>quiz/index.html</code>。
+</p>
+
+</div>
+</body>
+</html>
