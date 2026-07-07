@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFP金融 重要問題マップ（時間荷重・後半戦2026）</title>
+<style>
+  :root{
+    --bg:#fbfaf7; --fg:#232323; --muted:#6b6b6b; --line:#e3ddd2; --card:#ffffff;
+    --s:#c0392b; --a:#d97a1a; --b:#7a8a99; --accent:#2c5f7c; --hl:#fff6e6;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1c1d1f; --fg:#e8e6e2; --muted:#9a9a9a; --line:#34363a; --card:#25272b;
+           --s:#e57373; --a:#f0a860; --b:#9fb0bf; --accent:#7fb3d0; --hl:#2c2a24; }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.7;font-size:15px;}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 20px 80px;}
+  h1{font-size:24px;margin:0 0 4px;letter-spacing:.02em;}
+  h2{font-size:19px;margin:38px 0 12px;padding:8px 12px;background:var(--accent);color:#fff;border-radius:6px;}
+  h3{font-size:16px;margin:24px 0 8px;border-left:4px solid var(--accent);padding-left:9px;}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:14px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0;}
+  th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;}
+  th{background:rgba(44,95,124,.10);font-weight:700;}
+  .tbl-scroll{overflow-x:auto;}
+  .rank{display:inline-block;min-width:20px;text-align:center;font-weight:800;color:#fff;border-radius:4px;padding:1px 7px;font-size:12.5px;}
+  .rS{background:var(--s);} .rA{background:var(--a);} .rB{background:var(--b);}
+  .pill{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:10px;border:1px solid var(--line);color:var(--muted);margin-right:3px;}
+  .num{font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap;}
+  .qlist{font-variant-numeric:tabular-nums;letter-spacing:.01em;}
+  ul{margin:6px 0 6px 0;padding-left:20px;} li{margin:3px 0;}
+  .logic{background:var(--hl);border:1px solid var(--line);border-radius:6px;padding:10px 13px;margin:9px 0;}
+  .logic b{color:var(--accent);}
+  code{background:rgba(127,127,127,.14);padding:1px 5px;border-radius:4px;font-size:13px;font-family:"SF Mono",Consolas,monospace;}
+  .kpi{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;}
+  .kpi>div{flex:1;min-width:130px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 13px;}
+  .kpi .big{font-size:22px;font-weight:800;color:var(--accent);}
+  .kpi .lbl{font-size:12px;color:var(--muted);}
+  .warn{color:var(--s);font-weight:700;}
+  .new{background:var(--a);color:#fff;font-size:11px;padding:1px 6px;border-radius:4px;}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:30px;border-top:1px solid var(--line);padding-top:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>CFP金融資産運用設計 ― 重要問題マップ</h1>
+<p class="sub">時間荷重方式による出題傾向分析／後半戦2026（試験11/8）｜作成 2026-07-08</p>
+
+<div class="card">
+<b>この資料の使い方</b><br>
+過去問見直しの<b>優先順位づけ</b>のための資料。実際に解く<b>直近7回（2023①〜2026①）</b>の各設問に、<b>全16回（2018①〜2026①）</b>の傾向から算出した重みを付けてある。見直しは <span class="rank rS">S</span>→<span class="rank rA">A</span>→<span class="rank rB">B</span> の順。特に計算問題（<b>下段のロジック集</b>）は本番の取りこぼしゼロを目標に、手が勝手に動くまで反復する。
+</div>
+
+<h3>分析の方式</h3>
+<ul>
+<li><b>母集団＝全16回・800問</b>（2018①②・2019①②・2020②・2021①②・2022①②・2023①②・2024①②・2025①②・2026①）。7回だけでは偶然の偏りを頻出と誤認するため全期間で傾向を把握。</li>
+<li><b>時間荷重係数</b>：直近ほど重い。<span class="pill">2025・2026 ×3</span><span class="pill">2023・2024 ×2</span><span class="pill">2018〜2022 ×1</span> 制度改正で「最近増えた／減った」も検出。</li>
+<li>その傾向を<b>直近7回の各設問に投影</b>して S/A/B を決定。</li>
+</ul>
+
+<div class="kpi">
+  <div><div class="big">12</div><div class="lbl">大問構成（7回完全固定）</div></div>
+  <div><div class="big">約44%</div><div class="lbl">が計算問題（毎回19〜23問）</div></div>
+  <div><div class="big">8〜9問</div><div class="lbl">が毎回同じ定型計算</div></div>
+  <div><div class="big">16%</div><div class="lbl">がF1経済時事（問1〜8）</div></div>
+</div>
+
+<!-- ============ 出題傾向マップ ============ -->
+<h2>1. 出題傾向マップ（12大問が7回完全固定）</h2>
+<p class="sub">大問の位置・分野・計算の所在がほぼ不変。「どこに何が出るか」を先に体に入れておくと、本番で迷わない。</p>
+<div class="tbl-scroll">
+<table>
+<tr><th>大問</th><th>設問</th><th>分野</th><th>内容</th><th>定型計算（毎回ここ）</th></tr>
+<tr><td>問1</td><td>1〜4</td><td>F1 経済指標</td><td>GDP・物価・国際収支・日銀短観・在庫循環・機械受注</td><td>―（時事知識）</td></tr>
+<tr><td>問2</td><td>5〜8</td><td>F1 財政・時事</td><td>予算/PB・日銀展望レポート・世界経済の潮流</td><td>△ 財政収支(PB)</td></tr>
+<tr><td>問3</td><td>8〜11</td><td>F2 預貯金・積立</td><td>定期預金・各種金融商品・るいとう等</td><td><b class="warn">S</b> 定期預金 税引後受取</td></tr>
+<tr><td>問4</td><td>11〜13</td><td>F3 財形・DC</td><td>財形年金/住宅・iDeCo</td><td>―</td></tr>
+<tr><td>問5</td><td>13〜15</td><td>F4 株式財務</td><td>決算短信ベースの財務指標分析</td><td><b class="warn">S</b> ROE/ROIC/PER/PBR</td></tr>
+<tr><td>問6</td><td>15〜19</td><td>F4 株式税制</td><td>税制・取引制度・NISA・信用取引</td><td>△ 税額複合計算</td></tr>
+<tr><td>問7</td><td>19〜25</td><td>F5 債券</td><td>利回り・国債・運用手法</td><td><b class="warn">S</b> デュレーション＋利回り</td></tr>
+<tr><td>問8</td><td>25〜31</td><td>F6 投資信託</td><td>分配金・譲渡・運用評価</td><td><b class="warn">S</b> 投信3計算（分配金→譲渡→TR）</td></tr>
+<tr><td>問9</td><td>30〜37</td><td>F7 PF理論</td><td>期待収益率・パフォーマンス・行動F</td><td><b class="warn">S</b> 標準偏差＋時間加重＋シャープ</td></tr>
+<tr><td>問10</td><td>36〜43</td><td>F8 外貨・為替</td><td>外貨建て債券・為替予約・購買力平価</td><td><b class="warn">S</b> 外貨債券＋為替予約</td></tr>
+<tr><td>問11</td><td>41〜47</td><td>F9 デリバティブ</td><td>オプション・先物・FX・スワップ</td><td><b class="warn">A</b> 二項モデル＋ヘッジ枚数</td></tr>
+<tr><td>問12</td><td>47〜50</td><td>F10 制度・法規</td><td>金融ADR/FINMAC・国外財産調書・個人情報・犯収法</td><td>△ 税額/国保料（近年挿入）</td></tr>
+</table>
+</div>
+<p class="sub"><b>分野別 出題頻度（16回・毎回の目安問数）</b>：F1経済時事＝毎回8（最頻・得点源）／F4株式・F5債券・F6投信・F7PF理論・F8外貨・F9デリバ＝各5〜7（高位安定）／F2預貯金＝2〜3・F3財形DC＝2（少数皆勤）／F10制度法規＝3〜4（変動）。<b>分野構成は16回通じて極めて安定</b>＝ヤマではなく全分野の底上げが効く。</p>
+
+<!-- ============ 計算テーマ ランキング ============ -->
+<h2>2. 計算テーマ 時間荷重ランキング（最重要）</h2>
+<p class="sub">スコア＝Σ(各回の出題数 × 時間荷重係数)。「毎回性」＝16回中の皆勤度。計算はここが本丸。</p>
+<div class="tbl-scroll">
+<table>
+<tr><th>重み</th><th>テーマ</th><th class="num">荷重<br>スコア</th><th>毎回性</th><th>直近7回の該当設問</th></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>C5 投資信託3計算</b><br>個別元本/元本払戻金/譲渡所得/トータルリターン</td><td class="num">75</td><td>毎回3問</td><td class="qlist">各回 問25〜28</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>C6 外貨建て債券</b>の利回り・損益</td><td class="num">53</td><td>毎回1〜2</td><td class="qlist">問36〜40帯</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>C11 財務指標</b> ROE/ROA/ROIC/PER/PBR/配当</td><td class="num">38</td><td>毎回1〜2</td><td class="qlist">問13〜15</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>C3 期待収益率・標準偏差</b>（相関・シナリオ）</td><td class="num">35</td><td>近年毎回</td><td class="qlist">問30〜33帯</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>C2 デュレーション</b>／イミュナイゼーション</td><td class="num">26</td><td class="warn">16回皆勤</td><td class="qlist">問20〜22</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>C13 定期預金 税引後受取</b></td><td class="num">24</td><td class="warn">16回皆勤</td><td class="qlist">問9（易・確実得点）</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>C14a 時間加重収益率</b></td><td class="num">—</td><td>ほぼ毎回</td><td class="qlist">問31〜34帯</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>C14b スポット/フォワード債券理論価格</b></td><td class="num">—</td><td>毎回1〜2</td><td class="qlist">問19〜22帯</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>C14c 先物理論価格</b>（日経225・TOPIX）</td><td class="num">—</td><td>毎回1</td><td class="qlist">問44〜45帯</td></tr>
+<tr><td><span class="rank rA">A</span></td><td><b>C9 オプション</b>（二項モデル期待値・損益）</td><td class="num">25</td><td>ほぼ毎回</td><td class="qlist">問42〜45帯</td></tr>
+<tr><td><span class="rank rA">A</span></td><td><b>C10 先物フルヘッジ枚数</b></td><td class="num">23</td><td>ほぼ毎回</td><td class="qlist">問43〜46帯</td></tr>
+<tr><td><span class="rank rA">A</span></td><td><b>C14d 上場株式等の税額/還付</b>（複合）</td><td class="num">—</td><td>毎回1</td><td class="qlist">問15〜16・47〜48帯</td></tr>
+<tr><td><span class="rank rA">A</span></td><td><b>C1 債券利回り</b>（最終/所有期間/直接/応募者）</td><td class="num">17</td><td>直近増加</td><td class="qlist">問19〜21帯</td></tr>
+<tr><td><span class="rank rA">A</span></td><td><b>C7 為替予約</b>（先物レート）<span class="new">新傾向</span></td><td class="num">14</td><td>2022新→定着</td><td class="qlist">問36〜41帯</td></tr>
+<tr><td><span class="rank rA">A</span></td><td><b>C4 パフォーマンス指標</b> シャープ/トレイナー/ジェンセン</td><td class="num">18</td><td>計算↔知識で揺れ</td><td class="qlist">問32帯</td></tr>
+<tr><td><span class="rank rB">B</span></td><td><b>C8 相対的購買力平価</b><span class="new">新傾向</span></td><td class="num">8</td><td>25②・26①連続</td><td class="qlist">問39〜40</td></tr>
+<tr><td><span class="rank rB">B</span></td><td><b>C12 株式益利回り・配当利回り</b><span class="new">新登場</span></td><td class="num">4</td><td>26①初</td><td class="qlist">問15</td></tr>
+<tr><td><span class="rank rB">B</span></td><td>C14e 特殊計算（コール条項付永久債・GDP判定・正規分布 等）</td><td class="num">—</td><td>散発・難</td><td class="qlist">回により</td></tr>
+</table>
+</div>
+<p class="sub"><b>読み方</b>：<span class="rank rS">S</span>＝毎回級×計算＝取りこぼし厳禁。この9テーマだけで<b>毎回8〜9問（16〜18点）</b>が定型で拾える。<span class="rank rA">A</span>＝ほぼ毎回or直近増加。<span class="rank rB">B</span>＝新傾向ウォッチ（購買力平価・益利回りは直近で浮上＝今後増える可能性、要チェック）。</p>
+
+<!-- ============ 計算ロジック集 ============ -->
+<h2>3. 計算ロジック集（Sテーマ＝確実得点の型）</h2>
+<p class="sub">本番で手が止まらないように、手順と引っかけを型で覚える。</p>
+
+<h3>C5 投資信託3計算 ★最頻・最重点</h3>
+<div class="logic">
+<b>①元本払戻金の判定（すべての土台）</b>：<span class="warn">分配"前"でなく「収益分配金落ち後の基準価額」</span>と個別元本を比較。落後＜個別元本なら差額＝元本払戻金（非課税）で個別元本を減額。落後≧個別元本なら全額普通分配・個別元本不変。<br>
+<b>②譲渡所得</b>＝(解約価額−信託財産留保額)−取得費（購入時手数料込み・払戻金で減額後の個別元本）。<br>
+<b>③トータルリターン</b>＝評価金額＋累計受取分配金(<u>税引後</u>)＋累計売付金額−累計買付金額(手数料込み)。普通分配のみ課税、元本払戻は非課税で加算。<br>
+<span class="pill">2026① Q26-28で全滅した最重要弱点</span>
+</div>
+
+<h3>C2 デュレーション ★16回皆勤</h3>
+<div class="logic">
+割引債のデュレーション＝残存期間。PF＝各債券の加重平均。<br>
+<b>価格変化率 ≒ −修正デュレーション × 金利変化(%)</b>。<br>
+金利<b>低下</b>見通し→デュレーション<b>長期化</b>→<b>低クーポン（長期）債</b>の比率↑が最も効果的（同残存なら低クーポンほどデュレーション長）。イミュナイゼーション＝運用期間をPFデュレーションに一致。
+</div>
+
+<h3>C13 定期預金 税引後受取 ★易しい確実得点</h3>
+<div class="logic">
+単利型／半年複利型を区別（半年複利は<code>(1+年利/2)^(年×2)</code>）。期間別の段階金利を正しく選ぶ。利息に<b>20.315%</b>課税。最後に<b>10円未満切捨</b>等の端数処理を必ず適用。法人は半年複利型不可。
+</div>
+
+<h3>C11 財務指標</h3>
+<div class="logic">
+ROE＝当期純利益÷自己資本（<u>期首・期末の平均</u>を使う指定に注意）。ROA＝利益÷総資産(平均)。<b>ROIC＝税引後営業利益÷(有利子負債＋株主資本)</b>、税引後営業利益＝営業利益×(1−実効税率)。PER＝株価÷EPS、PBR＝株価÷BPS。配当性向＝配当総額÷純利益。<b>時価総額＝PBR×自己資本</b>。
+</div>
+
+<h3>C3 期待収益率・標準偏差</h3>
+<div class="logic">
+期待収益率＝Σ(構成比×各収益率)（またはΣ生起確率×収益率）。<br>
+2資産の標準偏差：<code>σp²=(σ1w1)²+(σ2w2)²+2·w1·w2·ρ·σ1·σ2</code>。<span class="warn">相関ρが負なら第3項はマイナス（分散効果大）</span>＝符号ミス厳禁。
+</div>
+
+<h3>C6 外貨建て債券</h3>
+<div class="logic">
+<b>購入時＝仲値＋為替手数料</b>（円が多く要る）、<b>償還/売却時＝仲値−為替手数料</b>。購入可能額面＝投資円÷(購入単価率×購入レート)を購入単位で切り下げ。利付債＝(額面×利率×年数＋償還)×売却レート、ゼロクーポン＝償還のみ。利益＝円ベース受取−購入円。
+</div>
+
+<h3>C14a 時間加重収益率／C14b フォワード／C14c 先物理論価格</h3>
+<div class="logic">
+<b>時間加重</b>＝各期間リターンを幾何連結 <code>(1+r1)(1+r2)…−1</code>（資金流出入の影響を除く）。<br>
+<b>フォワードレート</b>＝<code>(1+s2)²/(1+s1)−1</code>（スポットから）。債券理論価格＝各CFをスポットで割引。<br>
+<b>先物理論価格</b>＝現物×{1+(短期金利−配当利回り)×日数/365}。
+</div>
+
+<h3>A帯：C9二項／C10ヘッジ枚数／C1利回り／C7為替予約／C4</h3>
+<div class="logic">
+<b>C9二項</b>：n期間の到達確率は二項係数（3期間＝(1,3,3,1)/8）。プット=max(K−S,0)/コール=max(S−K,0)を確率加重、金利0%なら割引なし。<br>
+<b>C10ヘッジ枚数</b>＝PF時価×β÷(先物価格×取引単位)。βは加重平均。<br>
+<b>C1利回り</b>＝(表面利率＋(売却or額面−買付)÷所有年数)÷買付価格×100。<br>
+<b>C7為替予約</b>：先物レート＝直物×(1+自国金利)/(1+外国金利)、金利は<u>月割</u>。<br>
+<b>C4</b>：シャープ=(R−Rf)/σ、トレイナー=(R−Rf)/β、ジェンセンα=R−[Rf+β(Rm−Rf)]。<br>
+<b>C8購買力平価</b>（B・新傾向）：将来レート=現在×(1+自国物価)/(1+外国物価)。物価上昇率が低い国の通貨は増価。
+</div>
+
+<!-- ============ 回別チェックリスト ============ -->
+<h2>4. 直近7回 重要問題チェックリスト（見直し用）</h2>
+<p class="sub">実際に解く7回。見直しは各回の <span class="rank rS">S</span>（定型計算・確実に）→ <span class="rank rA">A</span>（頻出・落としたくない）→ <span class="rank rB">B</span>（難・新傾向は確認だけ）の順。設問番号は計算問題を中心に、重要知識問題も併記。</p>
+<div class="tbl-scroll">
+<table>
+<tr><th>回</th><th><span class="rank rS">S</span> 最優先（定型計算）</th><th><span class="rank rA">A</span> 重要</th><th><span class="rank rB">B</span> 難/新傾向</th></tr>
+<tr><td><b>2023①</b></td><td class="qlist">8,13,14,20,25,26,27,30,31,33,36,44</td><td class="qlist">5,15,19,32,37,42,43</td><td class="qlist">2,21,38</td></tr>
+<tr><td><b>2023②</b></td><td class="qlist">9,14,21,22,25,26,27,31,33,36,37,38</td><td class="qlist">15,16,20,39,42,43,47</td><td class="qlist">1,30,48</td></tr>
+<tr><td><b>2024①</b></td><td class="qlist">9,14,15,20,22,25,26,27,30,32,36,37,39,44</td><td class="qlist">16,21,38,40,42,43,48</td><td class="qlist">―</td></tr>
+<tr><td><b>2024②</b></td><td class="qlist">8,13,19,20,21,25,26,27,31,32,33,37,38,45</td><td class="qlist">5,14,15,39,41,43,44</td><td class="qlist">1</td></tr>
+<tr><td><b>2025①</b></td><td class="qlist">9,14,20,22,31,32,33,36,37,38,39,44</td><td class="qlist">16,42,43</td><td class="qlist">5,35</td></tr>
+<tr><td><b>2025②</b></td><td class="qlist">9,14,15,20,21,26,27,28,32,33,34,37,38</td><td class="qlist">16,22,40,44,48</td><td class="qlist">5,39<span class="new">購買力平価</span></td></tr>
+<tr><td><b>2026①</b></td><td class="qlist">9,14,20,26,27,28,32,33,38</td><td class="qlist">41,45,46</td><td class="qlist">15<span class="new">益回り</span>,40<span class="new">購買力平価</span></td></tr>
+</table>
+</div>
+<p class="sub">※知識問題の得点源（全回共通で確認）：問1〜8のF1経済時事（最新の日銀展望・世界経済の潮流・年次経済財政報告）／問12帯のF10（金融ADR・FINMAC・国外財産調書・犯収法・個人情報保護法）。選択肢暗記で確実に。</p>
+
+<!-- ============ 学習プラン ============ -->
+<h2>5. 学習プランへの組み込み</h2>
+<div class="card">
+<b>フェーズ1（基礎1巡・7〜8月）</b>：7回を解きながら、<span class="rank rS">S</span>の計算テーマを「ロジック集の型」で解けるか毎回確認。解けなければ間違いノートへ。<br>
+<b>フェーズ2（弱点補強・9月）</b>：<span class="rank rS">S</span>計算を全7回横断で連続演習（例：投信3計算だけを7回分＝21問まとめ解き）。テーマ縦断で型を固める。<br>
+<b>フェーズ3（直前・10〜11月）</b>：本チェックリストの <span class="rank rS">S</span>→<span class="rank rA">A</span> を時間制限で再演習。<span class="rank rB">B</span>（購買力平価・益利回り）は新傾向として直近2回を必ず確認。計算問題だけを抽出した直前PDFを作成。<br>
+<b>本番方針</b>：問1〜8のF1で落ち着いて知識を拾い、問8投信・問20債券・問9PF理論の定型計算を確実に。難度が集中する問13〜16・問36〜40・問42〜43は時間配分で優先度判断。
+</div>
+
+<p class="foot">
+分析母集団：金融 全16回800問（2018①〜2026①）／時間荷重係数 直近×3・中×2・遠×1。<br>
+関連ファイル：<code>間違いノート_金融.md</code>／<code>弱点克服レポート_金融.md</code>／<code>quiz/index.html</code>（金融K1-K25）／<code>phase2-plan-2026.md</code>。<br>
+※リスク・相続も同じ枠組みで横展開予定。
+</p>
+
+</div>
+</body>
+</html>
