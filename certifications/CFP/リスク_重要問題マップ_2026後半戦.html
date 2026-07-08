@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFPリスク 重要問題マップ（時間荷重・後半戦2026）</title>
+<style>
+  :root{
+    --bg:#fbfaf7; --fg:#232323; --muted:#6b6b6b; --line:#e3ddd2; --card:#ffffff;
+    --s:#c0392b; --a:#d97a1a; --b:#7a8a99; --accent:#a0562c; --hl:#fff4ec;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1c1d1f; --fg:#e8e6e2; --muted:#9a9a9a; --line:#34363a; --card:#25272b;
+           --s:#e57373; --a:#f0a860; --b:#9fb0bf; --accent:#d08a5a; --hl:#2c2620; }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.7;font-size:15px;}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 20px 80px;}
+  h1{font-size:24px;margin:0 0 4px;letter-spacing:.02em;}
+  h2{font-size:19px;margin:38px 0 12px;padding:8px 12px;background:var(--accent);color:#fff;border-radius:6px;}
+  h3{font-size:16px;margin:24px 0 8px;border-left:4px solid var(--accent);padding-left:9px;}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:14px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0;}
+  th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;}
+  th{background:rgba(160,86,44,.10);font-weight:700;}
+  .tbl-scroll{overflow-x:auto;}
+  .rank{display:inline-block;min-width:20px;text-align:center;font-weight:800;color:#fff;border-radius:4px;padding:1px 7px;font-size:12.5px;}
+  .rS{background:var(--s);} .rA{background:var(--a);} .rB{background:var(--b);}
+  .pill{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:10px;border:1px solid var(--line);color:var(--muted);margin-right:3px;}
+  .num{font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap;}
+  .qlist{font-variant-numeric:tabular-nums;letter-spacing:.01em;}
+  ul{margin:6px 0 6px 0;padding-left:20px;} li{margin:3px 0;}
+  .logic{background:var(--hl);border:1px solid var(--line);border-radius:6px;padding:10px 13px;margin:9px 0;}
+  .logic b{color:var(--accent);}
+  code{background:rgba(127,127,127,.14);padding:1px 5px;border-radius:4px;font-size:13px;font-family:"SF Mono",Consolas,monospace;}
+  .kpi{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;}
+  .kpi>div{flex:1;min-width:130px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 13px;}
+  .kpi .big{font-size:22px;font-weight:800;color:var(--accent);}
+  .kpi .lbl{font-size:12px;color:var(--muted);}
+  .warn{color:var(--s);font-weight:700;}
+  .new{background:var(--a);color:#fff;font-size:11px;padding:1px 6px;border-radius:4px;}
+  .note{background:var(--hl);border-left:3px solid var(--accent);padding:8px 12px;font-size:13px;border-radius:0 6px 6px 0;margin:12px 0;}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:30px;border-top:1px solid var(--line);padding-top:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>CFPリスクと保険 ― 重要問題マップ</h1>
+<p class="sub">時間荷重方式による出題傾向分析／後半戦2026（試験11/15想定）｜作成 2026-07-09</p>
+
+<div class="card">
+<b>この資料の使い方</b><br>
+過去問見直しの<b>優先順位づけ</b>のための資料。実際に解く<b>直近7回（2023①〜2026①）</b>の各設問に、時間荷重（直近×3・中×2）で算出した重みを付けてある。見直しは <span class="rank rS">S</span>→<span class="rank rA">A</span>→<span class="rank rB">B</span> の順。計算問題は<b>下段のロジック集</b>の型で確実に。
+</div>
+
+<div class="note">
+※本マップは<b>直近7回（350問）を主母集団</b>に作成。旧9回の長期トレンド補強はセッション上限で一部保留（リスクは2021②・2022①②の3回分のみ取得済で傾向を追認）。順位への影響は小さいが、回復後に追記予定。
+</div>
+
+<div class="kpi">
+  <div><div class="big">前後半</div><div class="lbl">二部構成（問1-30生保系／問31-50損保）</div></div>
+  <div><div class="big">約39%</div><div class="lbl">が計算問題（毎回17〜23問）</div></div>
+  <div><div class="big">RC5+RC7</div><div class="lbl">法人経理・損保金計算＝計算の1/3</div></div>
+  <div><div class="big">問19-24</div><div class="lbl">相続対策＝高配点ゾーン</div></div>
+</div>
+
+<!-- 出題傾向マップ -->
+<h2>1. 出題傾向マップ（二部構成・13ブロックが7回固定）</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th>位置</th><th>ブロック</th><th>設問帯</th><th>分野</th><th>計算</th></tr>
+<tr><td>①</td><td>生保総論・法令・数理・統計</td><td>1〜4</td><td>R1/R8/R9</td><td>―</td></tr>
+<tr><td>②</td><td>生保と税務（計算集中）</td><td>5〜10</td><td>R2/R3</td><td><b class="warn">S</b> 医療費控除・生保料控除・年金雑所得・一時所得</td></tr>
+<tr><td>③</td><td>生保約款 or 保険証券総合設例</td><td>9〜13</td><td>R1/R7/R10</td><td><b>A</b> 保障額比較(RC8・出る回)</td></tr>
+<tr><td>④</td><td>個人年金・名義変更・医療介護</td><td>13〜19</td><td>R2/R3/R7</td><td>△</td></tr>
+<tr><td>⑤</td><td>生保活用の相続対策</td><td>19〜24</td><td>R2/R4</td><td><b class="warn">S</b> 相続税課税額(RC2)＋高配点知識</td></tr>
+<tr><td>⑥</td><td>法人 役員退職金・事業保障</td><td>23〜27</td><td>R4/R8</td><td><b class="warn">S</b> 退職金・事業保障資金</td></tr>
+<tr><td>⑦</td><td>従業員福利厚生・退職金制度</td><td>27〜30</td><td>R4</td><td><b class="warn">S</b> 法人保険の経理(RC5)</td></tr>
+<tr><td>⑧</td><td>損保 制度・法律・募集ルール</td><td>31〜33</td><td>R9/R5/R6</td><td>―</td></tr>
+<tr><td>⑨</td><td>損保金の計算</td><td>34〜37</td><td>R5/R6/R7</td><td><b class="warn">S</b> 比例填補・過失相殺(RC7)</td></tr>
+<tr><td>⑩</td><td>個人の損保商品</td><td>37〜41</td><td>R5/R6</td><td>△</td></tr>
+<tr><td>⑪</td><td>企業向け損保・新種保険</td><td>40〜47</td><td>R6</td><td><b>A</b> 利益総合・休業(RC9)</td></tr>
+<tr><td>⑫</td><td>法人損保の経理処理</td><td>44〜47</td><td>R4</td><td><b class="warn">S</b> 圧縮記帳・長期火災(RC5)</td></tr>
+<tr><td>⑬</td><td>個人・個人事業主の損保税務</td><td>48〜50</td><td>R2/R5/R6</td><td>△ 地震保険料控除</td></tr>
+</table>
+</div>
+<p class="sub"><b>分野別 1回平均出題数</b>：R4法人保険・経理＝9〜11（最大）／R2生保と税務＝9〜12／R6損保(自動車・傷害・賠償・新種)＝9〜13／R9業法・保護＝4〜6／R5損保(火災・地震)＝3〜5／R3個人年金・R7第三分野・R8必要保障＝各2〜4／R10総合設例＝出る回3〜4／R1生保商品＝3〜5。</p>
+
+<!-- 計算テーマ ランキング -->
+<h2>2. 計算テーマ 時間荷重ランキング（最重要）</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th>重み</th><th>テーマ</th><th class="num">7回<br>登場</th><th>毎回性</th><th>該当設問帯</th></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>RC5 法人保険の経理処理</b>（定期保険の損金割合・養老ハーフタックス・名義変更・圧縮記帳）</td><td class="num">23</td><td>毎回3〜5</td><td class="qlist">問25-30・44-47帯</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>RC7 損害保険金</b>（比例填補・免責・過失相殺・地震・自動車）</td><td class="num">22</td><td>毎回3〜5</td><td class="qlist">問34-37帯</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>RC2 保険金の課税額</b>（一時所得・相続税課税対象額）</td><td class="num">14</td><td>毎回2</td><td class="qlist">問8-10・19-20帯</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>RC9 退職金・弔慰金の額</b>（功績倍率・弔慰金非課税）</td><td class="num">14</td><td>毎回2</td><td class="qlist">問23-28帯</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>RC6 個人年金の雑所得</b></td><td class="num">10</td><td>毎回1〜2</td><td class="qlist">問5-7・16帯</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>RC4 生命保険料控除額</b>（新旧・併用）</td><td class="num">7</td><td class="warn">毎回1・易</td><td class="qlist">問6/8/9</td></tr>
+<tr><td><span class="rank rS">S</span></td><td><b>RC9 医療費控除額</b></td><td class="num">7</td><td class="warn">毎回1・易</td><td class="qlist">問5-7</td></tr>
+<tr><td><span class="rank rA">A</span></td><td><b>RC8 保険証券からの保障額集計</b><span class="new">まとめ出題</span></td><td class="num">10</td><td>出る回3〜4</td><td class="qlist">問9-12帯（23②/24②/25②）</td></tr>
+<tr><td><span class="rank rA">A</span></td><td><b>RC9 事業保障資金 必要額</b></td><td class="num">4</td><td>近年毎回</td><td class="qlist">問24-30帯</td></tr>
+<tr><td><span class="rank rA">A</span></td><td><b>RC9 圧縮記帳後の帳簿価額</b></td><td class="num">4</td><td>散発</td><td class="qlist">問46-48帯</td></tr>
+<tr><td><span class="rank rA">A</span></td><td><b>RC9 利益総合・休業／所得補償／給付金集計</b></td><td class="num">各3</td><td>散発</td><td class="qlist">問36-42帯</td></tr>
+<tr><td><span class="rank rB">B</span></td><td><b>RC1 必要保障額</b></td><td class="num">2</td><td>低頻度</td><td class="qlist">問3・12</td></tr>
+</table>
+</div>
+<p class="sub"><b>読み方</b>：<span class="rank rS">S</span>＝毎回級×計算。特に<b>RC5法人経理＋RC7損保金計算</b>で計算の約1/3。RC4生保料控除・RC9医療費控除は毎回1問・易＝満点狙い。</p>
+
+<!-- 計算ロジック集 -->
+<h2>3. 計算ロジック集（Sテーマ＝確実得点の型）</h2>
+
+<h3>RC5 法人保険の経理処理 ★最頻</h3>
+<div class="logic">
+<b>定期保険（2019/7以降）</b>：最高解約返戻率で損金算入割合が変わる。<b>50%以下＝全額損金</b>／50%超70%以下＝当初4割を資産計上／70%超85%以下＝当初6割資産計上／85%超＝複雑（返戻率×0.9等）。<br>
+<b>養老保険ハーフタックス</b>（福利厚生プラン）＝保険料の<b>1/2損金・1/2資産</b>（満期=法人受取・死亡=遺族）。<br>
+<b>圧縮記帳</b>：保険金で代替資産取得時、保険差益を圧縮損として損金算入→帳簿価額＝取得価額−圧縮限度額。名義変更・現物支給の経理も頻出。
+</div>
+
+<h3>RC7 損害保険金 ★最頻</h3>
+<div class="logic">
+<b>比例填補</b>（一部保険）：保険金＝損害額×<code>保険金額÷(保険価額×80%)</code>（80%付保でフル）。<br>
+<b>地震保険</b>：火災保険金額の30〜50%（上限 建物5000万・家財1000万）。全損100%/大半損60%/小半損30%/一部損5%。<br>
+<b>自動車</b>：対物・人身傷害・車両。過失相殺・免責金額を差引。<br>
+超過修理費特約・比例填補・免責の順序に注意。
+</div>
+
+<h3>RC2 保険金の課税額</h3>
+<div class="logic">
+<b>一時所得</b>＝(満期・解約返戻金−払込保険料−特別控除50万)×<b>1/2</b>を総所得に算入。<br>
+<b>相続税の課税対象額</b>＝死亡保険金−非課税枠<b>(500万×法定相続人数)</b>。契約形態で課税関係（相続税/所得税/贈与税）が変わる点に注意。
+</div>
+
+<h3>RC4 生保料控除／RC9 医療費控除 ★毎回・易・満点狙い</h3>
+<div class="logic">
+<b>生保料控除（新制度）</b>：一般・介護医療・個人年金の3区分、各最高<b>4万円</b>（所得税）・合計<b>12万円</b>上限。旧制度は各5万/合計10万。新旧併用は有利判定。<br>
+<b>医療費控除</b>＝支払医療費−保険金等で補填−<code>min(10万円, 総所得×5%)</code>。
+</div>
+
+<h3>RC6 個人年金の雑所得／RC9 退職金</h3>
+<div class="logic">
+<b>個人年金 雑所得</b>＝年金額−必要経費（＝年金額×<code>払込保険料総額÷年金総支給見込額</code>）。<br>
+<b>役員退職金（適正額）</b>＝最終報酬月額×勤続年数×功績倍率。<b>弔慰金非課税</b>＝業務外死亡6ヶ月分・業務上死亡36ヶ月分。
+</div>
+
+<!-- 回別チェックリスト -->
+<h2>4. 直近7回 重要問題チェックリスト（見直し用）</h2>
+<p class="sub">見直しは各回 <span class="rank rS">S</span>（定型計算・確実に）→ <span class="rank rA">A</span>（頻出・難）→ 知識ゾーンの順。</p>
+<div class="tbl-scroll">
+<table>
+<tr><th>回</th><th><span class="rank rS">S</span> 最優先（定型計算）</th><th><span class="rank rA">A</span> 重要</th></tr>
+<tr><td><b>2023①</b></td><td class="qlist">5,6,7,8,9,19,25,26,27,28,30,34,35,36</td><td class="qlist">3,45,46,47</td></tr>
+<tr><td><b>2023②</b></td><td class="qlist">5,6,7,8,19,23,26,27,28,34,35,37</td><td class="qlist">9,10,11,36,41,48</td></tr>
+<tr><td><b>2024①</b></td><td class="qlist">6,7,8,9,20,23,26,27,29,30,34,35,36,45,46,47</td><td class="qlist">24,39,40,50</td></tr>
+<tr><td><b>2024②</b></td><td class="qlist">4,5,6,7,8,16,17,22,27,28,29,34,35,36,37,41</td><td class="qlist">12,18,30,47,48</td></tr>
+<tr><td><b>2025①</b></td><td class="qlist">6,7,9,10,20,24,27,30,34,35</td><td class="qlist">13,14,25,36,39,40,47</td></tr>
+<tr><td><b>2025②</b></td><td class="qlist">5,6,7,8,19,23,24,25,27,29,35,36,41,42,43</td><td class="qlist">9,10,11,12,26,34,40</td></tr>
+<tr><td><b>2026①</b></td><td class="qlist">5,6,7,8,16,20,25,27,28,30,34,35,36,45</td><td class="qlist">18,21,42,46</td></tr>
+</table>
+</div>
+<p class="sub">※知識の得点源（全回共通）：<b>相続対策ブロック</b>（問19-24帯＝生保金非課税500万×法定相続人・2割加算・2次相続・代償分割）／<b>業法・契約者保護</b>（問1-4・31-33帯＝生保90%補償・ソルベンシー・クーリングオフ・ADR）／損保商品・法人退職金の知識。<span class="new">RC8保障額集計</span>は出る回(23②/24②/25②)でまとめて3-4問＝26①は無し→次回復活注意。</p>
+
+<h2>5. 学習プランへの組み込み</h2>
+<div class="card">
+<b>フェーズ1</b>：7回を解きつつ、<span class="rank rS">S</span>のRC5法人経理・RC7損保金計算を型で解けるか毎回確認。<br>
+<b>フェーズ2</b>：RC5・RC7をテーマ横断で連続演習（各20問超まとめ解き）。RC4生保料控除・RC9医療費控除は満点固定。<br>
+<b>直前・中日ブースト</b>：相続対策ブロック（RC2＋知識）と保障額集計（RC8）を総ざらい。難度集中ゾーン（税務計算・法人退職金経理・損保金計算）を時間制限で。
+</div>
+
+<p class="foot">
+母集団：リスク 直近7回350問（時間荷重 直近×3・中×2）＋旧9回は一部取得。<br>
+関連：<code>phase2-plan-2026.md</code>／金融・相続の重要問題マップ。器（間違いノート・弱点レポート・クイズRキー）は初回演習時に作成予定。
+</p>
+
+</div>
+</body>
+</html>
