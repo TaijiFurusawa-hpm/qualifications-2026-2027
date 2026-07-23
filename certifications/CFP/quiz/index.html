@@ -119,6 +119,8 @@
   .meta{display:flex; justify-content:space-between; align-items:center; font-size:12.5px; color:var(--sub); margin-bottom:8px}
   .meta a{display:inline-flex; align-items:center; gap:5px}
   .meta .ic{margin-right:0}
+  .qmeta-r{display:inline-flex; align-items:center; gap:8px}
+  .qid{font-family:var(--num); font-size:11px; font-weight:700; color:var(--faint); letter-spacing:.5px}
 
   /* 計器盤KPI */
   .qno{font-family:var(--num); font-variant-numeric:tabular-nums; letter-spacing:.5px}
@@ -227,6 +229,7 @@ const TIER_BASE = {1:5, 2:3, 3:2}; // 同一ティア内の重み（苦手ブー
 const MISS_BOOST = 2;             // 間違えた回数1回につき重みに加算する倍率
 const TIER_LABEL = {1:"第1ティア 最優先", 2:"第2ティア 重要", 3:"第3ティア 定着確認"};
 const TIER_CLASS = {1:"t1",2:"t2",3:"t3"};
+const srcLine = o => `${o.id}・論点：${o.s}`; // ID＋出典論点の1行表記（出題フィードバック/結果画面で共通利用）
 
 /* ===== 問題データ =====
    id: 永続キー（localStorageの苦手記録に使用） t: ティア
@@ -718,7 +721,10 @@ function render(){
   app.innerHTML = `
    <div class="meta">
      <span class="qno">${SUB}${mode==='weak'?'・苦手復習':''}　<b>${pad(idx+1)}</b><i>/${pad(pool.length)}</i></span>
-     <span class="tier ${TIER_CLASS[q.t]}">${TIER_LABEL[q.t]}</span>
+     <span class="qmeta-r">
+       <span class="qid">${q.id}</span>
+       <span class="tier ${TIER_CLASS[q.t]}">${TIER_LABEL[q.t]}</span>
+     </span>
    </div>
    <div class="bar"><i></i></div>
    <div class="card">
@@ -737,12 +743,12 @@ function answer(i){
     if(bi===correct)b.classList.add('ok'); if(bi===i&&!isOk)b.classList.add('ng');});
   if(isOk){ score++; bumpMiss(SUB,q.id,-1);          // 正解：苦手度を下げる＋Cyanグロー
     const c=document.querySelector('.card'); if(c){c.classList.remove('glow'); void c.offsetWidth; c.classList.add('glow');} }
-  else { wrong.push({q:q.q,you:q.c[i],cor:q.c[correct],e:q.e,s:q.s}); bumpMiss(SUB,q.id,+1); } // 不正解：優先度UP
+  else { wrong.push({id:q.id,q:q.q,you:q.c[i],cor:q.c[correct],e:q.e,s:q.s}); bumpMiss(SUB,q.id,+1); } // 不正解：優先度UP
   document.getElementById('fb').innerHTML =
     `<div class="fb ${isOk?'ok':'ng'}">
       <div class="fbh"><span class="fbi">${ic(isOk?'check':'x',14)}</span>${isOk?'正解':'不正解'}</div>
       <div class="ans">正解は <b>${correct+1}. ${q.c[correct]}</b></div>
-      <div class="exp">${q.e}<div class="src">論点：${q.s}</div></div>
+      <div class="exp">${q.e}<div class="src">${srcLine(q)}</div></div>
     </div>`;
   document.getElementById('nextWrap').innerHTML =
     `<button class="btn primary" onclick="next()">${idx+1<pool.length?'次の問題':'結果を見る'}<svg class="ic" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="margin:0 0 0 7px">${ICONS.chev}</svg></button>`;
@@ -759,7 +765,7 @@ function result(){
   const msg=pctScore>=90?'素晴らしい！取りこぼしなし。':pctScore>=70?'good。間違えた論点を復習しましょう。':'弱点が明確。苦手だけ復習が有効です。';
   const wrongHtml=wrong.length?wrong.map(w=>`
      <div class="rev"><div class="q">${w.q}</div>
-       <div class="a"><span class="cor">正：${w.cor}</span> ／ <span class="you">あなた：${w.you}</span><br>${w.e}<br><span style="font-size:12px">論点：${w.s}</span></div></div>`).join('')
+       <div class="a"><span class="cor">正：${w.cor}</span> ／ <span class="you">あなた：${w.you}</span><br>${w.e}<br><span style="font-size:12px">${srcLine(w)}</span></div></div>`).join('')
      :`<p class="center" style="color:var(--ok);display:flex;align-items:center;justify-content:center;gap:6px">${ic('trophy',20)}全問正解！お見事です。</p>`;
   const R=66, C=(2*Math.PI*R).toFixed(1);
   app.innerHTML=`
