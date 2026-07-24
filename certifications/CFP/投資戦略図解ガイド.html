@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>オプション投資戦略 図解＆詳細解説ガイド</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Roboto+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .font-mono {
+            font-family: 'Roboto Mono', monospace;
+        }
+        /* スムーススクロール */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* SVGチャートのスタイル */
+        .chart-grid {
+            stroke: #374151;
+            stroke-dasharray: 4 4;
+        }
+        .axis-line {
+            stroke: #9CA3AF;
+            stroke-width: 2;
+        }
+        .zero-line {
+            stroke: #6B7280;
+            stroke-width: 1.5;
+            stroke-dasharray: 2 2;
+        }
+        .payoff-line {
+            fill: none;
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+
+    <!-- ヘッダー -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">📈</span>
+                <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                    オプション投資戦略 完全図解ガイド
+                </h1>
+            </div>
+            <nav class="hidden md:flex space-x-1 text-sm font-medium text-slate-300">
+                <a href="#covered-call" class="px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-cyan-400 transition">カバードコール</a>
+                <a href="#protective-put" class="px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-cyan-400 transition">プロテクティブプット</a>
+                <a href="#vertical-spread" class="px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-cyan-400 transition">バーティカル</a>
+                <a href="#straddle-sell" class="px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-cyan-400 transition">ストラドル売り</a>
+                <a href="#strangle-sell" class="px-3 py-2 rounded-lg hover:bg-slate-800 hover:text-cyan-400 transition">ストラングル売り</a>
+                <a href="#comparison" class="px-3 py-2 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 transition">比較一覧表</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- イントロダクション -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl">
+            <h2 class="text-2xl sm:text-3xl font-black text-white mb-4">
+                デリバティブを武器にする：代表的合成ポジション5選
+            </h2>
+            <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                オプション取引は「単体の売り買い」だけでなく、原資産（現物株）や複数のオプションを組み合わせる（合成ポジション）ことで、**どのような相場環境（上昇・下落・保ち合い・高ボラティリティ）でも最適なリスク・リターンプロファイルを構築**できます。本文書では代表的な5つの戦略を図解とともに徹底解説します。
+            </p>
+        </div>
+    </section>
+
+    <!-- メインコンテンツ -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 pb-20">
+
+        <!-- 1. カバード・コール -->
+        <section id="covered-call" class="scroll-mt-20 bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+                <div>
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-2">
+                        インカム獲得・上昇限定
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white">1. カバード・コール（Covered Call）</h2>
+                </div>
+                <div class="text-xs sm:text-sm text-slate-400 bg-slate-950 px-4 py-2 rounded-lg border border-slate-800 font-mono">
+                    構成：原資産保有(買い) ＋ コール・オプション売り
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- SVG図解 -->
+                <div class="lg:col-span-6 bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-between">
+                    <h3 class="text-sm font-bold text-slate-300 mb-2 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span> 損益チャート（Payoff Diagram）
+                    </h3>
+                    <div class="w-full aspect-[4/3]">
+                        <svg viewBox="0 0 400 300" class="w-full h-full">
+                            <!-- グリッド -->
+                            <line x1="50" y1="50" x2="350" y2="50" class="chart-grid"/>
+                            <line x1="50" y1="110" x2="350" y2="110" class="chart-grid"/>
+                            <line x1="50" y1="230" x2="350" y2="230" class="chart-grid"/>
+                            <!-- 軸 -->
+                            <line x1="50" y1="170" x2="350" y2="170" class="zero-line"/>
+                            <line x1="50" y1="260" x2="350" y2="260" class="axis-line"/>
+                            <line x1="50" y1="260" x2="50" y2="30" class="axis-line"/>
+                            
+                            <!-- 損益ライン -->
+                            <!-- 現物単体（点線） -->
+                            <line x1="70" y1="250" x2="330" y2="50" stroke="#4B5563" stroke-width="2" stroke-dasharray="4 4"/>
+                            <!-- カバードコール合成線 -->
+                            <path d="M 70,230 L 250,110 L 330,110" class="payoff-line" stroke="#10B981"/>
+                            
+                            <!-- ポイントマーク -->
+                            <circle cx="250" cy="110" r="5" fill="#10B981"/>
+                            <text x="250" y="95" fill="#10B981" font-size="11" font-weight="bold" text-anchor="middle">権利行使価格 (K)</text>
+                            
+                            <!-- テキストラベル -->
+                            <text x="350" y="280" fill="#9CA3AF" font-size="11" text-anchor="end">原資産価格 ➔</text>
+                            <text x="45" y="30" fill="#9CA3AF" font-size="11" text-anchor="end">損益 ➔</text>
+                            <text x="330" y="100" fill="#10B981" font-size="11" font-weight="bold" text-anchor="end">最大利益限定（キャップ）</text>
+                            <text x="110" y="240" fill="#EF4444" font-size="11">下落リスクはほぼ現物と同等</text>
+                            <text x="280" y="45" fill="#6B7280" font-size="10">現物単体の損益</text>
+                        </svg>
+                    </div>
+                    <div class="text-xs text-slate-400 mt-2 text-center bg-slate-900/50 py-1.5 rounded border border-slate-800">
+                        特徴：株価が上がっても利益は頭打ちだが、下落時はプレミアム分だけクッションになる。
+                    </div>
+                </div>
+
+                <!-- 解説記事 -->
+                <div class="lg:col-span-6 space-y-4">
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <h4 class="text-base font-bold text-emerald-400 mb-1">狙い・相場観</h4>
+                        <p class="text-xs sm:text-sm text-slate-300">
+                            **「株価は大幅には上がらないが、暴落もしない（横ばい〜緩やかな上昇）」**と予想する局面。保有株から定期的なオプション料（プレミアム）を得てインカムを向上させます。
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <span class="text-slate-400 block text-xs">最大利益</span>
+                            <span class="font-bold text-emerald-400">限定的</span>
+                            <span class="text-[11px] text-slate-500 block mt-0.5">(権利行使価格 - 株買値) + プレミアム</span>
+                        </div>
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <span class="text-slate-400 block text-xs">最大損失</span>
+                            <span class="font-bold text-rose-400">大きい (株価ゼロで最大)</span>
+                            <span class="text-[11px] text-slate-500 block mt-0.5">株買値 - 受取プレミアム</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <h4 class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">具体例シミュレーション</h4>
+                        <ul class="space-y-1.5 text-xs text-slate-300 font-mono">
+                            <li>・ 株価1,000円で現物購入 ＋ 1,050円コール（プレミアム30円）売り</li>
+                            <li class="text-emerald-400">・ 満期株価 1,100円 ➔ 利益は上限の <span class="underline">80円</span> ((1050-1000)+30)</li>
+                            <li class="text-slate-400">・ 満期株価 1,000円 ➔ プレミアム分の <span class="underline">30円</span> のプラス</li>
+                            <li class="text-rose-400">・ 満期株価 900円 ➔ 損失は <span class="underline">▲70円</span> ((900-1000)+30) ※現物より30円軽減</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. プロテクティブ・プット -->
+        <section id="protective-put" class="scroll-mt-20 bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+                <div>
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 mb-2">
+                        下落保険・利益無制限
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white">2. プロテクティブ・プット（Protective Put）</h2>
+                </div>
+                <div class="text-xs sm:text-sm text-slate-400 bg-slate-950 px-4 py-2 rounded-lg border border-slate-800 font-mono">
+                    構成：原資産保有(買い) ＋ プット・オプション買い
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- SVG図解 -->
+                <div class="lg:col-span-6 bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-between">
+                    <h3 class="text-sm font-bold text-slate-300 mb-2 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400"></span> 損益チャート（Payoff Diagram）
+                    </h3>
+                    <div class="w-full aspect-[4/3]">
+                        <svg viewBox="0 0 400 300" class="w-full h-full">
+                            <!-- グリッド -->
+                            <line x1="50" y1="50" x2="350" y2="50" class="chart-grid"/>
+                            <line x1="50" y1="130" x2="350" y2="130" class="chart-grid"/>
+                            <!-- 軸 -->
+                            <line x1="50" y1="170" x2="350" y2="170" class="zero-line"/>
+                            <line x1="50" y1="260" x2="350" y2="260" class="axis-line"/>
+                            <line x1="50" y1="260" x2="50" y2="30" class="axis-line"/>
+                            
+                            <!-- 損益ライン -->
+                            <!-- 現物単体（点線） -->
+                            <line x1="70" y1="250" x2="330" y2="50" stroke="#4B5563" stroke-width="2" stroke-dasharray="4 4"/>
+                            <!-- プロテクティブプット合成線 -->
+                            <path d="M 70,210 L 170,210 L 330,70" class="payoff-line" stroke="#06B6D4"/>
+                            
+                            <!-- ポイントマーク -->
+                            <circle cx="170" cy="210" r="5" fill="#06B6D4"/>
+                            <text x="170" y="230" fill="#06B6D4" font-size="11" font-weight="bold" text-anchor="middle">権利行使価格 (K)</text>
+                            
+                            <!-- テキストラベル -->
+                            <text x="350" y="280" fill="#9CA3AF" font-size="11" text-anchor="end">原資産価格 ➔</text>
+                            <text x="45" y="30" fill="#9CA3AF" font-size="11" text-anchor="end">損益 ➔</text>
+                            <text x="330" y="60" fill="#06B6D4" font-size="11" font-weight="bold" text-anchor="end">上昇時は利益無制限</text>
+                            <text x="70" y="200" fill="#38BDF8" font-size="11">損失の下限が固定（保険）</text>
+                        </svg>
+                    </div>
+                    <div class="text-xs text-slate-400 mt-2 text-center bg-slate-900/50 py-1.5 rounded border border-slate-800">
+                        特徴：株価上昇時の利益は無制限に残しつつ、下落時の損失に「床（フロア）」を作る。
+                    </div>
+                </div>
+
+                <!-- 解説記事 -->
+                <div class="lg:col-span-6 space-y-4">
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <h4 class="text-base font-bold text-cyan-400 mb-1">狙い・相場観</h4>
+                        <p class="text-xs sm:text-sm text-slate-300">
+                            **「長期では上昇を確信しているが、決算や地政学リスクなどで短期的暴落が怖い」**局面。現物株を持ち続けながらプットオプション（売る権利）を買い、暴落時の保険をかけます。
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <span class="text-slate-400 block text-xs">最大利益</span>
+                            <span class="font-bold text-cyan-400">無制限</span>
+                            <span class="text-[11px] text-slate-500 block mt-0.5">(株価上昇益) - 支払プレミアム</span>
+                        </div>
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <span class="text-slate-400 block text-xs">最大損失</span>
+                            <span class="font-bold text-emerald-400">限定的（一定以下にならない）</span>
+                            <span class="text-[11px] text-slate-500 block mt-0.5">(株買値 - 権利行使価格) + プレミアム</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <h4 class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">具体例シミュレーション</h4>
+                        <ul class="space-y-1.5 text-xs text-slate-300 font-mono">
+                            <li>・ 株価1,000円で現物購入 ＋ 900円プット（プレミアム30円）買い</li>
+                            <li class="text-cyan-400">・ 満期株価 1,200円 ➔ 利益は <span class="underline">170円</span> ((1200-1000)-30)</li>
+                            <li class="text-slate-400">・ 満期株価 1,000円 ➔ 保険料分の <span class="underline">▲30円</span> のマイナス</li>
+                            <li class="text-emerald-400">・ 満期株価 500円に暴落 ➔ 損失は最小限の <span class="underline">▲130円</span> ((1000-900)+30) でストップ！</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. バーティカル・スプレッド -->
+        <section id="vertical-spread" class="scroll-mt-20 bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+                <div>
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-2">
+                        リスク・リターン双方が限定
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white">3. バーティカル・スプレッド（Vertical Spread）</h2>
+                </div>
+                <div class="text-xs sm:text-sm text-slate-400 bg-slate-950 px-4 py-2 rounded-lg border border-slate-800 font-mono">
+                    構成：同じ限月で「権利行使価格の異なる」買いと売りを同時に保有
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- SVG図解 (ブル・コール・スプレッド例) -->
+                <div class="lg:col-span-6 bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-between">
+                    <h3 class="text-sm font-bold text-slate-300 mb-2 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-indigo-400"></span> 損益チャート（例：ブル・コール・スプレッド）
+                    </h3>
+                    <div class="w-full aspect-[4/3]">
+                        <svg viewBox="0 0 400 300" class="w-full h-full">
+                            <!-- グリッド -->
+                            <line x1="50" y1="90" x2="350" y2="90" class="chart-grid"/>
+                            <line x1="50" y1="210" x2="350" y2="210" class="chart-grid"/>
+                            <!-- 軸 -->
+                            <line x1="50" y1="170" x2="350" y2="170" class="zero-line"/>
+                            <line x1="50" y1="260" x2="350" y2="260" class="axis-line"/>
+                            <line x1="50" y1="260" x2="50" y2="30" class="axis-line"/>
+                            
+                            <!-- バーティカル合成線 (Bull Call) -->
+                            <path d="M 70,210 L 150,210 L 270,90 L 330,90" class="payoff-line" stroke="#6366F1"/>
+                            
+                            <!-- ポイントマーク -->
+                            <circle cx="150" cy="210" r="5" fill="#6366F1"/>
+                            <circle cx="270" cy="90" r="5" fill="#6366F1"/>
+                            <text x="150" y="230" fill="#818CF8" font-size="10" font-weight="bold" text-anchor="middle">買行使価格 (K1)</text>
+                            <text x="270" y="75" fill="#818CF8" font-size="10" font-weight="bold" text-anchor="middle">売行使価格 (K2)</text>
+                            
+                            <!-- テキストラベル -->
+                            <text x="350" y="280" fill="#9CA3AF" font-size="11" text-anchor="end">原資産価格 ➔</text>
+                            <text x="45" y="30" fill="#9CA3AF" font-size="11" text-anchor="end">損益 ➔</text>
+                            <text x="330" y="110" fill="#818CF8" font-size="11" font-weight="bold" text-anchor="end">最大利益限定</text>
+                            <text x="70" y="200" fill="#818CF8" font-size="11">最大損失限定</text>
+                        </svg>
+                    </div>
+                    <div class="text-xs text-slate-400 mt-2 text-center bg-slate-900/50 py-1.5 rounded border border-slate-800">
+                        特徴：プレミアムの受払いを相殺してコストを抑える代わりに、利益も損失も一定範囲に固定。
+                    </div>
+                </div>
+
+                <!-- 解説記事 -->
+                <div class="lg:col-span-6 space-y-4">
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <h4 class="text-base font-bold text-indigo-400 mb-1">狙い・相場観</h4>
+                        <p class="text-xs sm:text-sm text-slate-300">
+                            **「ある程度の上昇（または下落）は見込めるが、極端な大動きはしない」**と予想する局面。オプション買い単体よりもコスト（支払プレミアム）を大幅に抑えてエントリーできます。
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <span class="text-slate-400 block text-xs">最大利益</span>
+                            <span class="font-bold text-indigo-400">限定的</span>
+                            <span class="text-[11px] text-slate-500 block mt-0.5">(行使価格差) - ネット支払プレミアム</span>
+                        </div>
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <span class="text-slate-400 block text-xs">最大損失</span>
+                            <span class="font-bold text-emerald-400">限定的</span>
+                            <span class="text-[11px] text-slate-500 block mt-0.5">最初に払ったネットプレミアム分のみ</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <h4 class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">ブル・コール・スプレッドの具体例</h4>
+                        <ul class="space-y-1.5 text-xs text-slate-300 font-mono">
+                            <li>・ 1,000円コール（買い・プレミアム40円）</li>
+                            <li>・ 1,050円コール（売り・プレミアム15円） ➔ <span class="text-indigo-400">ネット支払い25円</span></li>
+                            <li class="text-indigo-400">・ 満期株価 1,100円 ➔ 最大利益 <span class="underline">25円</span> ((1050-1000)-25)</li>
+                            <li class="text-rose-400">・ 満期株価 950円 ➔ 最大損失は払った <span class="underline">▲25円</span> だけ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. ストラドルの売り -->
+        <section id="straddle-sell" class="scroll-mt-20 bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+                <div>
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-2">
+                        保ち合い狙い・損失無制限
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white">4. ストラドルの売り（Short Straddle）</h2>
+                </div>
+                <div class="text-xs sm:text-sm text-slate-400 bg-slate-950 px-4 py-2 rounded-lg border border-slate-800 font-mono">
+                    構成：同じ権利行使価格(ATM)のコール売り ＋ プット売り
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- SVG図解 -->
+                <div class="lg:col-span-6 bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-between">
+                    <h3 class="text-sm font-bold text-slate-300 mb-2 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-amber-400"></span> 損益チャート（Payoff Diagram）
+                    </h3>
+                    <div class="w-full aspect-[4/3]">
+                        <svg viewBox="0 0 400 300" class="w-full h-full">
+                            <!-- グリッド -->
+                            <line x1="50" y1="60" x2="350" y2="60" class="chart-grid"/>
+                            <!-- 軸 -->
+                            <line x1="50" y1="140" x2="350" y2="140" class="zero-line"/>
+                            <line x1="50" y1="260" x2="350" y2="260" class="axis-line"/>
+                            <line x1="50" y1="260" x2="50" y2="30" class="axis-line"/>
+                            
+                            <!-- ストラドル売り合成線（山型） -->
+                            <path d="M 70,240 L 200,60 L 330,240" class="payoff-line" stroke="#F59E0B"/>
+                            
+                            <!-- ポイントマーク -->
+                            <circle cx="200" cy="60" r="5" fill="#F59E0B"/>
+                            <text x="200" y="45" fill="#F59E0B" font-size="11" font-weight="bold" text-anchor="middle">最大利益（ATM）</text>
+                            
+                            <!-- 損益分岐点 -->
+                            <circle cx="142" cy="140" r="4" fill="#EF4444"/>
+                            <circle cx="258" cy="140" r="4" fill="#EF4444"/>
+                            <text x="135" y="160" fill="#EF4444" font-size="10" font-weight="bold" text-anchor="end">下限分岐点</text>
+                            <text x="265" y="160" fill="#EF4444" font-size="10" font-weight="bold" text-anchor="start">上限分岐点</text>
+
+                            <!-- テキストラベル -->
+                            <text x="350" y="280" fill="#9CA3AF" font-size="11" text-anchor="end">原資産価格 ➔</text>
+                            <text x="45" y="30" fill="#9CA3AF" font-size="11" text-anchor="end">損益 ➔</text>
+                            <text x="80" y="230" fill="#EF4444" font-size="11">急落で無限損失</text>
+                            <text x="320" y="230" fill="#EF4444" font-size="11" text-anchor="end">急騰で無限損失</text>
+                        </svg>
+                    </div>
+                    <div class="text-xs text-slate-400 mt-2 text-center bg-slate-900/50 py-1.5 rounded border border-slate-800">
+                        特徴：株価がその場にとどまれば最大利益。上下どちらかに激しく動くと無限に赤字が膨らむ。
+                    </div>
+                </div>
+
+                <!-- 解説記事 -->
+                <div class="lg:col-span-6 space-y-4">
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <h4 class="text-base font-bold text-amber-400 mb-1">狙い・相場観</h4>
+                        <p class="text-xs sm:text-sm text-slate-300">
+                            **「相場が一切動かない（静かなレンジ相場・ボラティリティ低下）」**と予測する局面。2つのプレミアムを全額回収して利益を狙います。
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <span class="text-slate-400 block text-xs">最大利益</span>
+                            <span class="font-bold text-amber-400">限定的（受取プレミアムの合計）</span>
+                            <span class="text-[11px] text-slate-500 block mt-0.5">Call受取 + Put受取</span>
+                        </div>
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <span class="text-slate-400 block text-xs">最大損失</span>
+                            <span class="font-bold text-rose-500 uppercase">無制限（極めて危険）</span>
+                            <span class="text-[11px] text-slate-500 block mt-0.5">上下どちらのブレも損失</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <h4 class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">具体例シミュレーション</h4>
+                        <ul class="space-y-1.5 text-xs text-slate-300 font-mono">
+                            <li>・ 株価1,000円のとき、1,000円コール売り(50円) ＋ 1,000円プット売り(50円)</li>
+                            <li class="text-amber-400">・ 受取プレミアム合計： <span class="underline">100円</span> （損益分岐点：900円 〜 1,100円）</li>
+                            <li class="text-amber-400">・ 満期株価 1,000円（動かず） ➔ 最大利益 <span class="underline">100円</span></li>
+                            <li class="text-rose-500">・ 満期株価 1,200円に急騰 ➔ 損失 <span class="underline">▲100円</span> (受取100 - (1200-1000))</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ストラングル売り -->
+        <section id="strangle-sell" class="scroll-mt-20 bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+                <div>
+                    <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-400 border border-rose-500/20 mb-2">
+                        広いレンジで利益・損失無制限
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white">5. ストラングル売り（Short Strangle）</h2>
+                </div>
+                <div class="text-xs sm:text-sm text-slate-400 bg-slate-950 px-4 py-2 rounded-lg border border-slate-800 font-mono">
+                    構成：離れた行使価格(OTM)のコール売り ＋ プット売り
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- SVG図解 -->
+                <div class="lg:col-span-6 bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-between">
+                    <h3 class="text-sm font-bold text-slate-300 mb-2 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-rose-400"></span> 損益チャート（Payoff Diagram）
+                    </h3>
+                    <div class="w-full aspect-[4/3]">
+                        <svg viewBox="0 0 400 300" class="w-full h-full">
+                            <!-- グリッド -->
+                            <line x1="50" y1="80" x2="350" y2="80" class="chart-grid"/>
+                            <!-- 軸 -->
+                            <line x1="50" y1="140" x2="350" y2="140" class="zero-line"/>
+                            <line x1="50" y1="260" x2="350" y2="260" class="axis-line"/>
+                            <line x1="50" y1="260" x2="50" y2="30" class="axis-line"/>
+                            
+                            <!-- ストラングル売り合成線（台形） -->
+                            <path d="M 60,240 L 150,80 L 250,80 L 340,240" class="payoff-line" stroke="#F43F5E"/>
+                            
+                            <!-- ポイントマーク -->
+                            <circle cx="150" cy="80" r="5" fill="#F43F5E"/>
+                            <circle cx="250" cy="80" r="5" fill="#F43F5E"/>
+                            <text x="200" y="65" fill="#F43F5E" font-size="11" font-weight="bold" text-anchor="middle">平らな最大利益ゾーン</text>
+                            
+                            <!-- 損益分岐点 -->
+                            <text x="110" y="160" fill="#EF4444" font-size="10" font-weight="bold" text-anchor="end">Put行使価格</text>
+                            <text x="290" y="160" fill="#EF4444" font-size="10" font-weight="bold" text-anchor="start">Call行使価格</text>
+
+                            <!-- テキストラベル -->
+                            <text x="350" y="280" fill="#9CA3AF" font-size="11" text-anchor="end">原資産価格 ➔</text>
+                            <text x="45" y="30" fill="#9CA3AF" font-size="11" text-anchor="end">損益 ➔</text>
+                            <text x="70" y="230" fill="#EF4444" font-size="11">ブレイクで無限損失</text>
+                            <text x="330" y="230" fill="#EF4444" font-size="11" text-anchor="end">ブレイクで無限損失</text>
+                        </svg>
+                    </div>
+                    <div class="text-xs text-slate-400 mt-2 text-center bg-slate-900/50 py-1.5 rounded border border-slate-800">
+                        特徴：ストラドルより利益額は小さいが、勝率ゾーン（平らな頂点）が広く高勝率。
+                    </div>
+                </div>
+
+                <!-- 解説記事 -->
+                <div class="lg:col-span-6 space-y-4">
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <h4 class="text-base font-bold text-rose-400 mb-1">狙い・相場観</h4>
+                        <p class="text-xs sm:text-sm text-slate-300">
+                            **「指定した価格帯（レンジ）を飛び出すことはまずない」**と予測する高勝率狙いの戦略。ストラドル売りよりも安全域が広いのが魅力です。
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 text-xs sm:text-sm">
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <span class="text-slate-400 block text-xs">最大利益</span>
+                            <span class="font-bold text-rose-400">限定的（ストラドルより少なめ）</span>
+                            <span class="text-[11px] text-slate-500 block mt-0.5">OTM Call受取 + OTM Put受取</span>
+                        </div>
+                        <div class="bg-slate-950/60 p-3 rounded-xl border border-slate-800/80">
+                            <span class="text-slate-400 block text-xs">最大損失</span>
+                            <span class="font-bold text-rose-500 uppercase">無制限（レンジブレイク時）</span>
+                            <span class="text-[11px] text-slate-500 block mt-0.5">想定外の暴騰・暴落で激損</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800/80">
+                        <h4 class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-wider">具体例シミュレーション</h4>
+                        <ul class="space-y-1.5 text-xs text-slate-300 font-mono">
+                            <li>・ 株価1,000円のとき、1,100円コール売り(20円) ＋ 900円プット売り(20円)</li>
+                            <li class="text-rose-400">・ 受取プレミアム合計： <span class="underline">40円</span></li>
+                            <li class="text-rose-400">・ 満期株価 900円〜1,100円の枠内 ➔ 最大利益 <span class="underline">40円</span>（高勝率！）</li>
+                            <li class="text-rose-500">・ 満期株価 1,200円に突発高 ➔ 損失 <span class="underline">▲60円</span> (受取40 - (1200-1100))</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 比較一覧表 -->
+        <section id="comparison" class="scroll-mt-20 bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8">
+            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-6 flex items-center gap-2">
+                <span>📊</span> 5つの戦略 総合比較一覧表
+            </h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-xs sm:text-sm text-left text-slate-300 border-collapse">
+                    <thead class="text-xs uppercase bg-slate-950 text-slate-400 border-b border-slate-800">
+                        <tr>
+                            <th class="p-3">戦略名</th>
+                            <th class="p-3">ポジション構成</th>
+                            <th class="p-3">最大利益</th>
+                            <th class="p-3">最大損失</th>
+                            <th class="p-3">適合する相場予想</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800 font-mono">
+                        <tr class="hover:bg-slate-800/50 transition">
+                            <td class="p-3 font-bold text-emerald-400">カバード・コール</td>
+                            <td class="p-3">現物買い ＋ コール売り</td>
+                            <td class="p-3 text-emerald-400">限定的</td>
+                            <td class="p-3 text-rose-400">大きい (現物リスク)</td>
+                            <td class="p-3 font-sans">横ばい〜緩やかな上昇</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/50 transition">
+                            <td class="p-3 font-bold text-cyan-400">プロテクティブ・プット</td>
+                            <td class="p-3">現物買い ＋ プット買い</td>
+                            <td class="p-3 text-cyan-400">無制限</td>
+                            <td class="p-3 text-emerald-400">限定的 (床あり)</td>
+                            <td class="p-3 font-sans">長期的上昇だが短期的暴落ヘッジ</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/50 transition">
+                            <td class="p-3 font-bold text-indigo-400">バーティカル・スプレッド</td>
+                            <td class="p-3">異行使価格のCall(Put)買い＋売り</td>
+                            <td class="p-3 text-indigo-400">限定的</td>
+                            <td class="p-3 text-emerald-400">限定的</td>
+                            <td class="p-3 font-sans">一定範囲内での上昇/下落</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/50 transition">
+                            <td class="p-3 font-bold text-amber-400">ストラドルの売り</td>
+                            <td class="p-3">同行使価格(ATM)のCall売り＋Put売り</td>
+                            <td class="p-3 text-amber-400">限定的 (大)</td>
+                            <td class="p-3 text-rose-500 font-bold">無制限</td>
+                            <td class="p-3 font-sans">完全に動かない保ち合い相場</td>
+                        </tr>
+                        <tr class="hover:bg-slate-800/50 transition">
+                            <td class="p-3 font-bold text-rose-400">ストラングル売り</td>
+                            <td class="p-3">離れた行使価格(OTM)のCall売り＋Put売り</td>
+                            <td class="p-3 text-rose-400">限定的 (中)</td>
+                            <td class="p-3 text-rose-500 font-bold">無制限</td>
+                            <td class="p-3 font-sans">一定レンジ内に収まる相場</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- フッター -->
+    <footer class="border-t border-slate-800 bg-slate-900 py-6 text-center text-xs text-slate-500">
+        <p>オプション投資戦略 図解＆詳細解説ガイド</p>
+    </footer>
+
+</body>
+</html>
