@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金融 計算定着カレンダー（過去問1日1問・8/1〜11/8）</title>
+<style>
+  :root{ --bg:#fbfaf7; --fg:#232323; --muted:#6b6b6b; --line:#e3ddd2; --card:#ffffff;
+    --accent:#2c5f7c; --hl:#fff6e6; --s:#c0392b; --ok:#2e7d5b; --we:#f4f1ea; }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1c1d1f; --fg:#e8e6e2; --muted:#9a9a9a; --line:#34363a; --card:#25272b;
+      --accent:#7fb3d0; --hl:#2c2a24; --s:#e57373; --ok:#6cc39a; --we:#22242a; } }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;line-height:1.6;font-size:15px;}
+  .wrap{max-width:1080px;margin:0 auto;padding:26px 18px 80px;}
+  h1{font-size:23px;margin:0 0 4px;}
+  h2{font-size:18px;margin:36px 0 10px;padding:8px 12px;background:var(--accent);color:#fff;border-radius:6px;}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 16px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:13px 15px;margin:13px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0;}
+  th,td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top;}
+  th{background:rgba(44,95,124,.10);font-weight:700;}
+  .tbl-scroll{overflow-x:auto;}
+  .num{font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap;}
+  .q{font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;}
+  .hint{font-size:11.5px;color:var(--muted);}
+  .wkrow td{background:rgba(44,95,124,.13);font-weight:700;font-size:12.5px;}
+  tr.we td{background:var(--we);}
+  tr.exam td{background:rgba(192,57,43,.10);font-weight:700;}
+  .star{color:var(--s);font-weight:800;}
+  .fresh{background:var(--ok);color:#fff;font-size:10px;padding:0 4px;border-radius:3px;margin-left:3px;}
+  .logic{background:var(--hl);border:1px solid var(--line);border-radius:6px;padding:10px 13px;margin:9px 0;}
+  .logic b{color:var(--accent);}
+  code{background:rgba(127,127,127,.14);padding:1px 5px;border-radius:4px;font-size:12.5px;}
+  ul{margin:6px 0;padding-left:20px;} li{margin:4px 0;}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:28px;border-top:1px solid var(--line);padding-top:12px;}
+  .dow{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0;}
+  .dow>div{flex:1;min-width:118px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 11px;}
+  .dow .d{font-size:17px;font-weight:800;color:var(--accent);}
+  .dow .f{font-size:12.5px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>金融 計算定着カレンダー ― 過去問 1日1問（8/1〜11/8）</h1>
+<p class="sub">作成 2026-07-26｜維持モード（8/1〜10/20）は<b>1日1問＝81日分すべて過去問で確定</b>／10/21〜11/7は<b>金融60%の総ざらい</b>｜上位ソース＝<code>CFP第2回_修正戦略_2026-07-26.html</code></p>
+
+<div class="card">
+<b>使い方 ― 当日は「何をやるか」を考えない</b><br>
+その日の行の<b>過去問（年度回・問番号）を1問だけ解く</b>。ファイルは
+<code>certifications/CFP/過去問/{年度回}/問題/{年度回}_金融_問題.pdf</code>、解答は同じ階層の <code>解答/</code>。<br>
+<b>右端のヒントは解いた後に読む</b>（先に読むと思い出す訓練にならない）。できなかった日は<b>飛ばして翌日の分をやる</b>（遡って埋めない）。<br>
+<span class="fresh">初</span>＝<b>まだ解いたことがない年度</b>（8/1〜10/20の81問中 <b>25問</b>）。既演習の4年度（2026①・2025②・2025①・2024②）は復習、それ以外は初見の設例で「型が本当に身についたか」を試す。
+</div>
+
+<h2>1. 覚えるのは曜日だけ</h2>
+<div class="dow">
+  <div><div class="d">月</div><div class="f">投資信託</div></div>
+  <div><div class="d">火</div><div class="f">債券</div></div>
+  <div><div class="d">水</div><div class="f">PF理論</div></div>
+  <div><div class="d">木</div><div class="f">外貨</div></div>
+  <div><div class="d">金</div><div class="f">株式・財務</div></div>
+  <div><div class="d">土</div><div class="f">デリバティブ</div></div>
+  <div><div class="d">日</div><div class="f">税制・指標</div></div>
+</div>
+
+<div class="logic">
+<b>割り当てのルール</b><br>
+① <b>同じ論点が複数年度にあるときは最新年度を優先し、古い年度へ下る</b>（本番の傾向に近い設例から当たる）。<br>
+② <b>同じ設問は二度使わない</b>（81日＝81問すべて別の設問。全16年度＝800問から抽出）。<br>
+③ 頻度は<b>弱点ほど多く</b>。<span class="star">★</span>＝2024②で勘・誤答・再回答でも誤答だった型。T1が6回、D2が5回、S1・S2が各4回、B7・P6・G3・X2・X4が各3回。制覇済みの型（債券基礎・金利平価・購買力平価・クロスレート）は1回。<br>
+④ <b>所要は1日2〜5分</b>。超えたらその型は10/21以降の総ざらい枠に回す（維持モードで粘るのは目的から外れる）。
+</div>
+
+<h2>2. 型の一覧と割り当てた過去問（8/1〜10/20の81日間）</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">曜</th><th>分野</th><th>型</th><th class="num">登場</th><th>割り当てた過去問（最新年度から順に使用）</th></tr>
+<tr><td class="num">月</td><td>投信</td><td><b>T1</b> 個別元本と普通分配金／元本払戻金 <span class="star">★</span></td><td class="num">6回</td><td class="q">2026年第1回Q27／2025年第2回Q26／2025年第1回Q25／2024年第2回Q25／2023年第2回Q26／2023年第1回Q25</td></tr>
+<tr><td class="num">月</td><td>投信</td><td><b>T2</b> トータルリターン</td><td class="num">3回</td><td class="q">2026年第1回Q28／2025年第2回Q28／2025年第1回Q27</td></tr>
+<tr><td class="num">月</td><td>投信</td><td><b>T3</b> 解約(一部解約)の譲渡所得</td><td class="num">3回</td><td class="q">2026年第1回Q26／2025年第2回Q27／2025年第1回Q26</td></tr>
+<tr><td class="num">火</td><td>債券</td><td><b>B7</b> スポットレートによる理論価格 <span class="star">★</span></td><td class="num">3回</td><td class="q">2025年第2回Q22／2024年第2回Q20／2024年第1回Q21</td></tr>
+<tr><td class="num">火</td><td>債券</td><td><b>B5</b> マコーレー／修正デュレーション</td><td class="num">3回</td><td class="q">2025年第1回Q22／2024年第2回Q21／2024年第1回Q22</td></tr>
+<tr><td class="num">火</td><td>債券</td><td><b>B6</b> スポット⇄フォワードレート</td><td class="num">2回</td><td class="q">2024年第2回Q19／2023年第2回Q21</td></tr>
+<tr><td class="num">火</td><td>債券</td><td><b>B1</b> 単利の利回り（所有期間・最終）</td><td class="num">1回</td><td class="q">2026年第1回Q21</td></tr>
+<tr><td class="num">火</td><td>債券</td><td><b>B3</b> 割引債の複利利回り <span class="star">★</span></td><td class="num">1回</td><td class="q">2023年第1回Q19</td></tr>
+<tr><td class="num">火</td><td>債券</td><td><b>B2</b> 単利利回りと単価から表面利率を逆算</td><td class="num">1回</td><td class="q">2020年第2回Q20</td></tr>
+<tr><td class="num">火</td><td>債券</td><td><b>B4</b> 複利利回りから単価を逆算</td><td class="num">1回</td><td class="q">2024年第1回Q20</td></tr>
+<tr><td class="num">水</td><td>PF理論</td><td><b>P6</b> 時間加重収益率(CF調整) <span class="star">★</span></td><td class="num">3回</td><td class="q">2025年第2回Q34／2025年第1回Q31／2024年第2回Q33</td></tr>
+<tr><td class="num">水</td><td>PF理論</td><td><b>P3</b> 期待収益率と標準偏差(生起確率) <span class="star">★</span></td><td class="num">2回</td><td class="q">2025年第1回Q33／2024年第2回Q32</td></tr>
+<tr><td class="num">水</td><td>PF理論</td><td><b>P2</b> σ=0の資産との組合せ <span class="star">★</span></td><td class="num">2回</td><td class="q">2024年第2回Q31／2022年第2回Q30</td></tr>
+<tr><td class="num">水</td><td>PF理論</td><td><b>P4</b> シャープ／トレイナー／ジェンセンα</td><td class="num">1回</td><td class="q">2026年第1回Q32</td></tr>
+<tr><td class="num">水</td><td>PF理論</td><td><b>P1</b> 2資産の標準偏差(相関あり)</td><td class="num">1回</td><td class="q">2026年第1回Q33</td></tr>
+<tr><td class="num">水</td><td>PF理論</td><td><b>P7</b> デュレーション投資比率</td><td class="num">1回</td><td class="q">2025年第2回Q20</td></tr>
+<tr><td class="num">水</td><td>PF理論</td><td><b>P5</b> CAPM・証券市場線</td><td class="num">1回</td><td class="q">2026年第1回Q35</td></tr>
+<tr><td class="num">木</td><td>外貨</td><td><b>G3</b> 為替予約レート(残存期間) <span class="star">★</span></td><td class="num">3回</td><td class="q">2026年第1回Q41／2024年第2回Q39／2024年第1回Q38</td></tr>
+<tr><td class="num">木</td><td>外貨</td><td><b>G5</b> 外貨定期の円ベース年利回り <span class="star">★</span></td><td class="num">2回</td><td class="q">2025年第1回Q37／2024年第2回Q40</td></tr>
+<tr><td class="num">木</td><td>外貨</td><td><b>G4</b> 外貨定期の税引後受取額</td><td class="num">1回</td><td class="q">2024年第2回Q8</td></tr>
+<tr><td class="num">木</td><td>外貨</td><td><b>G7</b> クロスレート</td><td class="num">1回</td><td class="q">2026年第1回Q39</td></tr>
+<tr><td class="num">木</td><td>外貨</td><td><b>G6</b> 外貨建債券(手数料の向き)</td><td class="num">1回</td><td class="q">2026年第1回Q38</td></tr>
+<tr><td class="num">木</td><td>外貨</td><td><b>G1</b> 金利平価(将来レート)</td><td class="num">1回</td><td class="q">2025年第2回Q39</td></tr>
+<tr><td class="num">木</td><td>外貨</td><td><b>G2</b> 相対的購買力平価</td><td class="num">1回</td><td class="q">2026年第1回Q40</td></tr>
+<tr><td class="num">木</td><td>外貨</td><td><b>G8</b> 外貨投信の再投資口数・外貨利回り <span class="star">★</span></td><td class="num">1回</td><td class="q">2024年第2回Q38</td></tr>
+<tr><td class="num">金</td><td>株式・財務</td><td><b>S1</b> 財務指標の逆算連鎖 <span class="star">★</span></td><td class="num">4回</td><td class="q">2024年第2回Q13／2024年第1回Q14／2023年第2回Q14／2023年第1回Q13</td></tr>
+<tr><td class="num">金</td><td>株式・財務</td><td><b>S2</b> 配当割引モデル(理論株価) <span class="star">★</span></td><td class="num">4回</td><td class="q">2025年第2回Q15／2024年第2回Q14／2023年第2回Q15／2022年第1回Q15</td></tr>
+<tr><td class="num">金</td><td>株式・財務</td><td><b>S3</b> 益利回り・配当利回り</td><td class="num">2回</td><td class="q">2026年第1回Q15／2020年第2回Q16</td></tr>
+<tr><td class="num">金</td><td>株式・財務</td><td><b>S4</b> コーポレートアクション／増資・自社株買い</td><td class="num">1回</td><td class="q">2024年第2回Q16</td></tr>
+<tr><td class="num">土</td><td>デリバティブ</td><td><b>D2</b> 先物理論価格 <span class="star">★</span></td><td class="num">5回</td><td class="q">2025年第1回Q44／2024年第2回Q45／2024年第1回Q44／2023年第1回Q44／2022年第2回Q43</td></tr>
+<tr><td class="num">土</td><td>デリバティブ</td><td><b>D1</b> 二項モデルのオプション期待値</td><td class="num">4回</td><td class="q">2026年第1回Q45／2025年第1回Q42／2024年第2回Q43／2024年第1回Q42</td></tr>
+<tr><td class="num">土</td><td>デリバティブ</td><td><b>D3</b> ヘッジ枚数(フルヘッジ)</td><td class="num">3回</td><td class="q">2026年第1回Q46／2025年第2回Q44／2025年第1回Q43</td></tr>
+<tr><td class="num">日</td><td>税制・指標</td><td><b>X2</b> 損益通算の口座選択と国保 <span class="star">★</span></td><td class="num">3回</td><td class="q">2025年第1回Q47／2024年第2回Q47／2023年第2回Q48</td></tr>
+<tr><td class="num">日</td><td>税制・指標</td><td><b>X4</b> 債券の税引後損益と還付税額 <span class="star">★</span></td><td class="num">3回</td><td class="q">2024年第2回Q37／2021年第2回Q21／2019年第2回Q19</td></tr>
+<tr><td class="num">日</td><td>税制・指標</td><td><b>X3</b> 一時所得・金融類似商品</td><td class="num">2回</td><td class="q">2025年第2回Q40／2024年第2回Q41</td></tr>
+<tr><td class="num">日</td><td>税制・指標</td><td><b>X5</b> GDP年率換算・寄与度・デフレーター</td><td class="num">2回</td><td class="q">2024年第2回Q1／2023年第2回Q1</td></tr>
+<tr><td class="num">日</td><td>税制・指標</td><td><b>X1</b> 配当控除／課税方式の有利選択</td><td class="num">2回</td><td class="q">2026年第1回Q16／2022年第1回Q47</td></tr>
+</table>
+</div>
+
+<h2>3. 8月（相続80% ＋ 金融20%）</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">日付</th><th class="num">曜</th><th>今日の1問（過去問）</th><th>分野／型</th><th class="num">目安</th><th>ヒント（答え合わせ用）</th></tr>
+<tr class="wkrow"><td colspan="6">第1週</td></tr>
+<tr class="we"><td class="num">8/1</td><td class="num">土</td><td class="q">2025年第1回 <b>問44</b></td><td>デリバティブ／<b>D2</b> 先物理論価格 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★符号。現物×{1+(短期金利−配当利回り)×日数/365}。配当&gt;金利ならディスカウント</td></tr>
+<tr class="we"><td class="num">8/2</td><td class="num">日</td><td class="q">2025年第1回 <b>問47</b></td><td>税制・指標／<b>X2</b> 損益通算の口座選択と国保 <span class="star">★</span></td><td class="num">4分</td><td class="hint">★再回答でも誤答。申告分離は合計所得に算入され国保・住民税に波及。通算後を0以下に収める</td></tr>
+<tr class="wkrow"><td colspan="6">第2週</td></tr>
+<tr><td class="num">8/3</td><td class="num">月</td><td class="q">2026年第1回 <b>問27</b></td><td>投信／<b>T1</b> 個別元本と普通分配金／元本払戻金 <span class="star">★</span></td><td class="num">3分</td><td class="hint">★継続失点。落ち後基準価額と個別元本を比較／追加購入で個別元本は加重平均</td></tr>
+<tr><td class="num">8/4</td><td class="num">火</td><td class="q">2025年第2回 <b>問22</b></td><td>債券／<b>B7</b> スポットレートによる理論価格 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★勘で失点。各CFをその年限のスポットで割引→利益額の一致から売却単価を逆算</td></tr>
+<tr><td class="num">8/5</td><td class="num">水</td><td class="q">2025年第2回 <b>問34</b></td><td>PF理論／<b>P6</b> 時間加重収益率(CF調整) <span class="star">★</span></td><td class="num">5分</td><td class="hint">★継続失点。r_i＝期末÷(前期末±期首CF)→幾何連結→t乗根（√2回＝4乗根）</td></tr>
+<tr><td class="num">8/6</td><td class="num">木</td><td class="q">2026年第1回 <b>問41</b></td><td>外貨／<b>G3</b> 為替予約レート(残存期間) <span class="star">★</span></td><td class="num">3分</td><td class="hint">★再回答でも誤答。nは予約日から満期までの残存期間（3ヵ月後に予約→9ヵ月物金利）</td></tr>
+<tr><td class="num">8/7</td><td class="num">金</td><td class="q">2024年第2回 <b>問13</b></td><td>株式・財務／<b>S1</b> 財務指標の逆算連鎖 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★勘で失点。時価総額÷PBR＝期末自己資本／ROEは期首期末平均→平均×2−期末＝期首／ROAも同様</td></tr>
+<tr class="we"><td class="num">8/8</td><td class="num">土</td><td class="q">2026年第1回 <b>問45</b></td><td>デリバティブ／<b>D1</b> 二項モデルのオプション期待値</td><td class="num">3分</td><td class="hint">3期間なら二項係数(1,3,3,1)/8。各ノードでmax(K−S,0)→確率加重</td></tr>
+<tr class="we"><td class="num">8/9</td><td class="num">日</td><td class="q">2024年第2回 <b>問37</b></td><td>税制・指標／<b>X4</b> 債券の税引後損益と還付税額 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★Q37の罠。特定口座で申告しないなら償還差損は同じ年の利子までしか通算できない</td></tr>
+<tr class="wkrow"><td colspan="6">第3週</td></tr>
+<tr><td class="num">8/10</td><td class="num">月</td><td class="q">2026年第1回 <b>問28</b></td><td>投信／<b>T2</b> トータルリターン</td><td class="num">3分</td><td class="hint">評価額＋累計分配金(税引後)＋累計売付−累計買付。買付は購入時手数料込み</td></tr>
+<tr><td class="num">8/11</td><td class="num">火</td><td class="q">2025年第1回 <b>問22</b></td><td>債券／<b>B5</b> マコーレー／修正デュレーション</td><td class="num">4分</td><td class="hint">各期CF現在価値の加重平均／修正D＝マコーレー÷(1+r)／価格変化率≒−Δr×修正D</td></tr>
+<tr><td class="num">8/12</td><td class="num">水</td><td class="q">2025年第1回 <b>問33</b></td><td>PF理論／<b>P3</b> 期待収益率と標準偏差(生起確率) <span class="star">★</span></td><td class="num">4分</td><td class="hint">★勘で正解。収益率＝(配当＋株価−取得価額)÷取得価額 →確率加重→分散→√</td></tr>
+<tr><td class="num">8/13</td><td class="num">木</td><td class="q">2025年第1回 <b>問37</b></td><td>外貨／<b>G5</b> 外貨定期の円ベース年利回り <span class="star">★</span></td><td class="num">5分</td><td class="hint">★取る問題。預入TTS／受取TTB／為替差益は総合課税30%／6ヵ月は×2で年換算</td></tr>
+<tr><td class="num">8/14</td><td class="num">金</td><td class="q">2025年第2回 <b>問15</b></td><td>株式・財務／<b>S2</b> 配当割引モデル(理論株価) <span class="star">★</span></td><td class="num">4分</td><td class="hint">★勘で失点。理論株価＝D1÷(r−g)／株価＝PER×EPS(配当÷配当性向)／P1≧P0(1+r)−D</td></tr>
+<tr class="we"><td class="num">8/15</td><td class="num">土</td><td class="q">2026年第1回 <b>問46</b></td><td>デリバティブ／<b>D3</b> ヘッジ枚数(フルヘッジ)</td><td class="num">3分</td><td class="hint">PF時価×β÷(指数×取引単位)。βは加重平均。ミニは1/10で換算</td></tr>
+<tr class="we"><td class="num">8/16</td><td class="num">日</td><td class="q">2025年第2回 <b>問40</b></td><td>税制・指標／<b>X3</b> 一時所得・金融類似商品</td><td class="num">3分</td><td class="hint">一時払5年以内解約＝20.315%源泉分離で損失切捨て。一時所得＝(益−50万)×1/2</td></tr>
+<tr class="wkrow"><td colspan="6">第4週</td></tr>
+<tr><td class="num">8/17</td><td class="num">月</td><td class="q">2025年第2回 <b>問26</b></td><td>投信／<b>T1</b> 個別元本と普通分配金／元本払戻金 <span class="star">★</span></td><td class="num">3分</td><td class="hint">★継続失点。落ち後基準価額と個別元本を比較／追加購入で個別元本は加重平均</td></tr>
+<tr><td class="num">8/18</td><td class="num">火</td><td class="q">2024年第2回 <b>問19</b></td><td>債券／<b>B6</b> スポット⇄フォワードレート</td><td class="num">3分</td><td class="hint">(1+s長)^長＝(1+s短)^短×(1+f)^差。どちらを未知に置くかで使い分ける</td></tr>
+<tr><td class="num">8/19</td><td class="num">水</td><td class="q">2024年第2回 <b>問31</b></td><td>PF理論／<b>P2</b> σ=0の資産との組合せ <span class="star">★</span></td><td class="num">1分</td><td class="hint">★勘で失点。σp＝w_B×σ_B（相関計算は不要＝10秒問題）</td></tr>
+<tr><td class="num">8/20</td><td class="num">木</td><td class="q">2024年第2回 <b>問8</b></td><td>外貨／<b>G4</b> 外貨定期の税引後受取額</td><td class="num">4分</td><td class="hint">元本の円転−為替差益税(30%)＋税引後利息(20%)。取得原価＝原資の加重平均レート</td></tr>
+<tr><td class="num">8/21</td><td class="num">金</td><td class="q">2026年第1回 <b>問15</b></td><td>株式・財務／<b>S3</b> 益利回り・配当利回り</td><td class="num">3分</td><td class="hint">時価総額＝PBR×自己資本(期末)／益利回り＝純利益÷時価総額／配当利回り＝配当総額÷時価総額</td></tr>
+<tr class="we"><td class="num">8/22</td><td class="num">土</td><td class="q">2024年第2回 <b>問45</b></td><td>デリバティブ／<b>D2</b> 先物理論価格 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★符号。現物×{1+(短期金利−配当利回り)×日数/365}。配当&gt;金利ならディスカウント</td></tr>
+<tr class="we"><td class="num">8/23</td><td class="num">日</td><td class="q">2024年第2回 <b>問47</b></td><td>税制・指標／<b>X2</b> 損益通算の口座選択と国保 <span class="star">★</span></td><td class="num">4分</td><td class="hint">★再回答でも誤答。申告分離は合計所得に算入され国保・住民税に波及。通算後を0以下に収める</td></tr>
+<tr class="wkrow"><td colspan="6">第5週</td></tr>
+<tr><td class="num">8/24</td><td class="num">月</td><td class="q">2026年第1回 <b>問26</b></td><td>投信／<b>T3</b> 解約(一部解約)の譲渡所得</td><td class="num">3分</td><td class="hint">(解約価額−信託財産留保額)−取得費。取得費は元本払戻で減額後の個別元本ベース</td></tr>
+<tr><td class="num">8/25</td><td class="num">火</td><td class="q">2024年第2回 <b>問20</b></td><td>債券／<b>B7</b> スポットレートによる理論価格 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★勘で失点。各CFをその年限のスポットで割引→利益額の一致から売却単価を逆算</td></tr>
+<tr><td class="num">8/26</td><td class="num">水</td><td class="q">2025年第1回 <b>問31</b></td><td>PF理論／<b>P6</b> 時間加重収益率(CF調整) <span class="star">★</span></td><td class="num">5分</td><td class="hint">★継続失点。r_i＝期末÷(前期末±期首CF)→幾何連結→t乗根（√2回＝4乗根）</td></tr>
+<tr><td class="num">8/27</td><td class="num">木</td><td class="q">2024年第2回 <b>問39</b></td><td>外貨／<b>G3</b> 為替予約レート(残存期間) <span class="star">★</span></td><td class="num">3分</td><td class="hint">★再回答でも誤答。nは予約日から満期までの残存期間（3ヵ月後に予約→9ヵ月物金利）</td></tr>
+<tr><td class="num">8/28</td><td class="num">金</td><td class="q">2024年第1回 <b>問14</b><span class="fresh">初</span></td><td>株式・財務／<b>S1</b> 財務指標の逆算連鎖 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★勘で失点。時価総額÷PBR＝期末自己資本／ROEは期首期末平均→平均×2−期末＝期首／ROAも同様</td></tr>
+<tr class="we"><td class="num">8/29</td><td class="num">土</td><td class="q">2025年第1回 <b>問42</b></td><td>デリバティブ／<b>D1</b> 二項モデルのオプション期待値</td><td class="num">3分</td><td class="hint">3期間なら二項係数(1,3,3,1)/8。各ノードでmax(K−S,0)→確率加重</td></tr>
+<tr class="we"><td class="num">8/30</td><td class="num">日</td><td class="q">2024年第2回 <b>問1</b></td><td>税制・指標／<b>X5</b> GDP年率換算・寄与度・デフレーター</td><td class="num">3分</td><td class="hint">年率換算＝(1+前期比)^4−1／寄与度は前期の名目GDPで割る／デフレーター＝名目÷実質×100</td></tr>
+<tr class="wkrow"><td colspan="6">第6週</td></tr>
+<tr><td class="num">8/31</td><td class="num">月</td><td class="q">2025年第1回 <b>問25</b></td><td>投信／<b>T1</b> 個別元本と普通分配金／元本払戻金 <span class="star">★</span></td><td class="num">3分</td><td class="hint">★継続失点。落ち後基準価額と個別元本を比較／追加購入で個別元本は加重平均</td></tr>
+</table>
+</div>
+
+<h2>4. 9月（リスク80% ＋ 金融10% ＋ 相続10%）</h2>
+<p class="sub">❗<b>9/1にネット出願を最優先で実施</b>（出願期間 9/1〜10/1）。</p>
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">日付</th><th class="num">曜</th><th>今日の1問（過去問）</th><th>分野／型</th><th class="num">目安</th><th>ヒント（答え合わせ用）</th></tr>
+<tr class="wkrow"><td colspan="6">第6週</td></tr>
+<tr><td class="num">9/1</td><td class="num">火</td><td class="q">2026年第1回 <b>問21</b></td><td>債券／<b>B1</b> 単利の利回り（所有期間・最終）</td><td class="num">2分</td><td class="hint">{年利子＋(売却or償還−購入)÷所有年数}÷購入価格×100。分母は購入価格</td></tr>
+<tr><td class="num">9/2</td><td class="num">水</td><td class="q">2026年第1回 <b>問32</b></td><td>PF理論／<b>P4</b> シャープ／トレイナー／ジェンセンα</td><td class="num">3分</td><td class="hint">分母σ／分母β／α＝実績−CAPM。CAPM＝Rf＋β(Rm−Rf)</td></tr>
+<tr><td class="num">9/3</td><td class="num">木</td><td class="q">2026年第1回 <b>問39</b></td><td>外貨／<b>G7</b> クロスレート</td><td class="num">2分</td><td class="hint">外貨同士を直接足し引きせず、一度すべて円に直してから割る</td></tr>
+<tr><td class="num">9/4</td><td class="num">金</td><td class="q">2024年第2回 <b>問14</b></td><td>株式・財務／<b>S2</b> 配当割引モデル(理論株価) <span class="star">★</span></td><td class="num">4分</td><td class="hint">★勘で失点。理論株価＝D1÷(r−g)／株価＝PER×EPS(配当÷配当性向)／P1≧P0(1+r)−D</td></tr>
+<tr class="we"><td class="num">9/5</td><td class="num">土</td><td class="q">2024年第1回 <b>問44</b><span class="fresh">初</span></td><td>デリバティブ／<b>D2</b> 先物理論価格 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★符号。現物×{1+(短期金利−配当利回り)×日数/365}。配当&gt;金利ならディスカウント</td></tr>
+<tr class="we"><td class="num">9/6</td><td class="num">日</td><td class="q">2021年第2回 <b>問21</b><span class="fresh">初</span></td><td>税制・指標／<b>X4</b> 債券の税引後損益と還付税額 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★Q37の罠。特定口座で申告しないなら償還差損は同じ年の利子までしか通算できない</td></tr>
+<tr class="wkrow"><td colspan="6">第7週</td></tr>
+<tr><td class="num">9/7</td><td class="num">月</td><td class="q">2025年第2回 <b>問28</b></td><td>投信／<b>T2</b> トータルリターン</td><td class="num">3分</td><td class="hint">評価額＋累計分配金(税引後)＋累計売付−累計買付。買付は購入時手数料込み</td></tr>
+<tr><td class="num">9/8</td><td class="num">火</td><td class="q">2023年第1回 <b>問19</b><span class="fresh">初</span></td><td>債券／<b>B3</b> 割引債の複利利回り <span class="star">★</span></td><td class="num">2分</td><td class="hint">(n乗根(売却or償還÷購入)−1)×100。★√の押し回数＝4年なら2回</td></tr>
+<tr><td class="num">9/9</td><td class="num">水</td><td class="q">2026年第1回 <b>問33</b></td><td>PF理論／<b>P1</b> 2資産の標準偏差(相関あり)</td><td class="num">3分</td><td class="hint">σp²＝(σ1w1)²+(σ2w2)²+2w1w2ρσ1σ2。ρが負なら第3項は引き算</td></tr>
+<tr><td class="num">9/10</td><td class="num">木</td><td class="q">2026年第1回 <b>問38</b></td><td>外貨／<b>G6</b> 外貨建債券(手数料の向き)</td><td class="num">4分</td><td class="hint">購入＝仲値＋手数料／償還・売却＝仲値−手数料。購入可能額面は購入単位で切下げ</td></tr>
+<tr><td class="num">9/11</td><td class="num">金</td><td class="q">2024年第2回 <b>問16</b></td><td>株式・財務／<b>S4</b> コーポレートアクション／増資・自社株買い</td><td class="num">2分</td><td class="hint">株式分割＝取締役会決議／併合＝株主総会特別決議。公募増資→EPS・ROEとも下落</td></tr>
+<tr class="we"><td class="num">9/12</td><td class="num">土</td><td class="q">2025年第2回 <b>問44</b></td><td>デリバティブ／<b>D3</b> ヘッジ枚数(フルヘッジ)</td><td class="num">3分</td><td class="hint">PF時価×β÷(指数×取引単位)。βは加重平均。ミニは1/10で換算</td></tr>
+<tr class="we"><td class="num">9/13</td><td class="num">日</td><td class="q">2026年第1回 <b>問16</b></td><td>税制・指標／<b>X1</b> 配当控除／課税方式の有利選択</td><td class="num">3分</td><td class="hint">課税総所得1,000万円以下は所得税10%・住民税2.8%／投信は5%・1.4%</td></tr>
+<tr class="wkrow"><td colspan="6">第8週</td></tr>
+<tr><td class="num">9/14</td><td class="num">月</td><td class="q">2024年第2回 <b>問25</b></td><td>投信／<b>T1</b> 個別元本と普通分配金／元本払戻金 <span class="star">★</span></td><td class="num">3分</td><td class="hint">★継続失点。落ち後基準価額と個別元本を比較／追加購入で個別元本は加重平均</td></tr>
+<tr><td class="num">9/15</td><td class="num">火</td><td class="q">2024年第2回 <b>問21</b></td><td>債券／<b>B5</b> マコーレー／修正デュレーション</td><td class="num">4分</td><td class="hint">各期CF現在価値の加重平均／修正D＝マコーレー÷(1+r)／価格変化率≒−Δr×修正D</td></tr>
+<tr><td class="num">9/16</td><td class="num">水</td><td class="q">2024年第2回 <b>問32</b></td><td>PF理論／<b>P3</b> 期待収益率と標準偏差(生起確率) <span class="star">★</span></td><td class="num">4分</td><td class="hint">★勘で正解。収益率＝(配当＋株価−取得価額)÷取得価額 →確率加重→分散→√</td></tr>
+<tr><td class="num">9/17</td><td class="num">木</td><td class="q">2024年第2回 <b>問40</b></td><td>外貨／<b>G5</b> 外貨定期の円ベース年利回り <span class="star">★</span></td><td class="num">5分</td><td class="hint">★取る問題。預入TTS／受取TTB／為替差益は総合課税30%／6ヵ月は×2で年換算</td></tr>
+<tr><td class="num">9/18</td><td class="num">金</td><td class="q">2023年第2回 <b>問14</b><span class="fresh">初</span></td><td>株式・財務／<b>S1</b> 財務指標の逆算連鎖 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★勘で失点。時価総額÷PBR＝期末自己資本／ROEは期首期末平均→平均×2−期末＝期首／ROAも同様</td></tr>
+<tr class="we"><td class="num">9/19</td><td class="num">土</td><td class="q">2024年第2回 <b>問43</b></td><td>デリバティブ／<b>D1</b> 二項モデルのオプション期待値</td><td class="num">3分</td><td class="hint">3期間なら二項係数(1,3,3,1)/8。各ノードでmax(K−S,0)→確率加重</td></tr>
+<tr class="we"><td class="num">9/20</td><td class="num">日</td><td class="q">2023年第2回 <b>問48</b><span class="fresh">初</span></td><td>税制・指標／<b>X2</b> 損益通算の口座選択と国保 <span class="star">★</span></td><td class="num">4分</td><td class="hint">★再回答でも誤答。申告分離は合計所得に算入され国保・住民税に波及。通算後を0以下に収める</td></tr>
+<tr class="wkrow"><td colspan="6">第9週</td></tr>
+<tr><td class="num">9/21</td><td class="num">月</td><td class="q">2025年第2回 <b>問27</b></td><td>投信／<b>T3</b> 解約(一部解約)の譲渡所得</td><td class="num">3分</td><td class="hint">(解約価額−信託財産留保額)−取得費。取得費は元本払戻で減額後の個別元本ベース</td></tr>
+<tr><td class="num">9/22</td><td class="num">火</td><td class="q">2020年第2回 <b>問20</b><span class="fresh">初</span></td><td>債券／<b>B2</b> 単利利回りと単価から表面利率を逆算</td><td class="num">3分</td><td class="hint">単利利回りの式を表面利率について解く。デュレーション計算の前段にも使う</td></tr>
+<tr><td class="num">9/23</td><td class="num">水</td><td class="q">2025年第2回 <b>問20</b></td><td>PF理論／<b>P7</b> デュレーション投資比率</td><td class="num">4分</td><td class="hint">PFのD＝加重平均を目標に一致させ比率を解く。どちらの比率を問われたか最後に確認</td></tr>
+<tr><td class="num">9/24</td><td class="num">木</td><td class="q">2025年第2回 <b>問39</b></td><td>外貨／<b>G1</b> 金利平価(将来レート)</td><td class="num">2分</td><td class="hint">直物×(1+円金利)÷(1+外貨金利)。分子分母の向きを固定する</td></tr>
+<tr><td class="num">9/25</td><td class="num">金</td><td class="q">2023年第2回 <b>問15</b><span class="fresh">初</span></td><td>株式・財務／<b>S2</b> 配当割引モデル(理論株価) <span class="star">★</span></td><td class="num">4分</td><td class="hint">★勘で失点。理論株価＝D1÷(r−g)／株価＝PER×EPS(配当÷配当性向)／P1≧P0(1+r)−D</td></tr>
+<tr class="we"><td class="num">9/26</td><td class="num">土</td><td class="q">2023年第1回 <b>問44</b><span class="fresh">初</span></td><td>デリバティブ／<b>D2</b> 先物理論価格 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★符号。現物×{1+(短期金利−配当利回り)×日数/365}。配当&gt;金利ならディスカウント</td></tr>
+<tr class="we"><td class="num">9/27</td><td class="num">日</td><td class="q">2024年第2回 <b>問41</b></td><td>税制・指標／<b>X3</b> 一時所得・金融類似商品</td><td class="num">3分</td><td class="hint">一時払5年以内解約＝20.315%源泉分離で損失切捨て。一時所得＝(益−50万)×1/2</td></tr>
+<tr class="wkrow"><td colspan="6">第10週</td></tr>
+<tr><td class="num">9/28</td><td class="num">月</td><td class="q">2023年第2回 <b>問26</b><span class="fresh">初</span></td><td>投信／<b>T1</b> 個別元本と普通分配金／元本払戻金 <span class="star">★</span></td><td class="num">3分</td><td class="hint">★継続失点。落ち後基準価額と個別元本を比較／追加購入で個別元本は加重平均</td></tr>
+<tr><td class="num">9/29</td><td class="num">火</td><td class="q">2024年第1回 <b>問21</b><span class="fresh">初</span></td><td>債券／<b>B7</b> スポットレートによる理論価格 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★勘で失点。各CFをその年限のスポットで割引→利益額の一致から売却単価を逆算</td></tr>
+<tr><td class="num">9/30</td><td class="num">水</td><td class="q">2024年第2回 <b>問33</b></td><td>PF理論／<b>P6</b> 時間加重収益率(CF調整) <span class="star">★</span></td><td class="num">5分</td><td class="hint">★継続失点。r_i＝期末÷(前期末±期首CF)→幾何連結→t乗根（√2回＝4乗根）</td></tr>
+</table>
+</div>
+
+<h2>5. 10/1〜10/20（3科目並行・最終弱点克服）</h2>
+<p class="sub">この期間は<b>週1本ずつ本番タイムで通す（金融→相続→リスク）</b>。下の1日1問はその合間の維持。<b>10/20が「どの科目にリソースを寄せるか」の判断日。</b></p>
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">日付</th><th class="num">曜</th><th>今日の1問（過去問）</th><th>分野／型</th><th class="num">目安</th><th>ヒント（答え合わせ用）</th></tr>
+<tr class="wkrow"><td colspan="6">第10週</td></tr>
+<tr><td class="num">10/1</td><td class="num">木</td><td class="q">2024年第1回 <b>問38</b><span class="fresh">初</span></td><td>外貨／<b>G3</b> 為替予約レート(残存期間) <span class="star">★</span></td><td class="num">3分</td><td class="hint">★再回答でも誤答。nは予約日から満期までの残存期間（3ヵ月後に予約→9ヵ月物金利）</td></tr>
+<tr><td class="num">10/2</td><td class="num">金</td><td class="q">2020年第2回 <b>問16</b><span class="fresh">初</span></td><td>株式・財務／<b>S3</b> 益利回り・配当利回り</td><td class="num">3分</td><td class="hint">時価総額＝PBR×自己資本(期末)／益利回り＝純利益÷時価総額／配当利回り＝配当総額÷時価総額</td></tr>
+<tr class="we"><td class="num">10/3</td><td class="num">土</td><td class="q">2025年第1回 <b>問43</b></td><td>デリバティブ／<b>D3</b> ヘッジ枚数(フルヘッジ)</td><td class="num">3分</td><td class="hint">PF時価×β÷(指数×取引単位)。βは加重平均。ミニは1/10で換算</td></tr>
+<tr class="we"><td class="num">10/4</td><td class="num">日</td><td class="q">2019年第2回 <b>問19</b><span class="fresh">初</span></td><td>税制・指標／<b>X4</b> 債券の税引後損益と還付税額 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★Q37の罠。特定口座で申告しないなら償還差損は同じ年の利子までしか通算できない</td></tr>
+<tr class="wkrow"><td colspan="6">第11週</td></tr>
+<tr><td class="num">10/5</td><td class="num">月</td><td class="q">2025年第1回 <b>問27</b></td><td>投信／<b>T2</b> トータルリターン</td><td class="num">3分</td><td class="hint">評価額＋累計分配金(税引後)＋累計売付−累計買付。買付は購入時手数料込み</td></tr>
+<tr><td class="num">10/6</td><td class="num">火</td><td class="q">2023年第2回 <b>問21</b><span class="fresh">初</span></td><td>債券／<b>B6</b> スポット⇄フォワードレート</td><td class="num">3分</td><td class="hint">(1+s長)^長＝(1+s短)^短×(1+f)^差。どちらを未知に置くかで使い分ける</td></tr>
+<tr><td class="num">10/7</td><td class="num">水</td><td class="q">2026年第1回 <b>問35</b></td><td>PF理論／<b>P5</b> CAPM・証券市場線</td><td class="num">2分</td><td class="hint">Rf＋β×(市場ポートフォリオの期待収益率−Rf)。図の縦横軸を確認</td></tr>
+<tr><td class="num">10/8</td><td class="num">木</td><td class="q">2026年第1回 <b>問40</b></td><td>外貨／<b>G2</b> 相対的購買力平価</td><td class="num">2分</td><td class="hint">直物×(1+自国物価)÷(1+外国物価)。物価上昇率が低い国の通貨は増価</td></tr>
+<tr><td class="num">10/9</td><td class="num">金</td><td class="q">2023年第1回 <b>問13</b><span class="fresh">初</span></td><td>株式・財務／<b>S1</b> 財務指標の逆算連鎖 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★勘で失点。時価総額÷PBR＝期末自己資本／ROEは期首期末平均→平均×2−期末＝期首／ROAも同様</td></tr>
+<tr class="we"><td class="num">10/10</td><td class="num">土</td><td class="q">2022年第2回 <b>問43</b><span class="fresh">初</span></td><td>デリバティブ／<b>D2</b> 先物理論価格 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★符号。現物×{1+(短期金利−配当利回り)×日数/365}。配当&gt;金利ならディスカウント</td></tr>
+<tr class="we"><td class="num">10/11</td><td class="num">日</td><td class="q">2023年第2回 <b>問1</b><span class="fresh">初</span></td><td>税制・指標／<b>X5</b> GDP年率換算・寄与度・デフレーター</td><td class="num">3分</td><td class="hint">年率換算＝(1+前期比)^4−1／寄与度は前期の名目GDPで割る／デフレーター＝名目÷実質×100</td></tr>
+<tr class="wkrow"><td colspan="6">第12週</td></tr>
+<tr><td class="num">10/12</td><td class="num">月</td><td class="q">2023年第1回 <b>問25</b><span class="fresh">初</span></td><td>投信／<b>T1</b> 個別元本と普通分配金／元本払戻金 <span class="star">★</span></td><td class="num">3分</td><td class="hint">★継続失点。落ち後基準価額と個別元本を比較／追加購入で個別元本は加重平均</td></tr>
+<tr><td class="num">10/13</td><td class="num">火</td><td class="q">2024年第1回 <b>問20</b><span class="fresh">初</span></td><td>債券／<b>B4</b> 複利利回りから単価を逆算</td><td class="num">3分</td><td class="hint">単価＝100÷(1+利回り)^年数。2本の債券で同じ利回りになる条件を立てる</td></tr>
+<tr><td class="num">10/14</td><td class="num">水</td><td class="q">2022年第2回 <b>問30</b><span class="fresh">初</span></td><td>PF理論／<b>P2</b> σ=0の資産との組合せ <span class="star">★</span></td><td class="num">1分</td><td class="hint">★勘で失点。σp＝w_B×σ_B（相関計算は不要＝10秒問題）</td></tr>
+<tr><td class="num">10/15</td><td class="num">木</td><td class="q">2024年第2回 <b>問38</b></td><td>外貨／<b>G8</b> 外貨投信の再投資口数・外貨利回り <span class="star">★</span></td><td class="num">5分</td><td class="hint">★再回答でも誤答（本番は捨て問／論点だけ取る）。分配金÷落後純資産価格で口数増(1口未満切上)→年率換算</td></tr>
+<tr><td class="num">10/16</td><td class="num">金</td><td class="q">2022年第1回 <b>問15</b><span class="fresh">初</span></td><td>株式・財務／<b>S2</b> 配当割引モデル(理論株価) <span class="star">★</span></td><td class="num">4分</td><td class="hint">★勘で失点。理論株価＝D1÷(r−g)／株価＝PER×EPS(配当÷配当性向)／P1≧P0(1+r)−D</td></tr>
+<tr class="we"><td class="num">10/17</td><td class="num">土</td><td class="q">2024年第1回 <b>問42</b><span class="fresh">初</span></td><td>デリバティブ／<b>D1</b> 二項モデルのオプション期待値</td><td class="num">3分</td><td class="hint">3期間なら二項係数(1,3,3,1)/8。各ノードでmax(K−S,0)→確率加重</td></tr>
+<tr class="we"><td class="num">10/18</td><td class="num">日</td><td class="q">2022年第1回 <b>問47</b><span class="fresh">初</span></td><td>税制・指標／<b>X1</b> 配当控除／課税方式の有利選択</td><td class="num">3分</td><td class="hint">課税総所得1,000万円以下は所得税10%・住民税2.8%／投信は5%・1.4%</td></tr>
+<tr class="wkrow"><td colspan="6">第13週</td></tr>
+<tr><td class="num">10/19</td><td class="num">月</td><td class="q">2025年第1回 <b>問26</b></td><td>投信／<b>T3</b> 解約(一部解約)の譲渡所得</td><td class="num">3分</td><td class="hint">(解約価額−信託財産留保額)−取得費。取得費は元本払戻で減額後の個別元本ベース</td></tr>
+<tr><td class="num">10/20</td><td class="num">火</td><td class="q">2024年第1回 <b>問22</b><span class="fresh">初</span></td><td>債券／<b>B5</b> マコーレー／修正デュレーション</td><td class="num">4分</td><td class="hint">各期CF現在価値の加重平均／修正D＝マコーレー÷(1+r)／価格変化率≒−Δr×修正D</td></tr>
+</table>
+</div>
+
+<h2>6. 10/21〜11/7（金融60%・総ざらい）</h2>
+<p class="sub">ここからは1日1問ではなく<b>同じ型を複数年度で連続して解く</b>（型の汎用性の最終確認）。1日目（11/8）は中日ブーストが使えないため、この18日間が金融の最後の厚み。</p>
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">日付</th><th>メニュー</th><th>内容（型と過去問）</th><th class="num">目安</th></tr>
+
+<tr class="wkrow"><td colspan="4">10/21（水）〜10/27（火）：分野ごとに一気に総ざらい（同じ型を複数年度で連続して解く）</td></tr>
+<tr><td class="num">10/21 水</td><td>投信</td><td><b>T1</b>(2026年第1回Q27／2025年第2回Q26／2025年第1回Q25／2024年第2回Q25／2023年第2回Q26／2023年第1回Q25)、<b>T2</b>(2026年第1回Q28／2025年第2回Q28／2025年第1回Q27)、<b>T3</b>(2026年第1回Q26／2025年第2回Q27／2025年第1回Q26)</td><td class="num">60分</td></tr>
+<tr><td class="num">10/22 木</td><td>PF理論</td><td><b>P6</b>(2025年第2回Q34／2025年第1回Q31／2024年第2回Q33)、<b>P3</b>(2025年第1回Q33／2024年第2回Q32)、<b>P2</b>(2024年第2回Q31／2022年第2回Q30)、<b>P1</b>(2026年第1回Q33)、<b>P4</b>(2026年第1回Q32)、<b>P5</b>(2026年第1回Q35)、<b>P7</b>(2025年第2回Q20)</td><td class="num">60分</td></tr>
+<tr><td class="num">10/23 金</td><td>債券（基礎）</td><td><b>B1</b>(2026年第1回Q21)、<b>B2</b>(2020年第2回Q20)、<b>B3</b>(2023年第1回Q19)、<b>B4</b>(2024年第1回Q20)</td><td class="num">40分</td></tr>
+<tr><td class="num">10/24 土</td><td>債券（応用）</td><td><b>B5</b>(2025年第1回Q22／2024年第2回Q21／2024年第1回Q22)、<b>B6</b>(2024年第2回Q19／2023年第2回Q21)、<b>B7</b>(2025年第2回Q22／2024年第2回Q20／2024年第1回Q21)</td><td class="num">60分</td></tr>
+<tr><td class="num">10/25 日</td><td>外貨（レート系）</td><td><b>G1</b>(2025年第2回Q39)、<b>G2</b>(2026年第1回Q40)、<b>G3</b>(2026年第1回Q41／2024年第2回Q39／2024年第1回Q38)、<b>G7</b>(2026年第1回Q39)</td><td class="num">50分</td></tr>
+<tr><td class="num">10/26 月</td><td>外貨（円ベース損益系）</td><td><b>G4</b>(2024年第2回Q8)、<b>G5</b>(2025年第1回Q37／2024年第2回Q40)、<b>G6</b>(2026年第1回Q38)／<b>G8</b>は論点確認のみ（本番は捨て問）</td><td class="num">60分</td></tr>
+<tr><td class="num">10/27 火</td><td>株式・財務＋デリバ</td><td><b>S1</b>(2024年第2回Q13／2024年第1回Q14／2023年第2回Q14／2023年第1回Q13)、<b>S2</b>(2025年第2回Q15／2024年第2回Q14／2023年第2回Q15／2022年第1回Q15)、<b>S3</b>(2026年第1回Q15／2020年第2回Q16)／<b>D1</b>(2026年第1回Q45／2025年第1回Q42／2024年第2回Q43／2024年第1回Q42)、<b>D2</b>(2025年第1回Q44／2024年第2回Q45／2024年第1回Q44／2023年第1回Q44／2022年第2回Q43)、<b>D3</b>(2026年第1回Q46／2025年第2回Q44／2025年第1回Q43)</td><td class="num">60分</td></tr>
+<tr class="wkrow"><td colspan="4">10/28（水）〜11/3（火）：税制・クイズ t1 全問＋知識の詰め</td></tr>
+<tr><td class="num">10/28 水</td><td>税制・指標</td><td><b>X2</b>(2025年第1回Q47／2024年第2回Q47／2023年第2回Q48)、<b>X4</b>(2024年第2回Q37／2021年第2回Q21／2019年第2回Q19)、<b>X3</b>(2025年第2回Q40／2024年第2回Q41)、<b>X1</b>(2026年第1回Q16／2022年第1回Q47)、<b>X5</b>(2024年第2回Q1／2023年第2回Q1)</td><td class="num">50分</td></tr>
+<tr><td class="num">10/29 木</td><td>クイズ t1（1/3）</td><td>投信・PF・債券系（アプリ <code>quiz/index.html</code>）</td><td class="num">40分</td></tr>
+<tr><td class="num">10/30 金</td><td>クイズ t1（2/3）</td><td>外貨・株式・デリバ系</td><td class="num">40分</td></tr>
+<tr><td class="num">10/31 土</td><td>クイズ t1（3/3）</td><td>経済時事・商品・制度法規（K66 NISAの非課税要件を必ず通す）</td><td class="num">40分</td></tr>
+<tr><td class="num">11/1 日</td><td><b>時事カード更新</b></td><td>日銀・内閣府の<b>最新レポート</b>で数字カードを作り直す</td><td class="num">60分</td></tr>
+<tr><td class="num">11/2 月</td><td>時事カード周回</td><td>作った数字カード＋クイズ K9〜K13・K32・K33</td><td class="num">40分</td></tr>
+<tr><td class="num">11/3 火</td><td><b>本番タイム通し</b></td><td><b>2022年第2回</b>（未演習・50問120分）。順序①〜⑥＋捨て問15秒判定の最終リハーサル</td><td class="num">120分</td></tr>
+<tr class="wkrow"><td colspan="4">11/4（水）〜11/7（土）：最終確認（新しいことはやらない）</td></tr>
+<tr><td class="num">11/4 水</td><td>誤答の総見直し</td><td>11/3の誤答＋<code>間違いノート_金融.md</code>の★行だけを読む</td><td class="num">50分</td></tr>
+<tr><td class="num">11/5 木</td><td>★の型だけ手を動かす</td><td>T1・P6・S1・S2・G3・G5・B7・D2・X2・X4（各1問・直近に解いた年度で）</td><td class="num">50分</td></tr>
+<tr><td class="num">11/6 金</td><td>捨て問リストの確認</td><td>Q15型／Q37型／Q38型／一次資料穴埋め＝<b>見た瞬間に飛ばす</b>。解答順序を紙に書く</td><td class="num">30分</td></tr>
+<tr><td class="num">11/7 土</td><td><b>軽く回すだけ</b></td><td>クイズ t1 を流し見＋電卓メモ（√2回＝4乗根）＋持ち物確認。<b>早く寝る</b></td><td class="num">30分</td></tr>
+<tr class="exam"><td class="num">11/8 日</td><td colspan="3"><b>🎯 試験1日目：金融資産運用設計</b>　解答順序 ①制度47-50 →②デリバ42-46 →③投信25-30 →④PF31-36 →⑤知識1-12 →⑥重い計算</td></tr>
+
+</table>
+</div>
+
+<h2>7. 運用ルール（3つだけ）</h2>
+<ul>
+  <li><b>できなかった日は翌日の分をやる</b>（遡らない）。継続 &gt; 完璧。</li>
+  <li><b>詰まった型はクイズ側の t を1に上げる</b>（アプリ <code>quiz/index.html</code>／即答できた型は t2 へ）。<b>その場で</b>変更するのが最も精度が高い。</li>
+  <li><b>3回連続で即答できた型はローテから外してよい</b>。ただし<b>別年度の設例で再現できてから</b>（K1で「1回できたから降格」→翌日に再失点した反省）。外した枠には<span class="star">★</span>の型を入れる。</li>
+</ul>
+
+<p class="foot">
+関連：<code>CFP第2回_修正戦略_2026-07-26.html</code>（上位ソース）／<code>金融_次回優先課題.md</code>（再開用）／<code>弱点克服レポート_金融.md</code>（型の詳細）／<code>間違いノート_金融.md</code>（★行を直前に読む）／<code>金融_重要問題マップ_2026後半戦.html</code>（出題傾向）<br>
+作成 2026-07-26 ／ 生成スクリプト＝scratchpad/gen_calendar2.py（ASSIGN と SEQ を編集して再生成）
+</p>
+
+</div>
+</body>
+</html>
