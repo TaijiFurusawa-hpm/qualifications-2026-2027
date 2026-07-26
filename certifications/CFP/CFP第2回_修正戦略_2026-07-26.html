@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFP第2回 修正戦略（2026-07-26）｜60%設計と取る/捨てるの線引き</title>
+<style>
+  :root{
+    --bg:#fbfaf7; --fg:#232323; --muted:#6b6b6b; --line:#e3ddd2; --card:#ffffff;
+    --s:#c0392b; --a:#d97a1a; --b:#7a8a99; --accent:#2c5f7c; --hl:#fff6e6; --ok:#2e7d5b;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1c1d1f; --fg:#e8e6e2; --muted:#9a9a9a; --line:#34363a; --card:#25272b;
+           --s:#e57373; --a:#f0a860; --b:#9fb0bf; --accent:#7fb3d0; --hl:#2c2a24; --ok:#6cc39a; }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.7;font-size:15px;}
+  .wrap{max-width:1000px;margin:0 auto;padding:28px 20px 80px;}
+  h1{font-size:24px;margin:0 0 4px;letter-spacing:.02em;}
+  h2{font-size:19px;margin:40px 0 12px;padding:8px 12px;background:var(--accent);color:#fff;border-radius:6px;}
+  h3{font-size:16px;margin:26px 0 8px;border-left:4px solid var(--accent);padding-left:9px;}
+  h4{font-size:14.5px;margin:18px 0 6px;color:var(--accent);}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:14px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0;}
+  th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;}
+  th{background:rgba(44,95,124,.10);font-weight:700;}
+  .tbl-scroll{overflow-x:auto;}
+  .rank{display:inline-block;min-width:20px;text-align:center;font-weight:800;color:#fff;border-radius:4px;padding:1px 7px;font-size:12.5px;}
+  .rA{background:var(--ok);} .rB{background:var(--a);} .rC{background:var(--b);} .rS{background:var(--s);}
+  .num{font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap;}
+  ul{margin:6px 0 6px 0;padding-left:20px;} li{margin:3px 0;}
+  .logic{background:var(--hl);border:1px solid var(--line);border-radius:6px;padding:10px 13px;margin:9px 0;}
+  .logic b{color:var(--accent);}
+  code{background:rgba(127,127,127,.14);padding:1px 5px;border-radius:4px;font-size:13px;font-family:"SF Mono",Consolas,monospace;}
+  .kpi{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;}
+  .kpi>div{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 13px;}
+  .kpi .big{font-size:22px;font-weight:800;color:var(--accent);}
+  .kpi .lbl{font-size:12px;color:var(--muted);}
+  .warn{color:var(--s);font-weight:700;}
+  .ok{color:var(--ok);font-weight:700;}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:30px;border-top:1px solid var(--line);padding-top:12px;}
+  .big-quote{border-left:4px solid var(--s);background:rgba(192,57,43,.06);padding:12px 14px;margin:14px 0;border-radius:0 6px 6px 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>CFP第2回 修正戦略 ― 60%設計と「取る/捨てる」の線引き</h1>
+<p class="sub">策定 2026-07-26 ／ 月次配分を確定（本人提案を採用）｜試験 <b>1日目 11/8（金融）＝残り105日</b> ／ <b>2日目 11/15（リスク・相続）＝残り112日</b></p>
+
+<div class="kpi">
+  <div><div class="big">4回</div><div class="lbl">金融 演習回数<br>22 / 24 / 22 / 22</div></div>
+  <div><div class="big">0回</div><div class="lbl"><span class="warn">リスク・相続</span><br>器も未作成</div></div>
+  <div><div class="big">105日</div><div class="lbl">金融まで</div></div>
+  <div><div class="big">36日</div><div class="lbl">8/31まで<br>（2科目1巡の予定）</div></div>
+  <div><div class="big">91問</div><div class="lbl">金融クイズ<br>t1=69（76%）</div></div>
+</div>
+
+<div class="card">
+<b>この資料の位置づけ</b><br>
+2024年第2回の採点で「<b>失点の主因は知識不足ではなく時間配分と取捨選択</b>」と判明した。それを受けて、<code>phase2-plan-2026.md</code>（後半戦マスター）の配分を実績ベースで修正する。判断の軸は一つだけ ―― <b>「投入1時間あたり何点増えるか」</b>。
+</div>
+
+<h2>1. 現状認識 ― 何が起きているか</h2>
+
+<h3>1-1. 金融は「プラトー」に入った</h3>
+<div class="tbl-scroll">
+<table>
+<tr><th>実施日</th><th>年度回</th><th class="num">得点</th><th>内容</th></tr>
+<tr><td>7/07</td><td>2026①</td><td class="num">22/50</td><td>1回目。現在地把握</td></tr>
+<tr><td>7/13</td><td>2025②</td><td class="num">24/50</td><td>投信3計算を克服</td></tr>
+<tr><td>7/18</td><td>2025①</td><td class="num">22/50</td><td>時間加重を克服（√2回＝4乗根）</td></tr>
+<tr><td>7/26</td><td>2024②</td><td class="num">22/50</td><td><b>時間切れ8問・勘4問</b>。解答できた37問では 22/37＝<b class="ok">59%</b></td></tr>
+</table>
+</div>
+
+<p><b>4回連続で 22〜24。しかし中身は変わっている。</b>投信・PF理論・デリバティブは<b class="ok">得点源に転換</b>した（2024②で 12/17）。にもかかわらず総得点が動かないのは、<b>取った点と同じだけ「時間切れ」で落としているから</b>。</p>
+
+<div class="big-quote">
+<b>2024②の失点28問の正体</b><br>
+時間切れで適当＝8問（38,39,40,45,47,48,49,50）／解法不明で勘＝4問（13,14,20,31）。<br>
+<b>1問1分で取れるQ47〜50に到達できなかった</b>ことが直接の敗因（ここを普通に解けば24問＝合格ライン）。
+</div>
+
+<p>つまり金融の伸び代は<b>「新しい年度をもう1回解く」ことでは埋まらない</b>。必要なのは①解答順序の固定 ②捨て問の事前決定 ③型の穴埋め（4論点）だけである。</p>
+
+<h3>1-2. 一方、リスク・相続は着手ゼロ</h3>
+<p>元の計画（フェーズ1：7/21〜8/31）は「金融→リスク→相続を1巡」だったが、7月は<b>金融だけで消費</b>した。リスク・相続は過去問0回、<code>間違いノート</code>・<code>弱点克服レポート</code>・クイズキー（R／S）も未作成。<b>残り36日で2科目を立ち上げる</b>必要がある。</p>
+
+<div class="logic">
+<b>ROIの比較（ここが戦略の分岐点）</b><br>
+・金融：22 → 26〜30（時間配分＋型4つ）＝ <b>+4〜8点</b>。ただし逓減しており、必要時間は<b>10時間程度</b>で頭打ち。<br>
+・相続：0 → 24〜30（合格圏）＝ <b>+24〜30点</b>。<b>計算が48%（3科目最大）でほぼ全て定型</b>＝反復効果が最も大きい。<br>
+・リスク：0 → 24〜30。計算39%、二部構成（生保／損保）が固定。<br>
+→ <b>8月に金融を続けるのは、最も点にならない選択</b>。
+</div>
+
+<h2>2. 修正の3原則</h2>
+
+<h3>原則1：金融は 7/31 で締め、8/1 から「維持モード」へ</h3>
+<ul>
+  <li><b>年度を追加して弱点を探す段階は終わった</b>（4回で9分野・9種類の計算型を洗い出し済み）。7/31の完答トレで締める。</li>
+  <li>8〜9月はクイズ <code>t1</code> 周回＋<b>週1回40分の計算型ドリル</b>だけ（→ 4-1）。新規K66〜K91を優先。</li>
+  <li><b>10/21〜11/7で再び最厚（60%）に</b>する。1日目科目＝<b>中日ブーストが使えない</b>ため、直前の厚みは必須。</li>
+  <li><span class="ok">※金融が最難関という実感と矛盾しない</span>：総投入量では金融が最多（≒2.4ヶ月分）。<b>型の数が多い科目は「連続投入」より「間隔を置いた再確認」が効く</b>ため、7月に潰した型を8〜9月に寝かせ、10月後半に再固定する設計。</li>
+</ul>
+
+<h3>原則2：1ヶ月1科目の集中ローテ（8月＝相続／9月＝リスク）＋金融は毎月20%で維持</h3>
+<p class="sub">※当初案（8月に相続・リスクを半月ずつ）を、本人提案の<b>「1ヶ月1科目＋金融20%」に変更（7/26）</b>。半月ずつ2科目を詰め込むより、<b>1論点集中→複数問カバー</b>という前半戦から機能している型に合う。</p>
+<div class="tbl-scroll">
+<table>
+<tr><th>科目</th><th>計算比率</th><th>構造</th><th>先にやる理由 / 後にする理由</th></tr>
+<tr><td><b>相続</b></td><td class="num">48%</td><td>10ブロック固定。SC6自社株は<b>全16回で毎回3問</b></td><td><b class="ok">先</b>：定型計算が最多＝早く型化して長く反復するほど効く。ゼロからの伸びが最大</td></tr>
+<tr><td><b>リスク</b></td><td class="num">39%</td><td>二部構成（問1-30生保／問31-50損保）固定</td><td><b>後</b>：知識比率が相対的に高く、直前期の詰め込みが効く。相続対策ブロック（問19-24）は相続の知識と相互補強</td></tr>
+</table>
+</div>
+<p>両科目とも2日目（11/15）＝<b>中日ブースト（11/9〜11/14）で最後の詰めができる</b>。この保険がある科目を8〜9月に前倒しし、<b>保険がない金融（1日目）を10月後半〜11/7に寄せる</b>のが正しい順序。</p>
+
+<div class="logic">
+<b>「金融20%＝計算定着のみ」の中身を固定する（維持モードの必須条件）</b><br>
+放置すると8〜9月で型が抜ける。次の2つだけをやる（週2h以内）：<br>
+① <b>クイズ t1 周回</b>（スキマ・毎日少しでも触る）<br>
+② <b>週1回40分、計算型だけを手で動かす</b>＝投信3計算／デュレーション／時間加重（√2回）／財務指標の逆算連鎖／外貨39・40・41型／先物理論価格。<b>年度を通しで解かない</b>のがポイント（時間を食うだけで維持にならない）。
+</div>
+
+<h3>原則3：「取る/捨てる」を3層で管理する（今回の核心）</h3>
+<p>ここまでの反省で最も重要なのは、<b>「設問を捨てる」と「論点を捨てる」は別だ</b>ということ。Q37（インドルピー債）がその典型で、<b>設問は本番で捨てるべき</b>だが、そこに埋まっていた論点は持ち帰る価値があった。</p>
+
+<div class="logic">
+<b>Q37から抽出した1論点（＝K91）</b><br>
+特定口座（源泉徴収選択）で<b>確定申告を行わない</b>場合、償還差損と通算できるのは<b>その同じ年に受け取った利子等まで</b>。過去の年の利子には遡れない。<br>
+→ 償還年の利子2回分315,520円が上限 → 還付は 315,520×20%＝<b>63,104円</b>（引ききれない4,480円は切捨て）。<br>
+「損失全額×20%が還付」と考えると64,000円になり、答えが1つズレる。<b>この論点だけで他の設問でも使える。</b>
+</div>
+
+<div class="tbl-scroll">
+<table>
+<tr><th style="width:60px">層</th><th>基準</th><th>本番の扱い</th><th>学習の扱い</th></tr>
+<tr><td><span class="rank rA">A</span></td><td>型で<b>3分以内</b>に解ける／知識1問1分</td><td><b>必ず取る</b>（60%の土台）</td><td>クイズ t1 で毎日回す</td></tr>
+<tr><td><span class="rank rB">B</span></td><td><b>5分級</b>の計算。手順は決まっているが多い</td><td>時間が余ったら取る</td><td>クイズ t1〜t2。週1で手を動かす</td></tr>
+<tr><td><span class="rank rC">C1</span></td><td><b>10分超</b>の多段。設問全体は重いが<b>核の論点は1つ</b></td><td><b>捨てる</b>（見た瞬間マーク）</td><td><b class="ok">論点だけ抽出してクイズ化</b>（例：K91・K88）</td></tr>
+<tr><td><span class="rank rS">C2</span></td><td>一次資料の穴埋め・数字の細部。<b>論点も再利用できない</b></td><td><b>捨てる</b></td><td><b>学習もしない</b>（t3 or 除外）</td></tr>
+</table>
+</div>
+
+<h2>3. 60%得点設計（金融50問の例）</h2>
+<p>「60%取る」を努力目標にすると崩れたときに下回る。<b>目標は36問（72点）に置き、捨て問4問を織り込んでも30問（60%）を割らない構造</b>にする。</p>
+
+<div class="tbl-scroll">
+<table>
+<tr><th>分野（問番号）</th><th class="num">問数</th><th class="num">2024②<br>実績</th><th class="num">目標</th><th>根拠・使う型</th></tr>
+<tr><td>制度・法規（47-50）</td><td class="num">4</td><td class="num">2</td><td class="num"><b>4</b></td><td><b>最初に解く</b>。K79損益通算と国保／K81金融ADR／K90金融サービス提供法／K80暗号資産</td></tr>
+<tr><td>投資信託（25-30）</td><td class="num">6</td><td class="num">5</td><td class="num"><b>5</b></td><td>最大の得点源。K1個別元本（★Tier1復帰）・K3TR・K4譲渡所得</td></tr>
+<tr><td>PF理論（31-36）</td><td class="num">6</td><td class="num">4</td><td class="num"><b>5</b></td><td>K74（σ=0は10秒）・K75効率的フロンティア・K63α・K30時間加重</td></tr>
+<tr><td>デリバティブ（42-46）</td><td class="num">5</td><td class="num">3</td><td class="num"><b>4</b></td><td>K43先物理論価格（<b>符号</b>）・K16二項・ヘッジ枚数</td></tr>
+<tr><td>債券（19-24）</td><td class="num">6</td><td class="num">1</td><td class="num"><b>4</b></td><td>知識3問（K71物価連動・K72みなし償還差益・K73社債管理者）＋K89理論価格・K40デュレーション</td></tr>
+<tr><td>株式・財務（13-18）</td><td class="num">6</td><td class="num">2</td><td class="num"><b>4</b></td><td>K67逆算連鎖・K68配当割引・K82分割は取締役会・K47信用取引。<b>Q15型は捨て</b></td></tr>
+<tr><td>経済・時事（1-7）</td><td class="num">7</td><td class="num">3</td><td class="num"><b>4</b></td><td>K69年率換算・K70日銀2024年3月・K86物価指数・K9〜K13。<b>レポート穴埋めは捨て</b></td></tr>
+<tr><td>預貯金・商品（8-12）</td><td class="num">5</td><td class="num">2</td><td class="num"><b>3</b></td><td>K85スーパー定期・K83財形・K84iDeCo年単位拠出</td></tr>
+<tr><td>外貨建（37-41）</td><td class="num">5</td><td class="num">0</td><td class="num"><b>3</b></td><td><b>39・40・41を取る</b>（K76予約レート／K77円ベース年利回り／K78金融類似商品）。<b>37・38は捨て</b></td></tr>
+<tr><th>合計</th><th class="num">50</th><th class="num">22</th><th class="num">36</th><th>捨て問＝4問（Q15型1・外貨2・時事1）。<b>残り46問で36問＝78%</b></th></tr>
+</table>
+</div>
+
+<h3>3-1. 解答順序（次回から必ず固定）</h3>
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">順</th><th>範囲</th><th class="num">目安</th><th>狙い</th></tr>
+<tr><td class="num">①</td><td><b>問47〜50 制度・法規</b></td><td class="num">5分</td><td>1問1分の知識を確実に回収（<b>ここを最後に回したのが今回の敗因</b>）</td></tr>
+<tr><td class="num">②</td><td><b>問42〜46 デリバティブ</b></td><td class="num">15分</td><td>得点源。先物理論価格・ヘッジ枚数は型</td></tr>
+<tr><td class="num">③</td><td><b>問25〜30 投資信託</b></td><td class="num">20分</td><td>最大の得点源</td></tr>
+<tr><td class="num">④</td><td><b>問31〜36 PF理論</b></td><td class="num">20分</td><td>得点源。σ=0型は10秒</td></tr>
+<tr><td class="num">⑤</td><td><b>問1〜12 知識・時事</b></td><td class="num">20分</td><td>迷ったら即マーク（考えても増えない）</td></tr>
+<tr><td class="num">⑥</td><td><b>問13〜24・37〜41 重い計算</b></td><td class="num">残り</td><td>時間の許す限り。C1判定なら飛ばす</td></tr>
+</table>
+</div>
+
+<h3>3-2. 捨て問の「15秒判定ルール」（3科目共通）</h3>
+<p>問題を見た瞬間に次の4つのどれかに当たったら、<b>考えずにマークして次へ</b>（勘でも25%は拾える）。</p>
+<ol>
+  <li><b>表が2枚以上＋税率が複数登場</b>する（金融Q15型：口座2つ×商品7つ×課税方式3つ）</li>
+  <li><b>為替 × 税金 × 複数期間</b>の多段（金融Q37型：TTS/TTB復元＋8回利払＋通算＋還付）</li>
+  <li><b>選択肢4つすべてに独立した計算が必要</b>（金融Q38型：4つ解かないと消去できない）</li>
+  <li><b>一次資料（白書・日銀レポート等）の穴埋め</b>で、原典を読んでいないと決められない</li>
+</ol>
+<p class="sub">※1問2点。捨て問4問＝8点を捨てても、残り46問で36問取れれば72点。<b>10分粘って1問取ると、その裏で5問失う。</b></p>
+
+<h2>4. 月次スケジュール（確定版・2026-07-26）</h2>
+<p><b>1ヶ月1科目の集中ローテ＋金融は毎月20%で維持</b>（本人提案を採用）。半月ずつ2科目を詰め込むより、前半戦から機能している「1論点集中→複数問カバー」の型に合う。</p>
+
+<div class="logic">
+<b>「金融が最難関」との整合 ― 総投入量では金融が最多</b><br>
+金融：<b>7月まる1ヶ月 ＋ 8-9月0.4 ＋ 10月前半0.4 ＋ 10/21〜11/7で0.6 ≒ 2.4ヶ月分</b>（最多）／相続：8月0.8＋9月0.1＋10月0.3＋中日0.2 ≒ 1.4ヶ月分／リスク：9月0.8＋10月0.3＋中日0.2 ≒ 1.3ヶ月分。<br>
+<b>厚みを置く場所が「8-9月」ではなく「7月＋10月後半以降」になるだけで、最難関に最多を投じる形は崩していない。</b>金融は1日目（11/8）＝中日ブーストが使えないため、直前の厚みは必須。
+</div>
+
+<div class="tbl-scroll">
+<table>
+<tr><th style="width:110px">期間</th><th style="width:150px">配分</th><th>やること</th><th>月末チェックポイント</th></tr>
+
+<tr><td><b>7/27〜7/31</b></td><td><b>金融 100%</b></td>
+<td><b>時間内完答トレ ①</b>＝未演習年度（2023①）を<b>タイマー120分</b>で通す。順序①〜⑥を厳守／新規K66〜K91を周回。<b>これが金融の締め</b></td>
+<td><b>得点より「順序どおり解き切れたか・捨て問を実際に飛ばせたか」で可否判定</b></td></tr>
+
+<tr><td><b>8月</b></td><td><b class="warn">相続 80%</b><br>金融 20%（計算定着のみ）</td>
+<td><b>相続の立ち上げ</b>：器作成（<code>間違いノート_相続</code>／<code>弱点克服レポート_相続</code>／クイズキー<code>S</code>）＋過去問3回（2026①・2025②・2025①）。<b>SC9財産評価・SC8課税価格・SC3贈与税・SC6自社株（毎回3問固定）</b>から型化<br><span class="sub">金融＝クイズt1周回（毎日スキマ）＋週1回40分の計算型ドリル。<b>年度の通し演習はしない</b></span></td>
+<td>相続クイズ <b>S 30問以上</b>／定型計算6型が「手が動く」<br>金融：投信・PF・デリバが落ちていない（ドリルで確認）</td></tr>
+
+<tr><td><b>9月</b></td><td><b class="warn">リスク 80%</b><br>金融 10%／<b>相続 10%</b></td>
+<td><b>リスクの立ち上げ</b>：器作成＋過去問3回。<b>RC5法人保険経理・RC7損保金計算</b>（計算の1/3）＋RC2課税額・RC9退職金から型化<br><b class="warn">❗9/1にネット出願を最優先で実施</b>（9/1〜10/1）<br><span class="sub">補強①＝相続を1ヶ月放置しないため<b>相続10%</b>（クイズS周回のみでよい）。金融も同様にt1周回</span></td>
+<td>リスククイズ <b>R 25問以上</b>／生保・損保の二部構成に慣れた<br><b>出願完了</b>／相続・金融の型が抜けていない</td></tr>
+
+<tr><td><b>10/1〜10/20</b></td><td>3科目 並行<br><span class="sub">金融40/相続30/リスク30</span></td>
+<td><b>最終弱点克服フェーズ</b>：週1本ずつ本番タイムで通す（金融→相続→リスク）。複数回ミス問題の補強／各科目の直前PDF生成／クイズのTier再編（実際に解きながら都度）</td>
+<td><b>3科目とも30問（60%）を安定</b>。ここで届かない科目を特定する</td></tr>
+
+<tr><td><b>10/21〜11/7</b></td><td><b>金融 60%</b><br>相続 20%／リスク 20%</td>
+<td>補強②＝<b>1日目科目に寄せる</b>（中日が使えないため）。金融はクイズ<b>t1全問</b>＋計算型の総ざらい＋<b>最新の日銀・内閣府レポートで時事カードを更新</b>（10月に最新版が出る）<br><span class="sub">相続・リスクは維持（クイズ周回＋計算ドリル）</span></td>
+<td>金融が<b>36問設計で回る</b>（制度4・投信5・PF5・デリバ4・債券4・株式4・時事4・商品3・外貨3）</td></tr>
+
+<tr><td class="num"><b>11/8（日）</b></td><td colspan="3"><b>🎯 試験1日目：金融資産運用設計</b>（解答順序 ①制度→②デリバ→③投信→④PF→⑤知識→⑥重い計算 ／ 捨て問は15秒判定で飛ばす）</td></tr>
+
+<tr><td><b>11/9〜11/14</b></td><td>相続 50%／リスク 50%</td>
+<td>補強③＝<b>中日ブースト</b>（前半戦のタックス中日型）。2科目の直前PDF＋t1全問＋定型計算の総ざらい</td>
+<td>—</td></tr>
+
+<tr><td class="num"><b>11/15（日）</b></td><td colspan="3"><b>🎯 試験2日目：リスクと保険 ／ 相続・事業承継設計</b></td></tr>
+</table>
+</div>
+
+<h3>4-1. 「金融20%＝計算定着のみ」の中身（維持モードの必須条件）</h3>
+<div class="logic">
+📅 <b>1日1問を「どの型に費やすか」は全日程を確定済み → <a href="金融_計算定着カレンダー_2026.html">金融_計算定着カレンダー_2026.html</a></b><br>
+曜日固定（月=投信／火=債券／水=PF／木=外貨／金=株式財務／土=デリバ／日=税制指標）＋★弱点型を高頻度に重み付け。<b>8/1〜10/20の81日分すべてに型・クイズID・目安時間を割り当ててある</b>ので、当日は行を見るだけでよい（10/21〜11/7の総ざらいメニューも日別で確定）。
+</div>
+<p>放置すると8〜9月で型が抜ける。逆に年度を通しで解くと時間を食うだけで維持にならない。<b>次の2つだけ</b>（週2h以内）。</p>
+<ul>
+  <li><b>クイズ t1 周回</b>（スキマ・毎日少しでも触る）</li>
+  <li><b>週1回40分、計算型だけを手で動かす</b>：投信3計算／デュレーション／時間加重（√2回＝4乗根）／財務指標の逆算連鎖／外貨39・40・41型／先物理論価格（符号）／スポットレート理論価格</li>
+</ul>
+<p class="sub">※金融固有の弱点である<b>経済・時事（3回連続で最多失点）</b>は、8〜9月は数字カードの土台づくりに留め、<b>最新レポートの反映は10/21以降</b>に回す（10月に日銀・内閣府の最新版が出るため、早く作っても作り直しになる）。</p>
+
+<h3>4-2. 毎日の型（固定）</h3>
+<ul>
+  <li><b>スキマ</b>：クイズ <code>t1</code> 周回（その月の主科目＋金融を交互に）。<b>金融は維持のため毎日少しだけ触る</b></li>
+  <li><b>朝の実働</b>：その月の主科目に集中（1論点集中→複数問カバーの型を継続）</li>
+  <li><b>演習は必ずタイマー</b>：50問120分＝<b>1問2.4分</b>。3分超えたら手を止めて次へ</li>
+</ul>
+
+<h2>5. クイズ Tier の再編方針</h2>
+<p>現状の分布は次のとおり。<b>金融は t1 が76%＝Tier分けが機能していない</b>（t1は「約9割出題」の設計なので、t1が7割を超えると絞り込みの意味が消える）。</p>
+
+<div class="tbl-scroll">
+<table>
+<tr><th>科目</th><th class="num">問数</th><th class="num">t1</th><th class="num">t2</th><th class="num">t3</th><th>評価</th></tr>
+<tr><td>ライフ</td><td class="num">62</td><td class="num">26（42%）</td><td class="num">21</td><td class="num">15</td><td><b class="ok">理想形</b>。中核だけがt1</td></tr>
+<tr><td>不動産</td><td class="num">63</td><td class="num">55（87%）</td><td class="num">6</td><td class="num">2</td><td>要再編（受験済のため優先度低）</td></tr>
+<tr><td>タックス</td><td class="num">135</td><td class="num">68（50%）</td><td class="num">63</td><td class="num">4</td><td>妥当</td></tr>
+<tr><td><b>金融</b></td><td class="num">91</td><td class="num"><b class="warn">69（76%）</b></td><td class="num">22</td><td class="num">0</td><td><b class="warn">要再編</b>。t1を40問前後に絞る</td></tr>
+</table>
+</div>
+
+<p><b class="ok">運用方針（7/26決定）</b>：一括での再編はせず、<b>実際に問題を解きながら都度 t を変更する</b>（本人判断）。以下は変更時の基準。</p>
+
+<h4>再編ルール（都度適用）</h4>
+<ul>
+  <li><b>t1＝A層</b>（型で3分以内に解ける中核）＋<b>再失点が確認された論点</b>のみ。目標40問前後</li>
+  <li><b>t2＝B層</b>（5分級・週1で手を動かす）</li>
+  <li><b>t3＝C2層</b>（時事の細部・一次資料穴埋め・低頻度）。<b>今まで0問だったのが問題</b>。ここに落とすことでt1が締まる</li>
+  <li><b>周回中に「即答できた」問題は t2 へ／「詰まった」問題は t1 へ</b>。解きながらその場で書き換えるのが最も精度が高い</li>
+  <li><b>降格は「別年度・別設例で再現できてから」</b>（K1で失敗した反省。7/25にt2へ降格→翌日Q25で再失点→Tier1復帰）</li>
+</ul>
+
+<h2>6. 今回の再回答結果の反映（2024② 時間切れ8問）</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">問</th><th>論点</th><th>再回答</th><th>判定</th><th>クイズ</th></tr>
+<tr><td class="num">38</td><td>豪ドル建外国株式投信（再投資口数・外貨利回り）</td><td class="warn">誤答</td><td><b>弱点確定＝t1</b>／ただし本番はC1で捨てる</td><td>K88 → <b>t1へ昇格</b></td></tr>
+<tr><td class="num">39</td><td>為替予約レート（残存期間の取り方）</td><td class="warn">誤答</td><td><b>弱点確定＝t1</b>。A層（取る問題）</td><td>K76（t1）</td></tr>
+<tr><td class="num">47</td><td>損益通算の口座選択と国保への波及</td><td class="warn">誤答</td><td><b>弱点確定＝t1</b>。A層（最初に解く）</td><td>K79（t1）</td></tr>
+<tr><td class="num">50</td><td>金融ADRの費用・体制</td><td class="warn">誤答</td><td><b>弱点確定＝t1</b>。A層（1問1分）</td><td>K81 → <b>t1へ昇格</b></td></tr>
+<tr><td class="num">40</td><td>外貨定期の円ベース年利回り（税引後）</td><td class="ok">正解</td><td>実力あり（時間の問題）</td><td>K77（t1・監視）</td></tr>
+<tr><td class="num">45</td><td>日経225先物の理論価格</td><td class="ok">正解</td><td>実力あり。<b>符号だけ注意</b></td><td>K43（t1・既存）</td></tr>
+<tr><td class="num">48</td><td>金融サービス提供法</td><td class="ok">正解</td><td>実力あり</td><td>K90（t2）</td></tr>
+<tr><td class="num">49</td><td>暗号資産の税務</td><td class="ok">正解</td><td>実力あり</td><td>K80（t1・監視）</td></tr>
+<tr><td class="num">37</td><td><b>償還差損の還付は同一年内の利子まで</b></td><td>—</td><td><b>C1＝設問は捨て／論点は取る</b></td><td><b>K91を新規追加（t1）</b></td></tr>
+</table>
+</div>
+<p class="sub">※「時間があれば正解した4問（40・45・48・49）」は<b>実力あり＝解答順序を直せば自動的に取れる</b>。この4問＝8点が、順序固定だけで乗る点数の実体。</p>
+
+<h2>7. この戦略のリスクと打ち手</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th>リスク</th><th>兆候</th><th>打ち手</th></tr>
+<tr><td><b>8月に金融の型が抜ける</b></td><td>10月の完答トレで投信・PF理論が落ちる</td><td>金融t1を<b>毎日スキマで触る</b>（維持モードの必須条件）。抜けたら該当論点をt1へ戻す</td></tr>
+<tr><td><b>リスク・相続が8月で1巡しきれない</b></td><td>8/17時点で相続の過去問が2回以下</td><td><b>年度数より型の数を優先</b>。S/Aランク論点（相続SC9/SC8/SC3/SC6）に絞って解く。B以下は9月へ</td></tr>
+<tr><td><b>3科目とも中途半端になる</b></td><td><b>10/20の並行フェーズ</b>で3科目とも25問前後</td><td><b>課目別合格制を使う</b>。<b>10/20を判断日</b>とし、最も伸びた科目に11月のリソースを寄せる。残り1科目は次回（2027年第1回）へ回す選択肢を最後まで残す（3科目同時受験は必須ではない）</td></tr>
+<tr><td><b>リスクの立ち上げが9月＝残り2ヶ月</b></td><td>9月末にリスクが20問未満</td><td>リスクは<b>計算39%＋知識比率が相対的に高く直前詰めが効く</b>科目。かつ2日目＝中日ブーストがある。10月の並行フェーズと中日で挽回できる設計。ただし<b>器作成を9/1〜9/3で終える</b>こと（8月の相続で手順が確立しているので短縮できる）</td></tr>
+<tr><td><b>出願忘れ</b></td><td>—</td><td><b>9/1に最優先で実施</b>（9/1〜10/1）。前半戦と同じチェック運用</td></tr>
+</table>
+</div>
+
+<h2>8. 決定事項（この5点だけ覚える）</h2>
+<div class="card">
+<ol>
+  <li><b>金融は7/31で締め＝8/1から維持モード</b>（クイズt1周回＋週1回40分の計算型ドリルのみ。年度の通し演習はしない）。<b>10/21〜11/7で再び最厚に</b>する。</li>
+  <li><b>8月＝相続80%／9月＝リスク80%（＋相続10%）／10月＝3科目並行</b>。1ヶ月1科目の集中ローテ。器を作ってからS/Aランク論点だけ解く。</li>
+  <li><b>解答順序を固定</b>：①制度 →②デリバ →③投信 →④PF →⑤知識 →⑥重い計算。</li>
+  <li><b>捨て問は15秒判定で飛ばす</b>（表2枚＋複数税率／為替×税金×多段／全選択肢に計算／一次資料穴埋め）。ただし<b>論点だけは抽出してクイズ化</b>する。</li>
+  <li><b>目標は36問（72点）</b>。60%を目標にせず、36問設計にして崩れても30問を割らない。</li>
+</ol>
+</div>
+
+<p class="foot">
+関連：<code>phase2-plan-2026.md</code>（後半戦マスター）／<code>progress.md</code>（日次ログ）／<code>金融_次回優先課題.md</code>（再開用）／<code>弱点克服レポート_金融.md</code>（弱点8=時間配分・9=NISA・10=外貨の線引き）／<code>間違いノート_金融.md</code>／<code>金融_重要問題マップ_2026後半戦.html</code>・<code>リスク_重要問題マップ_2026後半戦.html</code>・<code>相続_重要問題マップ_2026後半戦.html</code>／<code>quiz/index.html</code>（金融K1〜K91）<br>
+策定 2026-07-26（2024年第2回 金融 採点・再回答結果を反映）
+</p>
+
+</div>
+</body>
+</html>
