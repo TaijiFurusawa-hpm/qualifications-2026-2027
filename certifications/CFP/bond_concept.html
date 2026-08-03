@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>スポットレート／フォワードレート 徹底理解（2025年度第2回 問20〜22）</title>
+<style>
+    :root {
+        --bg-color: #f7f5f0;
+        --text-main: #4a4a4a;
+        --accent-green: #9eb29a;
+        --accent-brown: #d1bfae;
+        --box-bg: #ffffff;
+        --border-color: #e0dcd3;
+        --red: #d9534f;
+    }
+    body {
+        font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.7;
+        padding: 40px 20px;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    h1 {
+        text-align: center;
+        font-size: 1.7rem;
+        border-bottom: 2px solid var(--accent-green);
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+    .subtitle {
+        text-align: center;
+        font-size: 0.9rem;
+        color: #8a8a8a;
+        margin-bottom: 40px;
+    }
+    h2 {
+        font-size: 1.3rem;
+        background-color: var(--accent-brown);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-top: 50px;
+    }
+    h3 {
+        font-size: 1.05rem;
+        color: #6b7f67;
+        border-left: 5px solid var(--accent-green);
+        padding-left: 10px;
+        margin-top: 30px;
+    }
+    p { margin-bottom: 16px; }
+    .strategy-container {
+        background-color: var(--box-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 24px 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    /* --- タイムライン --- */
+    .timeline { position: relative; padding: 20px 0; margin-top: 20px; }
+    .timeline::before {
+        content: ''; position: absolute; top: 40px; left: 50px; right: 50px;
+        height: 4px; background-color: var(--border-color); z-index: 1;
+    }
+    .year-points { display: flex; justify-content: space-between; position: relative; z-index: 2; }
+    .point { display: flex; flex-direction: column; align-items: center; width: 100px; }
+    .circle {
+        width: 24px; height: 24px; background-color: var(--accent-green);
+        border-radius: 50%; margin-bottom: 10px; border: 3px solid #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .point.start .circle { background-color: var(--red); transform: scale(1.3); }
+    .year-label { font-weight: bold; margin-bottom: 10px; }
+    .cashflow {
+        background-color: #fff8e1; border: 1px dashed #f3c200;
+        padding: 5px 10px; border-radius: 4px; font-size: 0.9rem; margin-bottom: 10px;
+    }
+    .cashflow.out { background-color: #fdeeee; border-color: #e6a1a1; }
+    .discount-arrow {
+        background-color: #eef2f5; border: 1px solid #cdd6dd; padding: 8px;
+        border-radius: 4px; font-size: 0.85rem; text-align: center;
+        margin-top: 10px; width: 100%; position: relative;
+    }
+    .discount-arrow::before {
+        content: '← 割り引く'; display: block; font-weight: bold; color: #555; margin-bottom: 5px;
+    }
+    .highlight { color: var(--red); font-weight: bold; }
+    .note-box {
+        background-color: #f0f7f4; border-left: 5px solid var(--accent-green);
+        padding: 15px; margin-top: 20px; border-radius: 0 4px 4px 0;
+    }
+    .warn-box {
+        background-color: #fdf3f2; border-left: 5px solid var(--red);
+        padding: 15px 18px; margin: 20px 0; border-radius: 0 4px 4px 0;
+    }
+    .warn-box strong { color: var(--red); }
+    /* --- 数式 --- */
+    .formula {
+        background-color: #fbfaf7; border: 1px solid var(--border-color);
+        border-radius: 6px; padding: 14px 18px; margin: 16px 0;
+        font-family: "SF Mono", Consolas, Menlo, monospace;
+        font-size: 0.95rem; overflow-x: auto; white-space: nowrap;
+    }
+    .formula .big { font-size: 1.1rem; font-weight: bold; color: #3f5a3b; }
+    /* --- 表 --- */
+    table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 0.92rem; }
+    th, td { border: 1px solid var(--border-color); padding: 8px 10px; text-align: center; }
+    th { background-color: #efece5; font-weight: bold; }
+    td.left { text-align: left; }
+    tr.total td { background-color: #f4f7f3; font-weight: bold; }
+    .table-wrap { overflow-x: auto; }
+    /* --- ステップ --- */
+    .step {
+        background: var(--box-bg); border: 1px solid var(--border-color);
+        border-radius: 8px; padding: 18px 22px; margin-bottom: 16px;
+    }
+    .step-no {
+        display: inline-block; background: var(--accent-green); color: #fff;
+        border-radius: 4px; padding: 2px 10px; font-weight: bold; font-size: 0.85rem;
+        margin-bottom: 8px;
+    }
+    /* --- 確認問題 --- */
+    details {
+        background: var(--box-bg); border: 1px solid var(--border-color);
+        border-radius: 6px; padding: 12px 16px; margin-bottom: 12px;
+    }
+    summary { cursor: pointer; font-weight: bold; color: #5f7a5a; }
+    details[open] summary { margin-bottom: 10px; border-bottom: 1px dotted var(--border-color); padding-bottom: 8px; }
+    .answer { font-size: 0.93rem; }
+    ul { margin: 0 0 16px 1.2em; padding-left: 0.6em; }
+    li { margin-bottom: 6px; }
+    .kpi {
+        display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0;
+    }
+    .kpi div {
+        flex: 1 1 200px; background: var(--box-bg); border: 1px solid var(--border-color);
+        border-radius: 8px; padding: 14px; text-align: center;
+    }
+    .kpi .label { font-size: 0.8rem; color: #8a8a8a; }
+    .kpi .value { font-size: 1.25rem; font-weight: bold; color: #3f5a3b; margin-top: 4px; }
+    @media (max-width: 700px) {
+        body { padding: 20px 12px; }
+        .point { width: auto; flex: 1; }
+        .discount-arrow, .cashflow { font-size: 0.72rem; padding: 4px; }
+        .year-label { font-size: 0.8rem; }
+    }
+</style>
+</head>
+<body>
+
+<h1>スポットレート／フォワードレート 徹底理解</h1>
+<p class="subtitle">CFP 金融資産運用設計 ／ 2025年度第2回 問7（問題20・21・22）／ 作成 2026-08-04</p>
+
+<!-- ===================== 0. サマリー ===================== -->
+<h2>0. まず結論（30秒で読む）</h2>
+<div class="strategy-container">
+    <ul>
+        <li><strong>スポットレートとフォワードレートの違いは「どこに立つか」だけ</strong>。計算構造（将来のお金を割り引く）は完全に同じ。</li>
+        <li>両者をつなぐのは<strong>1本の式だけ</strong>：<span class="highlight">(1+S<sub>4</sub>)<sup>4</sup> ＝ (1+S<sub>2</sub>)<sup>2</sup> ×(1+f<sub>2,4</sub>)<sup>2</sup></span>（時間は掛け算でつながる）。</li>
+        <li>問22の正解は<strong>選択肢2＝①が②より2,300円多い</strong>。ただし<span class="highlight">フォワードレートを「％の小数第2位」に丸めてから単価を計算しないと2,400円になり、選択肢に無い答えが出る</span>（→ §5の丸めの罠）。</li>
+        <li><strong>この丸めは問20でも同じ</strong>（デュレーション2.9553を2.96に丸めてから比率へ）。<span class="highlight">この大問は「途中で出した値を丸めて次に渡す」が一貫したルール</span>だと分かれば、3問まとめて安定して取れる。</li>
+    </ul>
+    <div class="kpi">
+        <div><div class="label">問題20（設問A）</div><div class="value">正解 4</div><div class="label">FAの投資比率52.00%</div></div>
+        <div><div class="label">問題21（設問B）</div><div class="value">正解 1</div><div class="label">(ア)93.02 (イ)93.11</div></div>
+        <div><div class="label">問題22（設問C）</div><div class="value">正解 2</div><div class="label">①が2,300円多い</div></div>
+    </div>
+</div>
+
+<!-- ===================== 1. 定義 ===================== -->
+<h2>1. スポット／フォワードの定義（言葉を1回で決める）</h2>
+<div class="strategy-container">
+    <h3>スポットレート S<sub>n</sub>＝「今から n 年間」の金利</h3>
+    <p>今この瞬間にお金を出して、n年後に受け取るまでの、年あたりの利回り。<strong>起点はいつでも「現在（0年）」</strong>。表に「残存期間1年＝1.40%、2年＝2.00%…」と並んでいるのは、全部この現在起点の金利です。</p>
+    <p>割引債の理論価格が <span style="font-family:monospace;">100 ÷ (1+S<sub>n</sub>)<sup>n</sup></span> で出るのは、これが定義そのものだからです。</p>
+
+    <h3>フォワードレート f<sub>m,n</sub>＝「m年後から n年後まで」の金利</h3>
+    <p><strong>起点が将来にずれた金利</strong>。f<sub>2,4</sub> なら「2年後にスタートして4年後まで（＝2年間）」の年あたり金利です。今の市場のスポットレートから逆算して求まる、<strong>“将来こうなっているはず”という理論値</strong>であって、誰かが公表している数字ではありません。</p>
+    <div class="note-box">
+        <strong>添字の読み方（ここを間違えると全部ずれる）：</strong><br>
+        f<sub>2,3</sub>＝2年後スタート・3年後まで＝<strong>期間1年</strong>（だから1回だけ割る）<br>
+        f<sub>2,4</sub>＝2年後スタート・4年後まで＝<strong>期間2年</strong>（だから2乗で割る）<br>
+        ＝ <strong>「後ろの数字－前の数字」が期間＝割る回数</strong>。
+    </div>
+</div>
+
+<!-- ===================== 2. 橋渡しの式 ===================== -->
+<h2>2. 2つをつなぐ唯一の式（＝丸暗記はここだけ）</h2>
+<div class="strategy-container">
+    <p>4年後に同じ金額へ到達する道は2つあります。<strong>「4年間まっすぐ行く道」</strong>と、<strong>「2年行って、そこから2年行く道」</strong>。どちらを通っても着地が同じになる（そうでなければ裁定＝ノーリスクの儲けが発生してしまう）＝これが<strong>純粋期待仮説</strong>で、問22の「①と②の複利利回りは同じになるという理論」の正体です。</p>
+
+    <div class="formula">
+        <span class="big">(1+S<sub>4</sub>)<sup>4</sup> ＝ (1+S<sub>2</sub>)<sup>2</sup> × (1+f<sub>2,4</sub>)<sup>2</sup></span>
+    </div>
+    <p>時間は<strong>足し算ではなく掛け算</strong>でつながります（2年 + 2年 = 4年 が、指数の世界では ×）。この式を f について解けば、フォワードレートは必ず出せます。</p>
+
+    <div class="formula">
+        (1+f<sub>2,4</sub>)<sup>2</sup> ＝ (1+S<sub>4</sub>)<sup>4</sup> ÷ (1+S<sub>2</sub>)<sup>2</sup> &nbsp;&nbsp;→&nbsp;&nbsp; f<sub>2,4</sub> ＝ √( (1+S<sub>4</sub>)<sup>4</sup> ÷ (1+S<sub>2</sub>)<sup>2</sup> ) − 1
+    </div>
+    <div class="formula">
+        f<sub>2,3</sub> ＝ (1+S<sub>3</sub>)<sup>3</sup> ÷ (1+S<sub>2</sub>)<sup>2</sup> − 1 &nbsp;&nbsp;<span style="color:#8a8a8a;">（期間1年なので、ルートは不要）</span>
+    </div>
+
+    <h3>2025年度第2回のスポットレートで実際に出す</h3>
+    <div class="table-wrap">
+    <table>
+        <tr><th>残存期間</th><th>1年</th><th>2年</th><th>3年</th><th>4年</th></tr>
+        <tr><th>スポットレート</th><td>1.40%</td><td>2.00%</td><td>2.50%</td><td>2.80%</td></tr>
+    </table>
+    </div>
+    <div class="formula">
+f<sub>2,3</sub> ＝ 1.025<sup>3</sup> ÷ 1.02<sup>2</sup> − 1 ＝ 1.076890625 ÷ 1.0404 − 1 ＝ 0.0350736… → <strong>3.51%</strong>
+    </div>
+    <div class="formula">
+f<sub>2,4</sub> ＝ √(1.028<sup>4</sup> ÷ 1.02<sup>2</sup>) − 1 ＝ √(1.1167924 ÷ 1.0404) − 1 ＝ √1.0734237 − 1 ＝ 0.0360616… → <strong>3.61%</strong>
+    </div>
+    <div class="note-box">
+        <strong>意味の確認：</strong>今の4年金利は2.80%と低いのに、2年後スタートの金利は3.5〜3.6%と高い。これは<strong>「今の右肩上がりのイールドカーブは、市場が“将来の金利は上がる”と織り込んでいる状態だ」</strong>ということ。スポットが右肩上がり → フォワードはスポットより上、と覚えておくと検算になります。
+    </div>
+</div>
+
+<!-- ===================== 3. 図解 ===================== -->
+<h2>3. 図解：スタート地点の違いだけ（問22）</h2>
+<p>スポットとフォワードの違いは、<strong>「どこに立って計算しているか（スタート地点）」</strong>だけです。計算の構造自体は全く同じであることを視覚的に確認しましょう。</p>
+
+<!-- 戦略1 -->
+<div class="strategy-container">
+    <h2 style="margin-top:0;">パターンA：戦略①（現在から4年債RCを買う）</h2>
+    <p>あなたが立っているスタート地点は<span class="highlight">「現在（0年目）」</span>です。将来もらえるお金を、すべて「現在」まで引き戻すため、0年目を起点としたスポットレート（S）を使います。</p>
+
+    <div class="timeline">
+        <div class="year-points">
+            <div class="point start">
+                <div class="year-label">現在(0年)</div>
+                <div class="circle"></div>
+                <div style="color: #d9534f; font-weight:bold;">★スタート</div>
+            </div>
+            <div class="point">
+                <div class="year-label">1年後</div>
+                <div class="circle"></div>
+                <div class="cashflow">4万円</div>
+                <div class="discount-arrow">S1 (1.40%)<br>で1回割る</div>
+            </div>
+            <div class="point">
+                <div class="year-label">2年後</div>
+                <div class="circle"></div>
+                <div class="cashflow">4万円</div>
+                <div class="discount-arrow">S2 (2.00%)<br>で2回割る</div>
+            </div>
+            <div class="point">
+                <div class="year-label">3年後</div>
+                <div class="circle"></div>
+                <div class="cashflow">4万円</div>
+                <div class="discount-arrow">S3 (2.50%)<br>で3回割る</div>
+            </div>
+            <div class="point">
+                <div class="year-label">4年後</div>
+                <div class="circle"></div>
+                <div class="cashflow">104万円</div>
+                <div class="discount-arrow">S4 (2.80%)<br>で4回割る</div>
+            </div>
+        </div>
+    </div>
+    <div class="note-box">
+        <strong>ポイント：</strong> すべてのキャッシュフローを「現在（0年目）」に引き戻すため、現在からの距離に応じたスポットレートをそれぞれ適用します。
+    </div>
+</div>
+
+<!-- 戦略2 -->
+<div class="strategy-container">
+    <h2 style="margin-top:0;">パターンB：戦略②（2年後に、残存2年債を買う）</h2>
+    <p>タイムマシンで2年後にワープしました。あなたの新しいスタート地点は<span class="highlight">「2年後」</span>です。ここから先にもらえるお金を「2年後の時点」に引き戻すため、2年後を起点としたフォワードレート（f）を使います。</p>
+
+    <div class="timeline">
+        <div class="year-points">
+            <div class="point" style="opacity: 0.3;">
+                <div class="year-label">現在(0年)</div>
+                <div class="circle"></div>
+            </div>
+            <div class="point" style="opacity: 0.3;">
+                <div class="year-label">1年後</div>
+                <div class="circle"></div>
+            </div>
+            <div class="point start">
+                <div class="year-label">2年後</div>
+                <div class="circle"></div>
+                <div style="color: #d9534f; font-weight:bold;">★新スタート</div>
+            </div>
+            <div class="point">
+                <div class="year-label">3年後</div>
+                <div class="circle"></div>
+                <div class="cashflow">4万円</div>
+                <div class="discount-arrow">f2,3 (3.51%)<br>で1回割る</div>
+            </div>
+            <div class="point">
+                <div class="year-label">4年後</div>
+                <div class="circle"></div>
+                <div class="cashflow">104万円</div>
+                <div class="discount-arrow">f2,4 (3.61%)<br>で2回割る</div>
+            </div>
+        </div>
+    </div>
+    <div class="note-box">
+        <strong>ポイント：</strong><br>
+        ・3年後のお金は、新スタート地点から見て「1年先」なので、2年後起点・1年物の金利（f<sub>2,3</sub>）で1回割ります。<br>
+        ・4年後のお金は、新スタート地点から見て「2年先」なので、2年後起点・2年物の金利（f<sub>2,4</sub>）で2回割ります。<br><br>
+        やってることは、パターンAの「現在から2年先のキャッシュフローをS2で2回割る」のと同じ構造です！
+    </div>
+</div>
+
+<!-- 戦略2の全体像 -->
+<div class="strategy-container">
+    <h3>ただし、戦略②はこの図の「前半」も込みで1つの戦略</h3>
+    <p>上の図はあくまで<strong>②の後半（2年後に買う利付債RC）</strong>だけを描いたものです。実際の②は、<strong>0年目に割引債FCを買って2年寝かせ、その満期金で残存2年のRCを買う</strong>という2階建てです。利益額を出すには前半も要ります。</p>
+    <div class="timeline">
+        <div class="year-points">
+            <div class="point start">
+                <div class="year-label">現在(0年)</div>
+                <div class="circle"></div>
+                <div class="cashflow out">−961,200円<br><span style="font-size:0.8em;">FC購入</span></div>
+            </div>
+            <div class="point" style="opacity:0.4;">
+                <div class="year-label">1年後</div>
+                <div class="circle"></div>
+            </div>
+            <div class="point start">
+                <div class="year-label">2年後</div>
+                <div class="circle"></div>
+                <div class="cashflow">＋100万円<br><span style="font-size:0.8em;">FC償還</span></div>
+                <div class="cashflow out">−1,007,400円<br><span style="font-size:0.8em;">RC購入</span></div>
+            </div>
+            <div class="point">
+                <div class="year-label">3年後</div>
+                <div class="circle"></div>
+                <div class="cashflow">＋4万円</div>
+            </div>
+            <div class="point">
+                <div class="year-label">4年後</div>
+                <div class="circle"></div>
+                <div class="cashflow">＋104万円</div>
+            </div>
+        </div>
+    </div>
+    <div class="note-box">
+        <strong>ここが混乱しやすい：</strong>2年後に手元に入るのは100万円ですが、RCの購入には1,007,400円かかります（＝額面100万円分を単価100.74円で買う）。<strong>足りない7,400円は追加で出す</strong>と考えます。設問が定義する利益額は「<strong>税引前元利金合計 − 購入金額</strong>」なので、購入金額は<strong>FCとRCの2回分を合計</strong>します。
+    </div>
+</div>
+
+<!-- ===================== 4. 完全解法 ===================== -->
+<h2>4. 問22の完全解法（この5手順で必ず解ける）</h2>
+
+<div class="step">
+    <span class="step-no">STEP 1</span>
+    <h3 style="margin-top:0;">①の単価を、スポットレートで出す</h3>
+    <p>利付債RC（残存4年・利率4.00%・年1回）を、各キャッシュフローごとに対応年限のスポットで割り引きます。額面100円あたりで計算するのが鉄則（最後に1万倍する）。</p>
+    <div class="table-wrap">
+    <table>
+        <tr><th>時点</th><th>CF</th><th>割引</th><th>現在価値</th></tr>
+        <tr><td>1年後</td><td>4</td><td>÷1.014</td><td>3.9448</td></tr>
+        <tr><td>2年後</td><td>4</td><td>÷1.02<sup>2</sup>（=1.0404）</td><td>3.8447</td></tr>
+        <tr><td>3年後</td><td>4</td><td>÷1.025<sup>3</sup>（=1.07689）</td><td>3.7144</td></tr>
+        <tr><td>4年後</td><td>104</td><td>÷1.028<sup>4</sup>（=1.11679）</td><td>93.1240</td></tr>
+        <tr class="total"><td colspan="3">①の単価</td><td>104.63円</td></tr>
+    </table>
+    </div>
+    <p>額面100万円分 ＝ 1万口 → <strong>購入金額 1,046,300円</strong></p>
+</div>
+
+<div class="step">
+    <span class="step-no">STEP 2</span>
+    <h3 style="margin-top:0;">②の前半：割引債FCの単価</h3>
+    <div class="formula">100 ÷ 1.02<sup>2</sup> ＝ 100 ÷ 1.0404 ＝ 96.1168… → <strong>96.12円</strong> → 購入金額 <strong>961,200円</strong></div>
+    <p>2年後に額面100万円が償還されます。</p>
+</div>
+
+<div class="step">
+    <span class="step-no">STEP 3</span>
+    <h3 style="margin-top:0;">フォワードレートを出す（§2の式）</h3>
+    <div class="formula">f<sub>2,3</sub> ＝ 1.025<sup>3</sup> ÷ 1.02<sup>2</sup> − 1 → <strong>3.51%</strong>　／　f<sub>2,4</sub> ＝ √(1.028<sup>4</sup> ÷ 1.02<sup>2</sup>) − 1 → <strong>3.61%</strong></div>
+</div>
+
+<div class="step">
+    <span class="step-no">STEP 4</span>
+    <h3 style="margin-top:0;">②の後半：2年後時点でのRCの単価（フォワードで割る）</h3>
+    <div class="table-wrap">
+    <table>
+        <tr><th>時点</th><th>CF</th><th>割引（2年後起点）</th><th>2年後時点の価値</th></tr>
+        <tr><td>3年後</td><td>4</td><td>÷1.0351（1回）</td><td>3.8644</td></tr>
+        <tr><td>4年後</td><td>104</td><td>÷1.0361<sup>2</sup>（2回）</td><td>96.8791</td></tr>
+        <tr class="total"><td colspan="3">②後半の単価</td><td>100.74円</td></tr>
+    </table>
+    </div>
+    <p>額面100万円分 → <strong>購入金額 1,007,400円</strong></p>
+</div>
+
+<div class="step">
+    <span class="step-no">STEP 5</span>
+    <h3 style="margin-top:0;">利益額＝「元利金合計 − 購入金額」で比較</h3>
+    <div class="table-wrap">
+    <table>
+        <tr><th></th><th>①（4年債を持ち切る）</th><th>②（割引債2年 → 利付債2年）</th></tr>
+        <tr><td class="left">購入金額</td><td>1,046,300</td><td>961,200 ＋ 1,007,400<br>＝ 1,968,600</td></tr>
+        <tr><td class="left">税引前元利金合計</td><td>4万×4回 ＋ 100万<br>＝ 1,160,000</td><td>100万（FC償還）<br>＋ 4万×2回＋100万<br>＝ 2,080,000</td></tr>
+        <tr class="total"><td class="left">利益額</td><td>113,700円</td><td>111,400円</td></tr>
+    </table>
+    </div>
+    <p style="text-align:center; font-size:1.05rem;"><strong>差＝113,700 − 111,400 ＝ <span class="highlight">2,300円（①が多い）→ 選択肢2</span></strong></p>
+</div>
+
+<!-- ===================== 5. 丸めの罠 ===================== -->
+<h2>5. ★最大の罠：途中で出した値は「丸めてから」次に使う</h2>
+<div class="warn-box">
+    <p><strong>ここを外すと、正しい理解のまま、選択肢に無い数字にたどり着きます。</strong></p>
+    <p>f<sub>2,3</sub>＝3.507365…%、f<sub>2,4</sub>＝3.60616…% を、<strong>丸めずにそのまま</strong>単価計算に入れると、②の単価は 100.75円 → 購入 1,007,500円 → ②の利益 111,300円 → <strong>差は2,400円</strong>。選択肢に2,400円は無く、そこで手が止まります。</p>
+    <p>正しくは、フォワードレートを<strong>3.51% / 3.61%（％の小数第2位まで＝小数第3位を四捨五入）</strong>に確定させてから単価を計算します。すると②の単価は 100.74円 → <strong>差2,300円＝選択肢2</strong>に着地します。</p>
+</div>
+<div class="strategy-container">
+    <h3>問題文の丸め指示の読み方</h3>
+    <p>問22の指示は「<strong>計算過程は小数点以下第5位を四捨五入、計算結果は小数点以下第3位を四捨五入</strong>」。この試験では、<strong>途中で求めた「レート」も1つの計算結果</strong>として第3位で四捨五入し、確定した値を次の計算に持ち込みます。</p>
+    <div class="table-wrap">
+    <table>
+        <tr><th>対象</th><th>生の値</th><th>使う値</th></tr>
+        <tr><td class="left">f<sub>2,3</sub></td><td>3.507365…%</td><td><strong>3.51%</strong></td></tr>
+        <tr><td class="left">f<sub>2,4</sub></td><td>3.60616…%</td><td><strong>3.61%</strong></td></tr>
+        <tr><td class="left">単価（100円あたり）</td><td>100.74343…</td><td><strong>100.74円</strong></td></tr>
+    </table>
+    </div>
+    <div class="note-box">
+        <strong>実戦での判断基準：</strong>計算し終えて<strong>選択肢に自分の答えが無い</strong>とき、まず疑うのは考え方ではなく<strong>丸めのタイミング</strong>。「レートを丸めてから使ったか？」を最初にチェックする。差が数千円レベル（＝単価0.01円レベル）のズレなら、ほぼ確実に丸めが原因です。
+    </div>
+</div>
+
+<!-- ===================== 6. 電卓 ===================== -->
+<h2>6. 電卓の打ち方（関数電卓なしで累乗・ルートを出す）</h2>
+<div class="strategy-container">
+    <h3>累乗（1.028<sup>4</sup> など）＝定数計算を使う</h3>
+    <p>多くの一般電卓は <code>×</code> を2回押すと定数モードになります。<code>1.028 × × = = =</code> のように押すと、押した <code>=</code> の回数だけ掛かります（＝が1回で2乗、2回で3乗、3回で4乗）。<strong>機種で挙動が違うので、必ず本番前に手元の電卓で「1.028を4回掛けたら1.1167924」を確認</strong>しておくこと。</p>
+    <h3>ルート（f<sub>2,4</sub> を出すとき）＝√キー1回</h3>
+    <p>f<sub>2,4</sub> は<strong>2乗根</strong>なので、割った答えに <code>√</code> を1回押すだけです（1.0734237 → √ → 1.0360616）。</p>
+    <div class="note-box">
+        ・<strong>√を2回</strong>押すと4乗根（＝<sup>1</sup>⁄<sub>4</sub>乗）。4年物のフォワードや年率換算で使えます。<br>
+        ・期間が1年のフォワード（f<sub>2,3</sub>）は<strong>ルート不要</strong>。「期間＝後ろ−前」を先に確認してからキーを触ること。
+    </div>
+</div>
+
+<!-- ===================== 7. 問20・21 ===================== -->
+<h2>7. 同じ大問の問20・問21（デュレーション）も道具は同じ</h2>
+<div class="strategy-container">
+    <p>問20・21は別表（割引債FA・利付債RA・割引債FB）を使いますが、<strong>「将来のCFを割り引く」という骨格は問22と同一</strong>です。ここだけ追加で覚えます。</p>
+    <div class="table-wrap">
+    <table>
+        <tr><th></th><th>割引債券FA</th><th>利付債券RA</th><th>割引債券FB</th></tr>
+        <tr><td class="left">残存期間</td><td>2年</td><td>3年</td><td>4年</td></tr>
+        <tr><td class="left">利率</td><td>—</td><td>1.50%（年1回）</td><td>—</td></tr>
+        <tr><td class="left">複利利回り</td><td>1.70%</td><td>2.30%</td><td>2.80%</td></tr>
+    </table>
+    </div>
+
+    <h3>問20（正解4）：割引債のデュレーション＝残存期間そのもの</h3>
+    <ul>
+        <li><strong>割引債はマコーレー・デュレーション＝残存期間</strong>（FA＝2年、FB＝4年）。途中でCFが無いので当たり前、と理解しておく。</li>
+        <li>利付債RAは加重平均で出す：各CFの現在価値 × 経過年数 の合計 ÷ 価格。<br>
+        価格＝1.5÷1.023＋1.5÷1.023<sup>2</sup>＋101.5÷1.023<sup>3</sup>＝1.4663＋1.4333＋94.8067＝<strong>97.7063</strong><br>
+        D＝(1×1.4663＋2×1.4333＋3×94.8067)÷97.7063＝288.7530÷97.7063＝2.9553… → <strong>2.96年</strong></li>
+        <li>ポートフォリオのデュレーションは<strong>投資比率による加重平均</strong>：<br>
+        w×2 ＋ (1−w)×4 ＝ 2.96 → 4−2w＝2.96 → w＝<strong>52.00%</strong> → 選択肢4。</li>
+    </ul>
+    <div class="warn-box">
+        <strong>ここでも「丸めてから使う」：</strong>D<sub>RA</sub>を丸めずに2.9553のまま比率に入れると w＝52.23% となり、選択肢（48.00／50.50／51.00／52.00）のどれとも一致しません。<strong>Dを2.96年に確定させてから比率を出す</strong>と、ちょうど52.00%に着地します。§5の問22とまったく同じ構造で、この大問は<strong>「途中で求めた値を丸めてから次へ渡す」ことを一貫して要求している</strong>と読めます。
+    </div>
+
+    <h3>問21（正解1）：修正デュレーションと理論価格は別物</h3>
+    <p>この設問は「<strong>近似（修正デュレーション）で出した価格</strong>」と「<strong>厳密な理論価格</strong>」を並べて、両者がズレることを確認させる問題です。</p>
+    <ul>
+        <li>FBの現在価格＝100÷1.028<sup>4</sup>＝<strong>89.54円</strong></li>
+        <li>修正デュレーション＝マコーレーD÷(1+r)＝4÷1.028＝<strong>3.8911</strong></li>
+        <li>(ア) 金利1%下落 → 価格変化率＝−(−1%×3.8911)＝+3.8911% → 89.54×1.038911＝<strong>93.02円</strong></li>
+        <li>(イ) 利回りが1.80%になったときの理論価格＝100÷1.018<sup>4</sup>＝<strong>93.11円</strong></li>
+    </ul>
+    <div class="note-box">
+        <strong>(ア)＜(イ) になる理由＝コンベクシティ：</strong>デュレーションによる近似は直線で、実際の価格－利回り曲線は下に凸。だから金利低下時、<strong>近似（93.02）は実際の価格（93.11）を過小評価</strong>します。この大小関係を知っていれば、選択肢を絞る材料になります。
+    </div>
+</div>
+
+<!-- ===================== 8. 自力チェック ===================== -->
+<h2>8. 自力チェック（見ないで解けたら定着）</h2>
+<p>電卓だけ使い、上の解説を見ずに答えてください。数値は 2025年度第2回 の表と同じです（S<sub>1</sub>=1.40%、S<sub>2</sub>=2.00%、S<sub>3</sub>=2.50%、S<sub>4</sub>=2.80%）。</p>
+
+<details>
+    <summary>Q1. f<sub>1,2</sub>（1年後スタート・1年間）は何％か。</summary>
+    <div class="answer">
+        期間＝2−1＝1年なのでルート不要。<br>
+        f<sub>1,2</sub>＝1.02<sup>2</sup>÷1.014 − 1 ＝ 1.0404÷1.014 − 1 ＝ 0.026035… → <strong>2.60%</strong><br>
+        <span style="color:#8a8a8a;">検算：1年目1.40%と2年目2.60%の平均がおよそ2.00%（＝S<sub>2</sub>）になっている。</span>
+    </div>
+</details>
+
+<details>
+    <summary>Q2. f<sub>1,3</sub>（1年後スタート・2年間）は何％か。</summary>
+    <div class="answer">
+        期間＝3−1＝2年なのでルート1回。<br>
+        f<sub>1,3</sub>＝√(1.025<sup>3</sup>÷1.014) − 1 ＝ √(1.076890625÷1.014) − 1 ＝ √1.0620223 − 1 ＝ 0.030549… → <strong>3.05%</strong>
+    </div>
+</details>
+
+<details>
+    <summary>Q3. 「1年債を4回乗り換える」と「4年債を1本持つ」が同じ結果になる、という理論の名前は？ また、この理論が成り立つとき (1+S<sub>4</sub>)<sup>4</sup> は何に等しいか。</summary>
+    <div class="answer">
+        <strong>純粋期待仮説</strong>。<br>
+        (1+S<sub>4</sub>)<sup>4</sup> ＝ (1+S<sub>1</sub>)×(1+f<sub>1,2</sub>)×(1+f<sub>2,3</sub>)×(1+f<sub>3,4</sub>)<br>
+        ＝ (1+S<sub>2</sub>)<sup>2</sup>×(1+f<sub>2,4</sub>)<sup>2</sup> ＝ (1+S<sub>3</sub>)<sup>3</sup>×(1+f<sub>3,4</sub>)<br>
+        <span style="color:#8a8a8a;">＝ 分け方は自由。どう分けても4年後の到達点は同じ。</span>
+    </div>
+</details>
+
+<details>
+    <summary>Q4. 利付債RC（利率4.00%・年1回）の残存2年ぶんを、<strong>現在</strong>買うとしたら単価はいくらか。（②の後半＝2年後に買う場合の100.74円と比べよ）</summary>
+    <div class="answer">
+        現在買うならスポットで割る：4÷1.014 ＋ 104÷1.0404 ＝ 3.9448 ＋ 99.9616 ＝ <strong>103.91円</strong><br>
+        2年後に同じ債券を買うと <strong>100.74円</strong>＝<strong>安い</strong>。<br>
+        <span style="color:#8a8a8a;">理由：2年後の金利（フォワード3.5〜3.6%）は今の金利（1.4〜2.0%）より高いと市場が織り込んでいるから。金利が高い＝債券価格は安い。この方向感（金利↑＝価格↓）が瞬時に出るかが本番の分かれ目。</span>
+    </div>
+</details>
+
+<details>
+    <summary>Q5. ②の利益額を出すとき、購入金額に「FCの961,200円」と「RCの1,007,400円」を両方足すのはなぜか。2年後に受け取る100万円は差し引かないのか。</summary>
+    <div class="answer">
+        設問が利益額を「<strong>税引前元利金合計額 − 購入金額</strong>」と定義しているから。<br>
+        受け取った100万円は<strong>元利金合計側</strong>（2,080,000円の一部）に計上済みなので、購入金額から引くと二重計上になります。<br>
+        <strong>入ってきたお金は全部「元利金合計」に、出したお金は全部「購入金額」に</strong>、と機械的に振り分けるのが安全です。
+    </div>
+</details>
+
+<details>
+    <summary>Q6. 計算し終えたら差が2,400円になった。選択肢は「2,300／3,800／34,000／等しい」。どこを疑うか。</summary>
+    <div class="answer">
+        <strong>丸めのタイミング</strong>。フォワードレートを3.507%／3.606%のまま使っていないか確認する。<strong>3.51%／3.61%に丸めてから</strong>単価を計算し直すと、②の単価が100.75→100.74となり、差は2,300円になる。<br>
+        <span style="color:#8a8a8a;">考え方が合っているのに選択肢に無い＝丸め、を反射にする。</span>
+    </div>
+</details>
+
+<!-- ===================== 9. まとめ ===================== -->
+<h2>9. 3行まとめ</h2>
+<div class="strategy-container">
+    <ul>
+        <li><strong>スポット＝現在起点、フォワード＝将来起点。やることは同じ「割り引く」だけ。</strong></li>
+        <li><strong>つなぐ式は (1+S<sub>長</sub>)<sup>長</sup> ＝ (1+S<sub>短</sub>)<sup>短</sup> × (1+f)<sup>期間</sup>。期間＝添字の引き算＝割る回数＝ルートの回数。</strong></li>
+        <li><strong>レートは％小数第2位に丸めてから単価へ。選択肢に無い答えが出たら、まず丸めを疑う。</strong></li>
+    </ul>
+</div>
+
+</body>
+</html>
