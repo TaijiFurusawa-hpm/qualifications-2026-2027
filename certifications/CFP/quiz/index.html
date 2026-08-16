@@ -801,10 +801,16 @@ let SUB="", pool=[], idx=0, score=0, wrong=[], answered=false, mode="";
 
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 
-/* 出典sの「YYYY-MM-DD 新規」から、追加されてからの経過日数を返す（無ければ Infinity） */
+/* 出典sの「YYYY-MM-DD 新規」から、追加されてからの経過日数を返す（無ければ Infinity）
+   ※sは運用メモを自由記述する欄なので、書式がずれると静かに新着判定から漏れる。
+     日付と「新規」が両方あるのに接続していない場合だけ警告して、書式ドリフトに気づけるようにする。 */
 function daysSinceAdded(q){
-  const m = /(\d{4})-(\d{2})-(\d{2})\s*新規/.exec(q.s||"");
-  if(!m) return Infinity;
+  const s = q.s || "";
+  const m = /(\d{4})-(\d{2})-(\d{2})\s*新規/.exec(s);
+  if(!m){
+    if(/\d{4}-\d{2}-\d{2}/.test(s) && s.includes("新規")) console.warn(`[quiz] 追加日を読めません: ${q.id} / ${s}`);
+    return Infinity;
+  }
   const t = new Date(+m[1], +m[2]-1, +m[3]).getTime();
   if(isNaN(t)) return Infinity;
   return (Date.now() - t) / 86400000;
