@@ -182,6 +182,7 @@
   .center{text-align:center}
   .chip{display:inline-flex; align-items:center; font-family:var(--num); font-size:11px; color:var(--sub); border:1px solid var(--line); border-radius:20px; padding:2px 9px; margin:2px 6px 2px 0}
   .badge{font-family:var(--num); background:rgba(251,113,133,.2); color:#fda4af; font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; margin-left:6px; border:1px solid rgba(251,113,133,.35)}
+  .badge-new{background:rgba(34,211,238,.18); color:#67e8f9; border-color:rgba(34,211,238,.4)}
 
   .rev{border-left:2px solid var(--ng); padding:8px 0 8px 12px; margin:12px 0; background:linear-gradient(90deg, rgba(251,113,133,.06), transparent); border-radius:0 8px 8px 0}
   .rev .q{font-weight:600; font-size:14px}
@@ -227,7 +228,14 @@ const SESSION_SIZE = 30;          // 1回の出題数
 const TIER1_RATIO = 0.9;          // 第1ティアの出題割合（9割。残り1割を第2・第3ティアから）
 const TIER_BASE = {1:5, 2:3, 3:2}; // 同一ティア内の重み（苦手ブースト用）。ティア間の割合はTIER1_RATIOで制御
 const MISS_BOOST = 2;             // 間違えた回数1回につき重みに加算する倍率
+// 直近追加ほど強くブーストし、時間とともに減衰させる（演習で落としたばかりの論点を優先的に出す）
+// [経過日数の上限, 重み倍率]。sの「YYYY-MM-DD 新規」から追加日を読む。
+// ※短期間に大量追加した時期は新着の母数自体が増えるため、倍率を上げすぎると既存問題が回らなくなる。
+//   集中的に潰したいときは「直近追加だけ」ボタンを使う。
+const NEW_BOOST_STEPS = [[7,3],[14,1.6],[21,1.2]];
+const NEW_DAYS = NEW_BOOST_STEPS[NEW_BOOST_STEPS.length-1][0]; // 「新着」の範囲は常にブースト表の最終閾値と一致させる
 const TIER_LABEL = {1:"第1ティア 最優先", 2:"第2ティア 重要", 3:"第3ティア 定着確認"};
+const MODE_LABEL = {weak:"・苦手復習", fresh:"・直近追加"}; // 出題画面のヘッダー表示。モードを増やしたらここに1行足す
 const TIER_CLASS = {1:"t1",2:"t2",3:"t3"};
 const srcLine = o => `${o.id}・論点：${o.s}`; // ID＋出典論点の1行表記（出題フィードバック/結果画面で共通利用）
 
@@ -792,7 +800,28 @@ function setBest(sub,n){const b=loadJSON(BEST_KEY);b[sub]=n;saveJSON(BEST_KEY,b)
 let SUB="", pool=[], idx=0, score=0, wrong=[], answered=false, mode="";
 
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function weightOf(sub,q){ return TIER_BASE[q.t] * (1 + MISS_BOOST*missOf(sub,q.id)); }
+
+/* 出典sの「YYYY-MM-DD 新規」から、追加されてからの経過日数を返す（無ければ Infinity） */
+function daysSinceAdded(q){
+  const m = /(\d{4})-(\d{2})-(\d{2})\s*新規/.exec(q.s||"");
+  if(!m) return Infinity;
+  const t = new Date(+m[1], +m[2]-1, +m[3]).getTime();
+  if(isNaN(t)) return Infinity;
+  return (Date.now() - t) / 86400000;
+}
+function isFresh(q){ return daysSinceAdded(q) <= NEW_DAYS; }
+function freshCount(sub){ return DATA[sub].filter(isFresh).length; }
+/* 追加からの経過日数に応じて減衰するブースト倍率 */
+function freshBoost(q){
+  const d = daysSinceAdded(q);
+  for(const [limit, mul] of NEW_BOOST_STEPS){ if(d <= limit) return mul; }
+  return 1;
+}
+
+/* 重み ＝ ティア基礎 × 苦手ブースト × 直近追加ブースト */
+function weightOf(sub,q){
+  return TIER_BASE[q.t] * (1 + MISS_BOOST*missOf(sub,q.id)) * freshBoost(q);
+}
 
 // 重み付き非復元抽出（同一プール内で苦手ブースト）
 function weightedSampleFrom(sub, items, n){
@@ -825,13 +854,23 @@ function startSession(sub){
   pool = weightedSample(sub, items, Math.min(SESSION_SIZE, items.length));
   idx=0; score=0; wrong=[]; render();
 }
-function startWeak(sub){
-  SUB=sub; mode="weak";
-  const m=missMap()[sub]||{};
-  const items=DATA[sub].filter(q=>m[q.id]>0).sort((a,b)=>(m[b.id]-m[a.id])||(a.t-b.t));
+/* 絞り込み済みリストでセッションを開始する共通処理（startWeak/startFreshが利用） */
+function startFiltered(sub, m, items){
   if(!items.length){ home(); return; }
+  SUB=sub; mode=m;
   pool=items.slice(0, SESSION_SIZE);
   idx=0; score=0; wrong=[]; render();
+}
+/* 間違えた問題だけを解く（誤答回数の多い順） */
+function startWeak(sub){
+  const m=missMap()[sub]||{};
+  startFiltered(sub, "weak",
+    DATA[sub].filter(q=>m[q.id]>0).sort((a,b)=>(m[b.id]-m[a.id])||(a.t-b.t)));
+}
+/* 直近追加分だけを解く（新しい順）。演習で落とした論点をその場で潰すためのモード */
+function startFresh(sub){
+  startFiltered(sub, "fresh",
+    DATA[sub].filter(isFresh).sort((a,b)=>daysSinceAdded(a)-daysSinceAdded(b)||(a.t-b.t)));
 }
 
 /* ===== アイコン（lucide系インラインSVG）＆モーション ===== */
@@ -852,7 +891,8 @@ const ICONS={
   info:'<circle cx="12" cy="12" r="9"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
   flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/>',
   receipt:'<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/>',
-  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>'
+  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>',
+  sparkles:'<path d="M12 3l1.9 4.6L18.5 9.5 13.9 11.4 12 16l-1.9-4.6L5.5 9.5l4.6-1.9L12 3Z"/><path d="M18 15l.9 2.1 2.1.9-2.1.9L18 21l-.9-2.1-2.1-.9 2.1-.9L18 15Z"/>'
 };
 const SUBJECT_ICON={"ライフ":"heart","不動産":"building","タックス":"receipt","金融":"layers","リスク":"shield"};
 function ic(n,s){s=s||18;return `<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONS[n]||''}</svg>`;}
@@ -869,11 +909,11 @@ function home(){
    <div class="card" style="padding:14px 16px"><p style="margin:0;font-size:13.5px">科目を選んでスタート。回答後すぐに正誤と解説が出ます。<br>
    <span style="color:var(--sub);font-size:12.5px">第1ティア9割で出題（残り1割が第2・第3ティア）。間違えた問題は次回以降の優先度が上がります。</span></p></div>
    ${subs.map((s,si)=>{
-     const best=bestOf(s), wc=weakCount(s), n=DATA[s].length, max=Math.min(SESSION_SIZE,n);
+     const best=bestOf(s), wc=weakCount(s), fc=freshCount(s), n=DATA[s].length, max=Math.min(SESSION_SIZE,n);
      return `<div class="card subcard" onclick="subjectMenu('${s}')">
         <div class="stile s${si%2}">${ic(SUBJECT_ICON[s]||'target',22)}</div>
         <div style="flex:1;min-width:0">
-          <h2>${s}${wc?`<span class="badge">苦手 ${wc}</span>`:''}</h2>
+          <h2>${s}${wc?`<span class="badge">苦手 ${wc}</span>`:''}${fc?`<span class="badge badge-new">新着 ${fc}</span>`:''}</h2>
           <div class="scard-meta"><span>全${n}問</span><span class="dot"></span><span>1回30問・優先度抽出</span>${best!=null?`<span class="dot"></span><span>ベスト <b style="font-family:var(--num);color:var(--ink)">${best}</b>/${max}</span>`:''}</div>
           ${best!=null?`<div class="mini"><i style="width:${Math.round(best/max*100)}%"></i></div>`:''}
         </div>
@@ -889,7 +929,7 @@ function home(){
 }
 
 function subjectMenu(s){
-  const wc=weakCount(s), n=DATA[s].length, best=bestOf(s), max=Math.min(SESSION_SIZE,n);
+  const wc=weakCount(s), fc=freshCount(s), n=DATA[s].length, best=bestOf(s), max=Math.min(SESSION_SIZE,n);
   const tc={1:0,2:0,3:0}; DATA[s].forEach(q=>tc[q.t]++);
   const si=Object.keys(DATA).indexOf(s);
   app.innerHTML = `
@@ -916,6 +956,7 @@ function subjectMenu(s){
      </div>
      <div style="height:14px"></div>
      <button class="btn primary" onclick="startSession('${s}')">${ic('play',16)}30問にチャレンジ（優先度ランダム）</button>
+     <button class="btn" onclick="startFresh('${s}')" ${fc?'':'disabled style="opacity:.45"'}>${ic('sparkles',17)}直近追加だけ${fc?`（${fc}問）`:'（なし）'}</button>
      <button class="btn" onclick="startWeak('${s}')" ${wc?'':'disabled style="opacity:.45"'}>${ic('flame',17)}苦手だけ復習${wc?`（${wc}問）`:'（なし）'}</button>
      <button class="btn ghost" onclick="if(confirm('${s}の苦手記録をリセットします。よろしいですか？')){clearWeak('${s}')}">${ic('reset',16)}苦手記録をリセット</button>
    </div>`;
@@ -928,7 +969,7 @@ function render(){
   const pad=n=>String(n).padStart(2,'0');
   app.innerHTML = `
    <div class="meta">
-     <span class="qno">${SUB}${mode==='weak'?'・苦手復習':''}　<b>${pad(idx+1)}</b><i>/${pad(pool.length)}</i></span>
+     <span class="qno">${SUB}${MODE_LABEL[mode]||''}　<b>${pad(idx+1)}</b><i>/${pad(pool.length)}</i></span>
      <span class="qmeta-r">
        <span class="qid">${q.id}</span>
        <span class="tier ${TIER_CLASS[q.t]}">${TIER_LABEL[q.t]}</span>
