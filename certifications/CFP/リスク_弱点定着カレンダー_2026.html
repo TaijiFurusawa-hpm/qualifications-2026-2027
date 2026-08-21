@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>リスク 弱点定着カレンダー（過去問1日1問・9/1〜10/20）</title>
+<style>
+  :root{ --bg:#fbfaf7; --fg:#232323; --muted:#6b6b6b; --line:#e3ddd2; --card:#ffffff;
+    --accent:#7a4b2a; --hl:#fff6e6; --s:#c0392b; --ok:#2e7d5b; --we:#f4f1ea; }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1c1d1f; --fg:#e8e6e2; --muted:#9a9a9a; --line:#34363a; --card:#25272b;
+      --accent:#c39a76; --hl:#2c2a24; --s:#e57373; --ok:#6cc39a; --we:#22242a; } }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;line-height:1.6;font-size:15px;}
+  .wrap{max-width:1080px;margin:0 auto;padding:26px 18px 80px;}
+  h1{font-size:23px;margin:0 0 4px;}
+  h2{font-size:18px;margin:36px 0 10px;padding:8px 12px;background:var(--accent);color:#fff;border-radius:6px;}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 16px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:13px 15px;margin:13px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0;}
+  th,td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top;}
+  th{background:rgba(122,75,42,.10);font-weight:700;}
+  .tbl-scroll{overflow-x:auto;}
+  .num{font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap;}
+  .q{font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px;}
+  .hint{font-size:11.5px;color:var(--muted);}
+  .wkrow td{background:rgba(122,75,42,.13);font-weight:700;font-size:12.5px;}
+  tr.we td{background:var(--we);}
+  .star{color:var(--s);font-weight:800;}
+  .logic{background:var(--hl);border-left:4px solid var(--accent);padding:11px 14px;margin:12px 0;
+    border-radius:0 6px 6px 0;font-size:13.5px;}
+  code{background:rgba(128,128,128,.14);padding:1px 5px;border-radius:3px;font-size:12.5px;}
+  .dow{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:10px 0;}
+  .dow>div{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:8px 4px;text-align:center;}
+  .dow .d{font-size:17px;font-weight:800;color:var(--accent);}
+  .dow .f{font-size:12px;line-height:1.35;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>リスク 弱点定着カレンダー ― 過去問 1日1問（9/1〜10/20）</h1>
+<p class="sub">作成 2026-08-22｜<b>50日分すべて「実際に失点した設問」で確定</b>（架空の練習問題は1問もない）｜上位ソース＝<code>リスク_次回優先課題.md</code>／<code>間違いノート_リスク.md</code>／<code>progress.md</code></p>
+
+<div class="card" style="border-color:var(--ok);">
+<b>✅ 位置づけ ― リスクは「集中期間を終えて維持に入る」科目</b><br>
+8/22に出口条件（2025①・2024①とも合格ライン超え）をクリアし、集中期間は終了した。得点推移＝<b>22 → 33 → 31 → 42 → 37 → 37</b>（直近3回は合格ライン+9〜+12）。<br>
+9月以降は<b>相続80%</b>が主戦場なので、リスクは<b>1日10分の1問だけ</b>で維持する。<b>通し演習は行わない</b>。このカレンダーの役割は得点を伸ばすことではなく、<b>落ちていないかを毎日1問で検知すること</b>（金融で機能が実証済み）。
+</div>
+
+<div class="card">
+<b>使い方 ― 当日は「何をやるか」を考えない</b><br>
+その日の行の<b>過去問（年度回・問番号）を1問だけ解く</b>。ファイルは
+<code>certifications/CFP/過去問/{年度}年第{N}回/問題/{年度}年第{N}回_リスク_問題.pdf</code>、解答は同じ階層の <code>解答/</code>。<br>
+<b>右端のヒントは解いた後に読む</b>（先に読むと思い出す訓練にならない）。できなかった日は<b>飛ばして翌日の分をやる</b>（遡って埋めない）。<br>
+<span class="star">★</span>＝<b>2回以上落としている継続失点</b>（50問中 <b>30問</b>）。落としたら、その場で該当クイズ（R番号）を引いて回す。
+</div>
+
+<h2>1. 覚えるのは曜日だけ</h2>
+<div class="dow">
+  <div><div class="d">月</div><div class="f">生保の税務<br>（控除・医療費）</div></div>
+  <div><div class="d">火</div><div class="f">個人年金<br>（雑所得）</div></div>
+  <div><div class="d">水</div><div class="f">一時所得<br>名義変更</div></div>
+  <div><div class="d">木</div><div class="f">法人保険<br>退職金・中退共</div></div>
+  <div><div class="d">金</div><div class="f">相続対策<br>生保の知識</div></div>
+  <div><div class="d">土</div><div class="f">損保金の<br>計算</div></div>
+  <div><div class="d">日</div><div class="f">損保の知識<br>と税務</div></div>
+</div>
+
+<div class="logic">
+<b>割り当てのルール</b><br>
+① <b>出題は「年度回・問番号」で指定する</b>（クイズIDではない）。クイズアプリは指定した問題だけを開けないため、当日は必ずPDFを開く。<br>
+② <b>同じ論点が複数年度にあるときは最新年度を優先</b>し、古い年度へ下る。<b>同じ設問は二度使わない</b>（50日＝50問すべて別の設問）。<br>
+③ 頻度は<b>継続失点ほど多く</b>。RC6個人年金が5回、RC4生保料控除が4回、名義変更が4回、中退共が3回。<br>
+④ <b>所要は1日2〜6分</b>。超えたらその型は10/21以降の総ざらい枠に回す（維持モードで粘るのは目的から外れる）。<br>
+⑤ <b>時間帯は毎日 5:10〜5:20</b>（金融の1日1問 5:00〜5:10 の直後）。
+</div>
+
+<h2>2. 重点配分 ― 継続失点の4論点をどこに置いたか</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th>論点</th><th class="num">連続</th><th class="num">配置</th><th>割り当てた過去問（最新年度から順に使用）</th></tr>
+<tr><td><b>名義変更の税務</b>（方向×対価×取得原因）</td><td class="num">★5回</td><td class="num">4回</td><td class="q">9/2 2025①問17／9/16 2024②問13／9/30 2024②問15／10/14 2024②問7</td></tr>
+<tr><td><b>RC6 個人年金の雑所得</b></td><td class="num">★4回</td><td class="num">5回</td><td class="q">9/1 2026①問7／9/15 2025②問5／9/29 2024②問4／10/13 2024②問28／10/20 2024①問7</td></tr>
+<tr><td><b>RC4 生命保険料控除</b>（4回続けて得点になっていない）</td><td class="num">★4回</td><td class="num">4回</td><td class="q">9/7 2026①問6／9/21 2025②問8／10/5 2024②問6／10/19 2024①問9</td></tr>
+<tr><td><b>中退共</b>（知識3＋計算1）</td><td class="num">★4回</td><td class="num">3回</td><td class="q">9/3 2024①問30〈計算〉／9/17 2025②問28／10/1 2025①問28</td></tr>
+<tr><td>RC2 一時所得</td><td class="num">★3回</td><td class="num">3回</td><td class="q">9/9 2026①問8／9/23 2025②問6／10/7 2025①問10</td></tr>
+<tr><td>RC7 損保金の計算</td><td class="num">★—</td><td class="num">5回</td><td class="q">9/5 2024①問35／9/12 2025①問35／9/26 2024①問36／10/10 2025②問34／10/17 2026①問34</td></tr>
+<tr><td>RC9c 企業費用・利益総合／事業保障資金</td><td class="num">★2回</td><td class="num">2回</td><td class="q">9/19 2025①問40／10/8 2025②問26</td></tr>
+<tr><td>所得補償保険／労働災害総合保険／紛争解決機関／対人賠償の免責</td><td class="num">★各2回</td><td class="num">4回</td><td class="q">10/3 2025①問39／9/27 2025②問45／9/13 2025②問33／10/11 2024②問39</td></tr>
+<tr><td>相続対策（課税対象額・代償分割・権利評価）</td><td class="num">★2回</td><td class="num">4回</td><td class="q">9/4 2026①問20／9/11 2025①問23／9/18 2026①問21／10/2 2026①問23</td></tr>
+<tr><td>法人経理（85%超の計上率・圧縮記帳）</td><td class="num">★2回</td><td class="num">2回</td><td class="q">9/10 2026①問27／10/15 2026①問46</td></tr>
+</table>
+</div>
+
+<h2>3. 9月（相続80% ＋ 金融10% ＋ リスク10%）</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">日付</th><th class="num">曜</th><th>今日の1問（過去問）</th><th>分野／型</th><th class="num">目安</th><th>ヒント（答え合わせ用）</th></tr>
+<tr class="wkrow"><td colspan="6">第1週</td></tr>
+<tr><td class="num">9/1</td><td class="num">火</td><td class="q">2026年第1回 <b>問7</b></td><td>個人年金／<b>RC6</b> 雑所得 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★4回連続。まず公的年金等／私的年金／非課税に3分類（企業型DCは公的年金等・財形年金は非課税）。私的年金だけ 必要経費＝年金年額×(払込総額÷総支給見込額)</td></tr>
+<tr><td class="num">9/2</td><td class="num">水</td><td class="q">2025年第1回 <b>問17</b></td><td>名義変更の税務 <span class="star">★</span></td><td class="num">3分</td><td class="hint">★5回連続の最新。①方向（誰から誰へ）②対価の有無 ③取得原因（相続／生前贈与／自己負担）を先に確定してから税目を決める</td></tr>
+<tr><td class="num">9/3</td><td class="num">木</td><td class="q">2024年第1回 <b>問30</b></td><td>中退共／退職金額の計算 <span class="star">★</span></td><td class="num">4分</td><td class="hint">★8/22は近似値を選んで結果オーライ。掛金月額が変わったら期間で横に切らず「掛金の層」で縦に分け、それぞれの納付月数で引く</td></tr>
+<tr><td class="num">9/4</td><td class="num">金</td><td class="q">2026年第1回 <b>問20</b></td><td>相続対策／相続税の課税対象額 <span class="star">★</span></td><td class="num">6分</td><td class="hint">★2回連続。①法定相続人の数を数える ②生命保険金の非課税枠は「相続人が受け取った保険金の合計」だけを分母に按分（孫の分は除く） ③死亡退職金は別枠で500万円×法定相続人数 ④弔慰金は枠の外</td></tr>
+<tr class="we"><td class="num">9/5</td><td class="num">土</td><td class="q">2024年第1回 <b>問35</b></td><td>損保金／<b>RC7</b> 人身傷害＋車両保険</td><td class="num">5分</td><td class="hint">8/22の失点。人身傷害は自分の過失分も含めて基準で算定／車両保険は免責金額を引く。2つを分けて積む</td></tr>
+<tr class="we"><td class="num">9/6</td><td class="num">日</td><td class="q">2024年第1回 <b>問33</b></td><td>損保知識／損保に係る法律知識</td><td class="num">2分</td><td class="hint">8/22の失点。失火責任法は重過失なら賠償責任を負う／特定小型原動機付自転車の扱い</td></tr>
+<tr class="wkrow"><td colspan="6">第2週</td></tr>
+<tr><td class="num">9/7</td><td class="num">月</td><td class="q">2026年第1回 <b>問6</b></td><td>生保税務／<b>RC4</b> 生命保険料控除 <span class="star">★</span></td><td class="num">4分</td><td class="hint">★4回続けて得点になっていない。自動更新の団体定期＝新制度／損保会社の医療保険＝介護医療／自動振替貸付分も含める。仕分けが先・速算表は後</td></tr>
+<tr><td class="num">9/8</td><td class="num">火</td><td class="q">2026年第1回 <b>問14</b></td><td>個人年金／年金の課税区分</td><td class="num">2分</td><td class="hint">保証期間分を繰上げて一時金で受け取っても雑所得（一時所得ではない）。変額年金のファンド間スイッチングは非課税</td></tr>
+<tr><td class="num">9/9</td><td class="num">水</td><td class="q">2026年第1回 <b>問8</b></td><td>一時所得／<b>RC2</b> <span class="star">★</span></td><td class="num">5分</td><td class="hint">★保険料負担者ごとに按分（収入×自己負担割合）。一時払「終身」は金融類似商品にならない＝5年以内解約でも一時所得</td></tr>
+<tr><td class="num">9/10</td><td class="num">木</td><td class="q">2026年第1回 <b>問27</b></td><td>法人経理／<b>RC5</b> 定期保険の資産計上 <span class="star">★</span></td><td class="num">4分</td><td class="hint">★「保険料×最高解約返戻率×90%」の3段で書き下す。90%を保険料に掛けない。85%超は当初10年90%・11年目以降70%</td></tr>
+<tr><td class="num">9/11</td><td class="num">金</td><td class="q">2025年第1回 <b>問23</b></td><td>相続対策／代償分割 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★2回連続。代償交付金を交付すれば交付側の課税価格は減り受取側は増える＝税額は変わる。分割払いは相続人全員の合意でよく家裁の許可は不要</td></tr>
+<tr class="we"><td class="num">9/12</td><td class="num">土</td><td class="q">2025年第1回 <b>問35</b></td><td>損保金／<b>RC7</b> 対物賠償＋車両保険</td><td class="num">5分</td><td class="hint">23②では7/7だったのに失点＝型はまだ本物でない。過失相殺 → 免責金額 の順を固定する</td></tr>
+<tr class="we"><td class="num">9/13</td><td class="num">日</td><td class="q">2025年第2回 <b>問33</b></td><td>損保知識／紛争解決機関 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★2回連続。そんぽADRセンター（共済に関する紛争は対象外）／外資系損保・保険仲立人は保険オンブズマン</td></tr>
+<tr class="wkrow"><td colspan="6">第3週</td></tr>
+<tr><td class="num">9/14</td><td class="num">月</td><td class="q">2024年第2回 <b>問5</b></td><td>生保税務／医療費控除</td><td class="num">3分</td><td class="hint">治療目的なら薬局の一般用医薬品も対象（処方薬かどうかで決まらない）。視力矯正用のコンタクトは対象外</td></tr>
+<tr><td class="num">9/15</td><td class="num">火</td><td class="q">2025年第2回 <b>問5</b></td><td>個人年金／<b>RC6</b> 雑所得 <span class="star">★</span></td><td class="num">6分</td><td class="hint">★余命年数は「支給開始日における年齢」で引く。終身年金＝余命と保証期間の長い方／確定年金＝確定期間。相続した年金も課税部分から必要経費を按分して引く</td></tr>
+<tr><td class="num">9/16</td><td class="num">水</td><td class="q">2024年第2回 <b>問13</b></td><td>名義変更の税務 <span class="star">★</span></td><td class="num">3分</td><td class="hint">★相続で取得したのだから相続税（生前贈与ではない）。「全額が」という限定語があるだけで誤りと決めつけない</td></tr>
+<tr><td class="num">9/17</td><td class="num">木</td><td class="q">2025年第2回 <b>問28</b></td><td>中退共／退職金準備制度 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★iDeCo＋は事業主のみの拠出も可能／中退共の懲戒解雇による減額分は企業に返金されない（国庫等へ）</td></tr>
+<tr><td class="num">9/18</td><td class="num">金</td><td class="q">2026年第1回 <b>問21</b></td><td>相続対策／生命保険契約に関する権利</td><td class="num">3分</td><td class="hint">解約返戻金＋前納保険料＋積立配当金−源泉徴収されるべき所得税額。被保険者は生存＝死亡保険金は出ない</td></tr>
+<tr class="we"><td class="num">9/19</td><td class="num">土</td><td class="q">2025年第1回 <b>問40</b></td><td>損保金／<b>RC9c</b> 企業費用・利益総合 <span class="star">★</span></td><td class="num">6分</td><td class="hint">★2回連続。利益率＝(営業利益＋経常費)÷営業収益（変動費は入れない）。約定補償率が利益率より大きいときのみ利益率に読み替える</td></tr>
+<tr class="we"><td class="num">9/20</td><td class="num">日</td><td class="q">2024年第1回 <b>問41</b></td><td>損保知識／フリート契約</td><td class="num">2分</td><td class="hint">8/22の失点。全車両一括付保特約の要件（所有・使用自動車が10台以上）と適用範囲</td></tr>
+<tr class="wkrow"><td colspan="6">第4週</td></tr>
+<tr><td class="num">9/21</td><td class="num">月</td><td class="q">2025年第2回 <b>問8</b></td><td>生保税務／<b>RC4</b> 生命保険料控除 <span class="star">★</span></td><td class="num">4分</td><td class="hint">★死亡と介護が同額で保険料の区分がなければ「一般」／未払いの12月分は含めない／新旧は別々に速算表を引いてから比べる</td></tr>
+<tr><td class="num">9/22</td><td class="num">火</td><td class="q">2025年第1回 <b>問8</b></td><td>個人年金／死亡保険金の年金受取</td><td class="num">2分</td><td class="hint">相続税と所得税の二重課税の調整。年金支給開始初年度の課税部分の扱いを確認する</td></tr>
+<tr><td class="num">9/23</td><td class="num">水</td><td class="q">2025年第2回 <b>問6</b></td><td>一時所得／<b>RC2</b> 名義変更の按分 <span class="star">★</span></td><td class="num">6分</td><td class="hint">★名義変更後の保険金は「負担割合で按分」＝負担金額を引くのではない。契約者貸付は控除前の金額が総収入金額</td></tr>
+<tr><td class="num">9/24</td><td class="num">木</td><td class="q">2024年第1回 <b>問27</b></td><td>退職金／<b>RC9a</b> 退職金の額</td><td class="num">4分</td><td class="hint">8/22の失点。規程の条文（勤続年数の通算・支給率表・端数処理）を先に拾ってから表を引く</td></tr>
+<tr><td class="num">9/25</td><td class="num">金</td><td class="q">2024年第1回 <b>問4</b></td><td>生保知識／破綻時のデメリット</td><td class="num">2分</td><td class="hint">8/22の失点。早期解約控除・予定利率の引下げ・補償対象外の部分を、資料のスケジュールと対応させて読む</td></tr>
+<tr class="we"><td class="num">9/26</td><td class="num">土</td><td class="q">2024年第1回 <b>問36</b></td><td>損保金／海外旅行の携行品損害</td><td class="num">3分</td><td class="hint">8/22の失点。1品あたりの限度額 → 免責金額 → 支払限度額 の順。現金・小切手など除外品を先に落とす</td></tr>
+<tr class="we"><td class="num">9/27</td><td class="num">日</td><td class="q">2025年第2回 <b>問45</b></td><td>損保知識／労働災害総合保険 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★2回連続。法定外補償条項＝政府労災の認定を基に支払う上乗せ給付／使用者賠償責任条項＝法的賠償責任で和解費用も出る</td></tr>
+<tr class="wkrow"><td colspan="6">第5週</td></tr>
+<tr><td class="num">9/28</td><td class="num">月</td><td class="q">2026年第1回 <b>問13</b></td><td>生保税務／支払調書</td><td class="num">2分</td><td class="hint">相続・贈与に係る年金の支払調書は金額基準なしで提出義務。資料が付く問題はまず但し書きを読む</td></tr>
+<tr><td class="num">9/29</td><td class="num">火</td><td class="q">2024年第2回 <b>問4</b></td><td>個人年金／<b>RC6</b> 雑所得 <span class="star">★</span></td><td class="num">4分</td><td class="hint">★相続開始の年（1年目）の課税部分はゼロ＝計上しない。手順に「①相続か ②何年目か」を入れる</td></tr>
+<tr><td class="num">9/30</td><td class="num">水</td><td class="q">2024年第2回 <b>問15</b></td><td>名義変更／個人→法人 <span class="star">★</span></td><td class="num">4分</td><td class="hint">★有償＝全額を資産計上（直ちに損金にできない）／無償＝資産計上のうえ同額を雑収入（受贈益）として益金算入</td></tr>
+</table>
+</div>
+
+<h2>4. 10月（10/1〜10/20＝3科目並行）</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">日付</th><th class="num">曜</th><th>今日の1問（過去問）</th><th>分野／型</th><th class="num">目安</th><th>ヒント（答え合わせ用）</th></tr>
+<tr class="wkrow"><td colspan="6">第1週</td></tr>
+<tr><td class="num">10/1</td><td class="num">木</td><td class="q">2025年第1回 <b>問28</b></td><td>中退共 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★4回連続。中退共から本人（死亡時は遺族）へ直接支払われる＝会社を経由しない。「会社は関与しない」が全体の構造</td></tr>
+<tr><td class="num">10/2</td><td class="num">金</td><td class="q">2026年第1回 <b>問23</b></td><td>相続対策／養子・2割加算</td><td class="num">2分</td><td class="hint">孫養子は2割加算の対象（代襲相続人である場合を除く）／実子がいれば非課税枠に算入できる養子は1人まで／保険金を受け取った孫は生前贈与加算の対象</td></tr>
+<tr class="we"><td class="num">10/3</td><td class="num">土</td><td class="q">2025年第1回 <b>問39</b></td><td>損保金／所得補償保険 <span class="star">★</span></td><td class="num">4分</td><td class="hint">★2回連続。退院後の自宅療養も就業不能に含む。免責期間を差し引いてから日割り計算（1ヵ月＝30日）</td></tr>
+<tr class="we"><td class="num">10/4</td><td class="num">日</td><td class="q">2024年第1回 <b>問50</b></td><td>損保税務／年金払積立傷害保険の相続</td><td class="num">3分</td><td class="hint">8/22の失点。契約者（給付金受取人）を相続で変更した場合の評価と、その後の給付金の課税</td></tr>
+<tr class="wkrow"><td colspan="6">第2週</td></tr>
+<tr><td class="num">10/5</td><td class="num">月</td><td class="q">2024年第2回 <b>問6</b></td><td>生保税務／<b>RC4</b> 生命保険料控除 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★★超難問（生成AIも誤答）。保障内容を変える特約の中途付加は「付加日で2分割」＝年単位で切り替えない。指定代理請求特約は旧のまま</td></tr>
+<tr><td class="num">10/6</td><td class="num">火</td><td class="q">2025年第1回 <b>問19</b></td><td>個人年金／利率変動型個人年金の商品性</td><td class="num">2分</td><td class="hint">積立利率の最低保証・積立金の増減・年金原資の確定時期。商品性の記述問題は「最低保証があるのはどこか」で切る</td></tr>
+<tr><td class="num">10/7</td><td class="num">水</td><td class="q">2025年第1回 <b>問10</b></td><td>一時所得／<b>RC2</b> <span class="star">★</span></td><td class="num">5分</td><td class="hint">★24②で正解したが25①で再失点＝制覇は保留。通し（一時所得内で通算 → −50万 → ×1/2）を白紙から書く</td></tr>
+<tr><td class="num">10/8</td><td class="num">木</td><td class="q">2025年第2回 <b>問26</b></td><td>事業保障資金／<b>RC9c</b> <span class="star">★</span></td><td class="num">3分</td><td class="hint">★2回連続。保険金は益金になるので、必要額 ÷ (1−法人税等の実効税率) で割り戻す。必要額をそのまま保険金額にすると足りない</td></tr>
+<tr><td class="num">10/9</td><td class="num">金</td><td class="q">2024年第1回 <b>問15</b></td><td>生保知識／少額短期保険業制度</td><td class="num">2分</td><td class="hint">8/22の失点。保険期間の上限・被保険者1人あたりの保険金額の上限・供託金。数字を丸暗記する</td></tr>
+<tr class="we"><td class="num">10/10</td><td class="num">土</td><td class="q">2025年第2回 <b>問34</b></td><td>損保金／自賠責の損害額</td><td class="num">6分</td><td class="hint">☆で一度も着手していない設問。傷害分（治療関係費・休業損害・慰謝料）と死亡分（葬儀費・逸失利益・慰謝料）を分けて積む</td></tr>
+<tr class="we"><td class="num">10/11</td><td class="num">日</td><td class="q">2024年第2回 <b>問39</b></td><td>損保知識／対人賠償の免責 <span class="star">★</span></td><td class="num">2分</td><td class="hint">★2回連続。免責＝①記名被保険者とその父母・配偶者・子 ②運転者本人とその父母・配偶者・子 ③業務に従事中の使用人</td></tr>
+<tr class="wkrow"><td colspan="6">第3週</td></tr>
+<tr><td class="num">10/12</td><td class="num">月</td><td class="q">2025年第2回 <b>問7</b></td><td>生保税務／医療費控除</td><td class="num">3分</td><td class="hint">本番は正解したが計算は誤っていた設問。自家用車のガソリン代・駐車場代は対象外（原則は公共交通機関）／選定療養費は対象</td></tr>
+<tr><td class="num">10/13</td><td class="num">火</td><td class="q">2024年第2回 <b>問28</b></td><td>個人年金／<b>RC6</b> 収入保障の雑所得 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★印字された参考式の④まで指を置いて追う。②の課税部分で止めると用意された誤答肢にちょうど着地する</td></tr>
+<tr><td class="num">10/14</td><td class="num">水</td><td class="q">2024年第2回 <b>問7</b></td><td>名義変更／法人→個人（現物支給） <span class="star">★</span></td><td class="num">6分</td><td class="hint">★評価は名義変更時の解約返戻金相当額。長期平準定期は前半6割＝1/2資産、後半4割＝全額損金＋前払保険料を均等取崩し。差額は雑収入／雑損失</td></tr>
+<tr><td class="num">10/15</td><td class="num">木</td><td class="q">2026年第1回 <b>問46</b></td><td>法人損保／圧縮記帳 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★2回連続。非課税ではなく課税の繰延べ。保険差益＝保険金−支出経費−帳簿価額／限度額＝差益×取得価額÷(保険金−支出経費)</td></tr>
+<tr><td class="num">10/16</td><td class="num">金</td><td class="q">2026年第1回 <b>問12</b></td><td>生保知識／契約者保護機構</td><td class="num">2分</td><td class="hint">高予定利率契約＝過去5年間常に基準利率超／補償率＝90%−{(過去5年間の各年の予定利率−基準利率)の総和÷2}。数字を丸暗記する</td></tr>
+<tr class="we"><td class="num">10/17</td><td class="num">土</td><td class="q">2026年第1回 <b>問34</b></td><td>損保金／<b>RC7</b> 地震保険 <span class="star">★</span></td><td class="num">3分</td><td class="hint">★地震保険は比例填補をしない。支払額＝保険金額×支払割合（限度＝保険価額×同じ割合）。保険価額や損害額に割合を掛けない</td></tr>
+<tr class="we"><td class="num">10/18</td><td class="num">日</td><td class="q">2024年第1回 <b>問32</b></td><td>損保知識／地震保険制度</td><td class="num">2分</td><td class="hint">8/22の失点。1回の地震等における保険金総支払限度額・再保険の仕組み・割引の重複適用不可</td></tr>
+<tr class="wkrow"><td colspan="6">第4週</td></tr>
+<tr><td class="num">10/19</td><td class="num">月</td><td class="q">2024年第1回 <b>問9</b></td><td>生保税務／<b>RC4</b> 生命保険料控除 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★8/22は捨てた問。配当金は引く／自動振替貸付は含める／未払いは含めない の3点セット。一般区分は併用が最大になる場合がある</td></tr>
+<tr><td class="num">10/20</td><td class="num">火</td><td class="q">2024年第1回 <b>問7</b></td><td>個人年金／<b>RC6</b> 雑所得 <span class="star">★</span></td><td class="num">5分</td><td class="hint">★4回連続の最新（8/22の失点）。総支給見込額＝基本年金額×(余命年数と保証期間の長い方)。配当は入れない</td></tr>
+</table>
+</div>
+
+<h2>5. 今回あえて配置しなかった失点</h2>
+<div class="card">
+6回分の失点は<b>合計98問</b>あり、50日枠に入りきらない。<b>入らなかった48問を黙って落とすのではなく、ここに残す</b>。<b>10/21以降の総ざらい枠と、中日ブースト（11/9〜11/14）で回す</b>。
+<ul style="margin:8px 0 0;padding-left:1.2em;font-size:13.5px;">
+<li><b>2023年第2回は0問配置</b>（失点8問すべて＝クーリング・オフ／特別勘定／名義変更／代償分割／現物支給／中退共／総合福祉団体定期／対人賠償の免責）。<b>同じ論点をより新しい年度で配置済みのため</b>、最新年度優先ルールの結果として落ちた。論点自体は全部カバーしている。</li>
+<li><b>2026①</b>：問1・2・3・19・22・28・30・33・37・38・39・42・43・48・49・50（生保商品/約款・損保知識・個人の損保税務が中心）</li>
+<li><b>2025②</b>：問1・2・13・27・35・36・38・40</li>
+<li><b>2025①</b>：問12・14・29・31</li>
+<li><b>2024②</b>：問1・3・10・29・32・35・36・37・42・43・46・47・50</li>
+<li><b>2024①</b>：問3・46</li>
+</ul>
+</div>
+
+<div class="logic">
+<b>★11月の直前期に必ず戻る3つ</b>（リスク_次回優先課題.md より）<br>
+<b>名義変更（5回連続）／RC6 個人年金の雑所得（4回連続）／RC4 生命保険料控除（4回続けて得点になっていない）</b>。<br>
+このカレンダーはその3つに <b>4＋5＋4＝13枠（全体の26%）</b> を割いている。10/20を終えた時点でまだ落とすようなら、<b>11/9〜11/14の中日ブーストで最優先に置く</b>。
+</div>
+
+<div class="card">
+<b>本番で使う解答手順（8/22に完成形を実行できた ― これは崩さない）</b>
+<pre style="margin:6px 0;font-size:12.5px;white-space:pre-wrap;">① 税務計算のまとまりを飛ばして、知識問題・損保金計算・生保系を先に解く
+② 最後に税務帯へ戻る（8/22は 6:26〜6:45 の19分）
+③ その19分の中で、さらに"どれを捨てるか"を選ぶ（8/22は問9のみ＝捨て）</pre>
+<b>試験日＝2026-11-15（2日目）</b>。第1回と第2回で税務帯の位置が変わるので、<b>解き始める前に設問の並びを一度見て、税務計算のまとまりがどこかを確認してから順序を決める</b>。
+</div>
+
+</div>
+</body>
+</html>
