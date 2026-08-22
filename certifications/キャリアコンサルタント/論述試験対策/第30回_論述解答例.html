@@ -1,0 +1,316 @@
+<title>第30回 論述 解答例</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+
+<style>
+:root{
+  --paper:#f0f1ee; --panel:#ffffff; --panel-2:#f7f8f5;
+  --ink:#1e211f; --ink-2:#4a504c; --sub:#7b827d;
+  --line:#d5d9d3; --line-2:#e6e9e3; --rule:#b9bfb8;
+  --ai:#22506d; --ai-w:#e4edf3;
+  --shu:#b8322a; --shu-w:#f6e6e3;
+  --shadow:0 1px 2px rgba(30,33,31,.05), 0 8px 24px -18px rgba(30,33,31,.25);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#15181a; --panel:#1c2023; --panel-2:#21262a;
+    --ink:#e8eae6; --ink-2:#bcc2bd; --sub:#8e968f;
+    --line:#333a3e; --line-2:#2a3033; --rule:#454d51;
+    --ai:#7fb6d6; --ai-w:#1c2f3b;
+    --shu:#e58072; --shu-w:#3a201c;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -18px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#15181a; --panel:#1c2023; --panel-2:#21262a;
+  --ink:#e8eae6; --ink-2:#bcc2bd; --sub:#8e968f;
+  --line:#333a3e; --line-2:#2a3033; --rule:#454d51;
+  --ai:#7fb6d6; --ai-w:#1c2f3b;
+  --shu:#e58072; --shu-w:#3a201c;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -18px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:16px;line-height:1.9;letter-spacing:.015em;
+  font-feature-settings:"palt" 1;-webkit-font-smoothing:antialiased;
+}
+.sheet{max-width:860px;margin:0 auto;padding:52px 20px 100px}
+
+header{display:flex;flex-direction:column;gap:13px;margin-bottom:20px}
+.stamp{
+  align-self:flex-start;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.2em;font-weight:600;color:var(--shu);
+  border:1.5px solid var(--shu);padding:4px 11px;border-radius:2px;
+}
+h1{
+  font-family:"Noto Serif JP",serif;font-weight:700;
+  font-size:clamp(23px,3.8vw,31px);line-height:1.5;margin:0;text-wrap:balance;
+}
+.byline{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.06em;
+  color:var(--sub);display:flex;flex-wrap:wrap;gap:5px 18px;
+  padding-top:15px;border-top:1px solid var(--line);margin:6px 0 0;
+}
+
+/* ── 作成方針 ─────────────────────── */
+.policy{
+  background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ai);
+  border-radius:0 4px 4px 0;padding:20px 24px;margin:30px 0 0;box-shadow:var(--shadow);
+}
+.policy .lbl{
+  display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.16em;color:var(--ai);font-weight:600;margin-bottom:11px;
+}
+.policy ul{margin:0;padding-left:1.3em}
+.policy li{margin-bottom:7px;font-size:15px;line-height:1.8;color:var(--ink-2)}
+.policy li:last-child{margin-bottom:0}
+.policy b{color:var(--ink)}
+
+/* ── 設問ブロック ─────────────────── */
+.qb{margin-top:56px}
+.qb-hd{display:flex;align-items:baseline;gap:13px;border-bottom:2px solid var(--ink);padding-bottom:9px;margin-bottom:16px}
+.qb-no{
+  font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;
+  color:var(--shu);letter-spacing:.08em;flex:none;
+}
+.qb-hd h2{font-size:17px;font-weight:700;margin:0;line-height:1.6}
+.qb-hd .pt{
+  margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:12px;
+  color:var(--sub);flex:none;
+}
+.prompt{
+  font-size:14px;line-height:1.85;color:var(--sub);
+  background:var(--panel-2);border:1px solid var(--line-2);border-radius:3px;
+  padding:12px 16px;margin:0 0 18px;
+}
+
+/* 解答欄 */
+.ansbox{
+  background:var(--panel);border:1px solid var(--line);border-radius:4px;
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.ansbox .cap{
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 14px;
+  background:var(--panel-2);border-bottom:1px solid var(--line);
+  padding:8px 16px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  color:var(--sub);letter-spacing:.05em;
+}
+.ansbox .cap b{color:var(--ai);font-weight:600}
+.ans{
+  font-size:15px;line-height:30px;padding:9px 16px 12px;margin:0;
+  background:repeating-linear-gradient(var(--panel) 0 29px, var(--rule) 29px 30px);
+}
+.ans .n{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--shu);margin-right:2px}
+.sub-lbl{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;
+  color:var(--ink-2);padding:10px 16px 0;margin:0;letter-spacing:.06em;
+}
+
+/* ── 解説パネル ───────────────────── */
+.exp{
+  background:var(--panel);border:1px solid var(--line);border-radius:4px;
+  padding:20px 24px;margin:18px 0 0;box-shadow:var(--shadow);
+}
+.exp .lbl{
+  display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.16em;color:var(--sub);font-weight:600;margin-bottom:13px;
+}
+.exp p{margin:0 0 13px;font-size:15px;line-height:1.85;color:var(--ink-2)}
+.exp p:last-child{margin-bottom:0}
+.exp p b{color:var(--ink)}
+.exp ul{margin:0;padding-left:1.3em}
+.exp li{margin-bottom:8px;font-size:15px;line-height:1.8;color:var(--ink-2)}
+.exp li:last-child{margin-bottom:0}
+.exp li b{color:var(--ink)}
+
+/* ── 表 ───────────────────────────── */
+.tw{overflow-x:auto;margin:14px 0 0;border:1px solid var(--line);border-radius:3px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:13.5px;line-height:1.75}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:top}
+thead th{
+  background:var(--panel-2);font-size:12px;font-weight:700;letter-spacing:.04em;
+  color:var(--ink-2);border-bottom:1.5px solid var(--line);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td.k{
+  font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--shu);
+  width:1%;white-space:nowrap;text-align:center;
+}
+td b{color:var(--ink)}
+.q-cite{color:var(--ai)}
+
+/* ── 注意 ─────────────────────────── */
+.warn{
+  background:var(--shu-w);border-left:3px solid var(--shu);border-radius:0 4px 4px 0;
+  padding:16px 20px;margin:18px 0 0;font-size:14.5px;line-height:1.85;
+}
+.warn p{margin:0;color:var(--ink-2)}
+.warn b{color:var(--shu)}
+
+footer{
+  margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;line-height:2;
+  color:var(--sub);letter-spacing:.03em;
+}
+@media (max-width:600px){
+  body{font-size:15px}
+  .sheet{padding:36px 15px 76px}
+  .qb-hd .pt{margin-left:0;width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
+</style>
+
+<div class="sheet">
+
+<header>
+  <span class="stamp">実技（論述）解答例</span>
+  <h1>第30回 論述試験 解答例と構造解説<br>── Zさん・大学3年・社会福祉学科の事例</h1>
+  <p class="byline">
+    <span>試験実施／2025年11月2日</span>
+    <span>キャリアコンサルティング協議会</span>
+    <span>50分・記述式4問</span>
+  </p>
+</header>
+
+<div class="policy">
+  <span class="lbl">この解答例の作成方針</span>
+  <ul>
+    <li><b>設問1（主訴）</b>には、相談者が実際に口にした<b>感情と価値観のキーワードを4つ</b>盛り込みました（不安／荷が重い・向いていない／素敵だ／心からやりたい）。</li>
+    <li><b>設問3②（根拠）</b>は、トゥールミンの議論モデルに沿って<b>「事実 → 論拠 → 主張」</b>の順で記述しています。ラベルは書かず文章に溶かしていますが、各項目に必ず<b>「〜のため」で終わる論拠が1句</b>入っています。</li>
+    <li>字数はすべて<b>実際の解答欄の行数に収まる分量</b>です（手書きで1行50〜55字を想定）。</li>
+  </ul>
+</div>
+
+<!-- ══════ 設問1 ══════ -->
+<div class="qb">
+  <div class="qb-hd"><span class="qb-no">設問1</span><h2>主訴 ── 相談者がこの面談で相談したいこと</h2><span class="pt">10点</span></div>
+  <p class="prompt">事例記録の中の「相談の概要」【略A】の記載に相当する、相談者がこの面談で相談したいことは何か。事例記録を手掛かりに記述せよ。</p>
+
+  <div class="ansbox">
+    <div class="cap"><span>解答欄 <b>2行</b></span><span>108字（1行54字）</span></div>
+    <p class="ans">インターンシップに５社参加したが何をしたいか分からず不安である。素敵だと感じ目指した福祉は荷が重く向いていないと思うようになり、心からやりたい仕事の見つけ方が分からない。ひとまず福祉で就職活動をしてよいか迷っている。</p>
+  </div>
+
+  <div class="exp">
+    <span class="lbl">盛り込んだキーワードと、その出所</span>
+    <div class="tw"><table>
+      <thead><tr><th>キーワード</th><th>種別</th><th>事例記録中の相談者の発言</th></tr></thead>
+      <tbody>
+        <tr><td><b>不安</b></td><td>感情</td><td class="q-cite">「このままではいけないと不安になってきた」</td></tr>
+        <tr><td><b>荷が重い／向いていない</b></td><td>感情（自己評価）</td><td class="q-cite">「自分には荷が重く、向いていないのではと思うようになった」</td></tr>
+        <tr><td><b>素敵だ</b></td><td>価値観</td><td class="q-cite">「高齢者やその家族を支援する仕事があると知って素敵だなと感じ」</td></tr>
+        <tr><td><b>心からやりたい</b></td><td>価値観</td><td class="q-cite">「心からやりたいと思えるような仕事をどうやったら見つけられるのか」</td></tr>
+      </tbody>
+    </table></div>
+    <p style="margin-top:15px">主訴は「事実の要約」ではなく<b>「相談者が何に困り、何を求めて来たか」</b>です。最後を「〜迷っている」で結び、相談の依頼内容が残るようにしています。</p>
+  </div>
+
+  <div class="warn"><p><b>やってはいけないこと：</b>ここにキャリアコンサルタントの見立て（「自己理解が不足している」等）を混ぜること。設問1は<b>相談者の言葉の世界だけ</b>で書きます。見立ては設問3の担当です。</p></div>
+</div>
+
+<!-- ══════ 設問2 ══════ -->
+<div class="qb">
+  <div class="qb-hd"><span class="qb-no">設問2</span><h2>【下線B】の応答意図</h2><span class="pt">10点</span></div>
+  <p class="prompt">事例記録の【下線B】について、この事例を担当したキャリアコンサルタントがどのような意図で応答したと考えるかを記述せよ。<br><span style="color:var(--ai)">【下線B】「素敵だなと思って目指した社会福祉の分野だったけれど、仕事としては自分には向いていないと思うようになったのですね。」</span></p>
+
+  <div class="ansbox">
+    <div class="cap"><span>解答欄 <b>2行</b></span><span>110字（1行55字）</span></div>
+    <p class="ans">相談者の語りを要約して伝え返すことで、理解が正しいかを確認し、受容と共感を示して信頼関係を築くとともに、福祉を素敵だと感じ目指した動機と、向いていないと感じている現在の認識との隔たりに気づきを促し、自己理解を深める意図。</p>
+  </div>
+
+  <div class="exp">
+    <span class="lbl">この応答を2層で読む</span>
+    <ul>
+      <li><b>第1層：関係構築</b>　相談者の言葉をそのまま用いて要約・伝え返しをしている。理解の確認と受容・共感の提示であり、初回面談の信頼関係づくりにあたる。</li>
+      <li><b>第2層：自己理解の促進</b>　この応答は<b>「素敵だなと思って目指した」（過去の動機・価値観）</b>と<b>「向いていないと思うようになった」（現在の認識）</b>を1文の中で並置している。単なるオウム返しではなく、<b>相談者自身の中にある隔たりを意識化させる</b>意図が読み取れる。</li>
+    </ul>
+    <p style="margin-top:14px">実際、この応答の直後に相談者は両親の期待や「大学まで行ったのだから」という自分の思いを語り出しており、<b>応答が語りを深める働きをしたことが事例記録から確認できます</b>。</p>
+  </div>
+
+  <div class="warn"><p><b>結び方：</b>設問が「どのような<b>意図</b>で応答したか」なので、必ず<b>「〜する意図。」</b>で終えます。「〜と伝えた。」で終えると、意図ではなく行為の説明になり点になりません。</p></div>
+</div>
+
+<!-- ══════ 設問3 ══════ -->
+<div class="qb">
+  <div class="qb-hd"><span class="qb-no">設問3</span><h2>相談者の問題と、その根拠</h2><span class="pt">20点（①10・②10）</span></div>
+  <p class="prompt">あなたが考える相談者の問題（①）とその根拠（②）について、相談者の言動を通じて、具体的に記述せよ。</p>
+
+  <div class="ansbox">
+    <div class="cap"><span>解答欄 ①<b>2行</b>／②<b>3行</b></span><span>①106字・②160字</span></div>
+    <p class="sub-lbl">① 問題</p>
+    <p class="ans"><span class="n">1.</span>実習や伝聞の断片的な情報で福祉の仕事を判断しており、仕事理解が不足している。<span class="n">2.</span>自分の興味・価値観・強みを整理できておらず、自己理解が不足している。<span class="n">3.</span>友人や親の期待に影響され、主体的に意思決定できていない。</p>
+    <p class="sub-lbl">② その根拠</p>
+    <p class="ans"><span class="n">1.</span>「制度が複雑」「現場の話は荷が重い」と伝聞で語るのみで、判断材料が実体験に基づいていないため。<span class="n">2.</span>「できることが思いつかない」「知識は福祉だけ」と語り、祖母との経験を強みや価値観に結びつけられていないため。<span class="n">3.</span>「みんなどうやって決めたのだろう」「ひとまず福祉で」と、自分の軸でなく周囲との比較で選ぼうとしているため。</p>
+  </div>
+
+  <div class="exp">
+    <span class="lbl">トゥールミン・モデルによる分解</span>
+    <p>答案では文章に溶かしていますが、実際には次の3要素で組み立てています。<b>事実だけを並べた答案は「根拠」になりません</b>。事実と主張をつなぐ論拠が入って初めて、なぜその言動から問題が言えるのかが示せます。</p>
+    <div class="tw"><table>
+      <thead><tr><th></th><th>主張（Claim）＝①の問題</th><th>事実（Data）＝相談者の言動</th><th>論拠（Warrant）＝事実と主張をつなぐもの</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="k">1</td>
+          <td><b>仕事理解の不足</b></td>
+          <td class="q-cite">「制度や社会背景が複雑」「実習などで現場の話を聞くと自分には荷が重い」── いずれも授業と伝聞。福祉の職種や働き方を自ら調べた発言が一つもない。</td>
+          <td>職業選択の判断が一次情報でなく間接的な印象に基づく場合、その職業の実像を捉え損なう。断片的な情報だけで「向いていない」と結論づけていること自体が、仕事理解の不足を示す。</td>
+        </tr>
+        <tr>
+          <td class="k">2</td>
+          <td><b>自己理解の不足</b></td>
+          <td class="q-cite">「自分にできることは何かと考えても思いつかない」「大学生活で身についた知識といえば社会福祉分野だけ」「他に仕事に結びつくような経験も思いつかない」</td>
+          <td>祖母との関わりから「素敵だ」と感じた原体験は、本人の価値観の源として明確に語られている。にもかかわらず、それを自分の強みや職業選択の軸として言語化できていない。持っている材料を自己理解に変換できていない。</td>
+        </tr>
+        <tr>
+          <td class="k">3</td>
+          <td><b>主体的な意思決定の回避</b></td>
+          <td class="q-cite">「みんなどうやって決めたのだろう」「やっぱりこのまま福祉分野の方が現実的」「ひとまず福祉で就職活動をするのがいいのかな…」</td>
+          <td>判断の根拠が、友人との比較と両親の期待という外的基準に置かれている。自分の価値観に照らした選択ではなく消去法であり、決定の主体が本人にない。</td>
+        </tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="warn"><p><b>書くときの型：</b>「〔事実〕〜と語っており、〔論拠〕〜であるため、〔主張〕〜が不足している」。行数が足りないときは主張を①に預け、②は<b>「事実 →（〜のため）」</b>だけを残します。上の答案②が全項目「〜ため。」で終わっているのはそのためです。</p></div>
+</div>
+
+<!-- ══════ 設問4 ══════ -->
+<div class="qb">
+  <div class="qb-hd"><span class="qb-no">設問4</span><h2>今後の方針</h2><span class="pt">10点</span></div>
+  <p class="prompt">設問3で答えた内容を踏まえ、今後あなたがこのケースを担当するとしたら、どのような方針でキャリアコンサルティングを進めていくか記述せよ。</p>
+
+  <div class="ansbox">
+    <div class="cap"><span>解答欄 <b>5行</b></span><span>252字（1行50字）</span></div>
+    <p class="ans">まず、何をしたいか分からず不安な気持ちを受容し、関係構築を継続する。次に、祖母を支援する仕事を素敵だと感じた原体験や、参加した５社のインターンシップを振り返り、アセスメントも用いて興味・価値観・強みを言語化し、自己理解を深める。あわせて、福祉分野の職種や働き方の幅を、OB・OG訪問やjobtag等により具体的に把握できるよう情報提供し、仕事理解を促す。その上で、他業界も含めた選択肢を自分の軸で比較検討し、主体的に方向性を決められるよう支援する。決定後は具体的な方策を共に立て、実行を継続的に支援する。</p>
+  </div>
+
+  <div class="exp">
+    <span class="lbl">設問3との対応（ここが採点の要）</span>
+    <p>設問4は「設問3で答えた内容を踏まえ」と明示されています。<b>①で挙げた問題と、方針が1対1で対応していること</b>が読み取れる形にします。</p>
+    <div class="tw"><table>
+      <thead><tr><th></th><th>設問3で挙げた問題</th><th>設問4での対応箇所</th></tr></thead>
+      <tbody>
+        <tr><td class="k">—</td><td>（前提）初回面談・不安が強い</td><td>不安な気持ちを受容し、<b>関係構築を継続する</b></td></tr>
+        <tr><td class="k">2</td><td>自己理解の不足</td><td>祖母の原体験と5社のインターンシップを振り返り、<b>興味・価値観・強みを言語化</b></td></tr>
+        <tr><td class="k">1</td><td>仕事理解の不足</td><td>福祉分野の職種と働き方の幅を、<b>OB・OG訪問やjobtagで具体的に把握</b></td></tr>
+        <tr><td class="k">3</td><td>主体的な意思決定の回避</td><td>他業界も含めた選択肢を<b>自分の軸で比較検討し、主体的に決められるよう支援</b></td></tr>
+        <tr><td class="k">—</td><td>（着地）方策の実行</td><td>具体的な方策を共に立て、<b>実行を継続的に支援する</b></td></tr>
+      </tbody>
+    </table></div>
+    <p style="margin-top:15px">自己理解を仕事理解より先に置いたのは、<b>相談者が「自分にできることが思いつかない」状態にあるため</b>です。判断の軸がない状態で情報だけ増やしても、選べません。順序にも理由があると読める答案にしています。</p>
+  </div>
+
+  <div class="warn"><p><b>入れてはいけないもの：</b>「福祉業界を勧める」「他業界への転換を勧める」など、<b>結論の方向を先に決める記述</b>。方針は相談者が自分で決められるようにする過程を書くもので、キャリアコンサルタントが答えを出す場所ではありません。</p></div>
+</div>
+
+<footer>
+  第30回 国家資格キャリアコンサルタント試験 実技（論述）／2026年8月23日 作成<br>
+  問題文および解答用紙は特定非営利活動法人キャリアコンサルティング協議会が公表した資料に基づく。<br>
+  本解答例は模範解答ではなく、記述の型を示すための一例。
+</footer>
+
+</div>

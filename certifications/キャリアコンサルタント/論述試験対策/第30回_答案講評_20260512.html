@@ -1,0 +1,463 @@
+<title>第30回 答案講評</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+
+<style>
+:root{
+  --paper:#f0f1ee; --panel:#ffffff; --panel-2:#f7f8f5;
+  --ink:#1e211f; --ink-2:#4a504c; --sub:#7b827d;
+  --line:#d5d9d3; --line-2:#e6e9e3; --rule:#b9bfb8;
+  --ai:#22506d; --ai-w:#e4edf3;
+  --shu:#b8322a; --shu-w:#f6e6e3;
+  --ok:#2f6b4f; --ok-w:#e6f0ea;
+  --hand:#2c3f52; --hand-bg:#f3f6f8;
+  --shadow:0 1px 2px rgba(30,33,31,.05), 0 8px 24px -18px rgba(30,33,31,.25);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#15181a; --panel:#1c2023; --panel-2:#21262a;
+    --ink:#e8eae6; --ink-2:#bcc2bd; --sub:#8e968f;
+    --line:#333a3e; --line-2:#2a3033; --rule:#454d51;
+    --ai:#7fb6d6; --ai-w:#1c2f3b;
+    --shu:#e58072; --shu-w:#3a201c;
+    --ok:#79b795; --ok-w:#1b2b22;
+    --hand:#a9c6da; --hand-bg:#1a2329;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -18px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#15181a; --panel:#1c2023; --panel-2:#21262a;
+  --ink:#e8eae6; --ink-2:#bcc2bd; --sub:#8e968f;
+  --line:#333a3e; --line-2:#2a3033; --rule:#454d51;
+  --ai:#7fb6d6; --ai-w:#1c2f3b;
+  --shu:#e58072; --shu-w:#3a201c;
+  --ok:#79b795; --ok-w:#1b2b22;
+  --hand:#a9c6da; --hand-bg:#1a2329;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -18px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;
+  font-size:16px;line-height:1.9;letter-spacing:.015em;
+  font-feature-settings:"palt" 1;-webkit-font-smoothing:antialiased;
+}
+.sheet{max-width:880px;margin:0 auto;padding:52px 20px 100px}
+
+header{display:flex;flex-direction:column;gap:13px;margin-bottom:8px}
+.stamp{
+  align-self:flex-start;font-family:"IBM Plex Mono",monospace;
+  font-size:11px;letter-spacing:.2em;font-weight:600;color:var(--shu);
+  border:1.5px solid var(--shu);padding:4px 11px;border-radius:2px;
+}
+h1{
+  font-family:"Noto Serif JP",serif;font-weight:700;
+  font-size:clamp(23px,3.8vw,31px);line-height:1.5;margin:0;text-wrap:balance;
+}
+.byline{
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.06em;
+  color:var(--sub);display:flex;flex-wrap:wrap;gap:5px 18px;
+  padding-top:15px;border-top:1px solid var(--line);margin:6px 0 0;
+}
+
+/* ── 総評 ─────────────────────────── */
+.verdict{
+  background:var(--panel);border:1px solid var(--line);border-radius:4px;
+  box-shadow:var(--shadow);padding:24px 26px;margin:32px 0 0;
+}
+.verdict .lbl{
+  display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.16em;color:var(--sub);font-weight:600;margin-bottom:14px;
+}
+.verdict .top{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 20px;margin-bottom:16px;
+}
+.verdict .score{
+  font-family:"IBM Plex Mono",monospace;font-size:42px;font-weight:600;
+  line-height:1;color:var(--ai);letter-spacing:-.01em;font-variant-numeric:tabular-nums;
+}
+.verdict .score small{font-size:19px;color:var(--sub);font-weight:400}
+.verdict .top .d{font-size:14px;color:var(--sub);line-height:1.7}
+.verdict p{margin:0 0 13px;font-size:15.5px;line-height:1.85;color:var(--ink-2)}
+.verdict p:last-child{margin-bottom:0}
+.verdict b{color:var(--ink)}
+
+.tw{overflow-x:auto;margin:16px 0 0;border:1px solid var(--line);border-radius:3px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px;line-height:1.75}
+th,td{padding:9px 13px;text-align:left;border-bottom:1px solid var(--line-2);vertical-align:top}
+thead th{
+  background:var(--panel-2);font-size:12px;font-weight:700;letter-spacing:.04em;
+  color:var(--ink-2);border-bottom:1.5px solid var(--line);white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;white-space:nowrap;font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+td.k{font-family:"IBM Plex Mono",monospace;font-weight:600;color:var(--sub);white-space:nowrap}
+td b{color:var(--ink)}
+tr.focus{background:var(--shu-w)}
+tr.focus td{color:var(--ink)}
+
+/* ── 設問ブロック ─────────────────── */
+.qb{margin-top:58px}
+.qb-hd{display:flex;align-items:baseline;gap:13px;border-bottom:2px solid var(--ink);padding-bottom:9px;margin-bottom:20px}
+.qb-no{
+  font-family:"IBM Plex Mono",monospace;font-size:13px;font-weight:600;
+  color:var(--shu);letter-spacing:.08em;flex:none;
+}
+.qb-hd h2{font-size:17px;font-weight:700;margin:0;line-height:1.6}
+.qb-hd .pt{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--sub);flex:none}
+
+.hand{
+  background:var(--hand-bg);border:1px solid var(--line);border-left:3px solid var(--hand);
+  border-radius:0 4px 4px 0;padding:16px 20px;margin:0 0 20px;
+}
+.hand .lbl{
+  display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  letter-spacing:.14em;color:var(--hand);font-weight:600;margin-bottom:9px;
+}
+.hand p{margin:0;font-size:15px;line-height:1.9;color:var(--ink-2)}
+.hand .unclear{color:var(--sub);font-size:13px;display:block;margin-top:9px}
+
+.eval{display:grid;grid-template-columns:1fr;gap:14px;margin:0 0 18px}
+@media (min-width:700px){.eval{grid-template-columns:1fr 1fr}}
+.eval > div{
+  background:var(--panel);border:1px solid var(--line);border-radius:4px;
+  padding:17px 20px;box-shadow:var(--shadow);
+}
+.eval h3{
+  margin:0 0 11px;font-size:13px;font-weight:700;letter-spacing:.08em;
+  display:flex;align-items:center;gap:7px;
+}
+.eval .good h3{color:var(--ok)}
+.eval .bad h3{color:var(--shu)}
+.eval ul{margin:0;padding-left:1.25em}
+.eval li{margin-bottom:9px;font-size:14.5px;line-height:1.8;color:var(--ink-2)}
+.eval li:last-child{margin-bottom:0}
+.eval li b{color:var(--ink)}
+
+/* ── 最小修正 ─────────────────────── */
+.fix{
+  background:var(--panel);border:1px solid var(--line);border-radius:4px;
+  box-shadow:var(--shadow);overflow:hidden;
+}
+.fix .cap{
+  background:var(--panel-2);border-bottom:1px solid var(--line);
+  padding:9px 18px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  color:var(--sub);letter-spacing:.08em;font-weight:600;
+}
+.fix .body{padding:17px 20px}
+.fix .row{margin-bottom:15px}
+.fix .row:last-child{margin-bottom:0}
+.fix .tag{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;
+  letter-spacing:.08em;color:var(--sub);display:block;margin-bottom:4px;
+}
+.fix .before{font-size:14.5px;line-height:1.85;color:var(--sub);margin:0}
+.fix .after{font-size:15px;line-height:1.9;color:var(--ink);margin:0}
+.fix ins{background:var(--ok-w);color:var(--ok);text-decoration:none;font-weight:700;padding:1px 3px;border-radius:2px}
+.fix del{color:var(--sub);text-decoration:line-through;text-decoration-color:var(--shu)}
+
+.note{
+  background:var(--ai-w);border-left:3px solid var(--ai);border-radius:0 4px 4px 0;
+  padding:15px 20px;margin:18px 0 0;font-size:14.5px;line-height:1.85;
+}
+.note p{margin:0;color:var(--ink-2)}
+.note b{color:var(--ai)}
+
+/* ── チェックリスト ───────────────── */
+.check{
+  background:var(--panel);border:1px solid var(--line);border-radius:4px;
+  box-shadow:var(--shadow);padding:24px 26px;margin:22px 0 0;
+}
+.check ol{margin:0;padding-left:1.4em;counter-reset:none}
+.check li{margin-bottom:13px;font-size:15.5px;line-height:1.85;color:var(--ink-2)}
+.check li:last-child{margin-bottom:0}
+.check li b{color:var(--ink)}
+.check .p{
+  display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  font-weight:600;color:var(--shu);background:var(--shu-w);
+  padding:1px 8px;border-radius:2px;margin-left:6px;
+}
+
+footer{
+  margin-top:70px;padding-top:20px;border-top:1px solid var(--line);
+  font-family:"IBM Plex Mono",monospace;font-size:11px;line-height:2;
+  color:var(--sub);letter-spacing:.03em;
+}
+@media (max-width:600px){
+  body{font-size:15px}
+  .sheet{padding:36px 15px 76px}
+  .qb-hd .pt{margin-left:0;width:100%}
+  .verdict .score{font-size:34px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+:focus-visible{outline:2px solid var(--shu);outline-offset:2px}
+</style>
+
+<div class="sheet">
+
+<header>
+  <span class="stamp">答案講評</span>
+  <h1>2026年5月12日の答案を、解答例と突き合わせる<br>── 第30回 実技（論述）</h1>
+  <p class="byline">
+    <span>解答日／2026-05-12</span>
+    <span>所要時間／6:26〜7:05＝39分</span>
+    <span>本番／50分</span>
+  </p>
+</header>
+
+<div class="verdict">
+  <span class="lbl">総評</span>
+  <div class="top">
+    <span class="score">32〜34<small> / 50点</small></span>
+    <span class="d">推定得点<br>合格圏に届いてはいるが、余裕はない水準</span>
+  </div>
+  <p><b>骨格はできています。</b>設問2は2層構造で書けており、設問4では祖母への提案という、この事例にしか書けない具体策を出しています。ここは一般論で埋める受験者が多いところで、明確な強みです。</p>
+  <p><b>一方、失点は一箇所に集中しています。設問3②に論拠が一つもありません。</b>3項目すべてが相談者の発言の引用で終わり、最後が「といった発言より。」。事実は並んでいるのに、その事実からなぜその問題が言えるのかが書かれていない。これは今回ご指定のトゥールミンの論拠（ワラント）が丸ごと欠けている状態です。</p>
+  <p>裏を返せば、<b>引用の精度はすでに高い</b>ので、既存の引用の後ろに「〜ため。」を1句足すだけで根拠になります。<b>ここが最大のレバレッジ</b>です。</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>設問</th><th class="n">配点</th><th class="n">推定</th><th>状態</th></tr></thead>
+    <tbody>
+      <tr><td class="k">設問1　主訴</td><td class="n">10</td><td class="n">6〜7</td><td>核心は押さえた。<b>価値観のキーワードが0</b></td></tr>
+      <tr><td class="k">設問2　応答意図</td><td class="n">10</td><td class="n">8</td><td>構造は良い。<b>着地の言葉だけ</b>惜しい</td></tr>
+      <tr><td class="k">設問3①　問題</td><td class="n">10</td><td class="n">6</td><td>専門用語が先行し、<b>事例に根ざしていない</b></td></tr>
+      <tr class="focus"><td class="k">設問3②　根拠</td><td class="n">10</td><td class="n">5</td><td><b>論拠が一つもない</b>。引用の列挙で終わっている</td></tr>
+      <tr><td class="k">設問4　方針</td><td class="n">10</td><td class="n">7〜8</td><td>素材は良い。<b>一文が長く対応が見えない</b></td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<!-- ══════ 設問1 ══════ -->
+<div class="qb">
+  <div class="qb-hd"><span class="qb-no">設問1</span><h2>主訴</h2><span class="pt">推定 6〜7 / 10</span></div>
+
+  <div class="hand">
+    <span class="lbl">あなたの答案</span>
+    <p>インターンシップや実習を通じて現場を知り、福祉の仕事が荷が重いと感じた。友人との比較で何をしたいかわからない状況に不安を感じ、両親からの期待もある中で、やりたい仕事をどうやって見つけたら良いのかわからない。</p>
+  </div>
+
+  <div class="eval">
+    <div class="good">
+      <h3>◯ 効いている</h3>
+      <ul>
+        <li><b>「やりたい仕事をどうやって見つけたら良いのかわからない」</b>── 相談者の「心からやりたいと思えるような仕事をどうやったら見つけられるのかが分からない」をほぼ正確に再現できています。ここが主訴の核心なので、大崩れしません。</li>
+        <li>感情キーワードを2つ拾えています（<b>荷が重い／不安</b>）。</li>
+        <li>両親の期待という板挟みの文脈も入っている。</li>
+      </ul>
+    </div>
+    <div class="bad">
+      <h3>△ 落としている</h3>
+      <ul>
+        <li><b>価値観のキーワードが0。</b>「素敵だな」（福祉を目指した動機）が入っていません。「心からやりたい」も「やりたい仕事」に圧縮され、「心から」が消えています。<b>ご自身の基準（感情＋価値観を最低2つ）に照らすと、感情2・価値観0</b>です。</li>
+        <li><b>「インターンシップや実習を通じて…荷が重いと感じた」は事実とずれます。</b>インターン5社は福祉以外の業界で、結果は「何をしたいか分からなくなった」。「荷が重い」は大学の学びと実習で聞いた現場の話から。<b>別ルートの2つを一括りにすると因果が変わります。</b></li>
+        <li>相談者が最後に置いた<b>「ひとまず福祉で就職活動をするのがいいのかな…」</b>という迷いが落ちています。相談したいことに最も近い一言。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fix">
+    <div class="cap">最小の修正</div>
+    <div class="body">
+      <div class="row">
+        <span class="tag">BEFORE</span>
+        <p class="before">インターンシップや実習を通じて現場を知り、福祉の仕事が荷が重いと感じた。友人との比較で何をしたいかわからない状況に不安を感じ、両親からの期待もある中で、やりたい仕事をどうやって見つけたら良いのかわからない。</p>
+      </div>
+      <div class="row">
+        <span class="tag">AFTER（108字・2行）</span>
+        <p class="after">インターンシップに５社参加したが何をしたいか分からず不安である。<ins>素敵だと感じ</ins>目指した福祉は荷が重く向いていないと思うようになり、<ins>心から</ins>やりたい仕事の見つけ方が分からない。<ins>ひとまず福祉で就職活動をしてよいか迷っている。</ins></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note"><p><b>覚え方：</b>主訴は「何が起きたか」ではなく「<b>何に困り、何を求めて来たか</b>」。最後を「〜迷っている」「〜相談したい」で結ぶと、相談の依頼内容が必ず残ります。</p></div>
+</div>
+
+<!-- ══════ 設問2 ══════ -->
+<div class="qb">
+  <div class="qb-hd"><span class="qb-no">設問2</span><h2>【下線B】の応答意図</h2><span class="pt">推定 8 / 10</span></div>
+
+  <div class="hand">
+    <span class="lbl">あなたの答案</span>
+    <p>相談者の発言を要約して応答することで受容共感を示しラポール形成を進めることと、福祉を目指すきっかけと現実とのギャップに直面している状況を伝えることで相談者の意向を確認しようとする意図。</p>
+  </div>
+
+  <div class="eval">
+    <div class="good">
+      <h3>◯ 効いている</h3>
+      <ul>
+        <li><b>2層構造で書けています。</b>①受容共感・ラポール形成 ②ギャップへの直面化。設問2の型として理想的で、解答例と同じ骨格です。</li>
+        <li><b>「〜する意図。」で結んでいる。</b>設問が「どのような意図で」と聞いているので、この結びは必須です。守れています。</li>
+        <li>「福祉を目指すきっかけと現実とのギャップ」── 下線Bが1文の中で並置している2要素を正確に捉えています。</li>
+      </ul>
+    </div>
+    <div class="bad">
+      <h3>△ 惜しい</h3>
+      <ul>
+        <li><b>着地が「相談者の意向を確認しようとする意図」。</b>これだとキャリアコンサルタントが情報を取りに行っている構図になります。下線Bの応答が狙っているのは<b>相談者自身の気づき</b>なので、着地は「自己理解を深める」が適切です。</li>
+        <li><b>「状況を伝えることで」も同じ問題。</b>「伝える」はキャリアコンサルタントが教える構図。実際は伝え返しによって<b>本人が意識化する</b>のを促しています。「気づきを促し」に置き換えます。</li>
+        <li>伝え返しの第一義である<b>「理解が正しいかの確認」</b>が抜けています（細かい点）。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fix">
+    <div class="cap">最小の修正 ── 語尾2箇所だけ</div>
+    <div class="body">
+      <div class="row">
+        <span class="tag">AFTER（110字・2行）</span>
+        <p class="after">相談者の発言を要約して応答することで<ins>理解が正しいかを確認し、</ins>受容共感を示しラポール形成を進めることと、福祉を目指すきっかけと現実とのギャップに<del>直面している状況を伝えることで相談者の意向を確認しようとする</del><ins>気づきを促し、自己理解を深める</ins>意図。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note"><p><b>裏づけ：</b>この応答の<b>直後に相談者が両親の期待や「大学まで行ったのだから」という思いを語り出しています</b>。応答が語りを深めた事実が事例記録から確認できるので、「気づきを促す意図」という読みには根拠があります。</p></div>
+</div>
+
+<!-- ══════ 設問3① ══════ -->
+<div class="qb">
+  <div class="qb-hd"><span class="qb-no">設問3①</span><h2>問題</h2><span class="pt">推定 6 / 10</span></div>
+
+  <div class="hand">
+    <span class="lbl">あなたの答案</span>
+    <p>1. 福祉という仕事に対しての理解不足から、今ミスマッチが生じている。2. 自己理解不足によって、自己のメタ認知ができておらず自己効力感が低い。3. 情報・コンピテンシー不足による視野の狭まり。</p>
+    <span class="unclear">※ 1と3の一部は判読が難しく、文脈から補って翻刻しています。違っていればお知らせください。</span>
+  </div>
+
+  <div class="eval">
+    <div class="good">
+      <h3>◯ 効いている</h3>
+      <ul>
+        <li><b>仕事理解不足と自己理解不足という2本柱を押さえています。</b>この事例で外せない2つで、ここは正しく見立てられています。</li>
+        <li>3つ挙げて2行に収めている。分量配分は適切です。</li>
+      </ul>
+    </div>
+    <div class="bad">
+      <h3>△ 課題</h3>
+      <ul>
+        <li><b>専門用語が事例から浮いています。</b>「メタ認知」「コンピテンシー」「自己効力感」は、この相談者の言動から直接は出てこない語。設問は「<b>相談者の言動を通じて、具体的に</b>」と求めているので、事例の言葉に近い記述のほうが安全です。</li>
+        <li><b>「コンピテンシー不足」は危険な表現。</b>相談者に能力が足りないという評価に読めます。キャリアコンサルタントの見立てとしては、能力の欠如ではなく<b>支援によって埋まる不足</b>を指す語を選びます。</li>
+        <li><b>3が漠然としています。</b>「視野の狭まり」では問題の輪郭が出ません。ここは<b>「主体的に意思決定できていない」</b>とすると、「みんなどうやって決めたのだろう」「ひとまず福祉で」という言動と直結し、設問4の方針にもつながります。</li>
+        <li><b>「自己効力感が低い」は②で支えきれていません。</b>②の2は「知識は福祉だけ、他に経験もない」で、これは自己理解の材料不足の証拠であって、自己効力感の低さの直接証拠ではない。<b>事実と主張の距離が遠く、本来ここにこそ論拠が要ります。</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fix">
+    <div class="cap">最小の修正</div>
+    <div class="body">
+      <div class="row">
+        <span class="tag">AFTER（106字・2行）</span>
+        <p class="after">1. <ins>実習や伝聞の断片的な情報で福祉の仕事を判断しており、</ins>仕事理解が不足している。2. <ins>自分の興味・価値観・強みを整理できておらず、</ins>自己理解が不足している。3. <ins>友人や親の期待に影響され、主体的に意思決定できていない。</ins></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note"><p><b>考え方：</b>①は「<b>何が不足しているか</b>」の名指しに徹し、専門用語ではなく<b>その不足が生じている状態を、事例の言葉で一句添える</b>。そうすると②の根拠と自然に対応します。</p></div>
+</div>
+
+<!-- ══════ 設問3② ══════ -->
+<div class="qb">
+  <div class="qb-hd"><span class="qb-no">設問3②</span><h2>その根拠 ── 最大の失点箇所</h2><span class="pt">推定 5 / 10</span></div>
+
+  <div class="hand">
+    <span class="lbl">あなたの答案</span>
+    <p>1. 「実際に大学で学んでみると…複雑だし、実習などで現場の話を聞くと自分には荷が重く向いていないのでは」と思う。2. 「大学生活で身についた知識は社会福祉分野だけだし、他に仕事に結びつく経験もない」3. 「同じ学科の友人の中には…みんなどうやって決めたのだろう」といった発言より。</p>
+  </div>
+
+  <div class="eval">
+    <div class="good">
+      <h3>◯ 効いている</h3>
+      <ul>
+        <li><b>引用の精度が高い。</b>3項目とも相談者の発言を正確に拾えており、設問の「相談者の言動を通じて」という要求に応えています。<b>ここは多くの受験者が要約しすぎて崩すところ</b>で、明確な強みです。</li>
+        <li>①の1・2・3と番号で対応させている。読み手が追いやすい。</li>
+      </ul>
+    </div>
+    <div class="bad">
+      <h3>△ 決定的な欠落</h3>
+      <ul>
+        <li><b>論拠（ワラント）が一つもありません。</b>3項目すべてが「相談者がこう言った」で終わり、締めが「といった発言より。」。<b>事実（Data）はあるが、事実と主張をつなぐ論拠（Warrant）が空欄</b>です。</li>
+        <li>そのため、<b>「なぜその発言から理解不足やメタ認知の欠如が言えるのか」が読み手に委ねられています。</b>採点者は補って読んではくれません。</li>
+        <li>逆に言えば、<b>足りないのは各項目の末尾に置く一句だけ</b>です。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fix">
+    <div class="cap">最小の修正 ── 引用を短くして、末尾に「〜ため。」を足す</div>
+    <div class="body">
+      <div class="row">
+        <span class="tag">AFTER（160字・3行）　緑が追加した論拠</span>
+        <p class="after">1.「制度が複雑」「現場の話は荷が重い」と<ins>伝聞で語るのみで、判断材料が実体験に基づいていないため。</ins>2.「できることが思いつかない」「知識は福祉だけ」と語り、<ins>祖母との経験を強みや価値観に結びつけられていないため。</ins>3.「みんなどうやって決めたのだろう」「ひとまず福祉で」と、<ins>自分の軸でなく周囲との比較で選ぼうとしているため。</ins></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note"><p><b>型：</b>「〔事実〕〜と語っており、〔論拠〕〜であるため、〔主張〕〜が不足している」。3行しかないときは<b>主張を①に預け、②は「事実 →（〜のため）」だけ残す</b>。上の修正案が全項目「〜ため。」で終わっているのはそのためです。<b>末尾が「〜より。」「〜と語っている。」で終わっていたら、その時点で論拠が抜けている合図</b>と覚えてください。</p></div>
+</div>
+
+<!-- ══════ 設問4 ══════ -->
+<div class="qb">
+  <div class="qb-hd"><span class="qb-no">設問4</span><h2>今後の方針</h2><span class="pt">推定 7〜8 / 10</span></div>
+
+  <div class="hand">
+    <span class="lbl">あなたの答案</span>
+    <p>まずは、大学での学びやそれ以上にインターンシップに参加するといった行動を承認し、やりたい事がみつからないといった不安や理想とのギャップによって感じた自分に荷が重いといったプレッシャーと両親からの期待に挟まれている状況に寄り添い、関係構築を継続していく。その中で、祖母に利用者側の意見を聞いたりする提案を通じ福祉の仕事に対しての理解を深め、大学生活における経験をお聞きし、ジョブカードなどに棚卸しすることで自己理解を深め、直接業界に行った先輩や、当該業界を目指す友人とのコミュニケーション、情報収集なども推奨し、視野が広がり前向きに求職活動に臨めるよう支援する。</p>
+  </div>
+
+  <div class="eval">
+    <div class="good">
+      <h3>◯ 効いている</h3>
+      <ul>
+        <li><b>「祖母に利用者側の意見を聞く」という提案が秀逸です。</b>祖母が福祉サービスを利用しているという事例固有の情報を活かした、<b>この事例にしか書けない具体策</b>。一般論に流れていない答案は採点者に刺さります。解答例より優れている部分です。</li>
+        <li><b>「行動を承認し」から入っている。</b>5社のインターンに参加した行動を認めるのは、自己効力感が低いという見立てに対応した支援。順序に理由があります。</li>
+        <li>ジョブ・カード、先輩、友人、情報収集 ── 手段が具体的。</li>
+        <li>関係構築 → 自己理解・仕事理解 → 求職活動、という流れがある。</li>
+      </ul>
+    </div>
+    <div class="bad">
+      <h3>△ 課題</h3>
+      <ul>
+        <li><b>一文が長すぎます。</b>前半が約120字の一文、後半が約190字の一文。読点でつないでいるため、<b>どこが何の支援なのか輪郭が出ず、設問3の1・2・3との対応が見えません</b>。文を切るだけで点が動きます。</li>
+        <li><b>意思決定の支援が明示されていない。</b>「視野が広がり」で受けてはいますが、<b>相談者が自分の軸で選択肢を比較し、主体的に決める</b>という段階がありません。「前向きに求職活動に臨めるよう」では、何を決めるのかが曖昧です。</li>
+        <li>「大学での学びやそれ以上に」「直接業界に行った先輩」は表現が不明瞭。<b>時間があるときに読み返す癖</b>をつけると拾えます。</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="fix">
+    <div class="cap">最小の修正 ── 内容はそのまま、文を切って対応を見せる</div>
+    <div class="body">
+      <div class="row">
+        <span class="tag">AFTER（250字・5行）</span>
+        <p class="after">まず、５社のインターンに参加した行動を承認し、やりたい事が見つからない不安と両親の期待に挟まれた状況に寄り添い、関係構築を継続する。<ins>次に、</ins>大学生活の経験をジョブ・カードで棚卸しし、興味・価値観・強みを言語化して自己理解を深める。<ins>あわせて、</ins>祖母に利用者側の意見を聞く提案や、福祉分野に就職した先輩への訪問を通じ、仕事理解を促す。<ins>その上で、他業界も含めた選択肢を自分の軸で比較検討し、主体的に方向性を決められるよう支援する。</ins></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="note"><p><b>効果：</b>「まず／次に／あわせて／その上で」を入れただけで、<b>①で挙げた3つの問題と方針が1対1で対応していることが読み取れる形</b>になります。書く内容はほぼ変えていません。設問4は「設問3で答えた内容を踏まえ」と明示されているので、<b>この対応が見えるかどうかが採点の要</b>です。</p></div>
+</div>
+
+<!-- ══════ まとめ ══════ -->
+<div class="qb">
+  <div class="qb-hd"><span class="qb-no">次回</span><h2>書き終えたら確認する5点</h2></div>
+
+  <div class="check">
+    <ol>
+      <li><b>設問1に、相談者が口にした価値観の語が入っているか。</b>感情語だけになりやすいので、「素敵だ」「心から」のような<b>その人が何を大事にしているかが分かる語</b>を最低1つ拾う。<span class="p">今回の失点</span></li>
+      <li><b>設問2の結びは「〜する意図。」か。</b>そして着地は「確認する」ではなく<b>「気づきを促す」「自己理解を深める」</b>になっているか。<span class="p">今回の失点</span></li>
+      <li><b>設問3②の各項目が「〜ため。」で終わっているか。</b>「〜より。」「〜と語っている。」で終わっていたら論拠が抜けている合図。<span class="p">最大の失点</span></li>
+      <li><b>設問3①に、事例から浮いた専門用語を使っていないか。</b>相談者の言動から説明できない語は外す。</li>
+      <li><b>設問4が、設問3の①1・2・3と1対1で追えるか。</b>「まず／次に／あわせて／その上で」で文を切り、最後に<b>主体的な意思決定の支援</b>を必ず置く。<span class="p">今回の失点</span></li>
+    </ol>
+  </div>
+
+  <div class="note"><p><b>時間について：</b>今回は39分で書き上げています。本番は50分なので<b>11分の余裕</b>があります。この時間を、書き終えた後に上の5点を見直すのに充てられます。特に3番は、末尾の一句を足すだけなので<b>見直しで確実に回収できる失点</b>です。</p></div>
+</div>
+
+<footer>
+  第30回 実技（論述）答案講評／対象答案 2026年5月12日／講評作成 2026年8月23日<br>
+  推定得点は配点区分と設問要求からの目安であり、実際の採点基準は公表されていない。
+</footer>
+
+</div>
