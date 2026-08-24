@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NotebookLM ポッドキャスト生成プロンプト集（CFP相続 弱点克服レポート用）</title>
+<style>
+  :root{ --bg:#f7f5f0; --fg:#4a4a4a; --accent:#a08a6e; --accent2:#d1bfae;
+    --box:#ffffff; --line:#e0dcd3; --red:#d9534f; --code:#fbfaf7; }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1e1d1b; --fg:#e6e2da; --accent:#c3a882; --accent2:#5a5148;
+      --box:#26251f; --line:#3a3831; --red:#e57373; --code:#1a1917; } }
+  *{box-sizing:border-box;}
+  body{font-family:"Helvetica Neue",Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif;
+    background:var(--bg);color:var(--fg);line-height:1.75;margin:0;font-size:15px;}
+  .wrap{max-width:900px;margin:0 auto;padding:28px 18px 80px;}
+  h1{font-size:22px;margin:0 0 6px;color:var(--accent);}
+  .sub{font-size:13.5px;color:var(--fg);opacity:.75;margin:0 0 20px;}
+  h2{font-size:17px;margin:34px 0 12px;padding:8px 12px;background:var(--accent);color:#fff;border-radius:5px;}
+  h3{font-size:15.5px;margin:24px 0 8px;border-left:4px solid var(--accent2);padding-left:9px;}
+  .box{background:var(--box);border:1px solid var(--line);border-radius:7px;padding:14px 16px;margin:14px 0;}
+  .warn{background:var(--box);border-left:4px solid var(--red);border-radius:0 6px 6px 0;padding:12px 15px;margin:14px 0;font-size:13.5px;}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:6px;padding:14px;
+    white-space:pre-wrap;word-wrap:break-word;font-size:13px;line-height:1.7;margin:8px 0;
+    font-family:"SFMono-Regular",Consolas,"Hiragino Kaku Gothic ProN",monospace;}
+  .copy{background:var(--accent);color:#fff;border:none;border-radius:5px;padding:6px 16px;
+    font-size:13px;cursor:pointer;margin-top:6px;}
+  .copy:hover{opacity:.85;} .copy.done{opacity:.6;}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0;}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;}
+  th{background:rgba(160,138,110,.13);font-weight:700;}
+  code{background:rgba(128,128,128,.14);padding:1px 5px;border-radius:3px;font-size:12.5px;}
+  .tbl-scroll{overflow-x:auto;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>NotebookLM ポッドキャスト生成プロンプト集 ― CFP相続</h1>
+<p class="sub">作成 2026-08-25｜素材＝<code>弱点克服レポート_相続.md</code>／<code>間違いノート_相続.md</code>｜1周目＝2026年第1回 素点15/50・実質8問</p>
+
+<div class="warn">
+<b>⚠️ 引用には使わないこと。</b> ポッドキャストは資料の要約であり、一次照合の担保にならない。
+理解のためだけに使い、条文・通達を引用する際は必ず原典で確認すること（引用の作法ルール）。
+</div>
+
+<div class="box">
+<b>設計の考え方（リスク版で確立したものを踏襲）</b>
+<ol style="margin:8px 0 0;padding-left:1.3em;">
+<li><b>1本にまとめない。型ごとに分割する</b>（1本に詰めると1論点1分未満になり浅くなる）</li>
+<li><b>ホストBを受験生役にして、実際の誤り方を口に出させ、講師役が訂正する</b>構成にする（失点記録という資産が最も活きる形式）</li>
+<li><b>数値を丸めさせない／算式は手順で言わせる／資料外を足させない</b></li>
+<li>最後に<b>口頭クイズ</b>を置く</li>
+</ol>
+</div>
+
+<h2>1. 使い方（3ステップ）</h2>
+<div class="box">
+① NotebookLM に <code>弱点克服レポート_相続.md</code> と <code>間違いノート_相続.md</code> をアップロードする<br>
+② 「音声概要」→「カスタマイズ」を開く<br>
+③ 下のプロンプトを<b>そのまま貼り付けて生成</b>する
+</div>
+
+<h2>2. 制作状況</h2>
+<div class="tbl-scroll">
+<table>
+<tr><th>#</th><th>テーマ</th><th>素材の状態</th><th>優先</th></tr>
+<tr><td><b>①</b></td><td><b>SC4 宅地の評価 ― 5ステップの解法フレーム</b></td><td>✅ 2026-08-25 に整理・3問とも検算済み</td><td><b>最優先（下記）</b></td></tr>
+<tr><td>②</td><td>法定相続人の数え方（放棄・みなし実子・養子数制限）</td><td>✅ 真因確定済み（Q14・Q15・Q21）</td><td>次点</td></tr>
+<tr><td>③</td><td>相続税の計算4段階と、2割加算が入る場所</td><td>✅ 真因確定済み（Q22）</td><td>次点</td></tr>
+<tr><td>④</td><td>SC3 贈与税（暦年／精算課税）</td><td>⏳ 8/29の解法確認後</td><td>—</td></tr>
+<tr><td>⑤</td><td>SC6 自社株評価（株主区分の分岐）</td><td>⏳ 8/27の解法確認後</td><td>—</td></tr>
+<tr><td>⑥</td><td>SC8 各人の課税価格（国際相続の3区分）</td><td>⏳ 8/28の解法確認後</td><td>—</td></tr>
+</table>
+</div>
+
+<h2>3. プロンプト① SC4 宅地の評価 ― 順番を体に入れる</h2>
+<h3>狙い</h3>
+<div class="box">
+宅地の評価は<b>知識ではなく手順</b>で決まる。5ステップの<b>順序</b>と、<b>2つの勘違いポイント</b>
+（側方路線加算の式／貸家建付地の減価率）を、聴くだけで口をついて出る状態にする。
+</div>
+
+<pre>この音声は、CFP試験「相続・事業承継設計」の受験対策として聴きます。
+私は2026年8月23日に2026年度第1回を初めて通しで解き、素点15/50でした。
+ただし勘で当てた分を除くと実質8問で、まだ科目の土台ができていない段階です。
+基礎的な用語の説明は省かず、しかし教科書の朗読にはしないでください。
+
+【今回の範囲】
+アップロードした資料のうち、「【SC4】宅地の評価 ― 解法フレーム」の章だけを扱ってください。
+他の章（法定相続人の数え方、贈与税、自社株など）には立ち入らないでください。
+範囲を狭くする代わりに、この章を隅々まで扱います。
+
+【この回でいちばん伝えてほしいこと＝宅地の評価は知識ではなく「順番」で決まる】
+5つのステップを、必ずこの順で、繰り返し声に出してください。
+　① 利用の単位で画地を切る（評価単位の判定）
+　② 切った画地の形で間口・奥行を測り直す
+　③ 正面路線を決める
+　④ 側方・二方を加算する
+　⑤ 最後に権利関係の減価を掛ける
+そして「①を間違えると、以降がどれだけ正確でも全部外れる」「⑤を先にやると側方加算の基礎が狂う」
+という2点を、理由とともに説明してください。
+
+【必ず扱ってほしい勘違いポイント その1 ― 側方路線影響加算の式】
+私は側方路線加算を「正面路線価 ×（1＋加算率）」と理解していました。正しくは
+「正面路線価×奥行価格補正率 ＋ 側方路線価×奥行価格補正率×側方路線影響加算率」です。
+ここを、次の順で扱ってください。
+　・まず、誤った式と正しい式を並べて読み上げる
+　・2026年度第1回の数値（正面450千円・側方200千円・奥行価格補正率1.00・角地0.03）で
+　　両方を計算し、456千円と463.5千円という2つの数字を声に出して対比する
+　・そのうえで「この2つは、正面路線価と側方路線価が等しいときだけ一致する。
+　　だから普段は誤りに気づかない」と明言する
+　・最後に「なぜ側方路線価に掛けるのか」を説明する。側方路線影響加算は
+　　角地であることによる増価を表し、その増価は側方路線の価値水準に比例する。
+　　正面路線価に掛けると、側方路線が450千円でも200千円でも同じ増価になってしまい意味をなさない。
+
+【必ず扱ってほしい勘違いポイント その2 ― 貸家建付地の減価率】
+貸家建付地は「1 − 借地権割合 × 借家権割合 × 賃貸割合」です。
+借地権割合50%・借家権割合30%・賃貸割合100%なら 1−0.15＝0.85 になります。
+これを「1 − 借家権割合＝0.7」としてしまうのが最頻ミスです。次の順で扱ってください。
+　・まず 0.85 と 0.7 を並べて、どちらが正しいかを言う
+　・「なぜ借地権割合を掛けるのか」を説明する。貸家建付地は自分の土地に自分の建物を建てて
+　　その建物を貸している土地で、土地には借地権を設定していない。ただ借家人は建物を通じて
+　　土地を使っており、その権利は借地権そのものではなく、借地権のうち借家権割合に相当する
+　　部分にすぎない。だから15%しか減らない。
+　・そのうえで検算の型を渡す。「貸宅地は50%減、貸家建付地は15%減。
+　　貸家建付地の減価は必ず貸宅地より小さい」。数式でも
+　　借家権割合×賃貸割合が1以下だから常に成り立つ、と補足してください。
+
+【評価単位の切り方は、対比で聴かせてください】
+2026年度第1回では、同じ甲宅地なのに設問によって切り方が変わりました。
+　・問題34：Ａ部分（自用地）とＢ部分（使用貸借）→ 一体で1画地
+　・問題35：Ｂ部分（使用貸借）とＣ部分（貸家建付地）→ 別々の画地
+この対比を具体的に説明し、「切る基準は、他人の財産価値のある権利が乗っているかどうか。
+使用借権は評価上ゼロなので切らない」という一文に集約してください。
+そして「切り方が変われば、間口も、接する路線も変わる」と付け加えてください。
+
+【構成の指定】
+ホストBを受験生役にしてください。Bには、上の2つの勘違い（側方加算を正面路線価に掛ける、
+貸家建付地を0.7にする）を実際に口に出して間違えてもらい、ホストAが訂正する形にしてください。
+Bが「なぜですか」と食い下がり、Aが理由まで答える、という往復を必ず入れてください。
+
+【やらないこと】
+・数値を丸めない。456千円、463.5千円、0.85、0.7、182,400千円、167,520千円は
+　そのままの数字で言う
+・資料に書かれていないこと（他の地区区分の加算率、不整形地補正、私道の評価など）を
+　足さない。今回は普通住宅地区・奥行価格補正率1.00の設例に限る
+・「覚えましょう」で終わらせない。必ず理由か、検算の型を添える
+
+【最後に口頭クイズを3問】
+　1. 側方路線影響加算率は、正面路線価と側方路線価のどちらに掛けるか。またその理由は
+　2. 借地権割合50%・借家権割合30%・賃貸割合100%の貸家建付地は、自用地価額の何倍か
+　3. 自用地と使用貸借で貸している部分は、一体で評価するか別々に評価するか。なぜか
+それぞれ、少し間を置いてから答えを言ってください。
+
+【尺】15〜20分。</pre>
+<button class="copy">コピー</button>
+
+<h2>4. 今後のプロンプトを作るときの型</h2>
+<div class="box">
+上のプロンプトは、次の6ブロックでできている。②〜⑥を作るときも同じ骨格を使う。
+<ol style="margin:8px 0 0;padding-left:1.3em;">
+<li><b>聴き手の状況</b>（何点だったか・どの段階か）</li>
+<li><b>範囲の限定</b>（資料のどの章だけを扱うか。狭くする代わりに隅々まで）</li>
+<li><b>いちばん伝えてほしいこと</b>（1本につき1つ）</li>
+<li><b>勘違いポイント</b>（誤った式と正しい式を並べ、数値で対比させ、理由を言わせる）</li>
+<li><b>構成の指定</b>（ホストBに実際の誤り方を口に出させる）</li>
+<li><b>やらないこと</b>＋<b>口頭クイズ3問</b>＋<b>尺</b></li>
+</ol>
+</div>
+
+<div class="warn">
+<b>改訂履歴</b><br>
+v1.0（2026-08-25）新規作成。プロンプト①（SC4 宅地の評価）を収録。
+2026年8月25日の解法確認で確定した2つの勘違いポイント（側方路線加算の式／貸家建付地の減価率）を核に構成した。
+</div>
+
+</div>
+<script>
+document.querySelectorAll('.copy').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var text = btn.parentElement.querySelector('pre').innerText;
+    var done = function(){
+      btn.textContent = 'コピーしました'; btn.classList.add('done');
+      setTimeout(function(){ btn.textContent = 'コピー'; btn.classList.remove('done'); }, 1600);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
+    } else { fallback(text, done); }
+  });
+});
+function fallback(text, done){
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); done(); } catch(e){}
+  document.body.removeChild(ta);
+}
+</script>
+</body>
+</html>
