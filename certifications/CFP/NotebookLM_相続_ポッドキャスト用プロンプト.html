@@ -351,7 +351,10 @@ v1.1（2026-08-25）プロンプト②（法定相続人の数え方）・③（
 <script>
 document.querySelectorAll('.copy').forEach(function(btn){
   btn.addEventListener('click', function(){
-    var text = btn.parentElement.querySelector('pre').innerText;
+    // ボタンの直前にある pre を探す（pre と button を囲む親が無い構成でも正しく拾うため）
+    var pre = btn.previousElementSibling;
+    while (pre && pre.tagName !== 'PRE') pre = pre.previousElementSibling;
+    var text = (pre || btn.parentElement.querySelector('pre')).innerText;
     var done = function(){
       btn.textContent = 'コピーしました'; btn.classList.add('done');
       setTimeout(function(){ btn.textContent = 'コピー'; btn.classList.remove('done'); }, 1600);

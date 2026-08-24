@@ -674,7 +674,10 @@ RC8は第2回の試験にだけ出る型で、出れば3問から5問がまと�
 <script>
 document.querySelectorAll('.copy').forEach(function(btn){
   btn.addEventListener('click', function(){
-    var text = btn.parentElement.querySelector('pre').innerText;
+    // ボタンの直前にある pre を探す（pre と button を囲む親が無い構成でも正しく拾うため）
+    var pre = btn.previousElementSibling;
+    while (pre && pre.tagName !== 'PRE') pre = pre.previousElementSibling;
+    var text = (pre || btn.parentElement.querySelector('pre')).innerText;
     var done = function(){
       btn.textContent = 'コピーしました';
       btn.classList.add('done');
