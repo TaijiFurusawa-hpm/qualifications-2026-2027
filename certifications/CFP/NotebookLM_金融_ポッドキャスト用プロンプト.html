@@ -26,6 +26,8 @@
   .copy{background:var(--accent);color:#fff;border:none;border-radius:5px;padding:6px 16px;
     font-size:13px;cursor:pointer;margin-top:6px;}
   .copy:hover{opacity:.85;} .copy.done{opacity:.6;}
+  .copy.fail{background:#c0554f;color:#fff;opacity:1;}
+  .prompt{margin:0 0 8px;}
   table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0;}
   th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;}
   th{background:rgba(74,122,140,.13);font-weight:700;}
@@ -75,6 +77,7 @@
 </div>
 
 <h2>3. プロンプト① 制度・法規 ― 1問1分で取れる6点を落とさない</h2>
+<div class="prompt">
 <pre>この音声は、CFP試験「金融資産運用設計」の受験対策として、スキマ時間に聴きます。
 私は過去問を5回分解いており、直近の2024年度第1回で24点を取って合格ライン23問を初めて
 クリアしました。時間配分の課題はすでに解決していて、残っているのは知識と型の精度だけです。
@@ -131,8 +134,10 @@
 
 【尺】12〜15分。</pre>
 <button class="copy">コピー</button>
+</div>
 
 <h2>4. プロンプト② デリバティブ後半 ― 3回連続で落としている型がある</h2>
+<div class="prompt">
 <pre>この音声は、CFP試験「金融資産運用設計」の受験対策として、スキマ時間に聴きます。
 私は過去問を5回分解いており、直近の2024年度第1回で24点を取って合格ラインを初めて
 クリアしました。残っている課題は知識と型の精度です。
@@ -193,8 +198,10 @@ Bが「なぜ安くなるんですか」と食い下がり、Aが理由まで答
 
 【尺】15〜20分。</pre>
 <button class="copy">コピー</button>
+</div>
 
 <h2>5. プロンプト③ 経済・金融指標 ― 数字カードを耳で回す</h2>
+<div class="prompt">
 <pre>この音声は、CFP試験「金融資産運用設計」の受験対策として、スキマ時間に聴きます。
 移動中や作業中に流し聴きすることを想定しています。
 
@@ -245,8 +252,10 @@ Bが3回に1回くらいは間違え、Aが訂正する形にしてください�
 
 【尺】12〜15分。</pre>
 <button class="copy">コピー</button>
+</div>
 
 <h2>6. プロンプト④ 捨て問の線引き ―「設問を捨てる」と「論点を捨てる」は別</h2>
+<div class="prompt">
 <pre>この音声は、CFP試験「金融資産運用設計」の受験対策として聴きます。
 私は過去問を5回分解いており、時間配分の課題はすでに解決しています。
 この回は知識ではなく、本番での判断と、学習の設計を変えるための音声にしてください。
@@ -301,8 +310,10 @@ Bが3回に1回くらいは間違え、Aが訂正する形にしてください�
 
 【尺】12〜15分。</pre>
 <button class="copy">コピー</button>
+</div>
 
 <h2>7. プロンプト⑤ 外貨・為替の計算群 ― 制覇した5型を落とさない</h2>
+<div class="prompt">
 <pre>この音声は、CFP試験「金融資産運用設計」の受験対策として、スキマ時間に聴きます。
 外貨・為替は6つの型のうち5つを2026年7月に制覇しています。
 したがってこの回は、新しく教える回ではなく、忘れかけを止めるための維持の回にしてください。
@@ -357,8 +368,10 @@ Bが3回に1回くらいは間違え、Aが訂正する形にしてください�
 
 【尺】15〜20分。</pre>
 <button class="copy">コピー</button>
+</div>
 
 <h2>8. プロンプト⑥ 投資信託の3計算 ― 判定の順番だけを体に入れる</h2>
+<div class="prompt">
 <pre>この音声は、CFP試験「金融資産運用設計」の受験対策として、スキマ時間に聴きます。
 投資信託の3計算は1周目で全滅しましたが、その後2回の別設例で正解できており、
 克服を確認しています。したがってこの回は維持の回です。
@@ -412,6 +425,7 @@ Bが3回に1回くらいは間違え、Aが訂正する形にしてください�
 
 【尺】15分。</pre>
 <button class="copy">コピー</button>
+</div>
 
 <h2>9. 今後の追加候補</h2>
 <div class="box">
@@ -434,25 +448,134 @@ v1.0（2026-08-25）新規作成。全6本を収録。<b>金融は時間配分�
 
 </div>
 <script>
-document.querySelectorAll('.copy').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    var text = btn.parentElement.querySelector('pre').innerText;
-    var done = function(){
-      btn.textContent = 'コピーしました'; btn.classList.add('done');
-      setTimeout(function(){ btn.textContent = 'コピー'; btn.classList.remove('done'); }, 1600);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
-    } else { fallback(text, done); }
+/* ============================================================
+   コピーボタン共通スニペット v2（2026-08-25）
+   ------------------------------------------------------------
+   ★これが原本。NotebookLM_*_ポッドキャスト用プロンプト.html へ
+     script タグで埋め込む際は、必ずここからコピーする。
+     ※このファイル内に script の終了タグを literal で書かないこと
+       （HTMLに埋め込むとパーサがそこで script を終端し、リスナーが登録されない）
+     実装を各HTMLで書き起こさない（v1のバグ再発原因がそれだった）。
+
+   v1のバグ（2026-08-25 発覚）
+     var text = btn.parentElement.querySelector('pre').innerText;
+     → pre と button を包む親が無い構成では btn.parentElement が
+       ページ全体のコンテナになり、【常にページ最初の pre】を返した。
+       結果、全ボタンがプロンプト①をコピーしていた。
+       しかも「静かに間違ったものをコピーする」ため気づけなかった。
+
+   v2の方針
+     ① 構造非依存 … .prompt ラッパーがあってもなくても正しく拾う
+     ② fail loud  … 見つからなければ黙って別のものをコピーせず、失敗を表示する
+   ============================================================ */
+(function(){
+  function findPre(btn){
+    // ① 同じラッパー（.prompt）の中を探す
+    var wrap = btn.closest ? btn.closest('.prompt') : null;
+    if (wrap) { var p = wrap.querySelector('pre'); if (p) return p; }
+    // ② ボタンの直前を遡って探す（包む親が無い構成でも拾う）
+    var el = btn.previousElementSibling;
+    while (el) { if (el.tagName === 'PRE') return el; el = el.previousElementSibling; }
+    // ③ 見つからなければ null を返す。★ページ先頭の pre を返さない
+    return null;
+  }
+  function flash(btn, msg, ok){
+    if (btn.dataset.orig === undefined) btn.dataset.orig = btn.textContent;
+    btn.textContent = msg;
+    btn.classList.remove('done','fail');
+    btn.classList.add(ok ? 'done' : 'fail');
+    setTimeout(function(){
+      btn.textContent = btn.dataset.orig;
+      btn.classList.remove('done','fail');
+    }, 1800);
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var pre = findPre(btn);
+      if (!pre) { flash(btn, 'コピー元が見つかりません', false); return; }
+      var text = pre.innerText;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function(){ flash(btn, 'コピーしました', true); },
+          function(){ var ok = fallbackCopy(text); flash(btn, ok ? 'コピーしました' : 'コピーに失敗しました', ok); }
+        );
+      } else {
+        var ok = fallbackCopy(text);
+        flash(btn, ok ? 'コピーしました' : 'コピーに失敗しました', ok);
+      }
+    });
   });
-});
-function fallback(text, done){
-  var ta = document.createElement('textarea');
-  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-  document.body.appendChild(ta); ta.select();
-  try { document.execCommand('copy'); done(); } catch(e){}
-  document.body.removeChild(ta);
-}
+})();
+</script> で埋め込む際は、必ずここからコピーする。
+     実装を各HTMLで書き起こさない（v1のバグ再発原因がそれだった）。
+
+   v1のバグ（2026-08-25 発覚）
+     var text = btn.parentElement.querySelector('pre').innerText;
+     → pre と button を包む親が無い構成では btn.parentElement が
+       ページ全体のコンテナになり、【常にページ最初の pre】を返した。
+       結果、全ボタンがプロンプト①をコピーしていた。
+       しかも「静かに間違ったものをコピーする」ため気づけなかった。
+
+   v2の方針
+     ① 構造非依存 … .prompt ラッパーがあってもなくても正しく拾う
+     ② fail loud  … 見つからなければ黙って別のものをコピーせず、失敗を表示する
+   ============================================================ */
+(function(){
+  function findPre(btn){
+    // ① 同じラッパー（.prompt）の中を探す
+    var wrap = btn.closest ? btn.closest('.prompt') : null;
+    if (wrap) { var p = wrap.querySelector('pre'); if (p) return p; }
+    // ② ボタンの直前を遡って探す（包む親が無い構成でも拾う）
+    var el = btn.previousElementSibling;
+    while (el) { if (el.tagName === 'PRE') return el; el = el.previousElementSibling; }
+    // ③ 見つからなければ null を返す。★ページ先頭の pre を返さない
+    return null;
+  }
+  function flash(btn, msg, ok){
+    if (btn.dataset.orig === undefined) btn.dataset.orig = btn.textContent;
+    btn.textContent = msg;
+    btn.classList.remove('done','fail');
+    btn.classList.add(ok ? 'done' : 'fail');
+    setTimeout(function(){
+      btn.textContent = btn.dataset.orig;
+      btn.classList.remove('done','fail');
+    }, 1800);
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var pre = findPre(btn);
+      if (!pre) { flash(btn, 'コピー元が見つかりません', false); return; }
+      var text = pre.innerText;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function(){ flash(btn, 'コピーしました', true); },
+          function(){ var ok = fallbackCopy(text); flash(btn, ok ? 'コピーしました' : 'コピーに失敗しました', ok); }
+        );
+      } else {
+        var ok = fallbackCopy(text);
+        flash(btn, ok ? 'コピーしました' : 'コピーに失敗しました', ok);
+      }
+    });
+  });
+})();
 </script>
 </body>
 </html>

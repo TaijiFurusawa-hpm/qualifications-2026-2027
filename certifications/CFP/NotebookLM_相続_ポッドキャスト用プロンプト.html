@@ -26,6 +26,8 @@
   .copy{background:var(--accent);color:#fff;border:none;border-radius:5px;padding:6px 16px;
     font-size:13px;cursor:pointer;margin-top:6px;}
   .copy:hover{opacity:.85;} .copy.done{opacity:.6;}
+  .copy.fail{background:#c0554f;color:#fff;opacity:1;}
+  .prompt{margin:0 0 8px;}
   table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0;}
   th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;}
   th{background:rgba(160,138,110,.13);font-weight:700;}
@@ -81,6 +83,7 @@
 （側方路線加算の式／貸家建付地の減価率）を、聴くだけで口をついて出る状態にする。
 </div>
 
+<div class="prompt">
 <pre>この音声は、CFP試験「相続・事業承継設計」の受験対策として聴きます。
 私は2026年8月23日に2026年度第1回を初めて通しで解き、素点15/50でした。
 ただし勘で当てた分を除くと実質8問で、まだ科目の土台ができていない段階です。
@@ -155,6 +158,7 @@ Bが「なぜですか」と食い下がり、Aが理由まで答える、とい
 
 【尺】15〜20分。</pre>
 <button class="copy">コピー</button>
+</div>
 
 <h2>4. プロンプト② 法定相続人の数え方 ― 5ステップと、割れる箇所</h2>
 <h3>狙い</h3>
@@ -164,6 +168,7 @@ Bが「なぜですか」と食い下がり、Aが理由まで答える、とい
 （人数と分母で扱いが割れる／仕分けと制限の順序）を体に入れる。
 </div>
 
+<div class="prompt">
 <pre>この音声は、CFP試験「相続・事業承継設計」の受験対策として聴きます。
 私は2026年8月23日に2026年度第1回を初めて通しで解き、素点15/50でした。
 勘で当てた分を除くと実質8問で、まだ科目の土台ができていない段階です。
@@ -244,6 +249,7 @@ Bが「なぜですか」と食い下がり、Aが理由まで答える往復を
 
 【尺】15〜20分。</pre>
 <button class="copy">コピー</button>
+</div>
 
 <h2>5. プロンプト③ 相続税の計算4段階 ― 2割加算はどこに入るか</h2>
 <h3>狙い</h3>
@@ -253,6 +259,7 @@ Bが「なぜですか」と食い下がり、Aが理由まで答える往復を
 検算の型まで持って帰る。
 </div>
 
+<div class="prompt">
 <pre>この音声は、CFP試験「相続・事業承継設計」の受験対策として聴きます。
 私は2026年8月23日に2026年度第1回を初めて通しで解き、素点15/50でした。
 
@@ -327,6 +334,7 @@ Aが「同じにならない。総額は分け方によって動かない数字�
 
 【尺】12〜15分。</pre>
 <button class="copy">コピー</button>
+</div>
 
 <h2>6. 今後のプロンプトを作るときの型</h2>
 <div class="box">
@@ -349,28 +357,134 @@ v1.1（2026-08-25）プロンプト②（法定相続人の数え方）・③（
 
 </div>
 <script>
-document.querySelectorAll('.copy').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    // ボタンの直前にある pre を探す（pre と button を囲む親が無い構成でも正しく拾うため）
-    var pre = btn.previousElementSibling;
-    while (pre && pre.tagName !== 'PRE') pre = pre.previousElementSibling;
-    var text = (pre || btn.parentElement.querySelector('pre')).innerText;
-    var done = function(){
-      btn.textContent = 'コピーしました'; btn.classList.add('done');
-      setTimeout(function(){ btn.textContent = 'コピー'; btn.classList.remove('done'); }, 1600);
-    };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
-    } else { fallback(text, done); }
+/* ============================================================
+   コピーボタン共通スニペット v2（2026-08-25）
+   ------------------------------------------------------------
+   ★これが原本。NotebookLM_*_ポッドキャスト用プロンプト.html へ
+     script タグで埋め込む際は、必ずここからコピーする。
+     ※このファイル内に script の終了タグを literal で書かないこと
+       （HTMLに埋め込むとパーサがそこで script を終端し、リスナーが登録されない）
+     実装を各HTMLで書き起こさない（v1のバグ再発原因がそれだった）。
+
+   v1のバグ（2026-08-25 発覚）
+     var text = btn.parentElement.querySelector('pre').innerText;
+     → pre と button を包む親が無い構成では btn.parentElement が
+       ページ全体のコンテナになり、【常にページ最初の pre】を返した。
+       結果、全ボタンがプロンプト①をコピーしていた。
+       しかも「静かに間違ったものをコピーする」ため気づけなかった。
+
+   v2の方針
+     ① 構造非依存 … .prompt ラッパーがあってもなくても正しく拾う
+     ② fail loud  … 見つからなければ黙って別のものをコピーせず、失敗を表示する
+   ============================================================ */
+(function(){
+  function findPre(btn){
+    // ① 同じラッパー（.prompt）の中を探す
+    var wrap = btn.closest ? btn.closest('.prompt') : null;
+    if (wrap) { var p = wrap.querySelector('pre'); if (p) return p; }
+    // ② ボタンの直前を遡って探す（包む親が無い構成でも拾う）
+    var el = btn.previousElementSibling;
+    while (el) { if (el.tagName === 'PRE') return el; el = el.previousElementSibling; }
+    // ③ 見つからなければ null を返す。★ページ先頭の pre を返さない
+    return null;
+  }
+  function flash(btn, msg, ok){
+    if (btn.dataset.orig === undefined) btn.dataset.orig = btn.textContent;
+    btn.textContent = msg;
+    btn.classList.remove('done','fail');
+    btn.classList.add(ok ? 'done' : 'fail');
+    setTimeout(function(){
+      btn.textContent = btn.dataset.orig;
+      btn.classList.remove('done','fail');
+    }, 1800);
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var pre = findPre(btn);
+      if (!pre) { flash(btn, 'コピー元が見つかりません', false); return; }
+      var text = pre.innerText;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function(){ flash(btn, 'コピーしました', true); },
+          function(){ var ok = fallbackCopy(text); flash(btn, ok ? 'コピーしました' : 'コピーに失敗しました', ok); }
+        );
+      } else {
+        var ok = fallbackCopy(text);
+        flash(btn, ok ? 'コピーしました' : 'コピーに失敗しました', ok);
+      }
+    });
   });
-});
-function fallback(text, done){
-  var ta = document.createElement('textarea');
-  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-  document.body.appendChild(ta); ta.select();
-  try { document.execCommand('copy'); done(); } catch(e){}
-  document.body.removeChild(ta);
-}
+})();
+</script> で埋め込む際は、必ずここからコピーする。
+     実装を各HTMLで書き起こさない（v1のバグ再発原因がそれだった）。
+
+   v1のバグ（2026-08-25 発覚）
+     var text = btn.parentElement.querySelector('pre').innerText;
+     → pre と button を包む親が無い構成では btn.parentElement が
+       ページ全体のコンテナになり、【常にページ最初の pre】を返した。
+       結果、全ボタンがプロンプト①をコピーしていた。
+       しかも「静かに間違ったものをコピーする」ため気づけなかった。
+
+   v2の方針
+     ① 構造非依存 … .prompt ラッパーがあってもなくても正しく拾う
+     ② fail loud  … 見つからなければ黙って別のものをコピーせず、失敗を表示する
+   ============================================================ */
+(function(){
+  function findPre(btn){
+    // ① 同じラッパー（.prompt）の中を探す
+    var wrap = btn.closest ? btn.closest('.prompt') : null;
+    if (wrap) { var p = wrap.querySelector('pre'); if (p) return p; }
+    // ② ボタンの直前を遡って探す（包む親が無い構成でも拾う）
+    var el = btn.previousElementSibling;
+    while (el) { if (el.tagName === 'PRE') return el; el = el.previousElementSibling; }
+    // ③ 見つからなければ null を返す。★ページ先頭の pre を返さない
+    return null;
+  }
+  function flash(btn, msg, ok){
+    if (btn.dataset.orig === undefined) btn.dataset.orig = btn.textContent;
+    btn.textContent = msg;
+    btn.classList.remove('done','fail');
+    btn.classList.add(ok ? 'done' : 'fail');
+    setTimeout(function(){
+      btn.textContent = btn.dataset.orig;
+      btn.classList.remove('done','fail');
+    }, 1800);
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var pre = findPre(btn);
+      if (!pre) { flash(btn, 'コピー元が見つかりません', false); return; }
+      var text = pre.innerText;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function(){ flash(btn, 'コピーしました', true); },
+          function(){ var ok = fallbackCopy(text); flash(btn, ok ? 'コピーしました' : 'コピーに失敗しました', ok); }
+        );
+      } else {
+        var ok = fallbackCopy(text);
+        flash(btn, ok ? 'コピーしました' : 'コピーに失敗しました', ok);
+      }
+    });
+  });
+})();
 </script>
 </body>
 </html>
