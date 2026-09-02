@@ -5,12 +5,17 @@
    使い方:
      node quiz/verify.js                        … index.html の全問を検証
      node quiz/verify.js quiz/drafts/xxx.js     … 投入前のドラフト単体を検証
+     ★どのディレクトリから実行してもよい（引数なしなら自分の隣の index.html を見る）
    ★出題時に選択肢はシャッフルされる（2026-08-26 実装）。したがって
      解説に【選択肢3に着地する】のような位置表現を書かないこと（金額・内容で書く）。
    ★ドラフトは【index.html に入れる前に】必ずこれを通すこと
      （2026-08-26、挿入してから検証してアプリ全体を壊した事故の対策）
    ========================================================== */
 const fs = require('fs');
+const path = require('path');
+// ★どこから実行してもよいように、既定パスはこのスクリプトの場所を基準に解決する
+//   （2026-09-03：リポジトリルートから実行して ENOENT になったため）
+const DEFAULT_INDEX = path.join(__dirname, 'index.html');
 
 // 他問への参照＝単独出題で解けなくなる（2026-08-26 S43・F49 で発覚）
 const REF_PATTERNS = [
@@ -72,7 +77,7 @@ if (target && target.endsWith('.js')) {
   totalBad += r.bad; totalN += r.n;
   console.log(`\nドラフト ${r.n}問  正解位置 ${JSON.stringify(r.pos)}`);
 } else {
-  const html = fs.readFileSync(target || 'quiz/index.html', 'utf8');
+  const html = fs.readFileSync(target || DEFAULT_INDEX, 'utf8');
   const s = html.indexOf('const DATA = {');
   const e = html.indexOf('/* ===== localStorage', s);
   if (s < 0 || e < 0) { console.error('❌ DATAブロックが見つからない'); process.exit(1); }
