@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFP相続 3本目（2025年第1回）弱点分析レポート</title>
+<style>
+  :root{
+    --bg:#fbfaf7; --fg:#232323; --muted:#6b6b6b; --line:#e3ddd2; --card:#ffffff;
+    --s:#c0392b; --a:#d97a1a; --b:#7a8a99; --accent:#6a4a8a; --hl:#f6f1fb;
+    --ok:#2e7d5b; --okbg:#eef7f2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1c1d1f; --fg:#e8e6e2; --muted:#9a9a9a; --line:#34363a; --card:#25272b;
+           --s:#e57373; --a:#f0a860; --b:#9fb0bf; --accent:#a98fc9; --hl:#272130;
+           --ok:#6fc79b; --okbg:#1f2b26; }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.75;font-size:15px;}
+  .wrap{max-width:1000px;margin:0 auto;padding:28px 20px 80px;}
+  h1{font-size:24px;margin:0 0 4px;letter-spacing:.02em;}
+  h2{font-size:19px;margin:40px 0 12px;padding:8px 12px;background:var(--accent);color:#fff;border-radius:6px;}
+  h3{font-size:16px;margin:26px 0 8px;border-left:4px solid var(--accent);padding-left:9px;}
+  h4{font-size:14.5px;margin:18px 0 6px;color:var(--accent);}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:14px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0;}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;}
+  th{background:rgba(106,74,138,.10);font-weight:700;}
+  .tbl-scroll{overflow-x:auto;}
+  .num{font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap;}
+  ul{margin:6px 0 6px 0;padding-left:20px;} li{margin:4px 0;}
+  .logic{background:var(--hl);border:1px solid var(--line);border-radius:6px;padding:10px 13px;margin:9px 0;}
+  .logic b{color:var(--accent);}
+  code{background:rgba(127,127,127,.14);padding:1px 5px;border-radius:4px;font-size:13px;font-family:"SF Mono",Consolas,monospace;}
+  .kpi{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;}
+  .kpi>div{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 13px;text-align:center;}
+  .kpi .big{font-size:22px;font-weight:800;color:var(--accent);}
+  .kpi .lbl{font-size:12px;color:var(--muted);}
+  .warn{color:var(--s);font-weight:700;}
+  .good{color:var(--ok);font-weight:700;}
+  .note{background:var(--hl);border-left:3px solid var(--accent);padding:9px 13px;font-size:13.5px;border-radius:0 6px 6px 0;margin:12px 0;}
+  .alert{background:rgba(192,57,43,.07);border-left:3px solid var(--s);padding:9px 13px;font-size:13.5px;border-radius:0 6px 6px 0;margin:12px 0;}
+  .okbox{background:var(--okbg);border-left:3px solid var(--ok);padding:9px 13px;font-size:13.5px;border-radius:0 6px 6px 0;margin:12px 0;}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:34px;border-top:1px solid var(--line);padding-top:12px;}
+  .bar{display:flex;height:22px;border-radius:4px;overflow:hidden;border:1px solid var(--line);margin:4px 0 2px;}
+  .bar i{display:block;height:100%;}
+  .bar .o{background:var(--ok);} .bar .x{background:rgba(192,57,43,.35);}
+  .tag{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:10px;background:var(--accent);color:#fff;margin-right:4px;}
+  .tagx{background:var(--s);} .tago{background:var(--ok);} .tagn{background:var(--b);}
+</style></head>
+<body>
+<div class="wrap">
+
+<h1>CFP相続 3本目 ― 2025年第1回 弱点分析レポート</h1>
+<p class="sub">実施 2026-09-13（日）4:48〜6:48／120分・50問到達｜採点・分析 2026-09-13〜14｜1本目＝2026①（15/50）／2本目＝2025②（29/50）</p>
+
+<div class="kpi">
+  <div><div class="big">28<span style="font-size:14px;">/50</span></div><div class="lbl">素点（合格ライン24）</div></div>
+  <div><div class="big good">+4</div><div class="lbl">ライン比（前回+1）</div></div>
+  <div><div class="big">26</div><div class="lbl">実質（まぐれ2問を除く）</div></div>
+  <div><div class="big warn">3</div><div class="lbl">時間切れの問数</div></div>
+</div>
+
+<div class="okbox">
+<b>素点は1問下がったが、ライン比は +1 → +4 に改善した。</b>2025①は合格ライン24＝他の回より3問低い難回である。<b>問45〜47は時間切れの適当マークで、うち2問がまぐれ正解</b>なので実質26問だが、それでもライン+2。<br>
+<b>本レポートの主題は素点ではなく、誤答22問が【2つの塊】に収束したこと</b>である。ばらばらの22論点ではなかった。
+</div>
+
+<h2>1. 結果の構造 ― 前半が上がり、後半が下がった</h2>
+
+<div class="tbl-scroll">
+<table>
+<tr><th>帯</th><th class="num">正解</th><th class="num">所要</th><th>内容</th></tr>
+<tr><td>問1〜10</td><td class="num warn">4/10</td><td class="num">19分</td><td>民法（法定相続分・欠格・配偶者居住権・相続人の不存在・養子）</td></tr>
+<tr><td>問11〜20</td><td class="num">5/10</td><td class="num">32分</td><td>遺言・後見／課税価格／小規模宅地</td></tr>
+<tr><td>問21〜30</td><td class="num">6/10</td><td class="num">26分</td><td>相続税の総額・税額控除・延納物納</td></tr>
+<tr><td>問31〜40</td><td class="num good">7/10</td><td class="num">32分</td><td>贈与税・財産評価</td></tr>
+<tr><td>問41〜50</td><td class="num">6/10</td><td class="num warn">11分</td><td>課税価格・申告・自社株・事業承継</td></tr>
+</table>
+</div>
+
+<div class="tbl-scroll">
+<table>
+<tr><th></th><th class="num">前半16問</th><th class="num">後半34問</th><th class="num">所要</th></tr>
+<tr><td><b>2本目 2025②</b></td><td class="num warn">4/16（25%）</td><td class="num good">25/34（74%）</td><td class="num">115分・完走</td></tr>
+<tr><td><b>3本目 2025①</b></td><td class="num">7/16（<b>44%</b>）</td><td class="num">21/34（62%）</td><td class="num">120分・<b>3問未到達</b></td></tr>
+</table>
+</div>
+
+<div class="card">
+<b>前半に使った時間が 28分 → 38分 に増え、正答率が 25% → 44% に上がった。</b>丁寧に解いた効果は出ている。<br>
+<b>その代償として、最後の9問に10分しか残らず3問を捨てた。</b>問19〜20（小規模宅地）に13分を使っているが<b>2問とも正解</b>なので、使い方自体は悪くない。<b>時間が足りないのではなく、配分の設計がまだない</b>状態である。
+</div>
+
+<h2>2. 🔴 誤答22問は、2つの塊に収束した</h2>
+
+<div class="tbl-scroll">
+<table>
+<tr><th style="width:22%;">塊</th><th style="width:30%;">該当</th><th>内容</th></tr>
+<tr><td><b>A ― 「数える」と「配る」の物差し</b></td><td>問1・問2・問23<br><span style="font-size:12px;">（計算3問）</span></td><td>法定相続人の<b>数</b>は正しいのに、法定相続<b>分</b>で落ちる。<b>半血兄弟姉妹</b>と<b>二重資格</b></td></tr>
+<tr><td><b>B ― 作った教材が定着前</b></td><td>問5・問7・問15・問18・問42・問44<br><span style="font-size:12px;">（計算3問＋文章3問）</span></td><td><b>すでにクイズがある論点</b>で、9/5投入・9/13演習＝8日では周回が足りなかった</td></tr>
+<tr><td>（新規論点）</td><td>問8・問10・問12・問14・問17・問26・問27・問28・問33・問34・問38・問48</td><td>初出の論点。クイズ化の対象</td></tr>
+<tr><td>（時間切れ）</td><td>問45〜47</td><td>論点ではなく<b>配分</b>の問題</td></tr>
+</table>
+</div>
+
+<h2>3. 塊A ― 「数える」と「配る」は別の物差し</h2>
+
+<p><b>今日の計算失点のうち3問が、この一軸で説明できる。</b>しかも<b>放棄マトリクス（2本目の最大の発見）と同じ軸</b>である。</p>
+
+<div class="tbl-scroll">
+<table>
+<tr><th style="width:28%;"></th><th style="width:36%;">数を<b>数える</b>とき<br><span style="font-size:12px;font-weight:400;">基礎控除3,000万＋600万×数／非課税枠500万×数</span></th><th style="width:36%;">相続分を<b>配る</b>とき<br><span style="font-size:12px;font-weight:400;">民法の相続分／相続税の総額の按分</span></th></tr>
+<tr><td><b>放棄した者</b></td><td>含める（1人）</td><td>民法＝除く／相続税法＝含める</td></tr>
+<tr style="background:rgba(192,57,43,.06);"><td><b>半血兄弟姉妹</b></td><td><b>1人</b>（全血と同じ）</td><td class="warn"><b>全血の1/2</b> ← 問1・問2</td></tr>
+<tr style="background:rgba(192,57,43,.06);"><td><b>二重資格者</b>（代襲＋養子）</td><td><b>1人</b></td><td class="warn"><b>2口</b> ← 問23</td></tr>
+<tr><td>養子（実子あり）</td><td><b>1人まで</b></td><td>算入された数で按分</td></tr>
+</table>
+</div>
+
+<div class="alert">
+<b>★2回連続で、まったく同じ場所で割れている。</b>
+<div class="tbl-scroll">
+<table style="margin-top:8px;">
+<tr><th></th><th>基礎控除（人数）</th><th>相続税の総額（配分）</th></tr>
+<tr><td><b>2本目 2025②</b></td><td class="good">問20 54,000千円 ⭕</td><td class="warn">問21 ✗（放棄者を按分から除いた）</td></tr>
+<tr><td><b>3本目 2025①</b></td><td class="good">問22 54,000千円 ⭕</td><td class="warn">問23 ✗（二重資格を1口にした）</td></tr>
+</table>
+</div>
+<b>どちらの回も、連続する2問で、人数は正解・配分は誤答。しかも基礎控除は2回とも54,000千円。</b><br>
+<b>→ 運用ルール＝「基礎控除の問題を解いた直後は、次の総額の問題で必ず物差しを切り替える」。</b>設例が同じなので、人数リストをそのまま持ち込みたくなる構造になっている。
+</div>
+
+<h3>3-1. 問1・問2 ― 半血兄弟姉妹（真因確定）</h3>
+<div class="card">
+<b>設例</b>：被相続人に妻・姉（父の前妻の子＝<b>半血</b>）・兄（全血・<b>相続放棄</b>）・弟（全血）。父母は死亡、子なし。<br><br>
+<b>⭕ できていたこと（ここが重要）</b>
+<ul>
+<li><b>配偶者と兄弟姉妹なら1/4</b>を正しく選んだ（本人申告では「1/3か1/4かで迷った」が、選んだのは1/4）</li>
+<li><b>問1（民法）で放棄した兄を除いた</b> ⭕</li>
+<li><b>問2（相続税法）で放棄した兄を含めた</b> ⭕</li>
+</ul>
+<b class="good">→ 放棄の場面分けは2問とも正しくできていた。S135〜S142の効果が確認できた。</b><br><br>
+<span class="warn">壊れた1点</span>：<b>半血兄弟姉妹の相続分は全血の1/2</b>（民法900条4号ただし書）を適用しなかった。
+<div class="logic">
+<b>問1（民法）</b>＝放棄した兄はいない者 → 妻3/4、兄弟姉妹1/4を<b>半血1：全血2</b>で分ける → 弟＝1/4×2/3＝<b>1/6</b><br>
+<b>問2（相続税法）</b>＝放棄がなかったものとする → 1/4を<b>姉1：兄2：弟2</b>で分ける → 姉＝1/4×1/5＝<b>1/20</b><br>
+<span class="warn">選択＝1/8（1/4÷2）と1/12（1/4÷3）＝いずれも半血を無視して等分</span>
+</div>
+<div class="note"><b>★混同の正体は「非嫡出子」との取り違えと思われる。</b><b>非嫡出子の相続分</b>は2013年の最高裁違憲決定を受けた改正で<b>嫡出子と同等</b>になったが、<b>半血兄弟姉妹は今も1/2のまま</b>（改正されていない）。「差別的な相続分の規定は撤廃された」と一括で覚えると、半血まで同等だと思い込む。<b>改正されたのは非嫡出子だけ。</b></div>
+</div>
+
+<h3>3-2. 問23 ― 二重資格（真因確定）</h3>
+<div class="card">
+<b>設例</b>：妻／長女（すでに死亡）→その子が<b>孫A</b>／長女の夫＝2008年に普通養子／二女（<b>相続放棄</b>）／<b>孫A・孫B・孫C</b>＝2022年12月に普通養子。課税遺産総額480,000千円。<br><br>
+<b>孫Aは2つの地位を同時に持つ</b>＝<b>長女の代襲相続人</b>であり、かつ<b>養子</b>。<b>二重資格の場合、相続分は合算する</b>（通説・登記実務）。
+<div class="logic">
+妻 1/2＝240,000 → 240,000×45%−27,000 ＝ <b>81,000</b><br>
+子 1/2＝240,000 を <b>4口</b>で分ける<br>
+　孫A（代襲1口＋養子1口＝<b>2口</b>）120,000 → ×40%−17,000 ＝ <b>31,000</b><br>
+　二女（1口）60,000 → ×30%−7,000 ＝ <b>11,000</b><br>
+　養子（1口）60,000 → ×30%−7,000 ＝ <b>11,000</b><br>
+<b>合計 134,000千円</b>
+</div>
+<b>⭕ 妻の81,000千円は完全に正解</b>＝速算表の当て方に問題はない。<span class="warn">落ちたのは子の口数を3にした一点</span>（子3人等分なら各80,000→17,000×3＝51,000、合計132,000千円）。
+<div class="note"><b>★判別の合図</b>＝関係図で<b>同じ人物が2か所に現れている</b>（孫Aとして代襲の位置にあり、かつ養子Aとしても並んでいる）ときは二重資格を疑う。</div>
+</div>
+
+<h2>4. 塊B ― 作った教材が、まだ間に合っていない</h2>
+
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">問</th><th>論点</th><th>該当クイズ</th><th>状況</th></tr>
+<tr><td class="num">15</td><td>生命保険金の非課税＝按分の分母</td><td>S138・S142</td><td class="warn"><b>分母側は2回連続</b>（2本目Q13と同じ）</td></tr>
+<tr><td class="num">18</td><td>生前贈与加算＝100万円控除</td><td>S143・S144</td><td class="warn"><b>2回連続</b>（2本目Q16と同じ）</td></tr>
+<tr><td class="num">5</td><td>欠格者は遺贈も受けられない</td><td>S158</td><td class="warn"><b>2回連続・同じ肢を選択</b>（2本目Q6と同じ）</td></tr>
+<tr><td class="num">7</td><td>配偶者居住権は建物全部に及ぶ</td><td>S157</td><td class="warn"><b>2回連続</b>（2本目Q5と同じ）</td></tr>
+<tr><td class="num">44</td><td>納税管理人の届出と申告期限</td><td>S165</td><td class="warn"><b>2回連続・裏表で出題</b>（2本目Q24と同じ）</td></tr>
+<tr><td class="num">42</td><td>株式の所在地＝発行法人の本店</td><td>弱点レポート🧭【SC8】</td><td>既存論点の未定着</td></tr>
+</table>
+</div>
+
+<div class="alert">
+<b>6問が「すでに教材にある論点」だった。</b>本人申告＝<b>「回していたけれど、知識が確実に定着するまでではなかった」</b>。<br>
+<b>S135〜S170は9/5投入・9/13演習＝8日間。</b>これは「クイズが効かなかった」のではなく、<b>周回の絶対量が足りていない</b>という事実を示している。<b>9/20の4本目までは7日あるので、ここが回収できるかが直接の指標になる。</b>
+</div>
+
+<h3>4-1. 問15 ― 非課税の分母（3回目・分母側は2回連続）</h3>
+<div class="card">
+<b>設例</b>：妻／長男（すでに死亡）→孫A・孫B／二男／長女（<b>相続放棄</b>）。保険金の受取人＝妻36,000／<b>長男の妻</b>5,000／二男4,000／<b>長女</b>5,000（千円）。<br><br>
+<b>⭕ できていたこと</b>＝法定相続人の数5人（<b>放棄した長女を含めて数えた</b>）／代襲の孫A・孫Bを人数に含めた／非課税枠25,000千円／<b>長男の妻の5,000千円を分母から正しく除外</b><br>
+<span class="warn">壊れた1点</span>：<b>按分の分母に、放棄した長女の5,000千円を入れた</b>（分母45,000千円とした）。
+<div class="logic">
+正＝分母40,000（妻36,000＋二男4,000）→ 妻の非課税 25,000×36/40＝22,500 → <b>13,500千円</b><br>
+<span class="warn">誤＝25,000×36/45＝20,000 → 36,000−20,000＝16,000千円</span>
+</div>
+<div class="tbl-scroll">
+<table>
+<tr><th></th><th>人数</th><th>分母</th></tr>
+<tr><td>1本目 26①Q14</td><td class="warn">✗ 放棄者を除いた</td><td class="good">⭕</td></tr>
+<tr><td>2本目 25②Q13</td><td class="good">⭕</td><td class="warn">✗ 放棄者を入れた</td></tr>
+<tr><td><b>3本目 25①Q15</b></td><td class="good">⭕</td><td class="warn"><b>✗ 放棄者を入れた（同じ）</b></td></tr>
+</table>
+</div>
+<div class="note">
+<b>★知らないのではない。</b>問1・問2では放棄の場面分けが2問とも正しくでき、今回も長男の妻は正しく除外している。<br>
+<b>問15は、同じ人物について、同じ問題の中で放棄を2回・逆向きに使わせる構造になっている。</b>
+<div class="logic">① 非課税枠 … 長女を<b>含める</b>　← 放棄の適用1回目<br>② 按分の分母 … 長女を<b>除く</b>　　← 放棄の適用2回目・逆向き</div>
+<b>①で「含める」と正しく判断した直後に、②で同じ人物を「除く」へ切り替える必要がある。</b>問1・問2は放棄の適用が1回だけなので通り、問15は2回あったので後ろが引きずられた、という形に見える。
+</div>
+<div class="okbox">
+<b>★手順で切る（保険として持っておく）</b><br>
+<b>人数は【家系図】を見て数える／分母は【保険金の表】を見て選ぶ。</b>見る場所が違えば直前の判断を引きずりようがない。<b>計算に入る前に、保険金の表の各行へ⭕✗を書き込む</b>（今回なら 妻⭕／長男の妻✗／二男⭕／長女✗）。表に×が2つ立っていれば、分母に足す行は残り2つしかない。
+</div>
+</div>
+
+<h3>4-2. 問18 ― 100万円控除（2回連続）</h3>
+<div class="card">
+<b>設例</b>：相続開始2031年7月。配偶者への贈与＝2024年6月 3,000／2024年9月 8,000／2026年10月 4,000／2029年8月 2,500／2030年3月 900（千円・いずれも贈与時の評価額）。相続開始時の評価額の列も併記されている。<br><br>
+<b>4つの罠のうち3つはクリアしている。</b>
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">#</th><th>罠</th><th class="num">結果</th></tr>
+<tr><td class="num">①</td><td><b>7年前の線</b>（2031年7月→2024年7月）。2024年<b>6月</b>の3,000千円は1ヶ月差で対象外</td><td class="num good">⭕</td></tr>
+<tr><td class="num">②</td><td><b>相続開始時の評価額の列</b>（5,000／9,500／8,000千円）＝撹乱。加算は<b>贈与時の価額</b></td><td class="num good">⭕</td></tr>
+<tr><td class="num">③</td><td>2030年3月の900千円＝<b>基礎控除以下・申告なしでも加算する</b></td><td class="num good">⭕</td></tr>
+<tr><td class="num">④</td><td><b>延長部分から100万円控除</b></td><td class="num warn">✗</td></tr>
+</table>
+</div>
+<div class="logic">
+延長部分（2024/7〜2028/7）＝ 8,000 ＋ 4,000 ＝ 12,000 <b>− 1,000</b> ＝ 11,000<br>
+3年以内（2028/7〜）＝ 2,500 ＋ 900 ＝ 3,400<br>
+<b>合計 14,400千円</b>（選択＝控除なしの15,400千円）
+</div>
+<div class="note"><b>★①が特に効いている。</b>2024年6月を「2024年1月1日以降だから延長部分」と読むと19,900千円に着地する。<b>7年前の線を月単位で引けている</b>ということ。<br>
+<b>⚠️ ただし本人は線を「2024年8月」に引いていた。</b>今回は6月と9月しかなかったので結果に影響しなかったが、<b>2024年7月の贈与があれば誤って除外していた</b>。<b>位置を1ヶ月直すだけ</b>。</div>
+</div>
+
+<h3>4-3. 問42 ― 株式の所在地（真因確定）</h3>
+<div class="card">
+<b>⭕ 納税義務者の判定は2人とも正解。</b>被相続人は2011年2月からX国＝<b>相続開始前10年以内に国内住所がない＝非居住被相続人</b> → 妻（日本国籍なし・X国在住）＝<b>非居住制限納税義務者</b>／長男（日本国籍・相続開始時は東京都）＝<b>居住無制限納税義務者</b>。<b>2本目で潰したSC8の帯が効いている。</b><br><br>
+<span class="warn">壊れた1点</span>：本人申告＝<b>「購入窓口が国内なので、国内資産だと判定していた」</b>。
+<div class="tbl-scroll">
+<table>
+<tr><th>財産</th><th>判定基準</th><th class="num">結果</th></tr>
+<tr><td>YA生命保険（<b>本店東京都</b>）の保険金 50,000</td><td>保険会社の<b>本店</b></td><td class="num good">国内 ⭕</td></tr>
+<tr><td>X国所在の土地・建物 25,000</td><td>所在地</td><td class="num good">国外 ⭕</td></tr>
+<tr style="background:rgba(192,57,43,.06);"><td><b>日本の証券会社で購入した</b>YB社（<b>本店X国</b>）株式 10,000</td><td><b>発行法人の本店</b></td><td class="num warn">国外 ✗</td></tr>
+<tr><td>YD銀行（本店X国）<b>本店</b>の預金 5,000（贈与）</td><td><b>受入営業所</b></td><td class="num good">国外 ⭕</td></tr>
+<tr><td>YE銀行（本店X国）<b>東京支店</b>の預金 3,000（贈与）</td><td><b>受入営業所</b></td><td class="num good">国内 ⭕</td></tr>
+</table>
+</div>
+<b>預貯金は2つとも正しく判定できている</b>（本店と支店で結論を分けられている）。<b>保険金も本店で判定できている。株式だけが外れた。</b>
+<div class="logic">保険金 50,000 − 非課税10,000（500万×2人）＝ 40,000<br>＋ 贈与加算（YE銀行東京支店）3,000<br>葬式費用1,000 → <b>制限納税義務者は控除不可</b><br><b>合計 43,000千円</b>（選択＝株式10,000を加えた53,000千円）</div>
+<div class="alert"><b>★出題者は、買った場所と所在地が食い違う組を2つ、逆向きに置いている。</b><br>
+・<b>日本の</b>証券会社で購入した<b>X国本店</b>の株式 → <b>国外</b><br>
+・<b>X国の</b>証券会社で購入した<b>日本国債</b>（長男の分） → <b>国内</b>（国債は発行国で判定）<br>
+<b>「どこで買ったか」は所在地判定に一切関係しない。最初から撹乱情報と決めておく。</b></div>
+</div>
+
+<h2>5. 新規論点 ― 計算2問</h2>
+
+<h3>問17 ― 非課税枠が使えない給付に、使ってしまった</h3>
+<div class="card">
+<b>⭕ 未支給年金300千円の除外は正解</b>（遺族固有の権利＝受け取った遺族の<b>一時所得</b>であって相続財産ではない）。<br>
+<span class="warn">壊れた1点</span>：遺族一時金28,000千円に<b>退職手当金等の非課税枠（500万×5人）を適用した</b>。
+<div class="tbl-scroll">
+<table>
+<tr><th>死亡の時点</th><th>何として課税されるか</th><th class="num">非課税枠</th></tr>
+<tr><td><b>在職中に死亡</b></td><td>死亡退職金＝<b>退職手当金等</b>（相法3条1項2号）</td><td class="num good">使える</td></tr>
+<tr><td><b>退職後、年金受給中に死亡</b></td><td><b>保証期間付定期金に関する権利</b>（同<b>5号</b>）</td><td class="num warn">使えない</td></tr>
+</table>
+</div>
+<b>500万円×法定相続人の数の非課税枠は「退職手当金等」にしか使えない</b>（相法12条1項6号）。設例の<b>「定年退職後、…受給していたが、その受給中に死亡した」</b>という一文がここを決めている。<b>すでに退職しているので「退職を起因とする給与」ではない。</b>
+<div class="note"><b>★誤答肢の設計</b>＝肢1と肢2の差、肢3と肢4の差は<b>どちらも未支給年金300千円</b>。つまり「非課税枠を使うか」と「未支給年金を入れるか」を<b>独立に問う</b>設計で、<b>未支給年金のほうは正解している</b>。外したのは非課税枠の1点。</div>
+</div>
+
+<h3>問8 ― 法定相続人がゼロのときの基礎控除</h3>
+<div class="card">
+特別縁故者1人が分与を受けた場合の基礎控除は<b>3,000万円</b>（3,000万＋600万×<b>0人</b>）。<b>特別縁故者は法定相続人ではない。</b><br>
+★分与を受けた特別縁故者は<b>2割加算の対象</b>／申告期限は<b>分与があったことを知った日</b>の翌日から10ヵ月以内。
+</div>
+
+<h2>6. 文章題14問 ― 論点棚卸し</h2>
+
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">問</th><th>テーマ</th><th class="num">正解</th><th>核（4肢すべての論点）</th></tr>
+<tr><td class="num warn">5</td><td>欠格・廃除</td><td class="num">1</td><td><b>欠格は手続き不要で当然に発生</b>。★<b>欠格者は受遺欠格でもあり遺贈も受けられない</b>（民法965条）／<b>廃除を請求できるのは被相続人のみ</b>／<b>詐欺強迫で遺言を変更させたのは欠格事由</b>（廃除事由ではない）／欠格・廃除とも<b>代襲は生じる</b></td></tr>
+<tr><td class="num warn">7</td><td>配偶者居住権</td><td class="num">2</td><td><b>店舗併用でも建物全部に及ぶ</b>。★居住していなかった配偶者は取得できない／<b>譲渡は承諾があっても不可</b>／第三者への使用は承諾があれば可／<b>消滅後も配偶者が共有持分を持つなら返還不要</b></td></tr>
+<tr><td class="num">8</td><td>相続人の不存在</td><td class="num">4</td><td><b>特別縁故者1人でも基礎控除は3,000万円</b>（600万×0）。★相続財産法人は当然に成立／清算人は利害関係人・検察官の請求で選任／<b>6ヵ月以上</b>の公告／申告期限は<b>分与を知った日</b>から10ヵ月</td></tr>
+<tr><td class="num">10</td><td>養子</td><td class="num">4</td><td><b>連れ子でない未成年者を養子にすると親権は養親のみ</b>。★<b>縁組【前】に生まれた養子の子は養親と血族関係を生じない</b>（代襲相続の可否に直結）／<b>15歳未満で親権者と監護者が分かれていれば監護者の同意が必要</b>／<b>配偶者の実子（連れ子）は家裁の許可不要</b></td></tr>
+<tr><td class="num">12</td><td>遺言の効力</td><td class="num">3</td><td><b>遺贈の効力は遺言者の死亡時に発生</b>（受遺者の承認時ではない）。★<b>遺産分割の禁止は5年以内なら有効</b>（17歳→成年は1年）／予備的遺言は有効／<b>遺言執行者の同意＋相続人全員の合意なら遺言と異なる分割ができる</b></td></tr>
+<tr><td class="num">14</td><td>成年後見登記</td><td class="num">1</td><td><b>監督人選任前の合意解除による終了登記は【当事者が申請】</b>（公証人の嘱託ではない）。★公証人が嘱託するのは<b>契約の締結</b>の登記だけ／<b>審判関係は家裁書記官の嘱託</b>／交付請求できるのは本人・配偶者・<b>4親等内の親族</b>等</td></tr>
+<tr style="background:rgba(192,57,43,.06);"><td class="num">26</td><td>未成年者控除</td><td class="num">4</td><td><b>★放棄した未成年者でも、遺贈で取得していれば適用できる</b>（相法19条の3が「<b>放棄がなかったものとした場合における相続人</b>」と読み替え）。★1年未満は<b>切り上げ</b>／控除しきれない分は<b>扶養義務者から控除</b>／<b>制限納税義務者は不可</b></td></tr>
+<tr><td class="num">27</td><td>相次相続控除</td><td class="num">1</td><td><b>相次相続控除に申告要件はない</b>（ゼロになるなら申告不要）。★兄弟姉妹でも可／更正の請求で可／控除額は算式で決まり<b>協議で動かせない</b>／<b>1次相続で税額ゼロなら適用不可</b></td></tr>
+<tr><td class="num">28</td><td>延納・物納</td><td class="num">1</td><td><b>物納は延納の【次の順位】</b>＝現金→延納→<b>延納でも困難な場合に限り物納</b>。「いずれかを選択」は誤り。★延納は税額<b>10万円超</b>／<b>担保は第三者所有でも可</b>／収納価額は著しい変化があれば収納時の現況</td></tr>
+<tr><td class="num">33</td><td>相続時精算課税</td><td class="num">1</td><td><b>精算課税を選んでも相続放棄はできる</b>（ただし<b>放棄しても必ず加算</b>＝相法21条の16）。★災害特例（2024年〜）／<b>特別控除には期限内申告が必要</b>／加算は<b>基礎控除控除後</b>の残額</td></tr>
+<tr><td class="num">34</td><td>住宅取得等資金</td><td class="num">1</td><td><b>遅滞なく居住が確実と見込まれれば適用可</b>。★<b>国外の家屋は対象外</b>（小規模宅地が国外でも可なのと対照的）／<b>年齢は贈与の年の1月1日で18歳</b>／<b>期限内申告が要件</b></td></tr>
+<tr><td class="num">38</td><td>地積規模の大きな宅地</td><td class="num">4</td><td><b>倍率地域の宅地も対象</b>（倍率方式の価額と規模格差補正の価額の低いほう）。★三大都市圏500㎡／それ以外1,000㎡／<b>容積率400%（特別区300%）以上は対象外</b>／市街地農地も一定要件で対象</td></tr>
+<tr style="background:rgba(192,57,43,.06);"><td class="num">44</td><td>申告書の提出先</td><td class="num">4</td><td><b>納税管理人の届出を【しない】で出国するなら、出国の日までに申告</b>（10ヵ月ではない）。★届出をすれば通常どおり10ヵ月／提出先は<b>被相続人の住所地が国内ならそこ</b>、国外なら各相続人の住所地</td></tr>
+<tr><td class="num">48</td><td>所在不明株主の特例</td><td class="num">1</td><td>（ア）<b>剰余金の配当を受領</b>（議決権の行使ではない）／（イ）5年を<b>1年</b>に短縮／（ウ）認定から<b>2年</b>以内に申立て</td></tr>
+</table>
+</div>
+
+<div class="alert">
+<b>⚠️ 2026-09-14 訂正 ― 問26で、2本目レポートの記述に誤りが見つかった。</b><br>
+2本目（2025②Q24・Q25）の分析で<b>「生命保険金の非課税枠・未成年者控除・障害者控除・相次相続控除はいずれも相続人限定なので、放棄した時点で適用できない」</b>と書いたが、<b>未成年者控除・障害者控除は誤り</b>。<br>
+相続税法19条の3・19条の4は<b>「法定相続人（相続の放棄があつた場合には、その放棄がなかつたものとした場合における相続人）」</b>と定めており、<b>放棄者でも遺贈で財産を取得していれば適用できる</b>（国税庁タックスアンサーNo.4164で確認）。<br>
+<b>→ クイズ S127・S134 を差し替え、弱点克服レポートと間違いノートの該当行を訂正した。</b>
+<div class="logic">
+<b>★正しい判別基準＝条文に何と書いてあるか、の3分類</b><br>
+① <b>「相続の放棄をした者を除く」と明文で除外</b> → <b>不可</b>：生命保険金・退職手当金の非課税枠（相法12条）<br>
+② <b>「放棄がなかったものとした場合における相続人」と読み替え</b> → <b>可</b>：未成年者控除・障害者控除（19条の3・19条の4）<br>
+③ <b>読み替えがなく「相続人」のまま</b> → <b>不可</b>：相次相続控除（20条）、債務控除の債務（13条）<br>
+<b>「相続人限定だから全部不可」という一括りは誤りだった。</b>
+</div>
+</div>
+
+<h2>7. 時間配分 ― 論点ではなく設計の問題</h2>
+
+<div class="tbl-scroll">
+<table>
+<tr><th>区間</th><th class="num">2本目 2025②</th><th class="num">3本目 2025①</th></tr>
+<tr><td>開始</td><td class="num">4:33</td><td class="num">4:48</td></tr>
+<tr><td>前半16問</td><td class="num">28分（4/16）</td><td class="num">38分（<b>7/16</b>）</td></tr>
+<tr><td>問41時点の残り</td><td class="num">―</td><td class="num warn">約10分／9問</td></tr>
+<tr><td>結果</td><td class="num good">115分・完走</td><td class="num warn">120分・<b>3問が適当マーク</b></td></tr>
+</table>
+</div>
+
+<div class="card">
+<b>前半を丁寧に解いた効果ははっきり出ている（25%→44%）。問19〜20の小規模宅地に13分を使ったが2問とも正解しており、使い方も悪くない。</b><br>
+<b>問題は、その配分が事前に設計されていないこと。</b>結果として最後の9問に10分しか残らず、<b>問45〜47（自社株の計算3問）が適当マークになった</b>（うち2問はまぐれ正解）。
+</div>
+
+<div class="okbox">
+<b>★次回への申し送り＝「前半のどこを削るか」を先に決める</b><br>
+リスクでは<b>「税務ブロック（問4〜8）を後回しにする」</b>という判断を事前に固定し、それが完成形になった（8/22＝税務4問に19分で2/4、従来の27〜32分から短縮）。<br>
+相続でも同じ形が要る。候補は<b>問1〜12の民法・手続き帯</b>で、ここは1問あたりの配点は同じでも<b>正答率が44%</b>。<b>1問2分を上限とし、超えたら記号を付けて次へ進む</b>という運用にすれば、後半の計算帯に10分を戻せる。
+</div>
+
+<h2>8. 3回の推移 ― 何が返ってきたか</h2>
+
+<div class="tbl-scroll">
+<table>
+<tr><th></th><th class="num">1本目 2026①</th><th class="num">2本目 2025②</th><th class="num">3本目 2025①</th></tr>
+<tr><td>素点</td><td class="num">15/50</td><td class="num">29/50</td><td class="num">28/50</td></tr>
+<tr><td>合格ライン</td><td class="num">未公表</td><td class="num">28</td><td class="num">24</td></tr>
+<tr><td><b>ライン比</b></td><td class="num">―</td><td class="num">+1</td><td class="num good"><b>+4</b></td></tr>
+<tr><td>前半16問</td><td class="num">―</td><td class="num warn">4/16</td><td class="num">7/16</td></tr>
+<tr><td>放棄の場面分け</td><td class="num warn">Q14で失点</td><td class="num warn">5問で失点</td><td class="num good"><b>問1・問2で成功</b>／問15で失点</td></tr>
+<tr><td>債務控除</td><td class="num warn">相殺で当たり</td><td class="num warn">Q15 ✗</td><td class="num good"><b>問16 ⭕</b></td></tr>
+<tr><td>相続登記義務化</td><td class="num">―</td><td class="num warn">Q9 ✗</td><td class="num good"><b>問13 ⭕</b></td></tr>
+<tr><td>納税義務者の判定</td><td class="num warn">失点</td><td class="num good">⭕</td><td class="num good"><b>問42で2人とも⭕</b></td></tr>
+</table>
+</div>
+
+<div class="okbox">
+<b>返ってきているもの</b>＝放棄の場面分け（相続分側）／債務控除／相続登記義務化／納税義務者の判定。<b>いずれも8月〜9月に4点セットまたはクイズで潰した論点である。方法論は機能している。</b>
+</div>
+
+<h2>9. 次にやること</h2>
+
+<div class="tbl-scroll">
+<table>
+<tr><th class="num">優先</th><th>やること</th><th>状態</th></tr>
+<tr><td class="num warn">1</td><td><b>S171〜S194（24問）を回す</b>。特に<b>S171〜S175（半血・二重資格）</b>と<b>S186・S194（放棄の訂正版）</b></td><td class="good">✅投入済（相続194問／全743問）</td></tr>
+<tr><td class="num warn">2</td><td><b>S135〜S170を引き続き回す</b>。6問が「教材はあるが定着前」だった。<b>9/20までの7日が回収の指標</b></td><td>要周回</td></tr>
+<tr><td class="num">3</td><td><b>誤記の訂正</b>＝未成年者控除・障害者控除は放棄者でも可（S127・S134を差し替え、レポート2本を訂正）</td><td class="good">✅完了</td></tr>
+<tr><td class="num">4</td><td><b>前半12問の時間上限を決める</b>（1問2分・超えたら記号を付けて次へ）</td><td>4本目で試す</td></tr>
+<tr><td class="num">5</td><td>ポッドキャスト⑭「数えると配る」を追加するか判定</td><td>下記</td></tr>
+</table>
+</div>
+
+<div class="note">
+<b>★出口条件との関係</b>＝直近2本（9/20の2024②・9/26の2024①）が<b>2回ともライン+4以上</b>で、相続の集中期間を終了し10/1から3科目並行へ。<b>両回ともライン27なので、31問以上が目標</b>になる。
+</div>
+
+<p class="foot">
+作成 2026-09-13〜14／出典＝2025年度第1回 相続・事業承継設計（模範解答PDFで全50問照合済み）。計算問題7問の真因はすべて本人インプットで確定。文章題14問は問題PDFの4肢から起こしたもの。<br>
+未成年者控除の訂正は<b>国税庁タックスアンサー No.4164</b>で確認（条文＝相続税法19条の3）。
+</p>
+
+</div>
+</body>
+</html>
