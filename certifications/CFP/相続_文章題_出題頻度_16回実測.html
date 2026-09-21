@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>相続 文章題の出題頻度 ― 16回実測</title><style>
+  :root{
+    --bg:#fbfaf7; --fg:#232323; --muted:#6b6b6b; --line:#e3ddd2; --card:#ffffff;
+    --s:#c0392b; --a:#d97a1a; --b:#7a8a99; --accent:#6a4a8a; --hl:#f6f1fb;
+    --ok:#2e7d5b; --okbg:#eef7f2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1c1d1f; --fg:#e8e6e2; --muted:#9a9a9a; --line:#34363a; --card:#25272b;
+           --s:#e57373; --a:#f0a860; --b:#9fb0bf; --accent:#a98fc9; --hl:#272130;
+           --ok:#6fc79b; --okbg:#1f2b26; }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.75;font-size:15px;}
+  .wrap{max-width:1000px;margin:0 auto;padding:28px 20px 80px;}
+  h1{font-size:24px;margin:0 0 4px;letter-spacing:.02em;}
+  h2{font-size:19px;margin:40px 0 12px;padding:8px 12px;background:var(--accent);color:#fff;border-radius:6px;}
+  h3{font-size:16px;margin:26px 0 8px;border-left:4px solid var(--accent);padding-left:9px;}
+  h4{font-size:14.5px;margin:18px 0 6px;color:var(--accent);}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:14px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0;}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;}
+  th{background:rgba(106,74,138,.10);font-weight:700;}
+  .tbl-scroll{overflow-x:auto;}
+  .num{font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap;}
+  ul{margin:6px 0 6px 0;padding-left:20px;} li{margin:4px 0;}
+  .logic{background:var(--hl);border:1px solid var(--line);border-radius:6px;padding:10px 13px;margin:9px 0;}
+  .logic b{color:var(--accent);}
+  code{background:rgba(127,127,127,.14);padding:1px 5px;border-radius:4px;font-size:13px;font-family:"SF Mono",Consolas,monospace;}
+  .kpi{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;}
+  .kpi>div{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 13px;text-align:center;}
+  .kpi .big{font-size:22px;font-weight:800;color:var(--accent);}
+  .kpi .lbl{font-size:12px;color:var(--muted);}
+  .warn{color:var(--s);font-weight:700;}
+  .good{color:var(--ok);font-weight:700;}
+  .note{background:var(--hl);border-left:3px solid var(--accent);padding:9px 13px;font-size:13.5px;border-radius:0 6px 6px 0;margin:12px 0;}
+  .alert{background:rgba(192,57,43,.07);border-left:3px solid var(--s);padding:9px 13px;font-size:13.5px;border-radius:0 6px 6px 0;margin:12px 0;}
+  .okbox{background:var(--okbg);border-left:3px solid var(--ok);padding:9px 13px;font-size:13.5px;border-radius:0 6px 6px 0;margin:12px 0;}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:34px;border-top:1px solid var(--line);padding-top:12px;}
+  .bar{display:flex;height:22px;border-radius:4px;overflow:hidden;border:1px solid var(--line);margin:4px 0 2px;}
+  .bar i{display:block;height:100%;}
+  .bar .o{background:var(--ok);} .bar .x{background:rgba(192,57,43,.35);}
+  .tag{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:10px;background:var(--accent);color:#fff;margin-right:4px;}
+  .tagx{background:var(--s);} .tago{background:var(--ok);} .tagn{background:var(--b);}
+</style></head><body><div class="wrap">
+
+<h1>相続・事業承継設計 ― 文章題の出題頻度（16回実測）</h1>
+<p class="sub">対象＝2018年第1回〜2026年第1回の全16回・814設問／作成 2026-09-21</p>
+
+<div class="card">
+<b>この資料の目的</b><br>
+クイズの<b>Tier（出題頻度）を決めるための一次データ</b>。従来のTierは<b>失点ベースだけ</b>（落としたらt1・取れたらt2）で、<b>その論点が本番でどれだけ出るか</b>は一度も入っていなかった。<br>
+<b>★直近4回だけで判定すると外す。</b>実際に4回で判定したところ、<b>成年後見（13/16年度）・遺留分（14/16）・譲渡制限株式（11/16）を「1回限り」と誤判定</b>し、t3へ落としかけた。16回全数で数え直したのがこの表。
+</div>
+
+<h2>1. 時間荷重ランキング</h2>
+
+<div class="card">
+<b>荷重の計算</b>＝<b>直近5回（2024-1〜2026-1）×3 ＋ 中6回（2021-1〜2023-2）×2 ＋ 遠5回（2018-1〜2020-2）×1</b><br>
+満点は 5×3＋6×2＋5×1＝<b>32</b>。計算テーマの時間荷重ランキング（<a href="相続_重要問題マップ_2026後半戦.html" style="color:var(--accent);">相続_重要問題マップ</a>）と同じ方式。
+<div class="tbl-scroll" style="margin-top:10px;">
+<table>
+<tr><th>荷重</th><th>区分</th><th>Tierの上限</th></tr>
+<tr><td class="num">20〜32</td><td><span class="tag t-r">毎回級</span></td><td>t1（落としていれば）／t2（取れていれば）</td></tr>
+<tr><td class="num">12〜19</td><td><span class="tag t-a">高頻度</span></td><td>同上</td></tr>
+<tr><td class="num">6〜11</td><td><span class="tag t-b">散発</span></td><td><b>t2が上限</b>（取れていればt3）</td></tr>
+<tr><td class="num">5以下</td><td><span class="tag t-g">低頻度</span></td><td><b>t3</b></td></tr>
+</table>
+</div>
+</div>
+
+<div class="tbl-scroll">
+<table>
+<tr><th style="width:24%;">論点</th><th class="num">荷重</th><th class="num">直近5</th><th class="num">中6</th><th class="num">遠5</th><th class="num">計</th><th>区分</th><th>出題年度</th></tr>
+<tr><td><b>相続税の申告手続き</b></td><td class="num">30</td><td class="num">5/5</td><td class="num">5/6</td><td class="num">5/5</td><td class="num">15</td><td><span class="tag t-r">毎回級</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2018-2 2019-1 2019-2 2020-2 2021-1 2021-2 2022-1 2023-1 2023-2 2024-1 2024-2 2025-1 2025-2 2026-1</td></tr>
+<tr><td><b>遺言（方式・効力・撤回）</b></td><td class="num">29</td><td class="num">4/5</td><td class="num">6/6</td><td class="num">5/5</td><td class="num">15</td><td><span class="tag t-r">毎回級</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2018-2 2019-1 2019-2 2020-2 2021-1 2021-2 2022-1 2022-2 2023-1 2023-2 2024-1 2024-2 2025-1 2026-1</td></tr>
+<tr><td><b>遺留分（民法特例含む）</b></td><td class="num">28</td><td class="num">4/5</td><td class="num">6/6</td><td class="num">4/5</td><td class="num">14</td><td><span class="tag t-r">毎回級</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2018-2 2019-1 2020-2 2021-1 2021-2 2022-1 2022-2 2023-1 2023-2 2024-1 2024-2 2025-1 2025-2</td></tr>
+<tr><td><b>納税義務者・国外財産</b></td><td class="num">26</td><td class="num">4/5</td><td class="num">5/6</td><td class="num">4/5</td><td class="num">13</td><td><span class="tag t-r">毎回級</span></td><td style="font-size:11.5px;color:var(--muted);">2018-2 2019-1 2019-2 2020-2 2021-2 2022-1 2022-2 2023-1 2023-2 2024-1 2024-2 2025-2 2026-1</td></tr>
+<tr><td><b>配偶者居住権</b></td><td class="num">25</td><td class="num">5/5</td><td class="num">5/6</td><td class="num">0/5</td><td class="num">10</td><td><span class="tag t-r">毎回級</span></td><td style="font-size:11.5px;color:var(--muted);">2021-1 2021-2 2022-2 2023-1 2023-2 2024-1 2024-2 2025-1 2025-2 2026-1</td></tr>
+<tr><td><b>延納・物納</b></td><td class="num">24</td><td class="num">4/5</td><td class="num">4/6</td><td class="num">4/5</td><td class="num">12</td><td><span class="tag t-r">毎回級</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2018-2 2019-2 2020-2 2021-1 2022-1 2022-2 2023-1 2024-1 2024-2 2025-1 2026-1</td></tr>
+<tr><td><b>成年後見・任意後見</b></td><td class="num">24</td><td class="num">3/5</td><td class="num">5/6</td><td class="num">5/5</td><td class="num">13</td><td><span class="tag t-r">毎回級</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2018-2 2019-1 2019-2 2020-2 2021-2 2022-1 2022-2 2023-1 2023-2 2024-1 2025-1 2026-1</td></tr>
+<tr><td><b>教育資金／結婚子育て資金</b></td><td class="num">21</td><td class="num">3/5</td><td class="num">4/6</td><td class="num">4/5</td><td class="num">11</td><td><span class="tag t-r">毎回級</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2018-2 2019-2 2020-2 2021-2 2022-1 2022-2 2023-2 2024-1 2024-2 2025-2</td></tr>
+<tr><td><b>M&A・事業承継一般</b></td><td class="num">21</td><td class="num">3/5</td><td class="num">5/6</td><td class="num">2/5</td><td class="num">10</td><td><span class="tag t-r">毎回級</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2019-1 2021-1 2021-2 2022-2 2023-1 2023-2 2024-1 2024-2 2025-1</td></tr>
+<tr><td><b>準確定申告</b></td><td class="num">20</td><td class="num">4/5</td><td class="num">3/6</td><td class="num">2/5</td><td class="num">9</td><td><span class="tag t-r">毎回級</span></td><td style="font-size:11.5px;color:var(--muted);">2019-1 2019-2 2022-1 2022-2 2023-2 2024-1 2024-2 2025-2 2026-1</td></tr>
+<tr><td><b>譲渡制限株式・株式実務</b></td><td class="num">20</td><td class="num">2/5</td><td class="num">5/6</td><td class="num">4/5</td><td class="num">11</td><td><span class="tag t-r">毎回級</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2018-2 2019-1 2020-2 2021-1 2021-2 2022-2 2023-1 2023-2 2024-2 2026-1</td></tr>
+<tr><td><b>遺産分割協議</b></td><td class="num">19</td><td class="num">2/5</td><td class="num">4/6</td><td class="num">5/5</td><td class="num">11</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2018-2 2019-1 2019-2 2020-2 2021-1 2022-1 2022-2 2023-1 2024-1 2025-2</td></tr>
+<tr><td><b>相続の承認・放棄</b></td><td class="num">19</td><td class="num">1/5</td><td class="num">6/6</td><td class="num">4/5</td><td class="num">11</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2018-2 2019-1 2019-2 2021-1 2021-2 2022-1 2022-2 2023-1 2023-2 2024-1</td></tr>
+<tr><td><b>相続時精算課税</b></td><td class="num">18</td><td class="num">3/5</td><td class="num">4/6</td><td class="num">1/5</td><td class="num">8</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2021-1 2022-1 2022-2 2023-1 2024-1 2025-1 2026-1</td></tr>
+<tr><td><b>養子</b></td><td class="num">17</td><td class="num">3/5</td><td class="num">3/6</td><td class="num">2/5</td><td class="num">8</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2019-2 2022-1 2022-2 2023-1 2024-1 2025-1 2025-2</td></tr>
+<tr><td><b>認知・親子関係</b></td><td class="num">17</td><td class="num">3/5</td><td class="num">3/6</td><td class="num">2/5</td><td class="num">8</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2018-2 2020-2 2022-2 2023-1 2023-2 2024-1 2025-1 2026-1</td></tr>
+<tr><td><b>特別の寄与</b></td><td class="num">17</td><td class="num">2/5</td><td class="num">5/6</td><td class="num">1/5</td><td class="num">8</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2020-2 2021-1 2021-2 2022-2 2023-1 2023-2 2024-1 2025-1</td></tr>
+<tr><td><b>未分割</b></td><td class="num">16</td><td class="num">3/5</td><td class="num">3/6</td><td class="num">1/5</td><td class="num">7</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2021-1 2022-2 2023-2 2024-2 2025-1 2025-2</td></tr>
+<tr><td><b>遺言執行者</b></td><td class="num">16</td><td class="num">3/5</td><td class="num">3/6</td><td class="num">1/5</td><td class="num">7</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2020-2 2022-2 2023-1 2023-2 2024-2 2025-2 2026-1</td></tr>
+<tr><td><b>相続登記・国庫帰属</b></td><td class="num">15</td><td class="num">5/5</td><td class="num">0/6</td><td class="num">0/5</td><td class="num">5</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2024-1 2024-2 2025-1 2025-2 2026-1</td></tr>
+<tr><td><b>欠格・廃除</b></td><td class="num">15</td><td class="num">3/5</td><td class="num">2/6</td><td class="num">2/5</td><td class="num">7</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2018-2 2019-1 2021-1 2022-1 2024-1 2025-1 2025-2</td></tr>
+<tr><td><b>連帯納付義務</b></td><td class="num">15</td><td class="num">3/5</td><td class="num">2/6</td><td class="num">2/5</td><td class="num">7</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2018-2 2019-1 2021-2 2023-2 2024-1 2024-2 2025-2</td></tr>
+<tr><td><b>相次相続控除</b></td><td class="num">14</td><td class="num">3/5</td><td class="num">2/6</td><td class="num">1/5</td><td class="num">6</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2019-1 2021-2 2023-1 2024-2 2025-1 2026-1</td></tr>
+<tr><td><b>納税猶予（事業承継税制）</b></td><td class="num">14</td><td class="num">1/5</td><td class="num">4/6</td><td class="num">3/5</td><td class="num">8</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2019-1 2019-2 2020-2 2021-1 2021-2 2022-1 2022-2 2025-2</td></tr>
+<tr><td><b>相続人の不存在・失踪</b></td><td class="num">12</td><td class="num">2/5</td><td class="num">3/6</td><td class="num">0/5</td><td class="num">5</td><td><span class="tag t-a">高頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2021-2 2022-1 2023-2 2025-1 2025-2</td></tr>
+<tr><td><b>信託</b></td><td class="num">11</td><td class="num">1/5</td><td class="num">3/6</td><td class="num">2/5</td><td class="num">6</td><td><span class="tag t-b">散発</span></td><td style="font-size:11.5px;color:var(--muted);">2018-2 2020-2 2021-1 2022-1 2023-1 2026-1</td></tr>
+<tr><td><b>小規模宅地</b><br><b class="warn">★計算テーマ SC5（Aランク）</b></td><td class="num">11</td><td class="num">0/5</td><td class="num">5/6</td><td class="num">1/5</td><td class="num">6</td><td><span class="tag t-b">散発</span></td><td style="font-size:11.5px;color:var(--muted);">2019-2 2021-1 2021-2 2022-2 2023-1 2023-2</td></tr>
+<tr><td><b>贈与税の配偶者控除</b><br><b class="warn">★計算テーマ SC3（Sランク）</b></td><td class="num">10</td><td class="num">2/5</td><td class="num">1/6</td><td class="num">2/5</td><td class="num">5</td><td><span class="tag t-b">散発</span></td><td style="font-size:11.5px;color:var(--muted);">2018-1 2018-2 2021-1 2024-2 2026-1</td></tr>
+<tr><td><b>所在不明株主</b></td><td class="num">9</td><td class="num">3/5</td><td class="num">0/6</td><td class="num">0/5</td><td class="num">3</td><td><span class="tag t-b">散発</span></td><td style="font-size:11.5px;color:var(--muted);">2024-1 2025-1 2025-2</td></tr>
+<tr><td><b>配偶者の税額軽減</b><br><b class="warn">★計算テーマ SC2（Aランク）</b></td><td class="num">9</td><td class="num">1/5</td><td class="num">2/6</td><td class="num">2/5</td><td class="num">5</td><td><span class="tag t-b">散発</span></td><td style="font-size:11.5px;color:var(--muted);">2019-1 2020-2 2022-2 2023-2 2026-1</td></tr>
+<tr><td><b>住宅取得等資金</b><br><b class="warn">★計算テーマ SC3（Sランク）</b></td><td class="num">8</td><td class="num">2/5</td><td class="num">1/6</td><td class="num">0/5</td><td class="num">3</td><td><span class="tag t-b">散発</span></td><td style="font-size:11.5px;color:var(--muted);">2021-2 2024-2 2025-1</td></tr>
+<tr><td><b>贈与税の申告と納付</b></td><td class="num">6</td><td class="num">2/5</td><td class="num">0/6</td><td class="num">0/5</td><td class="num">2</td><td><span class="tag t-b">散発</span></td><td style="font-size:11.5px;color:var(--muted);">2024-2 2026-1</td></tr>
+<tr><td><b>2割加算</b><br><b class="warn">★計算テーマ SC2（Aランク）</b></td><td class="num">6</td><td class="num">0/5</td><td class="num">2/6</td><td class="num">2/5</td><td class="num">4</td><td><span class="tag t-b">散発</span></td><td style="font-size:11.5px;color:var(--muted);">2019-1 2019-2 2021-2 2022-2</td></tr>
+<tr><td><b>特別受益</b><br><b class="warn">★計算テーマ SC9（Sランク）</b></td><td class="num">4</td><td class="num">1/5</td><td class="num">0/6</td><td class="num">1/5</td><td class="num">2</td><td><span class="tag t-g">低頻度</span></td><td style="font-size:11.5px;color:var(--muted);">2020-2 2024-2</td></tr>
+</table>
+</div>
+
+<h2>2. 単純な年度数では判定を誤る ― 2つの罠</h2>
+
+<div class="alert">
+<b>罠① 新制度は、存在しなかった年が分母に入る</b>
+<div class="tbl-scroll" style="margin-top:8px;">
+<table>
+<tr><th>論点</th><th>出題年度</th><th>単純判定</th><th>実態</th></tr>
+<tr><td><b>相続登記・国庫帰属</b></td><td>2024-1／2024-2／2025-1／2025-2／2026-1</td><td>5/16年度＝散発</td><td class="good"><b>制度創設（2024年4月）以降、5回連続で毎回出題＝100%</b></td></tr>
+<tr><td><b>所在不明株主</b></td><td>2024-1／2025-1／2025-2</td><td>3/16年度＝低頻度</td><td class="good"><b>直近5回中3回＝60%</b></td></tr>
+<tr><td><b>配偶者居住権</b></td><td>2021-1以降の10年度</td><td>10/16年度</td><td class="good"><b>2020年4月施行以降は毎回級（直近5/5）</b></td></tr>
+</table>
+</div>
+</div>
+
+<div class="alert">
+<b>罠② 古い年度に偏る論点は、過大評価される</b>
+<div class="tbl-scroll" style="margin-top:8px;">
+<table>
+<tr><th>論点</th><th>出題年度</th><th>実態</th></tr>
+<tr><td><b>2割加算</b></td><td>2018-1／2019-1／2019-2／2021-2／2022-2</td><td class="warn"><b>2023年以降、文章題としては出ていない</b>（計算問題に吸収された）</td></tr>
+<tr><td><b>特別受益</b></td><td>2020-2／2024-2</td><td>文章題としては2回だけ</td></tr>
+</table>
+</div>
+<b>→ だから時間荷重（直近×3）で見る。</b>
+</div>
+
+<h2>3. 🔴 重要な但し書き ― 計算テーマは降格しない</h2>
+
+<div class="warn">
+<b>この表は「〜に関する次の記述のうち」型の【文章題】としての出題だけを数えている。計算問題での登場は数えられていない。</b><br><br>
+したがって、<b>計算テーマ（相続_重要問題マップの時間荷重S・Aランク）に該当する論点は、文章題の頻度が低くても降格させない</b>。
+<div class="tbl-scroll" style="margin-top:8px;">
+<table>
+<tr><th>論点</th><th class="num">文章題の荷重</th><th>計算テーマとしての位置</th><th>判定</th></tr>
+<tr><td>小規模宅地</td><td class="num">11（散発）</td><td><b>SC5・Aランク</b>（25①で3問）</td><td class="warn"><b>降格しない</b></td></tr>
+<tr><td>2割加算</td><td class="num">6（散発）</td><td><b>SC2・Aランク</b>（各人の納付税額）</td><td class="warn"><b>降格しない</b></td></tr>
+<tr><td>特別受益</td><td class="num">4（低頻度）</td><td><b>SC9・Sランク</b>（具体的相続分）</td><td class="warn"><b>降格しない</b></td></tr>
+<tr><td>贈与税の配偶者控除</td><td class="num">10（散発）</td><td><b>SC3・Sランク</b>（店舗併用住宅の優先充当）</td><td class="warn"><b>降格しない</b></td></tr>
+<tr><td>配偶者の税額軽減</td><td class="num">9（散発）</td><td><b>SC2・Aランク</b></td><td class="warn"><b>降格しない</b></td></tr>
+<tr><td>住宅取得等資金</td><td class="num">8（散発）</td><td>SC3の周辺</td><td>t2まで可</td></tr>
+</table>
+</div>
+</div>
+
+<h2>4. この頻度ルールで、t1はどれだけ減るか</h2>
+
+<div class="card">
+相続クイズ194問を分類した結果＝<b>毎回級159・高頻度17・散発14・低頻度0</b>。<br>
+上の但し書き（計算テーマは降格しない）を適用すると、<b>実際に降格できるのは10問前後</b>にとどまる。
+<div class="okbox" style="margin-top:10px;">
+<b>★つまり、この頻度ルールの真価は「t1を軽くすること」ではなく「誤った降格を防ぐガードレール」にある。</b><br>
+実際、このデータがなければ<b>成年後見・遺留分・教育資金・譲渡制限株式をt3へ落とすところだった</b>（いずれも16回中11〜14年度で出題）。<br><br>
+<b>t1＝579問という再会頻度の問題（1周20セッション＝約3週間）を解くのは、頻度軸ではなく【定着度軸】</b>＝「過去問で出題され、実力で正解した帯をt2へ落とす」ほう。<b>5本目（2026-09-26）の結果が出てから全科目で実施する。</b>
+</div>
+</div>
+
+<p class="foot">
+作成 2026-09-21／出典＝過去問16回分（2018年第1回〜2026年第1回）の相続・事業承継設計 問題PDF 814設問を機械抽出し、設問主題でクラスタリングしたもの。<br>
+計算問題（「〜に関する次の記述のうち」型でないもの）は本集計に含まれない。計算テーマの頻度は
+<a href="相続_重要問題マップ_2026後半戦.html" style="color:var(--accent);">相続_重要問題マップ_2026後半戦.html</a> の時間荷重ランキングを参照。
+</p>
+
+</div></body></html>
