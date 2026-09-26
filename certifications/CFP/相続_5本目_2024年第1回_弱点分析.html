@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CFP相続 5本目（2024年第1回）弱点分析レポート</title>
+<style>
+  :root{
+    --bg:#fbfaf7; --fg:#232323; --muted:#6b6b6b; --line:#e3ddd2; --card:#ffffff;
+    --s:#c0392b; --a:#d97a1a; --b:#7a8a99; --accent:#6a4a8a; --hl:#f6f1fb;
+    --ok:#2e7d5b; --okbg:#eef7f2;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#1c1d1f; --fg:#e8e6e2; --muted:#9a9a9a; --line:#34363a; --card:#25272b;
+           --s:#e57373; --a:#f0a860; --b:#9fb0bf; --accent:#a98fc9; --hl:#272130;
+           --ok:#6fc79b; --okbg:#1f2b26; }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.75;font-size:15px;}
+  .wrap{max-width:1000px;margin:0 auto;padding:28px 20px 80px;}
+  h1{font-size:24px;margin:0 0 4px;letter-spacing:.02em;}
+  h2{font-size:19px;margin:40px 0 12px;padding:8px 12px;background:var(--accent);color:#fff;border-radius:6px;}
+  h3{font-size:16px;margin:26px 0 8px;border-left:4px solid var(--accent);padding-left:9px;}
+  h4{font-size:14.5px;margin:18px 0 6px;color:var(--accent);}
+  .sub{color:var(--muted);font-size:13.5px;margin:0 0 18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:14px 0;}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0;}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;}
+  th{background:rgba(106,74,138,.10);font-weight:700;}
+  .tbl-scroll{overflow-x:auto;}
+  .num{font-variant-numeric:tabular-nums;text-align:center;white-space:nowrap;}
+  ul{margin:6px 0 6px 0;padding-left:20px;} li{margin:4px 0;}
+  .logic{background:var(--hl);border:1px solid var(--line);border-radius:6px;padding:10px 13px;margin:9px 0;}
+  .logic b{color:var(--accent);}
+  code{background:rgba(127,127,127,.14);padding:1px 5px;border-radius:4px;font-size:13px;font-family:"SF Mono",Consolas,monospace;}
+  .kpi{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;}
+  .kpi>div{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:11px 13px;text-align:center;}
+  .kpi .big{font-size:22px;font-weight:800;color:var(--accent);}
+  .kpi .lbl{font-size:12px;color:var(--muted);}
+  .warn{color:var(--s);font-weight:700;}
+  .good{color:var(--ok);font-weight:700;}
+  .note{background:var(--hl);border-left:3px solid var(--accent);padding:9px 13px;font-size:13.5px;border-radius:0 6px 6px 0;margin:12px 0;}
+  .alert{background:rgba(192,57,43,.07);border-left:3px solid var(--s);padding:9px 13px;font-size:13.5px;border-radius:0 6px 6px 0;margin:12px 0;}
+  .okbox{background:var(--okbg);border-left:3px solid var(--ok);padding:9px 13px;font-size:13.5px;border-radius:0 6px 6px 0;margin:12px 0;}
+  .foot{color:var(--muted);font-size:12.5px;margin-top:34px;border-top:1px solid var(--line);padding-top:12px;}
+  .bar{display:flex;height:22px;border-radius:4px;overflow:hidden;border:1px solid var(--line);margin:4px 0 2px;}
+  .bar i{display:block;height:100%;}
+  .bar .o{background:var(--ok);} .bar .x{background:rgba(192,57,43,.35);}
+  .tag{display:inline-block;font-size:11.5px;padding:1px 7px;border-radius:10px;background:var(--accent);color:#fff;margin-right:4px;}
+  .tagx{background:var(--s);} .tago{background:var(--ok);} .tagn{background:var(--b);}
+</style>
+</head>
+<body><div class="wrap">
+<h1>CFP相続 5本目 ― 2024年第1回 弱点分析レポート</h1>
+<p class="sub">実施 2026-09-27 5:00〜6:59（119分）／分析 2026-09-27／合格ライン27問</p>
+
+<div class="kpi">
+<div><div class="big">27</div><div class="lbl">素点／50</div></div>
+<div><div class="big">+0</div><div class="lbl">ライン比（前回+5）</div></div>
+<div><div class="big">62%</div><div class="lbl">計算 13/21</div></div>
+<div><div class="big">48%</div><div class="lbl">文章 14/29</div></div>
+<div><div class="big">32</div><div class="lbl">取れたはずの5問を足すと（+5）</div></div>
+</div>
+
+<div class="okbox"><b>本人の総括（9/27）</b>＝「万全の状態ではなく、ケアレスミスも重なってボーダーぎりぎりだった。逆に言えば、それでもぎりぎり得点できたのは、自信を持ってもいいのかもしれない」<br>
+→ <b>数字もこの見方を支えている</b>。計算の誤答8問のうち<b>5問は、解き方も知識もあり、1か所の見落としか「回していない」だけ</b>だった（第5章）。</div>
+
+<h2>1. 5回の推移</h2>
+<div class="tbl-scroll"><table>
+<tr><th></th><th class="num">1本目 26①</th><th class="num">2本目 25②</th><th class="num">3本目 25①</th><th class="num">4本目 24②</th><th class="num">5本目 24①</th></tr>
+<tr><td>素点</td><td class="num">15</td><td class="num">29</td><td class="num">28</td><td class="num">32</td><td class="num"><b>27</b></td></tr>
+<tr><td>ライン</td><td class="num">—</td><td class="num">28</td><td class="num">24</td><td class="num">27</td><td class="num">27</td></tr>
+<tr><td>ライン比</td><td class="num">—</td><td class="num">+1</td><td class="num">+4</td><td class="num">+5</td><td class="num"><b>+0</b></td></tr>
+<tr><td>計算</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">74%</td><td class="num">62%</td></tr>
+<tr><td>文章</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">56%</td><td class="num">48%</td></tr>
+</table></div>
+<ul>
+<li><b>☆4問（18・20・23・34）が全滅</b>＝☆が「本当に解けなかった問題」の目印として機能した（1本目は☆20問中6問が正解で、目印にならなかった）。</li>
+<li>時間は前回より速い（問1〜10を12分）。<b>時間配分ではなく、中身で落ちている</b>。</li>
+<li>本人の状態＝9/22投入のS195〜S206を回しきれていない／精神的な疲労あり・体調が万全でない。</li>
+</ul>
+
+<h2>2. 🔴 最大の発見 ― 「振り子型」の失点が4問</h2>
+<div class="alert"><b>前回の試験で覚えた例外（結論）が、今回の既定値になり、逆側に外している。</b>知識は増えているが、「どの条件のときにその結論になるか」がセットで持てていない。</div>
+<div class="tbl-scroll"><table>
+<tr><th>問</th><th>前回覚えたこと</th><th>今回やったこと</th><th>本当の分かれ目</th></tr>
+<tr><td class="num">18</td><td>24②Q15「放棄者は葬式費用すら引けない」</td><td>放棄者の葬式費用3,500を外した</td><td><b>財産を取得しているか</b>（今回はみなし遺贈で取得あり→引ける）</td></tr>
+<tr><td class="num">20</td><td>25①Q23「二重資格は2口で配る」</td><td>2口にしたが、別人として速算表に当てた</td><td><b>税率は人ごとに合算してから</b></td></tr>
+<tr><td class="num">33</td><td>25②Q34「準角地（0.02）」</td><td>図を見ずに準角地にした</td><td><b>道路は1本が折れているか、2本が交わるか</b></td></tr>
+<tr><td class="num">45</td><td>24②Q44「純資産も必ず候補に入れる」</td><td>候補に類似業種比準まで入れた</td><td><b>会社規模で候補が決まる</b>（中会社＝併用か純資産）</td></tr>
+</table></div>
+<div class="logic"><b>対策</b>＝例外を覚えるときは<b>「条件→結論」の形</b>で持つ（「放棄者は✗」ではなく「財産を取得していない放棄者は✗」）。そして<b>判定の問いを順番に聞く</b>（例：債務控除なら 問い① 財産を取得しているか → 問い② 相続人・包括受遺者か）。今回の教材はすべてこの形で作った。</div>
+
+<h2>3. 計算8問 ― 真因（すべて本人申告で確定）</h2>
+<div class="tbl-scroll"><table>
+<tr><th>問</th><th>論点</th><th class="num">選択→正解</th><th>真因</th><th>型</th></tr>
+<tr><td class="num">3</td><td>特別受益・具体的相続分</td><td class="num">2→1</td><td>放棄者を戻さない判断は⭕。<b>贈与時の価額7,000を使った</b>（正＝相続開始時6,000）。26①Q3と同じで<b>2回目</b></td><td><span class="tag tagx">回していない</span></td></tr>
+<tr><td class="num">16</td><td>生命保険金の非課税</td><td class="num">4→1</td><td>非課税の分母から放棄者を除くのは<b>初めて⭕</b>。<b>契約者貸付金を保険金に戻した</b>（相続税は手取りのまま）</td><td><span class="tag">概念の穴</span></td></tr>
+<tr><td class="num">18☆</td><td>債務控除</td><td class="num">2→3</td><td>①<b>みなし遺贈で取得した放棄者の葬式費用を外した</b>（相基通13-1で控除できる）②<b>前受家賃を入れた</b>（返金義務がない）。預り敷金⭕</td><td><span class="tag">振り子</span></td></tr>
+<tr><td class="num">20☆</td><td>相続税の総額</td><td class="num">2→4</td><td>1/8×4の配り方は⭕。<b>孫Cの2口を別人として速算表に当てた</b>（正＝135,000にまとめて40%）</td><td><span class="tag">振り子</span></td></tr>
+<tr><td class="num">33</td><td>甲宅地の評価</td><td class="num">3→4</td><td><b>角地を準角地と判定</b>（図の左側が見切れていた）。知識はある</td><td><span class="tag tagn">見落とし</span></td></tr>
+<tr><td class="num">34☆</td><td>貸家建付地（自宅兼賃貸）</td><td class="num">2→3</td><td>解き方・空室の扱いとも⭕。<b>問33の103,000を引き継いだだけ</b>（連鎖）</td><td><span class="tag tagn">見落とし</span></td></tr>
+<tr><td class="num">38</td><td>上場株式</td><td class="num">2→4</td><td>株価294円は⭕。<b>配当期待権を「効力発生前だから無視」</b>（逆＝期間中だから加算）。26①Q38と同じで<b>2回目</b></td><td><span class="tag tagx">回していない</span></td></tr>
+<tr><td class="num">45</td><td>QY社株式（中会社）</td><td class="num">1→2</td><td>純資産・併用とも計算⭕。<b>類似業種比準を単独で候補に入れた</b>（大会社だけ）。S201そのもの</td><td><span class="tag">振り子</span></td></tr>
+</table></div>
+<p>問37（生命保険契約に関する権利）は正解したが「初めは貸付金を引くと思っていた」＝問16と合わせて<b>契約者貸付金の3場面</b>を教材化した。</p>
+
+<h2>4. 文章題15問 ― 論点の棚卸し</h2>
+<p class="sub">「頻度」＝過去16回の相続問題PDFのうち、その論点の語が出る回数（全文検索による目安）。<b>10回以上＝Tier1でクイズ化／8〜9回＝Tier2／4回以下＝捨てる</b>（「毎回出る定番だけクイズ化し、それ以外は捨てる」方針）。</p>
+<div class="tbl-scroll"><table>
+<tr><th>問</th><th>論点</th><th>選んだ肢（誤って不適切／適切と判断）</th><th>正しい判定</th><th class="num">頻度</th><th>対応</th></tr>
+<tr><td class="num">4</td><td>推定相続人の廃除</td><td>4（遺留分放棄者は対象外）</td><td>取消しを請求できるのは<b>被相続人だけ</b>（民法894条）。相続人全員での請求は✗</td><td class="num">10</td><td>S217 t1</td></tr>
+<tr><td class="num">8</td><td>承認・放棄</td><td>4（3年の建物賃貸で単純承認）</td><td><b>短期賃貸（建物3年）は単純承認にならない</b>（921条1号ただし書）。熟慮期間の伸長⭕</td><td class="num">8</td><td>S218 t2</td></tr>
+<tr><td class="num">9</td><td>認知</td><td>2（認知は取り消せない）</td><td><b>未成年者の認知に法定代理人の同意は不要</b>（780条）。取消し不可は⭕</td><td class="num">11</td><td>S219 t1</td></tr>
+<tr><td class="num">10</td><td>普通養子</td><td>4（15歳未満の離縁）</td><td><b>当事者の死亡で法定血族関係は終了しない</b>（死後離縁は家裁の許可）</td><td class="num">4</td><td>捨てる</td></tr>
+<tr><td class="num">15</td><td>任意後見</td><td>3（取消権なし）</td><td><b>公正証書が必要だが、証人2名は要件でない</b>（任意後見契約法3条）。証人2名は公正証書遺言</td><td class="num">13</td><td>S220 t1</td></tr>
+<tr><td class="num">22</td><td>2割加算</td><td>1（長女の夫のみ）</td><td>長女の夫＝養子（一親等）→対象外／<b>孫養子A・B→対象</b>／孫C＝代襲→対象外</td><td class="num">13</td><td>既存S122・S202（回す）</td></tr>
+<tr><td class="num">23☆</td><td>障害者控除</td><td>1（妻0円）</td><td>妻＝85歳まで3年2ヵ月→<b>4年に切り上げ</b>×20万＝800千円／放棄した養子Bも⭕</td><td class="num">9</td><td>S227 t1</td></tr>
+<tr><td class="num">24</td><td>物納</td><td>2（20日以内の再申請）</td><td><b>特定物納の収納価額＝申請の時の価額</b>（相法48条の2第5項）</td><td class="num">14</td><td>S221 t1</td></tr>
+<tr><td class="num">25</td><td>連帯納付義務</td><td>1（連帯納付の原則）</td><td><b>資力喪失で納付困難なら、求償権を放棄しても贈与課税なし</b></td><td class="num">8</td><td>S222 t2</td></tr>
+<tr><td class="num">26</td><td>申告手続</td><td>1（共同提出）</td><td><b>被相続人のマイナンバーは記載不要</b></td><td class="num">1</td><td>捨てる</td></tr>
+<tr><td class="num">32</td><td>教育資金の一括贈与</td><td>2（30歳で在学届出）</td><td><b>贈与者死亡時に在学中なら、24歳でも加算しない</b>（5億円超を除く）</td><td class="num">12</td><td>S223 t1</td></tr>
+<tr><td class="num">42</td><td>納税義務者と税額控除</td><td>2（制限の配偶者軽減）</td><td><b>非居住無制限は未成年者控除⭕・障害者控除✗</b>（条文の除外範囲が違う）</td><td class="num">11</td><td>S224 t1</td></tr>
+<tr><td class="num">47</td><td>株主区分</td><td>4（自己株式も議決権あり）</td><td><b>50%超のグループがあれば、そのグループだけが同族株主</b>。自己株式は議決権0</td><td class="num">16</td><td>S225 t1</td></tr>
+<tr><td class="num">48</td><td>遺留分の民法特例</td><td>4（後継者死亡で失効）</td><td><b>固定合意＝合意の時の価額</b>（相続開始時ではない）</td><td class="num">13</td><td>S226 t1</td></tr>
+<tr><td class="num">49</td><td>第三者承継</td><td>1（簿外債務を排除できる）</td><td>事業譲渡は<b>従業員の個別同意が必要</b>。株式譲渡は簿外債務を引き継ぐ</td><td class="num">2</td><td>捨てる</td></tr>
+</table></div>
+<div class="note"><b>読み取れること</b>：15問中<b>12問が頻度8回以上の定番論点</b>。捨ててよいのは3問だけ。<br>
+また、問3（持戻し＝相続開始時）と問48（固定合意＝合意の時）は<b>「何のための計算かで時点が決まる」</b>という同じ軸でつながる（ポッドキャスト⑩に追記）。</div>
+
+<h2>5. 取れたはずの5問 ― 本人の「自信を持ってもいい」を数字で見る</h2>
+<div class="tbl-scroll"><table>
+<tr><th>問</th><th>なぜ「取れたはず」か</th></tr>
+<tr><td class="num">33・34</td><td>知識も手順も正しい。<b>図の読み違い1つで2問</b></td></tr>
+<tr><td class="num">45</td><td>2つの計算はどちらも正しい。本人が即座に自分で原因を言えた（S201）</td></tr>
+<tr><td class="num">3・38</td><td>教材（S116・S53）は作ってあった。<b>回していない</b>（S53はTier2に下がっていた）</td></tr>
+</table></div>
+<p><b>27＋5＝32問（ライン+5）</b>。これは4本目と同じ水準で、<b>実力が落ちたのではなく、見落としと「作ったのに回していない」で5点を失った</b>と読める。<br>
+ただし<b>文章48%は実力どおり</b>。計算で上積みして文章をカバーする戦略（9/21の本人総括）は変わらない。</p>
+
+<h2>6. この分析で作ったもの</h2>
+<ul>
+<li><b>クイズ S207〜S227（21問）</b>：S207〜S210 契約者貸付金の3場面／S211〜S214 放棄者×受遺者・預り敷金・前受家賃／S215 二重資格の合算／S216 持戻しの通し／S217〜S227 文章題（上の表）。<b>S53・S56をTier1へ戻した</b>（配当期待権・2回目）。</li>
+<li><b>弱点克服レポート</b>：🧭【契約者貸付金】／🧭【放棄者×受遺者】（2つの問い＋「お金を返す義務」の軸）を新設。🧭【数える／配る】に問20の通し計算を追記。</li>
+<li><b>ポッドキャスト</b>：<b>⑭（契約者貸付金）・⑮（放棄者×受遺者）を新設</b>。④（配当期待権）⑤（中会社の候補）⑩（評価時点・固定合意）⑫（二重資格の合算）⑬（角地）に追記。</li>
+<li>条文・通達は e-Gov と国税庁で原文を確認した（相法13・14・15・19の3・19の4・48の2条／相基通13-1〜14-4／財基通168(7)・193／民法780・811・894・921条／任意後見契約法3条／円滑化法4・10条）。</li>
+</ul>
+
+<h2>7. 出口判定と次にやること</h2>
+<div class="alert"><b>出口条件（直近2本とも+4以上）は形式上は未達</b>（4本目+5／5本目+0）。<b>判定は本人と決める</b>（9/27合意）。</div>
+<div class="card"><b>判断材料</b>
+<ul>
+<li>取れたはずの5問を足すと+5＝4本目と同じ水準。<b>中身は後退していない</b></li>
+<li>失点の型は「振り子」「回していない」が中心＝<b>新しい知識より、作った教材を回すことで取れる</b></li>
+<li>10/1からの選択肢：<b>A</b> 予定どおり3科目並行へ移り、相続は教材（S195〜S227）を回す時間だけ残す／<b>B</b> 相続の過去問をもう1本（6本目）解いてから判定する</li>
+</ul></div>
+<h3>次にやること</h3>
+<ol>
+<li><b>S195〜S227を回す</b>（特に振り子型の4問＝S211・S212・S215・S201）</li>
+<li>ポッドキャストを録る：<b>⑭ → ⑮ → ⑤ → ⑫</b></li>
+<li>全科目のTier見直し（頻度×定着度ルール・9/21制定）</li>
+<li>出口判定（A／B）を本人と決める</li>
+</ol>
+
+<div class="foot">作成 2026-09-27／元データ＝分析中メモ（相続_5本目_2024年第1回_分析中メモ.md）・本人申告・日本FP協会 模範解答</div>
+</div></body></html>
