@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NotebookLM 経済動向プロンプト</title>
+<style>
+  :root{ --bg:#f5f7f8; --fg:#41484d; --accent:#4a7a8c; --accent2:#b9cdd6;
+    --box:#ffffff; --line:#dde5e9; --red:#c0554f; --code:#f9fbfc; }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#191d1f; --fg:#dde3e6; --accent:#7fb0c4; --accent2:#3c4c54;
+      --box:#212729; --line:#333c41; --red:#e08b86; --code:#171b1d; } }
+  *{box-sizing:border-box;}
+  body{font-family:"Helvetica Neue",Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif;
+    background:var(--bg);color:var(--fg);line-height:1.75;margin:0;font-size:15px;}
+  .wrap{max-width:900px;margin:0 auto;padding:28px 18px 80px;}
+  h1{font-size:22px;margin:0 0 6px;color:var(--accent);}
+  .sub{font-size:13.5px;opacity:.8;margin:0 0 20px;}
+  h2{font-size:17px;margin:34px 0 12px;padding:8px 12px;background:var(--accent);color:#fff;border-radius:5px;}
+  h3{font-size:15.5px;margin:24px 0 8px;border-left:4px solid var(--accent2);padding-left:9px;}
+  .box{background:var(--box);border:1px solid var(--line);border-radius:7px;padding:14px 16px;margin:14px 0;}
+  .warn{background:var(--box);border-left:4px solid var(--red);border-radius:0 6px 6px 0;padding:12px 15px;margin:14px 0;font-size:13.5px;}
+  pre{background:var(--code);border:1px solid var(--line);border-radius:6px;padding:14px;
+    white-space:pre-wrap;word-wrap:break-word;font-size:13px;line-height:1.7;margin:8px 0;
+    font-family:"SFMono-Regular",Consolas,"Hiragino Kaku Gothic ProN",monospace;}
+  .copy{background:var(--accent);color:#fff;border:none;border-radius:5px;padding:6px 16px;
+    font-size:13px;cursor:pointer;margin-top:6px;}
+  .copy:hover{opacity:.85;} .copy.done{opacity:.6;}
+  .copy.fail{background:#c0554f;color:#fff;opacity:1;}
+  .prompt{margin:0 0 8px;}
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0;}
+  th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top;}
+  th{background:rgba(74,122,140,.13);font-weight:700;}
+  code{background:rgba(128,128,128,.14);padding:1px 5px;border-radius:3px;font-size:12.5px;}
+  .tbl-scroll{overflow-x:auto;}
+</style>
+</head><body><div class="wrap">
+<h1>NotebookLM ポッドキャスト生成プロンプト ― 直前 経済動向 2026</h1>
+<p class="sub">作成 2026-10-19｜素材＝<code>直前_経済動向_2026.html</code>｜試験 2026-11-08（1日目・金融の冒頭大問対策）</p>
+<div class="warn">⚠️ 引用には使わないこと。ポッドキャストは資料の要約であり、一次照合の担保にならない。理解のためだけに使うこと（引用の作法ルール）。</div>
+
+<h2>1. 使い方（3ステップ）</h2>
+<div class="box">
+① NotebookLM に <code>直前_経済動向_2026.html</code> をアップロードする（ブラウザで開いてPDFに保存してからでもよい）<br>
+② 「音声概要」→「カスタマイズ」を開く<br>
+③ 下のプロンプトを<b>そのまま貼り付けて生成</b>する。①と②は範囲が重ならないように分けてある
+</div>
+
+<h2>2. 聴く順序</h2>
+<div class="tbl-scroll"><table>
+<tr><th>#</th><th>テーマ</th><th>なぜこの順位か</th><th>尺</th></tr>
+<tr><td>②</td><td>海外・GDP・経常収支</td><td>2025②で<b>0/3</b>、2025①問6も失点。<b>文脈と表の読み方</b>で解ける＝最も安い</td><td>15〜20分</td></tr>
+<tr><td>①</td><td>予算・日銀・白書</td><td>日銀はクイズK158〜K162で整理済み。予算と白書は<b>今年の数字</b>の入れ替えが中心</td><td>15〜20分</td></tr>
+</table></div>
+
+<h2>3. プロンプト① 予算・日銀・白書 ― 数字は「今年の値」と「前年からの向き」</h2>
+<div class="prompt">
+<pre>この音声は、CFP試験「金融資産運用設計」（2026年11月8日）の直前対策として、スキマ時間に聴きます。
+過去問では、冒頭の大問で毎回「予算」「日銀の金融政策」「経済財政白書」から数字の穴埋めや正誤が出ます。
+私は直近の過去問で、この帯を3問中0問、4問中3問と取りこぼしています。基礎用語の説明は不要ですが、
+数字は省かず、丸めずに読み上げてください。
+
+【今回の範囲】
+アップロードした資料のうち「① 2026年度 一般会計予算」「② 日本銀行の金融政策」
+「③ 令和8年度 年次経済財政報告」の3つの章だけを扱ってください。
+海外経済、GDP、経常収支には立ち入らないでください（別の回で扱います）。
+
+【この回でいちばん伝えてほしいこと＝数字は「今年の値」と「前年からの向き」をセットで】
+試験の誤答の選択肢は、前年の数字や1つ前の利上げの数字にすり替えたものが多いです。
+だから、数字を言うときは必ず「前年はいくつで、増えたのか減ったのか」を一緒に言ってください。
+
+【必ず扱ってほしい内容】
+1. 予算（2026年度当初）
+　・歳出総額122.3兆円で過去最大。増えた最大の要因は国債費で、そのうち利払費が2.5兆円増えた。
+　　金利上昇の影響だということ
+　・税収83.7兆円。税目の順は消費税26.7兆、所得税25.3兆、法人税20.7兆
+　・公債金29.6兆円、公債依存度24.2%（前年度24.9%から低下）
+　・一般会計の基礎的財政収支が1.3兆円の黒字で、1998年度当初以来28年ぶり
+　・公債依存度と基礎的財政収支の計算式。基礎的財政収支は、税収とその他収入から、
+　　歳出総額から債務償還費と利払費を除いたものを引く
+　・3年推移：税収は69.6、77.8、83.7兆と増加。公債金は35.4、28.6、29.6兆
+2. 日銀
+　・2024年3月のマイナス金利解除から、0.25、0.5、0.75、1.0、1.25%と、毎回0.25%ずつの利上げ。
+　　時期は2024年7月、2025年1月、2025年12月、2026年6月、2026年9月
+　・付利は政策金利と同じ、基準貸付利率は政策金利に0.25%を足した値。
+　　2026年9月の後は、1.25%、1.25%、1.5%
+　・長期国債の買入れは、2027年1〜3月まで毎四半期2,000億円程度ずつ減らし、2027年4月以降は月2兆円程度。
+　　その前の計画は、毎四半期4,000億円ずつ減らして2026年1〜3月に3兆円程度だった
+　・ETFは簿価で年3,300億円程度、J-REITは年50億円程度のペースで売却
+3. 経済財政白書（副題「成長型経済への本格的移行に向けた課題」）
+　・消費者物価は2026年5月に総合1.5%。ガソリン等の価格抑制策で1%台に抑えられている
+　・GDPデフレーター3.2%、GDPギャップはゼロ近傍、単位労働費用3.1%、実質賃金はプラス基調
+　・デフレ脱却の4指標の名前（消費者物価、GDPデフレーター、GDPギャップ、単位労働費用）
+　・春闘は5.01%で3年連続5%台だが、前年より0.24ポイント低下
+　・前年の白書は「消費者物価が41年ぶりの4.3%」「GDPデフレーターが5%超」という物価が高い局面だった。
+　　今年は向きが違うことを強調してください
+
+【構成の指定】
+ホストBを受験生役にしてください。Bには
+「基準貸付利率も政策金利と同じ1.25%ですよね？」
+「今年も物価は2%を大きく超えているんでしたっけ？」
+「公債依存度は前の年より上がったんですよね？」
+と実際に間違えてもらい、ホストAが訂正する形にしてください。
+
+【やらないこと】
+・数字を丸めない。122.3兆円、24.2%、5.01%はそのまま言う
+・資料に書かれていない数字や見通しを足さない
+・投資の助言や今後の金利の予想をしない
+
+【最後に口頭クイズを5問】
+　1. 2026年度当初予算の公債依存度は。前年度より上がったか下がったか
+　2. 一般会計の基礎的財政収支は黒字か赤字か。何年ぶりか
+　3. 2026年9月の利上げ後の、政策金利・付利・基準貸付利率は
+　4. 2027年4月以降の長期国債の月間買入れ額は
+　5. 春闘の賃上げ率は。前年より上がったか下がったか
+それぞれ、少し間を置いてから答えを言ってください。
+
+【尺】15〜20分。</pre>
+<button class="copy">コピー</button>
+</div>
+
+<h2>4. プロンプト② 海外・GDP・経常収支 ― 暗記より文脈と表の読み方</h2>
+<div class="prompt">
+<pre>この音声は、CFP試験「金融資産運用設計」（2026年11月8日）の直前対策として、スキマ時間に聴きます。
+過去問では、冒頭の大問で「世界経済の潮流」「日米の名目GDP」「経常収支の表」が出ます。
+私は直近の過去問で、GDPの数字（600兆円と700兆円）を取り違え、経常収支の表の列も当てられず、
+世界経済の潮流の穴埋めも落としました。基礎用語の説明は不要ですが、数字は省かずに読み上げてください。
+
+【今回の範囲】
+アップロードした資料のうち「④ 世界経済の潮流 2026年Ⅰ」「⑤ 名目GDP」「⑥ 経常収支」
+「⑦ 物価・短観」の章だけを扱ってください。予算と日銀には立ち入らないでください（別の回で扱います）。
+
+【この回でいちばん伝えてほしいこと＝暗記より「文脈」と「表の読み方」で解ける】
+穴埋めは文脈で、経常収支は表の数字の大小で、選択肢を絞れます。数字を覚えるだけでなく、
+その判断の手順を繰り返し聞かせてください。
+
+【必ず扱ってほしい内容】
+1. 世界経済の潮流 2026年Ⅰ（副題「中東情勢の緊迫化と政策対応」、7月17日公表）
+　・米国＝AI関連投資で景気の拡大基調は底堅いが、物価上昇で消費の環境は悪化傾向
+　・中国＝内需の弱さで緩やかに減速。不動産開発投資は2桁減、過剰供給
+　・ユーロ圏＝スペイン、イタリアなどがけん引して持ち直しの動き
+　・英国＝物価上昇率の鈍化と実質賃金の改善で持ち直し
+　・文脈のコツ＝「物価と比べるのは名目賃金、物価を差し引いた後は実質賃金」
+　　「補助金は財政政策、金利は金融政策」「中国の停滞は不動産」
+2. 名目GDP
+　・米国は世界の約26%、日本の約7倍（過去問の2023年の数字では6.5倍）
+　・日本の名目GDPは2024年に初めて600兆円を超え、2025年は666.4兆円
+　・数字は出題時点の版で少し動くので、概数で判断する
+3. 経常収支（2025年）
+　・経常収支31.9兆円の黒字。第一次所得収支41.6兆円が最大の黒字
+　・貿易収支は3年連続で赤字が縮小して▲0.85兆円、サービス収支は赤字が拡大して▲3.4兆円
+　・表の列を当てる手順：一番大きいプラスが第一次所得収支、次が経常収支。
+　　赤字の2列は、年ごとに大きく動く方が貿易収支（2022年は▲15.5兆円）、小幅で安定している方がサービス収支。
+　　2025年は貿易の赤字の方が小さくなったので、「赤字が大きい方が貿易」と覚えると逆になる
+4. 物価・短観（参考）
+　・消費者物価は2025年の3%台から、2026年は1%台後半へ鈍化
+　・短観は年4回、毎回2日間に分けて公表。業況判断DIは「良い」の割合から「悪い」の割合を引く。
+　　2026年9月調査の大企業製造業は+24
+
+【構成の指定】
+ホストBを受験生役にしてください。Bには
+「経常収支がいちばん大きい黒字の項目ですよね？」
+「日本のGDPって、もう700兆円を超えたんでしたっけ？」
+「中国の停滞の原因は金融市場でしたよね？」
+と実際に間違えてもらい、ホストAが訂正する形にしてください。
+
+【やらないこと】
+・資料に書かれていない国の話や見通しを足さない
+・数字を丸めすぎない（26%、7倍、666.4兆円、31.9兆円はそのまま言う）
+
+【最後に口頭クイズを5問】
+　1. 米国の名目GDPは世界のおよそ何%で、日本の何倍か
+　2. 日本の名目GDPが初めて600兆円を超えたのは何年か
+　3. 経常収支の表で、経常収支より大きい黒字の列は何か
+　4. 2025年の貿易収支とサービス収支は、赤字が拡大したか縮小したか
+　5. 世界経済の潮流で、中国の景気を弱めている要因は何か
+それぞれ、少し間を置いてから答えを言ってください。
+
+【尺】15〜20分。</pre>
+<button class="copy">コピー</button>
+</div>
+</div>
+<script>
+/* ============================================================
+   コピーボタン共通スニペット v2（2026-08-25）
+   ------------------------------------------------------------
+   ★これが原本。NotebookLM_*_ポッドキャスト用プロンプト.html へ
+     script タグで埋め込む際は、必ずここからコピーする。
+     ※このファイル内に script の終了タグを literal で書かないこと
+       （HTMLに埋め込むとパーサがそこで script を終端し、リスナーが登録されない）
+     実装を各HTMLで書き起こさない（v1のバグ再発原因がそれだった）。
+
+   v1のバグ（2026-08-25 発覚）
+     var text = btn.parentElement.querySelector('pre').innerText;
+     → pre と button を包む親が無い構成では btn.parentElement が
+       ページ全体のコンテナになり、【常にページ最初の pre】を返した。
+       結果、全ボタンがプロンプト①をコピーしていた。
+       しかも「静かに間違ったものをコピーする」ため気づけなかった。
+
+   v2の方針
+     ① 構造非依存 … .prompt ラッパーがあってもなくても正しく拾う
+     ② fail loud  … 見つからなければ黙って別のものをコピーせず、失敗を表示する
+   ============================================================ */
+(function(){
+  function findPre(btn){
+    // ① 同じラッパー（.prompt）の中を探す
+    var wrap = btn.closest ? btn.closest('.prompt') : null;
+    if (wrap) { var p = wrap.querySelector('pre'); if (p) return p; }
+    // ② ボタンの直前を遡って探す（包む親が無い構成でも拾う）
+    var el = btn.previousElementSibling;
+    while (el) { if (el.tagName === 'PRE') return el; el = el.previousElementSibling; }
+    // ③ 見つからなければ null を返す。★ページ先頭の pre を返さない
+    return null;
+  }
+  function flash(btn, msg, ok){
+    if (btn.dataset.orig === undefined) btn.dataset.orig = btn.textContent;
+    btn.textContent = msg;
+    btn.classList.remove('done','fail');
+    btn.classList.add(ok ? 'done' : 'fail');
+    setTimeout(function(){
+      btn.textContent = btn.dataset.orig;
+      btn.classList.remove('done','fail');
+    }, 1800);
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch(e){ ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var pre = findPre(btn);
+      if (!pre) { flash(btn, 'コピー元が見つかりません', false); return; }
+      var text = pre.innerText;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function(){ flash(btn, 'コピーしました', true); },
+          function(){ var ok = fallbackCopy(text); flash(btn, ok ? 'コピーしました' : 'コピーに失敗しました', ok); }
+        );
+      } else {
+        var ok = fallbackCopy(text);
+        flash(btn, ok ? 'コピーしました' : 'コピーに失敗しました', ok);
+      }
+    });
+  });
+})();
+</script>
+</body></html>
