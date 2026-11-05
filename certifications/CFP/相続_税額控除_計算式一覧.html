@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>相続税 税額控除の計算式</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#222;--sub:#666;--line:#ddd;--head:#f0ede6;--accent:#a33;--ok:#2a6e3f;--note:#fff6e0}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.75}
+main{max-width:920px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:1.5rem;margin:0 0 4px}
+h2{font-size:1.2rem;border-left:5px solid var(--accent);padding-left:10px;margin-top:40px}
+h3{font-size:1.05rem;margin-top:24px}
+.sub{color:var(--sub);font-size:.9rem}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.92rem;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:6px 8px;vertical-align:top;text-align:left}
+th{background:var(--head);white-space:nowrap}
+.f{font-family:"SFMono-Regular",Menlo,monospace;background:#f3f1ec;padding:8px 10px;border-radius:6px;display:block;white-space:pre-wrap;font-size:.9rem}
+.box{background:var(--note);border:1px solid #ecd9a8;border-radius:8px;padding:10px 14px;margin:14px 0}
+.red{color:var(--accent);font-weight:bold}
+.ok{color:var(--ok);font-weight:bold}
+ol li,ul li{margin:4px 0}
+</style>
+</head>
+<body>
+<main>
+<h1>相続税の税額控除 ― 計算式の一覧</h1>
+<p class="sub">2026-11-06 作成。きっかけ＝2025②の問22（配偶者の税額軽減）と問23（障害者控除）の失点。相続の集中期間（11/9〜11/14）で、税額控除をまとめてつぶすための資料。計算式・端数・要件は国税庁タックスアンサー（No.4152・4158・4161・4164・4167・4168）で確認した。</p>
+
+<h2>1. 全体の流れ（この順で引く）</h2>
+<span class="f">各人の算出税額
+  ＋ 2割加算（配偶者・父母・子 以外）
+  − ① 暦年課税分の贈与税額控除
+  − ② 配偶者の税額軽減
+  − ③ 未成年者控除
+  − ④ 障害者控除
+  − ⑤ 相次相続控除
+  − ⑥ 外国税額控除          → ここまでで赤字なら 0
+  − ⑦ 相続時精算課税分の贈与税額  → 引ききれない分は【還付】
+＝ 納付すべき税額</span>
+<div class="box">覚え方＝<b>贈与（先に払った分）→ 配偶者 → 人の控除2つ（未成年・障害者）→ 相次 → 外国 → 精算課税</b>。還付があるのは⑦の精算課税だけ。①の暦年分は引ききれなくても還付されない。</div>
+
+<h2>2. 7つの控除の計算式</h2>
+<table>
+<tr><th>控除</th><th>計算式</th><th>端数・決めごと</th><th>放棄した人</th><th>引ききれないとき</th></tr>
+<tr><td>① 暦年課税分の贈与税額控除</td><td>その年分の贈与税額 ×（相続税の課税価格に加算された贈与財産 ÷ その年分の贈与財産の合計）</td><td>贈与を受けた年ごとに計算。加算税・延滞税は入れない</td><td>遺贈などで財産を取得していれば対象（生前贈与の加算を受けた人）</td><td>還付なし</td></tr>
+<tr><td>② 配偶者の税額軽減</td><td>相続税の総額 ×（ア）÷ 課税価格の合計<br>（ア）＝ min｛配偶者の実際の課税価格、max（課税価格の合計 × 法定相続分、1億6千万円）｝</td><td><b>枠</b>＝法定相続分と1億6千万円の多い方。最後に<b>実際の課税価格でふた</b>をする</td><td class="ok">受けられる（条文が「取得した配偶者」）</td><td>—</td></tr>
+<tr><td>③ 未成年者控除</td><td>（18歳になるまでの年数）× 10万円</td><td class="red">年数の1年未満は切り上げ</td><td class="ok">受けられる（放棄がなかったものとした場合の相続人）</td><td>扶養義務者の相続税額から引ける</td></tr>
+<tr><td>④ 障害者控除</td><td>（85歳になるまでの年数）× 10万円<br>特別障害者は × 20万円</td><td class="red">年数の1年未満は切り上げ</td><td class="ok">受けられる（③と同じ）</td><td>扶養義務者の相続税額から引ける</td></tr>
+<tr><td>⑤ 相次相続控除</td><td>A × C/(B−A) × D/C ×（10−E）/10</td><td>C/(B−A) が1を超えたら<b>1</b>。<span class="red">経過年数Eの1年未満は切り捨て</span></td><td class="red">受けられない（条文が「相続人」）</td><td>引ききれない分は消える</td></tr>
+<tr><td>⑥ 外国税額控除</td><td>外国で課された相続税相当額。上限＝算出税額 ×（国外財産の価額 ÷ 課税価格の基礎になった財産の価額）</td><td>上限式は国税庁の原文で未確認。出題はまれ</td><td>—</td><td>—</td></tr>
+<tr><td>⑦ 相続時精算課税分の贈与税額</td><td>精算課税の贈与で納めた贈与税額をそのまま引く</td><td>外国税額控除の前の額を使う</td><td>—</td><td class="ok">還付される（唯一）</td></tr>
+</table>
+
+<h3>相次相続控除の記号</h3>
+<ul>
+<li><b>A</b>：今回の被相続人が、前の相続で課された相続税額（本税だけ。延滞税・利子税・加算税は入れない）。A＝0なら適用なし</li>
+<li><b>B</b>：今回の被相続人が、前の相続で取得した財産の価額（債務・葬式費用を引いた純資産）</li>
+<li><b>C</b>：今回の相続で財産を取得した全員の純資産の合計</li>
+<li><b>D</b>：その相続人が今回取得した純資産</li>
+<li><b>E</b>：前の相続から今回の相続までの年数（1年未満は切り捨て）</li>
+</ul>
+
+<h2>3. 取り違えやすい3点</h2>
+<table>
+<tr><th>混同</th><th>正しい形</th></tr>
+<tr><td>年数の端数</td><td><b>未成年者・障害者＝切り上げ</b>（控除が多くなる向き）／<b>相次相続＝切り捨て</b>（経過年数が少ないほど控除が多い。どちらも本人に有利な向き）</td></tr>
+<tr><td>配偶者の（ア）</td><td>「枠」と「実際の課税価格」の<b>少ない方</b>。実際が枠より小さければ実際の額（2025①問25＝250,000千円）、大きければ枠（2025②問22＝225,000千円）</td></tr>
+<tr><td>放棄した人</td><td>配偶者の軽減・未成年者・障害者＝<b>受けられる</b>／相次相続＝<b>受けられない</b>（→弱点克服レポートSC2）</td></tr>
+</table>
+
+<h2>4. 過去問で確かめる</h2>
+<table>
+<tr><th>出典</th><th>条件</th><th>計算</th><th>答え</th></tr>
+<tr><td>2025② 問22</td><td>課税価格の合計450,000千円・妻360,000千円</td><td>枠＝max（225,000、160,000）＝225,000 → 実際360,000と比べて少ない方</td><td><b>225,000千円</b></td></tr>
+<tr><td>2025① 問25</td><td>課税価格の合計534,000千円・妻250,000千円</td><td>枠＝max（267,000、160,000）＝267,000 → 実際250,000の方が少ない</td><td><b>250,000千円</b></td></tr>
+<tr><td>2025② 問23</td><td>孫B・特別障害者・21歳4ヵ月・算出税額15,000千円</td><td>85歳まで63年8ヵ月 → 64年 × 20万円＝12,800千円。算出税額の範囲内</td><td><b>12,800千円</b></td></tr>
+<tr><td>2024① 問23</td><td>妻・特別障害者・81歳10ヵ月・算出税額3,000千円／養子B（放棄）・一般障害者・35歳2ヵ月・算出税額4,000千円</td><td>妻＝3年2ヵ月→4年×20万＝800千円／B＝49年10ヵ月→50年×10万＝5,000千円 → 算出税額4,000千円が上限</td><td><b>妻800千円・B 4,000千円</b></td></tr>
+<tr><td>練習（未成年者）</td><td>孫C・15歳2ヵ月・算出税額2,000千円</td><td>18歳まで2年10ヵ月 → 3年 × 10万円</td><td><b>300千円</b></td></tr>
+<tr><td>練習（相次相続）</td><td>A＝20,000・B＝120,000・C＝200,000・D＝50,000（千円）・E＝3年8ヵ月</td><td>C/(B−A)＝2 → 1。20,000 × 1 × 0.25 × 0.7</td><td><b>3,500千円</b></td></tr>
+</table>
+
+<h2>5. 暦年贈与の加算期間（2024年の改正）</h2>
+<table>
+<tr><th>相続が始まった日</th><th>加算する贈与</th></tr>
+<tr><td>2026年12月31日まで</td><td>相続開始前3年以内</td></tr>
+<tr><td>2027年1月1日〜2030年12月31日</td><td>2024年1月1日から死亡の日まで</td></tr>
+<tr><td>2031年1月1日以後</td><td>相続開始前7年以内</td></tr>
+</table>
+<p>3年より前の贈与（延びた4年分）は、合計から<b>100万円を引いて</b>加算する（相続開始が2027年1月2日以後の場合）。加算は贈与税がかかったかどうかに関係ない（基礎控除以下の贈与・死亡した年の贈与も入る）。</p>
+
+<h2>関連するクイズ</h2>
+<p>S133（控除の順序）・S235／S244（配偶者の（ア））・S227（障害者控除）・S245（未成年者控除）・S246（相次相続控除の計算）・S131／S132／S187（相次相続の要件）・S186（放棄した未成年者）</p>
+</main>
+</body>
+</html>
