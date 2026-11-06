@@ -90,6 +90,19 @@ if (target && target.endsWith('.js')) {
     totalBad += r.bad; totalN += r.n;
     console.log(`${subject}: ${r.n}問  正解位置 ${JSON.stringify(r.pos)}`);
   }
+  // 直前計算ドリルのIDが実在するか（存在しないIDはアプリ側で黙って落ちるため）
+  // ★アプリは DRILL を必ず参照するので、ブロックが見つからない・読めないときもエラーにする
+  const ds = html.indexOf('const DRILL = {');
+  let DRILL = null;
+  try { if (ds >= 0) DRILL = eval('(' + html.slice(ds, html.indexOf('};', ds) + 1).replace(/^const DRILL = /, '') + ')'); }
+  catch (err) { console.log('❌ DRILLのパース失敗:', err.message); }
+  if (!DRILL) { totalBad++; console.log('❌ DRILLブロックが見つからない、または読めない'); }
+  else for (const [subject, ids] of Object.entries(DRILL)) {
+    const have = new Set((DATA[subject] || []).map(q => q.id));
+    const miss = ids.filter(id => !have.has(id));
+    if (miss.length) { totalBad += miss.length; console.log('❌ DRILL', subject, '存在しないID', miss.join(',')); }
+    else console.log(`DRILL ${subject}: ${ids.length}問`);
+  }
 }
 console.log(`\n合計 ${totalN}問 / エラー ${totalBad}`);
 process.exit(totalBad ? 1 : 0);
