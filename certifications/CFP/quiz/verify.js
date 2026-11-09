@@ -98,6 +98,10 @@ if (target && target.endsWith('.js')) {
   catch (err) { console.log('❌ DRILLのパース失敗:', err.message); }
   if (!DRILL) { totalBad++; console.log('❌ DRILLブロックが見つからない、または読めない'); }
   else for (const [subject, ids] of Object.entries(DRILL)) {
+    // ボタンと出題画面は DRILL_LABEL[科目] を表示するので、無いと「undefined」と出る
+    if (!html.includes(`"${subject}":"`, html.indexOf('const DRILL_LABEL'))) { totalBad++; console.log('❌ DRILL_LABEL に未登録', subject); }
+    const dup = ids.filter((id, i) => ids.indexOf(id) !== i);
+    if (dup.length) { totalBad += dup.length; console.log('❌ DRILL', subject, '重複ID', dup.join(',')); }
     const have = new Set((DATA[subject] || []).map(q => q.id));
     const miss = ids.filter(id => !have.has(id));
     if (miss.length) { totalBad += miss.length; console.log('❌ DRILL', subject, '存在しないID', miss.join(',')); }
