@@ -1,0 +1,497 @@
+[
+ {
+  "id": "P7S-01",
+  "docs": [
+   {
+    "type": "notice",
+    "title": "Harbor Point Public Library",
+    "text": "NOTICE TO LIBRARY PATRONS\nHarbor Point Public Library\n\nBeginning Monday, March 3, the east entrance of the library will be closed for approximately three weeks while workers replace the aging automatic doors. During this period, all visitors should use the main entrance on Fenwick Street. Because the main entrance has several steps, patrons who need step-free access are asked to call the front desk at 555-0143 so that staff can arrange assistance. Please note that the book return slot beside the east entrance will remain available, and the children's reading room will keep its regular hours. We apologize for any inconvenience and thank you for your patience."
+   }
+  ],
+  "sum": [
+   "図書館の東入口が約3週間閉鎖されるため、正面入口の利用と、段差のない出入りが必要な人への案内を知らせる告知。"
+  ],
+  "qs": [
+   {
+    "q": "What is the purpose of the notice?",
+    "c": [
+     "To announce new opening hours",
+     "To ask patrons for donations",
+     "To inform visitors of a temporary change in building access",
+     "To introduce a new library service"
+    ],
+    "a": 2,
+    "tag": "主旨・目的",
+    "e": "東の入口が約3週間閉鎖される間は正面入口を使うよう案内する内容。つまり建物の出入りに関する一時的な変更を利用者に知らせる告知。開館時間の変更や寄付の依頼、新サービスの紹介は本文に述べられていない。"
+   },
+   {
+    "q": "What are patrons who cannot use stairs asked to do?",
+    "c": [
+     "Telephone the front desk in advance",
+     "Enter through the east entrance",
+     "Use the book return slot",
+     "Visit the children's reading room"
+    ],
+    "a": 0,
+    "tag": "詳細",
+    "e": "正面入口には段差があるため、段差なしの出入りが必要な人は受付に電話して介助を手配するよう求められている。東入口は閉鎖中で、返却口と児童室は階段の問題と全く関係がない。"
+   }
+  ]
+ },
+ {
+  "id": "P7S-02",
+  "docs": [
+   {
+    "type": "e-mail",
+    "text": "To: Daniel Ortiz\nFrom: Priya Raman\nDate: June 12\nSubject: Conference venue\n\nDear Daniel,\n\nI visited the Lakeview Convention Center yesterday and think it suits our regional sales meeting on September 18. The main hall seats 200, well above the 150 people we expect, and the quoted rate includes a projector, microphones, and lunch for all attendees. The center does not provide overnight lodging, but the Hotel Alder next door offers a discount to groups that book ten or more rooms by August 1. The only drawback is that parking is limited to 60 spaces, so I suggest arranging a shuttle from the train station. If you approve, I will pay the 20 percent deposit by Friday.\n\nBest regards,\nPriya"
+   }
+  ],
+  "sum": [
+   "Raman さんが営業会議の会場候補の見学結果を報告し、収容人数や料金、宿泊、駐車場の制約と対応案を伝えるメール。"
+  ],
+  "qs": [
+   {
+    "q": "What does Ms. Raman suggest doing about parking?",
+    "c": [
+     "Reserving spaces at the hotel",
+     "Arranging transportation from the train station",
+     "Asking attendees to carpool",
+     "Holding the meeting in a smaller hall"
+    ],
+    "a": 1,
+    "tag": "詳細",
+    "e": "後半で駐車場は60台に限られるので、駅からのシャトルを手配しようと提案している。arrange a shuttle from the train station が、駅からの移動手段の手配に言い換えられている。"
+   },
+   {
+    "q": "What is NOT stated about the Lakeview Convention Center?",
+    "c": [
+     "It can hold more people than expected.",
+     "Its price covers a meal.",
+     "It has a small parking area.",
+     "It offers lodging for guests."
+    ],
+    "a": 3,
+    "tag": "NOT問題",
+    "e": "広間は予想の150名を上回る200名収容、料金に昼食が含まれ、駐車場は60台と書かれている。宿泊施設は提供せず隣のホテルを使うとあり、センターが宿泊を提供するという選択肢だけが合わない。"
+   }
+  ]
+ },
+ {
+  "id": "P7S-03",
+  "docs": [
+   {
+    "type": "text-message chain",
+    "text": "Marcus Bell (9:42 A.M.): Elena, has the catering van reached the Dunmore office yet? The client presentation starts at 10:30.\nElena Voss (9:44 A.M.): Not yet. The driver called to say he's stuck behind an accident on Route 9.\nMarcus Bell (9:45 A.M.): Did he say how long the delay would be?\nElena Voss (9:47 A.M.): At least 30 minutes. Since we don't start until 10:30, it might still work out.\nMarcus Bell (9:48 A.M.): I wouldn't count on it. The room needs to be set up first, and he'll still have to carry everything in.\nElena Voss (9:49 A.M.): True. There's a bakery called Corner Bakery just two blocks away. I can buy pastries there instead.\nMarcus Bell (9:50 A.M.): Good idea. Please use the company card and keep the receipt.\nElena Voss (9:51 A.M.): Will do. I'm leaving now and should be back by 10:10."
+   }
+  ],
+  "sum": [
+   "仕出しの配達車が事故で遅れ、顧客向け発表に間に合うか不安な二人が、近くのパン店で代わりの品を買うことにするやり取り。"
+  ],
+  "qs": [
+   {
+    "q": "At 9:48 A.M., what does Mr. Bell most likely mean when he writes, \"I wouldn't count on it\"?",
+    "c": [
+     "He doubts the food will be ready in time.",
+     "He thinks the presentation should be postponed.",
+     "He is unsure whether there was an accident.",
+     "He expects the driver to arrive early."
+    ],
+    "a": 0,
+    "tag": "意図問題",
+    "e": "直前で「30分遅れてもまだ間に合うかも」と言われ、設営が先で搬入にも時間がかかると続けている。つまり食事が間に合うか疑っている。発表の延期や事故の真偽には触れていない。"
+   },
+   {
+    "q": "What will Ms. Voss most likely do next?",
+    "c": [
+     "Reschedule the presentation",
+     "Telephone the driver again",
+     "Buy food at a nearby shop",
+     "Cancel the company card"
+    ],
+    "a": 2,
+    "tag": "詳細",
+    "e": "9:49に近くのパン店でペイストリーを買うと提案し、Bell さんが承諾、9:51に出発すると述べる。近くの店で食べ物を買う。運転手への再電話や発表の延期は出てこない。"
+   }
+  ]
+ },
+ {
+  "id": "P7S-04",
+  "docs": [
+   {
+    "type": "advertisement",
+    "title": "Greenfield Cycle Works",
+    "text": "GREENFIELD CYCLE WORKS\nFall Tune-Up Event\n\nIs your bicycle ready for the rainy season? From October 1 to October 31, bring any bike to our shop at 48 Maple Court and receive a full tune-up for just $45, a savings of $30 off the regular price. Our certified mechanics will adjust brakes and gears, inflate tires, and lubricate the chain. Most tune-ups are completed within two days, but repairs that require special parts may take longer. Customers who schedule an appointment online at greenfieldcycle.example will also receive a free set of reflective lights. Walk-ins are welcome, although appointments are given priority. Electric bicycles are not included in this offer."
+   }
+  ],
+  "sum": [
+   "自転車店が10月限定で、通常より30ドル安い点検整備を案内する広告。オンライン予約には反射ライトの特典があり、電動自転車は対象外。"
+  ],
+  "qs": [
+   {
+    "q": "In the advertisement, the word \"regular\" is closest in meaning to",
+    "c": [
+     "frequent",
+     "usual",
+     "even",
+     "scheduled"
+    ],
+    "a": 1,
+    "tag": "言い換え（同義語）",
+    "e": "a savings of $30 off the regular price は「通常価格より30ドル安い」の意味。regular は価格の文脈で usual(いつもの)に最も近い。frequent は頻度、even や scheduled は価格に合わない。"
+   },
+   {
+    "q": "How can customers receive a free item?",
+    "c": [
+     "By purchasing a new helmet",
+     "By bringing in an electric bicycle",
+     "By visiting during the first week",
+     "By reserving a time on the shop's website"
+    ],
+    "a": 3,
+    "tag": "詳細",
+    "e": "オンラインで予約した客には無料の反射ライトが付くと書かれている。schedule an appointment online が、サイトで時間を予約することに言い換えられている。電動自転車は対象外で、最初の週の特典はない。"
+   }
+  ]
+ },
+ {
+  "id": "P7S-05",
+  "docs": [
+   {
+    "type": "form",
+    "title": "Meridian Technologies",
+    "text": "MERIDIAN TECHNOLOGIES - Shared Facility Reservation Form\n\nName: Soo-Jin Park                    Department: Product Design\nEmployee ID: 40718                    Phone ext.: 2214\n\nFacility requested: Room 3B (Innovation Lab)\nDate: Thursday, November 19           Time: 1:00 P.M. - 4:30 P.M.\nNumber of attendees: 12 (including 3 external guests)\n\nEquipment needed:\n  [x] Projector\n  [x] Video-conferencing system\n  [ ] Whiteboard markers (supplied in room)\n  [x] Extra chairs (4)\nCatering: Not required\n\nPurpose: Review of prototype with clients from Oakridge Furniture\nSpecial notes: External guests will need visitor badges. Please inform the security desk by November 18.\n\nManager approval: Rafael Dominguez (signature on file) - November 12\n\nOFFICE USE ONLY\nApproved by Facilities on November 13."
+   }
+  ],
+  "sum": [
+   "社員が会議室を予約するための記入済み申請書。出席者数、設備、来客への対応、承認状況が書かれている。"
+  ],
+  "qs": [
+   {
+    "q": "What must be done by November 18?",
+    "c": [
+     "The room fee must be paid.",
+     "A manager's signature must be submitted.",
+     "Security staff must be told about visitors.",
+     "A prototype must be delivered."
+    ],
+    "a": 2,
+    "tag": "詳細",
+    "e": "備考欄に、外部の来客のため11月18日までに警備室へ知らせるよう記載がある。inform the security desk が、警備担当に連絡することに言い換えられている。上司の承認は11月12日に済んでいる。"
+   },
+   {
+    "q": "What can be inferred about Room 3B?",
+    "c": [
+     "Its regular seating is smaller than the size of the group.",
+     "It is located in a different building.",
+     "It is reserved only for the Product Design department.",
+     "It is booked every Thursday afternoon."
+    ],
+    "a": 0,
+    "tag": "推測",
+    "e": "出席者は12名なのに、追加の椅子を4脚頼んでいる。この2点から、部屋の通常の座席数は12名に足りないと分かる。別の建物にあるか、特定の部署専用か、毎週予約されているかを示す記述はない。"
+   },
+   {
+    "q": "What is NOT indicated about the meeting?",
+    "c": [
+     "Guests from another company will attend.",
+     "Facilities has approved the request.",
+     "A product sample will be discussed.",
+     "Food will be served."
+    ],
+    "a": 3,
+    "tag": "NOT問題",
+    "e": "出席者に社外の客3名(人数欄)、施設部門の承認(事務欄)、試作品の確認(目的欄)は書かれている。しかし Catering は Not required で、食事の提供は不要。食事が出るという選択肢だけが合わない。"
+   }
+  ]
+ },
+ {
+  "id": "P7S-06",
+  "docs": [
+   {
+    "type": "article",
+    "title": "Riverbend Bakery Expands Downtown",
+    "text": "Riverbend Bakery Expands Downtown\nBy Tomas Lindqvist, Staff Writer\n\nOAKFORD (May 6) - Riverbend Bakery, a family-owned business known for its sourdough loaves, will open a second shop on Harlow Avenue on June 14. [1] The new location, which is three times larger than the original on Dock Street, will include a café area with seating for 40 customers.\n\nOwner Camila Reyes said the expansion was prompted by growing demand. \"On weekends, our line stretches out the door, and we regularly sell out of bread by noon,\" she said. [2]\n\nThe Harlow Avenue shop will also introduce a lunch menu, featuring sandwiches and soups made with ingredients from local farms. Customers who visit during the first week will receive a free coffee with any purchase. Ms. Reyes said she hopes the menu will attract office workers from nearby buildings. [3]\n\nDespite the larger space, Ms. Reyes insists the original shop will not change. \"Dock Street is where we started, and it will keep its small-town feel,\" she said. [4] Both locations will open at 6:30 A.M. on weekdays."
+   }
+  ],
+  "sum": [
+   "地元のパン店が6月に2号店を開く記事。需要の増加が理由で、昼のメニューを加える一方、1号店は今のまま残す。"
+  ],
+  "qs": [
+   {
+    "q": "What is the article mainly about?",
+    "c": [
+     "The retirement of a well-known baker",
+     "A rise in the price of flour",
+     "A farm that supplies local restaurants",
+     "The growth of a local bakery"
+    ],
+    "a": 3,
+    "tag": "主旨・目的",
+    "e": "冒頭で2号店を6月14日に開くと伝え、店の規模、新メニュー、既存店の方針まで述べている。地元のパン店の事業拡大が主題。引退、小麦粉の値上げ、農場の話は本文にない。"
+   },
+   {
+    "q": "According to Ms. Reyes, why is the bakery opening a new shop?",
+    "c": [
+     "Its products often run out before the afternoon.",
+     "The lease on its first shop is ending.",
+     "Office workers asked for a lunch menu.",
+     "A local farm offered cheaper ingredients."
+    ],
+    "a": 0,
+    "tag": "詳細",
+    "e": "オーナーは、週末に行列ができ、正午までにパンが売り切れると語る。sell out of bread by noon が、午後前に品切れになることに言い換えられている。ランチ客は期待であって理由ではない。"
+   },
+   {
+    "q": "In which of the positions marked [1], [2], [3], and [4] does the following sentence best belong?\n\"To meet this demand, the bakery has hired six additional bakers and purchased an oven that can produce 200 loaves per hour.\"",
+    "c": [
+     "[1]",
+     "[2]",
+     "[3]",
+     "[4]"
+    ],
+    "a": 1,
+    "tag": "文挿入",
+    "e": "To meet this demand の this demand は、直前の行列と昼前の売り切れという需要の説明を受ける。その直後の[2]に入れると、増員とオーブン購入が対応策として自然につながる。他の位置に該当する内容はない。"
+   }
+  ]
+ },
+ {
+  "id": "P7S-07",
+  "docs": [
+   {
+    "type": "online chat discussion",
+    "text": "Anika Joshi (2:03 P.M.): Thanks for joining, everyone. I want to settle the date for the new inventory software rollout at the Calgary warehouse.\nGreg Lindholm (2:04 P.M.): The vendor can send trainers either the week of April 7 or the week of April 21. After those two weeks, they're fully booked until June.\nMei Tanaka (2:06 P.M.): April 7 is too early for us. The annual stocktake finishes on April 4, and my team will still be reconciling numbers.\nAnika Joshi (2:07 P.M.): Understood. What about April 21?\nGreg Lindholm (2:08 P.M.): That works for the vendor, but the warehouse supervisors have a safety audit that week, so training would have to be limited to mornings.\nMei Tanaka (2:10 P.M.): Mornings are fine. Our busiest shipping hours are in the afternoon anyway.\nAnika Joshi (2:11 P.M.): Then let's go with April 21. Greg, can you confirm with the vendor and ask them to shorten the sessions to three hours?\nGreg Lindholm (2:13 P.M.): Sure. I'll also ask whether they'd be willing to provide a recording for staff who miss a session.\nMei Tanaka (2:14 P.M.): That would help. By the way, who is paying for the trainers' travel?\nAnika Joshi (2:15 P.M.): Good question. I'll check with finance and let you know tomorrow."
+   }
+  ],
+  "sum": [
+   "新しい在庫管理ソフトの研修日を決めるチャット。4月7日は棚卸しの事後作業と重なるため、4月21日の週の午前中に決まる。"
+  ],
+  "qs": [
+   {
+    "q": "Why is the week of April 7 unsuitable for Ms. Tanaka?",
+    "c": [
+     "The vendor has no trainers available.",
+     "Her staff will be in the middle of a safety audit.",
+     "Her team will still be checking inventory figures.",
+     "The software will not be installed yet."
+    ],
+    "a": 2,
+    "tag": "詳細",
+    "e": "Tanaka さんは、棚卸しが4月4日に終わるが、チームはまだ数字の照合をしているだろうと言う。つまり在庫の数字の確認作業が残る。ベンダーの空きや安全監査は4月7日の週の問題ではない。"
+   },
+   {
+    "q": "At 2:10 P.M., what does Ms. Tanaka imply when she writes, \"Mornings are fine\"?",
+    "c": [
+     "Her team is unavailable in the afternoon.",
+     "Training in the morning would not disturb her team's busiest work.",
+     "She prefers to postpone the rollout until June.",
+     "She wants the sessions to last longer."
+    ],
+    "a": 1,
+    "tag": "意図問題",
+    "e": "Mornings are fine は、研修が午前中だけでも構わないという意味。続けて出荷が最も忙しいのは午後だと述べており、午前の研修が繁忙時間の作業に影響しないことをにおわせている。"
+   },
+   {
+    "q": "What is suggested about the vendor?",
+    "c": [
+     "It will charge less for morning sessions.",
+     "It has a training center in Calgary.",
+     "It has already agreed to record the sessions.",
+     "It cannot send trainers to the warehouse in May."
+    ],
+    "a": 3,
+    "tag": "推測",
+    "e": "ベンダーは4月7日か21日の週に来られ、その2週より後は6月まで予約で埋まっていると言う。よって5月は来られないと分かる。録音は確認予定の段階で、料金と研修場所は話題に出ていない。"
+   }
+  ]
+ },
+ {
+  "id": "P7S-08",
+  "docs": [
+   {
+    "type": "letter",
+    "title": "Willowbrook Botanical Garden",
+    "text": "Willowbrook Botanical Garden\n2200 Ashby Road, Millhaven\n\nOctober 9\n\nMr. Oscar Venn\n117 Quarry Lane\nMillhaven\n\nDear Mr. Venn,\n\nYour Family Membership at Willowbrook Botanical Garden will expire on November 30. Over the past year, your household visited us eleven times, and we were delighted to see your children take part in our Saturday seed-planting workshops. On behalf of everyone here, thank you for your loyal support.\n\nI am writing to let you know about several changes taking effect on January 1. The annual fee for Family Membership will rise from $85 to $95, the first increase in four years; it will fund the restoration of the Victorian glasshouse, which has been closed since March. In return, all members will receive free admission to the Winter Lantern Festival, which previously required a separate ticket costing $12 per person. Members will also be able to reserve workshop places two weeks earlier than the general public.\n\nIf you renew before November 15, you can keep the current fee of $85 for the entire next year. Renewals may be completed online, by mail with the enclosed form, or in person at the visitor center, which is open daily except Mondays. Please note that members who let their memberships lapse for more than 30 days must pay a $10 reinstatement charge.\n\nWe hope to see you and your family among the gardens again soon.\n\nSincerely,\n\nHarriet Cole\nDirector of Membership"
+   }
+  ],
+  "sum": [
+   "植物園の会員担当者が、会員資格の期限と1月からの会費改定や特典の変更を伝え、11月15日までの更新を勧める手紙。"
+  ],
+  "qs": [
+   {
+    "q": "Why did Ms. Cole write the letter?",
+    "c": [
+     "To invite Mr. Venn's children to a workshop",
+     "To ask Mr. Venn to donate to a building project",
+     "To remind Mr. Venn that his membership is ending and explain upcoming changes",
+     "To report that the glasshouse has reopened"
+    ],
+    "a": 2,
+    "tag": "主旨・目的",
+    "e": "第1段落で会員資格が11月30日に切れると知らせ、第2・3段落で1月からの変更点と更新方法を述べる。更新を促し新条件を説明する手紙。寄付の依頼や温室の再開は書かれていない。"
+   },
+   {
+    "q": "The word \"restoration\" in paragraph 2 is closest in meaning to",
+    "c": [
+     "renovation",
+     "return",
+     "replacement",
+     "collection"
+    ],
+    "a": 0,
+    "tag": "言い換え（同義語）",
+    "e": "the restoration of the Victorian glasshouse は、閉鎖中の温室を修復すること。renovation(改修)が最も近い。return は復帰、replacement は取り替え、collection は収集で、建物の修復の意味に合わない。"
+   },
+   {
+    "q": "Which benefit of membership would most likely interest Mr. Venn's children?",
+    "c": [
+     "Free parking at the visitor center",
+     "A discount at the garden shop",
+     "Admission to the glasshouse at no charge",
+     "Early booking of workshops"
+    ],
+    "a": 3,
+    "tag": "推測",
+    "e": "子どもが土曜の種まき教室に参加していること(第1段落)と、会員は教室の予約が一般より2週間早いこと(第2段落)を合わせると、早期予約が最も響く。温室は閉鎖中で、他の特典は書かれていない。"
+   },
+   {
+    "q": "How much would Mr. Venn pay if he renewed on November 10?",
+    "c": [
+     "$75",
+     "$85",
+     "$95",
+     "$105"
+    ],
+    "a": 1,
+    "tag": "詳細",
+    "e": "11月15日より前に更新すれば現行の85ドルのままなので、11月10日の更新は85ドル。95ドルは1月からの新料金、105ドルはそれに再加入手数料10ドルを足した誤り。75ドルは本文にない。"
+   }
+  ]
+ },
+ {
+  "id": "P7S-09",
+  "docs": [
+   {
+    "type": "web page",
+    "title": "BlueTide Kayak Adventures",
+    "text": "BlueTide Kayak Adventures - Tours & Policies\nHome | Tours | Booking | Contact\n\nOur guided tours depart from the Pelican Cove dock, 15 minutes north of the town of Seaford. [1] Every group is led by two certified guides and is limited to twelve paddlers so that everyone receives personal attention.\n\nTOURS\nSunrise Paddle (2 hours, $55): Glide along the quiet shoreline as the sun rises and look for herons and seals. Departs at 6:00 A.M.; suitable for beginners.\nSea Cave Explorer (4 hours, $95): Navigate through rock arches and caves. Prior kayaking experience is required, and first-time paddlers cannot be accepted. [2] Tours operate only at low tide, so departure times change daily; please check the online calendar.\nIsland Picnic (6 hours, $130): Paddle to Gull Island for a guided walk and a lunch prepared by a local caterer. Vegetarian meals are available on request.\n\nBOOKING AND CANCELLATIONS\nReservations are confirmed once a 25 percent deposit is paid. Cancellations made at least 72 hours before departure receive a full refund of the deposit. [3] Cancellations made within 72 hours forfeit the deposit unless the tour is canceled by BlueTide because of weather. Guests who are unable to join may transfer their booking to another person at no charge.\n\nWHAT TO BRING\nWear clothing that can get wet, and bring sunscreen and a water bottle. Life jackets, paddles, and waterproof bags are provided free of charge. [4] Cameras are welcome, but we recommend using a waterproof case, as BlueTide cannot be responsible for damaged equipment.\n\nChildren aged 10 and older may join the Sunrise Paddle with an adult."
+   }
+  ],
+  "sum": [
+   "カヤックツアー会社のウェブページ。3つのツアーの内容、予約とキャンセルの規定、持ち物と注意点を説明している。"
+  ],
+  "qs": [
+   {
+    "q": "What is suggested about the groups on BlueTide tours?",
+    "c": [
+     "They always include at least ten beginners.",
+     "They are led by guides who work for the caterer.",
+     "Each guide is responsible for no more than six paddlers.",
+     "They are divided into two teams for lunch."
+    ],
+    "a": 2,
+    "tag": "推測",
+    "e": "各グループは2名のガイドが率い、参加は12名までと書かれている。2点を合わせると、ガイド1人が受け持つのは最大6名。初心者の人数、ガイドの所属、昼食時の分割は書かれていない。"
+   },
+   {
+    "q": "In which of the positions marked [1], [2], [3], and [4] does the following sentence best belong?\n\"They are encouraged to begin with the Sunrise Paddle instead.\"",
+    "c": [
+     "[1]",
+     "[2]",
+     "[3]",
+     "[4]"
+    ],
+    "a": 1,
+    "tag": "文挿入",
+    "e": "Sea Cave Explorer は初めての漕ぎ手は不可と述べた直後の[2]に入れると、They が初心者を指し、初心者向けと説明された早朝コースを勧める文として自然につながる。他の位置には They が指す人々がいない。"
+   },
+   {
+    "q": "What is NOT stated about BlueTide?",
+    "c": [
+     "It refunds the entire cost of a tour when guests cancel early.",
+     "Its guides hold certification.",
+     "It can provide meals for guests who do not eat meat.",
+     "Guests may give their reservation to someone else."
+    ],
+    "a": 0,
+    "tag": "NOT問題",
+    "e": "ガイドの認定(冒頭)、菜食の対応(島ツアー)、予約の譲渡(最後の規定)は本文にある。早めのキャンセルで返金されるのは25%の手付金だけで、ツアー料金全額ではない。全額返金という選択肢だけが合わない。"
+   },
+   {
+    "q": "What does BlueTide recommend for guests who bring a camera?",
+    "c": [
+     "Leaving it in a locker at the dock",
+     "Buying insurance for it",
+     "Asking a guide to carry it",
+     "Protecting it with a waterproof case"
+    ],
+    "a": 3,
+    "tag": "詳細",
+    "e": "持ち物の最後に、カメラは歓迎だが防水ケースの使用を勧めるとある。using a waterproof case が、防水ケースで守ることに言い換えられている。桟橋のロッカー、保険、ガイドによる運搬は述べられていない。"
+   }
+  ]
+ },
+ {
+  "id": "P7S-10",
+  "docs": [
+   {
+    "type": "memo",
+    "title": "Castellan Logistics",
+    "text": "MEMORANDUM\n\nTo: All Employees, Castellan Logistics\nFrom: Beatrice Okafor, Director of Human Resources\nDate: January 8\nSubject: Revised Remote Work Policy\n\nAfter a three-month trial in the Operations and Accounting departments, the executive team has approved a revised remote work policy that will apply to all offices beginning February 3. The trial showed that employees who worked from home up to two days a week reported higher satisfaction, while customer-response times remained unchanged. However, it also revealed that teams whose members worked on completely different days struggled to hold meetings, so the new policy includes a core-day requirement.\n\nKey points:\n\n1. Eligibility. Employees who have completed six months of service may work remotely up to two days per week with supervisor approval. Employees on the Warehouse Operations team, whose duties must be performed on site, are not eligible but may apply for a flexible start-time schedule instead.\n\n2. Core days. All employees, regardless of their remote arrangements, are expected to be in the office every Tuesday and Thursday.\n\n3. Equipment. The company will provide a laptop and headset. A one-time allowance of $150 is available for a monitor or other ergonomic equipment; receipts must be submitted to Accounting within 30 days of purchase. Home internet costs will not be reimbursed.\n\n4. Application. Requests should be submitted through the HR portal by January 24. Applications received after that date will be processed in the following quarter.\n\nSupervisors will hold individual meetings with team members during the week of January 20 to discuss schedules. Employees who participated in the trial need not reapply, but their current arrangements will be reviewed to ensure they meet the new core-day rule. Questions may be directed to Ms. Okafor at extension 310."
+   }
+  ],
+  "sum": [
+   "人事部長が、試行を経て2月3日から全社に適用する在宅勤務方針を伝えるメモ。対象条件、出社日、機器手当、申請期限を説明している。"
+  ],
+  "qs": [
+   {
+    "q": "What is the purpose of the memo?",
+    "c": [
+     "To announce a revised policy on working from home and how to apply for it",
+     "To report the results of an employee satisfaction survey",
+     "To introduce a new schedule for warehouse shifts",
+     "To explain changes to the company's expense system"
+    ],
+    "a": 0,
+    "tag": "主旨・目的",
+    "e": "冒頭で、全オフィスに2月3日から適用する新しい在宅勤務方針を知らせ、条件と申請方法を列挙している。満足度調査の報告、倉庫のシフト、経費制度の変更が主題ではない。"
+   },
+   {
+    "q": "What problem did the trial reveal?",
+    "c": [
+     "Customers waited longer for responses.",
+     "Employees were less satisfied with their jobs.",
+     "Teams working on different days had trouble holding meetings.",
+     "Supervisors could not approve requests quickly."
+    ],
+    "a": 2,
+    "tag": "詳細",
+    "e": "試行で、メンバーの勤務日がまったく違うチームは会議の開催に苦労したとある。顧客対応の時間は変わらず、満足度は上がったので、前の2つは逆の内容。承認の遅れは書かれていない。"
+   },
+   {
+    "q": "Who will most likely be able to work from home in February?",
+    "c": [
+     "A forklift operator who has worked on the Warehouse Operations team for three years",
+     "An accountant who joined in July of last year and applied on January 20",
+     "A customer service agent who joined the company in November of last year",
+     "A sales manager with five years of service who applies on January 30"
+    ],
+    "a": 1,
+    "tag": "推測",
+    "e": "対象は勤続6か月以上で倉庫チームを除く。昨年7月入社の会計担当は2月3日に6か月を超え、1月20日の申請は期限内。11月入社は期間不足、倉庫は対象外、1月30日の申請は次の四半期の扱い。"
+   },
+   {
+    "q": "How can employees receive the $150 allowance?",
+    "c": [
+     "By applying through the HR portal by January 24",
+     "By discussing it at a meeting with a supervisor",
+     "By buying equipment from an approved company vendor",
+     "By submitting proof of purchase to Accounting within a month"
+    ],
+    "a": 3,
+    "tag": "詳細",
+    "e": "手当150ドルは、購入から30日以内に領収書を経理部へ提出するとある。receipts が購入の証明、30 days が1か月以内に言い換えられている。人事ポータルでの申請は在宅勤務の申込みで、指定業者の記述もない。"
+   }
+  ]
+ }
+]

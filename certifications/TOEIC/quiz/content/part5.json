@@ -1,0 +1,422 @@
+[
+ {
+  "id": "P5-01",
+  "tag": "品詞",
+  "q": "Ms. Ortega was ------- in persuading the board to approve the merger.",
+  "c": [
+   "succeed",
+   "success",
+   "successful",
+   "successfully"
+  ],
+  "a": 2,
+  "ja": "オルテガさんは取締役会を説得して合併を承認させることに成功した。",
+  "e": "be動詞の後の補語になる形容詞が必要で、be successful in ~ing で「~に成功する」。名詞 success は冠詞なしでは補語にならず、副詞 successfully は直後の in と結びつかない。動詞原形は was の後に置けない。"
+ },
+ {
+  "id": "P5-02",
+  "tag": "品詞",
+  "q": "The consultant's recommendations were ------- adopted by the entire sales division.",
+  "c": [
+   "enthusiastic",
+   "enthusiasts",
+   "enthusiasm",
+   "enthusiastically"
+  ],
+  "a": 3,
+  "ja": "そのコンサルタントの提案は営業部全体に熱心に採用された。",
+  "e": "were と過去分詞 adopted の間には動詞を修飾する副詞が入り、enthusiastically で「熱心に採用された」となる。形容詞 enthusiastic は受動態の途中に置けず、enthusiasts と enthusiasm は名詞で語順が成り立たない。"
+ },
+ {
+  "id": "P5-03",
+  "tag": "品詞",
+  "q": "The airline offers ------- priced tickets to travelers who book at least a month ahead.",
+  "c": [
+   "reasoning",
+   "reasonably",
+   "reasonable",
+   "reason"
+  ],
+  "a": 1,
+  "ja": "その航空会社は、少なくとも1か月前に予約する旅行者に手頃な価格の航空券を提供している。",
+  "e": "過去分詞 priced を修飾するのは副詞なので reasonably で「適正に値付けされた」。reasonable priced と形容詞を置くのが典型的なひっかけ。reasoning は「推論」、reason は「理由」で意味も形も合わない。"
+ },
+ {
+  "id": "P5-04",
+  "tag": "品詞",
+  "q": "Ms. Hale is widely regarded as the most ------- negotiator in the region.",
+  "c": [
+   "persuasive",
+   "persuade",
+   "persuasion",
+   "persuasively"
+  ],
+  "a": 0,
+  "ja": "ヘイルさんは地域で最も説得力のある交渉者と広く見なされている。",
+  "e": "the most と名詞 negotiator の間なので、名詞を修飾する形容詞 persuasive が入り「説得力のある交渉者」となる。persuasively は副詞で名詞を直接修飾できず、persuasion は名詞、persuade は動詞で最上級の後に置けない。"
+ },
+ {
+  "id": "P5-05",
+  "tag": "品詞",
+  "q": "Applicants must submit ------- of their previous employment along with the form.",
+  "c": [
+   "verify",
+   "verified",
+   "verifiable",
+   "verification"
+  ],
+  "a": 3,
+  "ja": "応募者は申込用紙とともに、過去の勤務先の証明書類を提出しなければならない。",
+  "e": "submit の目的語になる名詞が必要で、verification of employment で「在職の確認(証明)」。後ろに of が続くので、過去分詞 verified や形容詞 verifiable は名詞の代わりにならず、動詞 verify も目的語にならない。"
+ },
+ {
+  "id": "P5-06",
+  "tag": "品詞",
+  "q": "Customers who are ------- with the repair may return the device within 30 days.",
+  "c": [
+   "dissatisfy",
+   "dissatisfied",
+   "dissatisfying",
+   "dissatisfaction"
+  ],
+  "a": 1,
+  "ja": "修理に不満のある顧客は、30日以内にその機器を返品できる。",
+  "e": "who are に続く with the repair の形から、人の感情を表す過去分詞 dissatisfied（~に不満で）が入る。dissatisfying は「不満を与える」で主語が人だと合わず、dissatisfaction は名詞で be 動詞の補語にならない。"
+ },
+ {
+  "id": "P5-07",
+  "tag": "品詞",
+  "q": "Mr. Takeda's ------- to the company's overseas expansion was recognized at the annual ceremony.",
+  "c": [
+   "contribute",
+   "contributory",
+   "contribution",
+   "contributor"
+  ],
+  "a": 2,
+  "ja": "竹田さんの同社の海外展開への貢献は、年次式典で表彰された。",
+  "e": "所有格 Mr. Takeda's の後には名詞が必要で、contribution to ~ で「~への貢献」。contributor は「貢献者」で人を指し意味が合わない。動詞 contribute と形容詞 contributory は名詞位置に入らない。"
+ },
+ {
+  "id": "P5-08",
+  "tag": "品詞",
+  "q": "The factory's ------- of its production lines has reduced waste by 15 percent.",
+  "c": [
+   "automation",
+   "automate",
+   "automatic",
+   "automatically"
+  ],
+  "a": 0,
+  "ja": "工場が生産ラインを自動化したことで、無駄が15パーセント減った。",
+  "e": "The factory's の後は名詞で、automation of ~ で「~の自動化」。of の前の空所に形容詞 automatic や副詞 automatically は置けず、動詞 automate も所有格の後では使えない。"
+ },
+ {
+  "id": "P5-09",
+  "tag": "動詞の形",
+  "q": "By the time the inspectors arrived, the staff ------- all the safety equipment.",
+  "c": [
+   "have checked",
+   "had checked",
+   "would check",
+   "will check"
+  ],
+  "a": 1,
+  "ja": "検査官が到着するまでに、スタッフはすべての安全設備の点検を終えていた。",
+  "e": "By the time ~ arrived と過去の基準時があり、それより前に完了した動作なので過去完了 had checked が正解。現在完了は過去の基準点と合わず、would check と will check は未来の意味になってしまう。"
+ },
+ {
+  "id": "P5-10",
+  "tag": "動詞の形",
+  "q": "If the supplier had delivered the parts last week as promised, we ------- the order before yesterday's deadline.",
+  "c": [
+   "will complete",
+   "would complete",
+   "had completed",
+   "would have completed"
+  ],
+  "a": 3,
+  "ja": "仕入先が約束どおり先週部品を納入していれば、昨日の締め切り前に注文を完了できていただろう。",
+  "e": "If 節が had delivered の仮定法過去完了なので、主節は would have + 過去分詞。yesterday's deadline も過去の事実の反対を示す。would complete は現在や未来の仮定用で、had completed は主節の形にならない。"
+ },
+ {
+  "id": "P5-11",
+  "tag": "動詞の形",
+  "q": "Had Ms. Lin ------- the contract earlier, the company would have avoided the penalty.",
+  "c": [
+   "review",
+   "reviewed",
+   "reviewing",
+   "to review"
+  ],
+  "a": 1,
+  "ja": "リンさんがもっと早く契約書を確認していれば、会社は違約金を避けられただろう。",
+  "e": "If を省いた倒置で、Had + 主語 + 過去分詞 の形。主節の would have avoided が仮定法過去完了を示すので reviewed が入る。原形、to 不定詞、ing 形は Had の後で過去完了を作れない。"
+ },
+ {
+  "id": "P5-12",
+  "tag": "動詞の形",
+  "q": "The manager insisted that every employee ------- the safety training before using the machinery.",
+  "c": [
+   "completes",
+   "completing",
+   "complete",
+   "completed"
+  ],
+  "a": 2,
+  "ja": "部長は、機械を使う前にすべての従業員が安全研修を修了するよう強く求めた。",
+  "e": "insist that の節は要求を表し、動詞は原形（should の省略）を使うので complete。主語が三人称単数でも -s は付かない。completes や completed は事実の叙述になり、completing は節の動詞にならない。"
+ },
+ {
+  "id": "P5-13",
+  "tag": "動詞の形",
+  "q": "Neither the director nor the assistants ------- aware of the schedule change yet.",
+  "c": [
+   "are",
+   "is",
+   "was",
+   "has been"
+  ],
+  "a": 0,
+  "ja": "部長もアシスタントたちも、まだスケジュール変更に気づいていない。",
+  "e": "Neither A nor B の動詞は近い方の B に合わせる。the assistants は複数で、yet があるので現在形の are。is と has been は単数扱いで、was は過去形のため yet と合わない。"
+ },
+ {
+  "id": "P5-14",
+  "tag": "前置詞・接続詞",
+  "q": "------- the heavy traffic, the keynote speaker arrived at the conference ten minutes early.",
+  "c": [
+   "Despite",
+   "Although",
+   "Unless",
+   "Because"
+  ],
+  "a": 0,
+  "ja": "ひどい渋滞にもかかわらず、基調講演者は会議の10分前に到着した。",
+  "e": "空所の後が名詞句 the heavy traffic なので前置詞が必要で、「~にもかかわらず」の Despite。Although と Unless と Because は接続詞で後ろに節が必要。Because は意味も逆になる。"
+ },
+ {
+  "id": "P5-15",
+  "tag": "前置詞・接続詞",
+  "q": "The warranty remains valid ------- the product is used according to the instructions.",
+  "c": [
+   "owing to",
+   "in case of",
+   "provided that",
+   "rather than"
+  ],
+  "a": 2,
+  "ja": "製品が説明書どおりに使用される限り、保証は有効である。",
+  "e": "後ろに節が続くので接続詞が必要で、provided that は「~という条件で」。owing to と in case of は前置詞句で節を導けず、rather than は「~よりむしろ」の意味で条件にならない。"
+ },
+ {
+  "id": "P5-16",
+  "tag": "前置詞・接続詞",
+  "q": "Sales in Asia rose by 12 percent, ------- those in Europe remained flat.",
+  "c": [
+   "unless",
+   "because of",
+   "despite",
+   "whereas"
+  ],
+  "a": 3,
+  "ja": "アジアの売上は12パーセント伸びた一方、ヨーロッパの売上は横ばいだった。",
+  "e": "二つの地域を対比する接続詞 whereas（~である一方で）が入る。unless は条件、because of と despite は前置詞で後ろに節を取れない。前半と後半が対照的な内容である点が根拠。"
+ },
+ {
+  "id": "P5-17",
+  "tag": "前置詞・接続詞",
+  "q": "The shop will stay open late ------- customers can pick up their orders after work.",
+  "c": [
+   "so as",
+   "even if",
+   "as for",
+   "so that"
+  ],
+  "a": 3,
+  "ja": "客が仕事帰りに注文品を受け取れるように、その店は遅くまで営業する。",
+  "e": "目的を表す so that + 節（~できるように）が入る。so as は後に to 不定詞が続く形で節は取れない。even if は仮定の譲歩、as for は前置詞句で、どちらも目的の意味にならない。"
+ },
+ {
+  "id": "P5-18",
+  "tag": "前置詞・接続詞",
+  "q": "The seminar is open to all staff ------- their department.",
+  "c": [
+   "in case of",
+   "even though",
+   "regardless of",
+   "as a result"
+  ],
+  "a": 2,
+  "ja": "そのセミナーは所属部署を問わずすべての職員に開放されている。",
+  "e": "後ろが名詞 their department なので前置詞(句)が必要で、regardless of は「~に関係なく」。even though は接続詞で節が必要、as a result は副詞句、in case of は「~に備えて」で意味が合わない。"
+ },
+ {
+  "id": "P5-19",
+  "tag": "代名詞・関係詞",
+  "q": "Ms. Cho, ------- design won the national award, will lead the new project.",
+  "c": [
+   "whom",
+   "whose",
+   "who",
+   "which"
+  ],
+  "a": 1,
+  "ja": "デザインが全国的な賞を受賞したチョウさんが、新プロジェクトを率いる。",
+  "e": "空所の後の design は名詞で、「その人のデザイン」という所有の関係を表すので所有格の whose が入る。who と whom は後ろに名詞を直接取れず、which は人を先行詞にできない。"
+ },
+ {
+  "id": "P5-20",
+  "tag": "代名詞・関係詞",
+  "q": "The board has not decided ------- will replace the retiring CFO.",
+  "c": [
+   "who",
+   "whom",
+   "whose",
+   "whichever"
+  ],
+  "a": 0,
+  "ja": "取締役会は、退任する最高財務責任者の後任を誰にするかまだ決めていない。",
+  "e": "decided の目的語になる名詞節で、節内の主語として働く疑問詞 who が入る。whom は目的格で主語になれず、whose は後ろに名詞が必要。whichever は「どれでも」の意味で人を決める文脈に合わない。"
+ },
+ {
+  "id": "P5-21",
+  "tag": "代名詞・関係詞",
+  "q": "The interns were asked to prepare the presentation by -------.",
+  "c": [
+   "theirs",
+   "themselves",
+   "them",
+   "their"
+  ],
+  "a": 1,
+  "ja": "インターンたちは、自分たちだけでプレゼンを準備するよう求められた。",
+  "e": "by themselves で「自分たちだけで、独力で」の意味になる再帰代名詞が入る。them では「彼らによって」となり主語と同じ人物を指せず不自然。theirs と their は前置詞 by の目的語として形が合わない。"
+ },
+ {
+  "id": "P5-22",
+  "tag": "語彙",
+  "q": "We apologize for the delay and will ------- your order by Thursday.",
+  "c": [
+   "fulfill",
+   "accomplish",
+   "achieve",
+   "perform"
+  ],
+  "a": 0,
+  "ja": "遅れをおわびし、木曜日までにご注文を履行いたします。",
+  "e": "order を目的語に取り「注文に応じる」は fulfill an order が決まった言い方。accomplish と achieve は目標や任務の達成、perform は業務や動作の実行に使い、注文を目的語にする言い方は一般的でない。"
+ },
+ {
+  "id": "P5-23",
+  "tag": "語彙",
+  "q": "The region is experiencing a ------- shortage of skilled engineers.",
+  "c": [
+   "strict",
+   "rigid",
+   "severe",
+   "hard"
+  ],
+  "a": 2,
+  "ja": "その地域では熟練した技術者の深刻な不足が起きている。",
+  "e": "shortage と結びつくのは severe（深刻な）で、severe shortage が定番のコロケーション。strict は規則や人に、rigid は規則や構造に、hard は硬さや困難さに使うので、shortage には続かない。"
+ },
+ {
+  "id": "P5-24",
+  "tag": "語彙",
+  "q": "Employees who have worked here for over a year are ------- for a paid sabbatical.",
+  "c": [
+   "entitled",
+   "eligible",
+   "allowed",
+   "permitted"
+  ],
+  "a": 1,
+  "ja": "1年を超えて勤務している従業員は、有給のサバティカルを取る資格がある。",
+  "e": "be eligible for ~ で「~の資格がある」。entitled は entitled to ~ の形、allowed と permitted は後ろに to 不定詞を取る形が普通で、for + 名詞とは結びつかない。for と相性が合うのは eligible だけ。"
+ },
+ {
+  "id": "P5-25",
+  "tag": "語彙",
+  "q": "The merger is expected to ------- in significant cost savings.",
+  "c": [
+   "lead",
+   "cause",
+   "follow",
+   "result"
+  ],
+  "a": 3,
+  "ja": "その合併は大幅なコスト削減につながると見込まれている。",
+  "e": "result in ~ で「結果として~になる」。直後の in と結びつくのは result だけ。lead は lead to、cause は他動詞で in を取らず、follow は目的語を取るため in significant cost savings とつながらない。"
+ },
+ {
+  "id": "P5-26",
+  "tag": "語彙",
+  "q": "The factory had to ------- production temporarily because of a power outage.",
+  "c": [
+   "suspend",
+   "withdraw",
+   "dismiss",
+   "resign"
+  ],
+  "a": 0,
+  "ja": "停電のため、工場は生産を一時的に停止せざるを得なかった。",
+  "e": "production を目的語に取り、temporarily と合うのは suspend（一時停止する）。withdraw は引き出す・撤回する、dismiss は解雇する、resign は辞職するという意味で、production を目的語にする形にならない。"
+ },
+ {
+  "id": "P5-27",
+  "tag": "語彙",
+  "q": "The tenant is ------- for paying the utility bills.",
+  "c": [
+   "reliable",
+   "respectable",
+   "responsible",
+   "respective"
+  ],
+  "a": 2,
+  "ja": "光熱費の支払いは入居者の責任である。",
+  "e": "be responsible for ~ で「~に責任がある」。reliable は信頼できる、respectable は立派な、respective は「それぞれの」という意味で、for paying とつながらない。形が似た語が並ぶ典型的なひっかけ。"
+ },
+ {
+  "id": "P5-28",
+  "tag": "語彙",
+  "q": "Candidates must have a ------- command of both English and Japanese.",
+  "c": [
+   "strong",
+   "hard",
+   "heavy",
+   "thick"
+  ],
+  "a": 0,
+  "ja": "応募者は英語と日本語の両方に堪能でなければならない。",
+  "e": "a strong command of ~ で「~を自在に操る力」。command と結びつく形容詞は strong や firm などで、hard と heavy と thick は物の硬さ・重さ・厚みを表すため、言語力を表す command には使えない。"
+ },
+ {
+  "id": "P5-29",
+  "tag": "語彙",
+  "q": "Residents who wish to ------- a formal complaint about noise should contact the property manager.",
+  "c": [
+   "hang",
+   "pull",
+   "throw",
+   "lodge"
+  ],
+  "a": 3,
+  "ja": "騒音について正式に苦情を申し立てたい住民は、管理者に連絡すること。",
+  "e": "complaint を目的語に取り「申し立てる」を表す語は lodge で、lodge a complaint は公式な場面の定番表現。hang、pull、throw は物理的な動作を表す動詞で、complaint とは結びつかない。"
+ },
+ {
+  "id": "P5-30",
+  "tag": "語法・その他",
+  "q": "------- by a shortage of materials, the project fell behind schedule.",
+  "c": [
+   "Hampering",
+   "Hampered",
+   "Hamper",
+   "To hamper"
+  ],
+  "a": 1,
+  "ja": "資材不足に妨げられ、プロジェクトは予定より遅れた。",
+  "e": "主語 the project が「妨げられた」側なので、受け身の意味の過去分詞を使う分詞構文 Hampered by ~ が入る。Hampering だと主語が妨げる側になり、Hamper と To hamper は文頭で分詞構文にならない。"
+ }
+]

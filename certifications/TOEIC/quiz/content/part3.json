@@ -1,0 +1,1327 @@
+[
+ {
+  "id": "P3-01",
+  "intro": "conversation",
+  "speakers": [
+   {
+    "k": "M1",
+    "v": "US-M"
+   },
+   {
+    "k": "F1",
+    "v": "UK-F"
+   }
+  ],
+  "lines": [
+   {
+    "s": "F1",
+    "t": "IT Help Desk, this is Claire. How can I help you?"
+   },
+   {
+    "s": "M1",
+    "t": "Hi, Claire. This is Daniel from Accounting. I changed my password this morning, and now I can't connect to the VPN from my laptop."
+   },
+   {
+    "s": "F1",
+    "t": "That happens a lot after a reset. The laptop is probably still using your old credentials. Are you working from home today?"
+   },
+   {
+    "s": "M1",
+    "t": "Yes, and I need to finish the quarterly report before noon."
+   },
+   {
+    "s": "F1",
+    "t": "Then let's skip the usual ticket process. I'll send you a link to a remote tool, and I can update the saved login myself."
+   },
+   {
+    "s": "M1",
+    "t": "That would be great. Do I need to restart anything?"
+   },
+   {
+    "s": "F1",
+    "t": "Just close the VPN app first. I'll tell you when to open it again."
+   },
+   {
+    "s": "M1",
+    "t": "Okay, I'll do that now."
+   }
+  ],
+  "ja": [
+   "ITヘルプデスクのクレアです。どのようなご用件でしょうか。",
+   "経理のダニエルです。今朝パスワードを変更したら、ノートPCからVPNに接続できなくなりました。",
+   "変更後はよくあることです。ノートPCがまだ古い認証情報を使っているのでしょう。今日は在宅勤務ですか。",
+   "はい、正午までに四半期報告書を仕上げる必要があります。",
+   "では通常のチケット手続きは省きましょう。遠隔操作ツールのリンクをお送りするので、保存されたログイン情報は私が更新します。",
+   "助かります。何か再起動する必要はありますか。",
+   "まずVPNアプリを閉じてください。再び開くタイミングはお伝えします。",
+   "わかりました、今やります。"
+  ],
+  "qs": [
+   {
+    "q": "Why is the man calling?",
+    "c": [
+     "To report a problem with a remote connection",
+     "To request a new laptop",
+     "To change a password",
+     "To submit a quarterly report"
+    ],
+    "a": 0,
+    "e": "男性は冒頭で、パスワード変更後に自宅のノートPCからVPNへ接続できないと伝えている。remote connectionの不具合の報告が目的。パスワード変更は原因にすぎず、報告書は作業中の仕事の話である。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "What does the woman say is the likely cause of the problem?",
+    "c": [
+     "A report file is too large.",
+     "The VPN software was uninstalled.",
+     "Outdated login information is stored on the device.",
+     "The man's account was locked."
+    ],
+    "a": 2,
+    "e": "女性は「ノートPCがまだ古い認証情報を使っている」と述べる。これをoutdated login information is storedと言い換えた。アプリの削除やアカウントのロックには触れず、報告書は男性の仕事の話である。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What will the man do next?",
+    "c": [
+     "Restart his laptop",
+     "Shut down an application",
+     "Submit a support ticket",
+     "Contact the Accounting department"
+    ],
+    "a": 1,
+    "e": "女性が「まずVPNアプリを閉じて」と指示し、男性は今やると答える。close an appをshut down an applicationに言い換えた。restartは男性の質問に出るだけで、女性は再起動を求めていない。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P3-02",
+  "intro": "conversation with three speakers",
+  "speakers": [
+   {
+    "k": "F1",
+    "v": "AU-F"
+   },
+   {
+    "k": "M1",
+    "v": "US-M2"
+   },
+   {
+    "k": "M2",
+    "v": "UK-M"
+   }
+  ],
+  "lines": [
+   {
+    "s": "F1",
+    "t": "Welcome to the Harbor View Hotel. How may I help you?"
+   },
+   {
+    "s": "M1",
+    "t": "Hi, I have a reservation under Okafor for three nights. Is there any chance my room is ready?"
+   },
+   {
+    "s": "F1",
+    "t": "I'm sorry, Mr. Okafor. Housekeeping is still finishing the seventh floor. Let me ask our duty manager. Stephen?"
+   },
+   {
+    "s": "M2",
+    "t": "We can have a fourth-floor room ready in twenty minutes. It faces the parking lot, though, not the water."
+   },
+   {
+    "s": "M1",
+    "t": "Well, I did request an ocean-side room when I booked."
+   },
+   {
+    "s": "M2",
+    "t": "Understood. Your original room should be ready by two o'clock. You could leave your bags here and have lunch in our restaurant."
+   },
+   {
+    "s": "M1",
+    "t": "Hmm, I have a client meeting at one. I'll take the fourth-floor room, and switch later if it's not too much trouble."
+   },
+   {
+    "s": "F1",
+    "t": "Not at all. I'll note that on your reservation."
+   }
+  ],
+  "ja": [
+   "ハーバービューホテルへようこそ。ご用件をお伺いします。",
+   "オカフォー名で3泊予約しています。部屋は用意できていますか。",
+   "申し訳ありません、オカフォー様。客室清掃がまだ7階を仕上げております。当直責任者に確認します。スティーブン?",
+   "4階の部屋なら20分で用意できます。ただ、水辺ではなく駐車場側です。",
+   "ええと、予約時に海側の部屋を希望したのですが。",
+   "承知しました。ご希望の部屋は2時までに用意できます。荷物をお預けになり、レストランで昼食をどうぞ。",
+   "うーん、1時に取引先との会議があります。4階の部屋にして、後で移れれば助かります。",
+   "構いません。予約にその旨を記載します。"
+  ],
+  "qs": [
+   {
+    "q": "Who most likely is Stephen?",
+    "c": [
+     "A housekeeping worker",
+     "A restaurant server",
+     "Another guest",
+     "A hotel supervisor"
+    ],
+    "a": 3,
+    "e": "女性が「当直責任者に確認します。スティーブン?」と呼び、直後に部屋の割り当てを決めて答えたのでスティーブンはその責任者だとわかる。supervisorに言い換え。housekeepingは別の部署である。",
+    "tag": "話者・場所"
+   },
+   {
+    "q": "What does the man imply when he says, \"I did request an ocean-side room when I booked\"?",
+    "c": [
+     "He wants to change his reservation dates.",
+     "He is not satisfied with the room offered.",
+     "He would like to speak with a different employee.",
+     "He is unsure about his booking."
+    ],
+    "a": 1,
+    "e": "直前に「水辺ではなく駐車場側」と言われた流れで出る発言なので、提示された部屋に不満があるという含み。希望を伝えているだけで、日程変更や担当者の交代を求めてはいない。",
+    "tag": "意図問題"
+   },
+   {
+    "q": "Why does the man decide to accept the fourth-floor room?",
+    "c": [
+     "He has a meeting soon.",
+     "He wants a view of the parking lot.",
+     "He plans to eat lunch at the hotel.",
+     "His reservation was for one night."
+    ],
+    "a": 0,
+    "e": "男性は1時に取引先と会議があるため、20分で入れる4階の部屋を受け入れ、後で移ると言う。眺めより時間を優先した形。昼食は勧められただけで、予約は3泊のままである。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P3-03",
+  "intro": "conversation",
+  "speakers": [
+   {
+    "k": "M1",
+    "v": "UK-M2"
+   },
+   {
+    "k": "F1",
+    "v": "US-F2"
+   }
+  ],
+  "lines": [
+   {
+    "s": "M1",
+    "t": "Good afternoon, Ms. Tanaka. This is Peter Wallis from Greenfield Tiles. I'm calling about your order for the lobby renovation."
+   },
+   {
+    "s": "F1",
+    "t": "I was hoping you'd call. The tracking page still says the shipment is at the port."
+   },
+   {
+    "s": "M1",
+    "t": "Customs flagged one of the crates for an inspection, so the whole container is on hold. It may take up to a week."
+   },
+   {
+    "s": "F1",
+    "t": "A week? Our contractors begin laying the floor on the fifteenth."
+   },
+   {
+    "s": "M1",
+    "t": "I understand. What I can do is send half of the tiles by air freight, and we'll cover the extra shipping cost."
+   },
+   {
+    "s": "F1",
+    "t": "That would let them start on the entrance area, at least. Can you email me the new schedule so I can forward it to the contractor?"
+   },
+   {
+    "s": "M1",
+    "t": "Of course. I'll send it within the hour."
+   }
+  ],
+  "ja": [
+   "田中様、こんにちは。グリーンフィールド・タイルのピーター・ウォリスです。ロビー改装のご注文の件でお電話しました。",
+   "お待ちしていました。追跡ページでは荷物がまだ港にあるとなっています。",
+   "通関で木箱の1つが検査対象となり、コンテナ全体が止まっています。最長1週間かかるかもしれません。",
+   "1週間ですか。施工業者は15日に床張りを始めます。",
+   "承知しています。タイルの半分を航空便で送り、追加の送料は当社で負担します。",
+   "それなら少なくとも入口部分から始められます。施工業者に転送できるよう、新しい予定をメールしてもらえますか。",
+   "もちろんです。1時間以内にお送りします。"
+  ],
+  "qs": [
+   {
+    "q": "Why is the man calling?",
+    "c": [
+     "To ask about an inspection date",
+     "To confirm a floor installation",
+     "To notify a customer of a shipping delay",
+     "To request payment for extra freight"
+    ],
+    "a": 2,
+    "e": "男性は電話の目的として、通関検査でコンテナが止まり最長1週間かかると伝える。出荷の遅れを客に知らせるのが目的。inspectionは遅れの原因で、追加送料は当社負担である。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "What does the man offer to do?",
+    "c": [
+     "Absorb the cost of faster delivery for some items",
+     "Refund half of the order",
+     "Replace a damaged crate",
+     "Reschedule the contractors"
+    ],
+    "a": 0,
+    "e": "男性は半分を航空便で送り、追加送料は当社が負担すると申し出る。cover the extra shipping costをabsorb the costに、air freightをfaster deliveryに言い換え。halfは返金ではなく出荷量の話である。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What will the man do next?",
+    "c": [
+     "Contact the contractor",
+     "Check the tracking page",
+     "Visit the port",
+     "Send updated timing information in writing"
+    ],
+    "a": 3,
+    "e": "女性が新しい予定のメールを頼み、男性は1時間以内に送ると答える。email the new scheduleをsend updated timing information in writingに言い換え。施工業者に転送するのは女性である。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P3-04",
+  "intro": "conversation",
+  "speakers": [
+   {
+    "k": "F1",
+    "v": "AU-F"
+   },
+   {
+    "k": "M1",
+    "v": "UK-M"
+   }
+  ],
+  "lines": [
+   {
+    "s": "M1",
+    "t": "Hello, I'm calling to move my cleaning appointment. It's currently scheduled for Tuesday at ten."
+   },
+   {
+    "s": "F1",
+    "t": "Certainly. Can I have your name, please?"
+   },
+   {
+    "s": "M1",
+    "t": "Martin Hale."
+   },
+   {
+    "s": "F1",
+    "t": "Thank you, Mr. Hale. Dr. Reyes is out of the office next week, but Dr. Lim has openings on Wednesday morning and Friday afternoon."
+   },
+   {
+    "s": "M1",
+    "t": "Friday would be better. I'm leaving on a trip on Wednesday morning."
+   },
+   {
+    "s": "F1",
+    "t": "All right, I'll put you down for Friday at three. Please bring your insurance card, as always."
+   },
+   {
+    "s": "M1",
+    "t": "I will. Also, is it still the same office on Dalton Street?"
+   },
+   {
+    "s": "F1",
+    "t": "Yes, but the entrance has moved to the back of the building because of construction work."
+   }
+  ],
+  "ja": [
+   "クリーニングの予約を変更したくお電話しました。今は火曜の10時になっています。",
+   "承知しました。お名前をお願いします。",
+   "マーティン・ヘイルです。",
+   "ヘイル様、ありがとうございます。レイエス先生は来週不在ですが、リム先生なら水曜の午前と金曜の午後が空いています。",
+   "金曜のほうが好都合です。水曜の朝から旅行に出ます。",
+   "では金曜の3時で入れておきます。いつもどおり保険証をお持ちください。",
+   "わかりました。事務所は今もダルトン通りの同じ場所ですか。",
+   "はい。ただ、工事のため入口が建物の裏側に移っています。"
+  ],
+  "qs": [
+   {
+    "q": "Why is the man calling?",
+    "c": [
+     "To cancel his insurance",
+     "To change an appointment time",
+     "To ask about a dentist's schedule next week",
+     "To get directions to the office"
+    ],
+    "a": 1,
+    "e": "男性は冒頭で「予約を変更したい」と述べている。move my appointmentがchange an appointment timeに言い換えられている。保険証は持参物の話で、先生の予定は変更先を探す過程で出るだけ。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "Why does the man prefer Friday?",
+    "c": [
+     "He needs to see a different doctor.",
+     "His insurance starts that day.",
+     "The office is closed on Wednesday afternoon.",
+     "He will be out of town on another available day."
+    ],
+    "a": 3,
+    "e": "空き日のうち水曜については、男性が「水曜の朝から旅行に出る」と述べる。別の候補日に不在になるため金曜を選んだ。Wednesdayを使った引っかけに注意。医師の希望は述べていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What does the woman say about the office?",
+    "c": [
+     "It has moved to another street.",
+     "It is closed for construction.",
+     "Its entrance is in a different location.",
+     "It has hired a new doctor."
+    ],
+    "a": 2,
+    "e": "女性は工事のため入口が建物の裏側に移ったと述べる。the entrance has movedをentrance is in a different locationに言い換え。Dalton Streetは男性が今も同じ場所か尋ねただけで、移転はしていない。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P3-05",
+  "intro": "conversation",
+  "speakers": [
+   {
+    "k": "M1",
+    "v": "US-M"
+   },
+   {
+    "k": "F1",
+    "v": "UK-F"
+   }
+  ],
+  "lines": [
+   {
+    "s": "M1",
+    "t": "Rina, did you get a chance to review the three finalists for the data analyst position?"
+   },
+   {
+    "s": "F1",
+    "t": "I did. Ms. Park has the strongest technical background, but she's currently based in Seoul."
+   },
+   {
+    "s": "M1",
+    "t": "Relocating wouldn't be a problem. The company would pay moving expenses."
+   },
+   {
+    "s": "F1",
+    "t": "It's not the cost I'm worried about. She'd need a work visa, which could take two months."
+   },
+   {
+    "s": "M1",
+    "t": "Two months... Our current analyst leaves at the end of next month."
+   },
+   {
+    "s": "F1",
+    "t": "Exactly. Mr. Brooks lives locally and could start in three weeks, though he has less experience with our software."
+   },
+   {
+    "s": "M1",
+    "t": "I see. Let's have them both do the second-round interview, and I'll ask Ms. Park about starting remotely at first."
+   }
+  ],
+  "ja": [
+   "リナ、データアナリストの最終候補3人の書類は見てくれましたか。",
+   "見ました。パクさんは技術面が最も強いですが、今はソウル在住です。",
+   "転居は問題ありません。引っ越し費用は会社が負担します。",
+   "心配なのは費用ではありません。就労ビザが必要で、2か月かかるかもしれません。",
+   "2か月ですか。今のアナリストは来月末に辞めます。",
+   "そうなんです。ブルックスさんは地元在住で3週間後に始められますが、当社のソフトの経験は少なめです。",
+   "なるほど。2人とも二次面接に呼び、パクさんには最初は遠隔で勤務できないか聞いてみます。"
+  ],
+  "qs": [
+   {
+    "q": "What are the speakers mainly discussing?",
+    "c": [
+     "Which applicants to consider for a job",
+     "How to train a new analyst",
+     "Where to open a new office",
+     "How to upgrade some software"
+    ],
+    "a": 0,
+    "e": "冒頭の最終候補3人の書類確認から、候補者の比較検討が主題だとわかる。review the finalistsをwhich applicants to considerに言い換え。ソフトは候補者の経験の話で、訓練や事務所の話ではない。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "What does the woman imply when she says, \"It's not the cost I'm worried about\"?",
+    "c": [
+     "The moving expenses are too high.",
+     "Ms. Park lacks the necessary skills.",
+     "The visa fee is too expensive.",
+     "The hiring schedule may be a problem."
+    ],
+    "a": 3,
+    "e": "直後に就労ビザに2か月かかると述べ、後任が来月末に辞める話へ続く。懸念は費用でなく採用の時期だとわかる。技術面は最も強いと評価済みで、ビザの手数料の話も出ていない。",
+    "tag": "意図問題"
+   },
+   {
+    "q": "What will the man do?",
+    "c": [
+     "Pay a candidate's moving expenses",
+     "Discuss a temporary work arrangement with a candidate",
+     "Extend the current analyst's contract",
+     "Apply for a work visa"
+    ],
+    "a": 1,
+    "e": "男性は最後に、パクさんに最初は遠隔で始められないか尋ねると言う。starting remotely at firstをtemporary work arrangementに言い換え。引っ越し費用の負担は仮定の話で、ビザ申請はしない。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P3-06",
+  "intro": "conversation",
+  "speakers": [
+   {
+    "k": "F1",
+    "v": "US-F"
+   },
+   {
+    "k": "M1",
+    "v": "UK-M2"
+   }
+  ],
+  "lines": [
+   {
+    "s": "F1",
+    "t": "Travel Services, this is Hannah."
+   },
+   {
+    "s": "M1",
+    "t": "Hi, Hannah. I'm Victor Chen from Sales. I need to get to Singapore for the logistics conference on the twenty-second. My talk is at nine the next morning."
+   },
+   {
+    "s": "F1",
+    "t": "There's a direct flight leaving at eleven p.m. on the twenty-first for 840 dollars. The cheaper option, 610 dollars, has a layover in Tokyo and lands in the evening of the twenty-second."
+   },
+   {
+    "s": "M1",
+    "t": "I'd prefer the direct one. Can the company cover the difference?"
+   },
+   {
+    "s": "F1",
+    "t": "Our policy allows the higher fare only if the cheaper itinerary arrives less than eight hours before the event. Yours doesn't."
+   },
+   {
+    "s": "M1",
+    "t": "Hmm. Then I'll go with the layover. Could you also look for a hotel near the venue?"
+   },
+   {
+    "s": "F1",
+    "t": "Sure. I'll send some options by the end of the day."
+   }
+  ],
+  "ja": [
+   "出張サービス担当のハンナです。",
+   "営業部のビクター・チェンです。22日の物流会議のためシンガポールに行く必要があります。講演はその翌朝9時です。",
+   "21日午後11時発の直行便が840ドルです。安いほうは610ドルで、東京経由、22日の夜に到着します。",
+   "直行便にしたいです。差額は会社で負担してもらえますか。",
+   "規定では、安い行程が行事の8時間未満前の到着になる場合に限り高い運賃を認めます。今回は該当しません。",
+   "うーん、では経由便にします。会場近くのホテルも探してもらえますか。",
+   "はい。本日中にいくつか候補をお送りします。"
+  ],
+  "qs": [
+   {
+    "q": "Who most likely is the woman?",
+    "c": [
+     "A conference organizer",
+     "An airline agent",
+     "A company travel coordinator",
+     "A hotel clerk"
+    ],
+    "a": 2,
+    "e": "女性は出張サービス担当を名乗り、社内規定に基づいて航空券を手配している。社内の出張手配担当者である。航空会社や会議主催者ではなく、ホテルは後で探すと頼まれるだけである。",
+    "tag": "話者・場所"
+   },
+   {
+    "q": "Why can't the man's request be approved?",
+    "c": [
+     "The direct flight is fully booked.",
+     "The cheaper flight would arrive early enough.",
+     "The conference starts on a different day.",
+     "The policy covers only meals."
+    ],
+    "a": 1,
+    "e": "規定は、安い便が行事の8時間未満前に着く場合のみ高い運賃を認める。今回は十分前に着くので対象外。arrive early enoughがその言い換え。直行便が満席という話はない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What will the woman send to the man?",
+    "c": [
+     "Lodging options",
+     "A flight itinerary",
+     "A policy document",
+     "A conference schedule"
+    ],
+    "a": 0,
+    "e": "男性が会場近くのホテルを頼み、女性は本日中にいくつか候補を送ると答える。hotelをlodgingに、optionsをそのまま使って言い換えた。航空券の行程表を送るとは言っていない。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P3-07",
+  "intro": "conversation with three speakers",
+  "speakers": [
+   {
+    "k": "F1",
+    "v": "UK-F"
+   },
+   {
+    "k": "M1",
+    "v": "US-M2"
+   },
+   {
+    "k": "F2",
+    "v": "AU-F"
+   }
+  ],
+  "lines": [
+   {
+    "s": "F1",
+    "t": "And this is the main living area. The windows face east, so you get lots of morning light."
+   },
+   {
+    "s": "M1",
+    "t": "It's bigger than the photos suggested. Camille, what do you think?"
+   },
+   {
+    "s": "F2",
+    "t": "I love the kitchen, but I'm worried about the commute. Is the bus stop close?"
+   },
+   {
+    "s": "F1",
+    "t": "About five minutes on foot, and the line runs to central station every ten minutes."
+   },
+   {
+    "s": "M1",
+    "t": "What about parking? We own one car."
+   },
+   {
+    "s": "F1",
+    "t": "Each unit includes one space in the garage downstairs. A second space costs seventy dollars a month."
+   },
+   {
+    "s": "F2",
+    "t": "We'd only need one. Honestly, that's the main thing we were concerned about."
+   },
+   {
+    "s": "M1",
+    "t": "So the rent is just the listed price?"
+   },
+   {
+    "s": "F1",
+    "t": "Yes, and water is included. You'd pay for electricity separately."
+   }
+  ],
+  "ja": [
+   "こちらがメインの居間です。窓は東向きなので朝日がよく入ります。",
+   "写真より広いですね。カミーユ、どう思う?",
+   "キッチンは気に入ったけど、通勤が心配。バス停は近いですか。",
+   "徒歩5分ほどで、路線は10分おきに中央駅へ向かいます。",
+   "駐車場はどうですか。車は1台持っています。",
+   "各戸に下の車庫の1区画が含まれます。2区画目は月70ドルです。",
+   "1台で足ります。正直、それが一番の気がかりでした。",
+   "では家賃は表示価格のままですか。",
+   "はい、水道代は込みです。電気代は別にお支払いいただきます。"
+  ],
+  "qs": [
+   {
+    "q": "Where are the speakers?",
+    "c": [
+     "In a car dealership",
+     "At a bus terminal",
+     "In a parking garage",
+     "In a rental unit"
+    ],
+    "a": 3,
+    "e": "agentが「こちらがメインの居間です」と案内し、窓や台所、各戸の駐車区画を説明している。借りる部屋の内見中である。駐車場やバスは話題に出るだけで、場所ではない。",
+    "tag": "話者・場所"
+   },
+   {
+    "q": "What does the woman mean when she says, \"that's the main thing we were concerned about\"?",
+    "c": [
+     "She is worried about the bus schedule.",
+     "She is upset about the cost of a second space.",
+     "She is relieved about the parking arrangement.",
+     "She dislikes the kitchen."
+    ],
+    "a": 2,
+    "e": "直前で1区画が含まれ、自分たちは1台で足りると言った流れ。thatは駐車の件を指し、懸念が解消された安心を表す。通勤の心配は先に述べたが、それは別の話題である。",
+    "tag": "意図問題"
+   },
+   {
+    "q": "What is mentioned about the rent?",
+    "c": [
+     "It includes electricity.",
+     "It covers some utilities.",
+     "It is lower than expected.",
+     "It changes monthly."
+    ],
+    "a": 1,
+    "e": "女性は家賃に水道代が含まれ、電気代は別払いだと説明する。water is includedをcovers some utilitiesに言い換え。electricityは別払いだと明言されており、引っかけになる。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P3-08",
+  "intro": "conversation",
+  "speakers": [
+   {
+    "k": "F1",
+    "v": "US-F2"
+   },
+   {
+    "k": "M1",
+    "v": "UK-M"
+   }
+  ],
+  "lines": [
+   {
+    "s": "F1",
+    "t": "Tom, I just got off the phone with the caterer for the charity dinner."
+   },
+   {
+    "s": "M1",
+    "t": "Good. Did they confirm the menu?"
+   },
+   {
+    "s": "F1",
+    "t": "They did, but they need the final guest count by Friday. So far, a hundred and twenty people have registered, and about fifteen want vegetarian meals."
+   },
+   {
+    "s": "M1",
+    "t": "The ballroom seats a hundred and fifty. Are we expecting many last-minute sign-ups?"
+   },
+   {
+    "s": "F1",
+    "t": "Probably. Last year, a dozen people signed up in the final week."
+   },
+   {
+    "s": "M1",
+    "t": "Then let's give the caterer a number of one-forty to be safe. Extra meals can go to a local shelter."
+   },
+   {
+    "s": "F1",
+    "t": "Good idea. I'll call them back now."
+   }
+  ],
+  "ja": [
+   "トム、チャリティーディナーのケータリング業者との電話を終えたところ。",
+   "よかった。メニューは確定したの?",
+   "確定したけれど、金曜までに最終人数が必要なの。今のところ120人が登録済みで、約15人がベジタリアン食を希望よ。",
+   "宴会場は150席だ。直前の申し込みは多そうかな。",
+   "おそらくね。昨年は最終週に12人が申し込んだわ。",
+   "それなら念のため140人と伝えよう。余った食事は地元の保護施設に回せる。",
+   "いい案ね。今すぐ折り返すわ。"
+  ],
+  "qs": [
+   {
+    "q": "What are the speakers discussing?",
+    "c": [
+     "Preparations for a fundraising event",
+     "A new menu for a restaurant",
+     "A change in a venue",
+     "The results of a survey"
+    ],
+    "a": 0,
+    "e": "チャリティーディナーの食事業者との連絡と人数の調整が主題。charity dinnerをfundraising eventに言い換え。メニューは確定済みで会場変更の話はなく、調査結果も出ない。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "Why does the man suggest a guest count of 140?",
+    "c": [
+     "To fill all seats in the ballroom",
+     "To provide more vegetarian meals",
+     "To allow for late registrations",
+     "To donate food to a shelter"
+    ],
+    "a": 2,
+    "e": "登録120人で、昨年は最終週に12人増えたと聞き、念のため140人と伝えようと言う。直前の申込に備えるため。ballroomは150席で、140は満席ではない。余剰分の寄付は結果の話である。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What will the woman do next?",
+    "c": [
+     "Contact a local shelter",
+     "Register for a dinner",
+     "Ask for more volunteers",
+     "Provide a number to a food provider"
+    ],
+    "a": 3,
+    "e": "女性は最後に、今すぐ折り返すと言っており、折り返し先はケータリング業者。伝える内容は人数なので、provide a number to a food providerに言い換えた。保護施設への連絡は予定にない。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P3-09",
+  "intro": "conversation",
+  "speakers": [
+   {
+    "k": "F1",
+    "v": "AU-F"
+   },
+   {
+    "k": "M1",
+    "v": "US-M"
+   }
+  ],
+  "lines": [
+   {
+    "s": "F1",
+    "t": "Hi, I ordered a standing desk from your website last week, and when it arrived this morning, the surface was scratched."
+   },
+   {
+    "s": "M1",
+    "t": "I'm sorry about that. Do you have your order number?"
+   },
+   {
+    "s": "F1",
+    "t": "Yes, it's 4471-B. I'd like a replacement rather than a refund, since I need it for my home office by the weekend."
+   },
+   {
+    "s": "M1",
+    "t": "Let me check. Hmm, we're out of that model in white. The next shipment isn't due until the twentieth."
+   },
+   {
+    "s": "F1",
+    "t": "That's too late for me. Do you have the walnut finish?"
+   },
+   {
+    "s": "M1",
+    "t": "We have one at our Eastside store. I can have it delivered tomorrow at no charge, and the courier will take back the damaged one."
+   },
+   {
+    "s": "F1",
+    "t": "That works. Will I need to be home?"
+   },
+   {
+    "s": "M1",
+    "t": "Yes, someone has to sign for it between nine and noon."
+   }
+  ],
+  "ja": [
+   "こんにちは、先週サイトで昇降式デスクを注文したのですが、今朝届いたら天板に傷がありました。",
+   "申し訳ありません。注文番号はお分かりですか。",
+   "はい、4471-Bです。週末までに自宅の仕事場で使うので、返金ではなく交換をお願いします。",
+   "確認します。ええと、そのモデルの白は在庫切れです。次の入荷は20日の予定です。",
+   "それでは遅すぎます。ウォールナット色はありますか。",
+   "イーストサイド店に1台あります。明日無料で配送し、傷のあるほうは配送員が引き取ります。",
+   "それでお願いします。在宅している必要はありますか。",
+   "はい、9時から正午の間に受け取りの署名をする人が必要です。"
+  ],
+  "qs": [
+   {
+    "q": "What problem does the woman report?",
+    "c": [
+     "An order was delivered late.",
+     "A product arrived damaged.",
+     "The wrong color was shipped.",
+     "She was charged twice."
+    ],
+    "a": 1,
+    "e": "女性は冒頭で、届いた机の天板に傷があったと述べる。scratchedをdamagedに言い換え。色の話は交換候補を探す場面で出るだけで、誤配送ではない。届いたのも遅れではなく今朝である。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "What does the man say about the white desk?",
+    "c": [
+     "It is temporarily unavailable.",
+     "It will cost extra.",
+     "It was discontinued.",
+     "It can be picked up today."
+    ],
+    "a": 0,
+    "e": "男性は白は在庫切れで、次の入荷は20日だと述べる。out of stockをtemporarily unavailableに言い換え。生産終了とは言っておらず、入荷を待てば入手できる。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What is the woman asked to do tomorrow?",
+    "c": [
+     "Pick up a replacement",
+     "Visit the Eastside store",
+     "Be available to receive a delivery",
+     "Return the damaged item"
+    ],
+    "a": 2,
+    "e": "男性は明日の9時から正午に受け取りの署名をする人が必要だと言う。sign for itをreceive a deliveryに言い換え。店へ行くのではなく配送で、傷のある品は配送員が引き取る。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P3-10",
+  "intro": "conversation",
+  "speakers": [
+   {
+    "k": "M1",
+    "v": "UK-M2"
+   },
+   {
+    "k": "F1",
+    "v": "US-F"
+   }
+  ],
+  "lines": [
+   {
+    "s": "M1",
+    "t": "Mina, the packaging line was making a grinding noise again this morning."
+   },
+   {
+    "s": "F1",
+    "t": "I heard. The technicians looked at it twice last month, but the noise keeps coming back."
+   },
+   {
+    "s": "M1",
+    "t": "Could it be the same bearing that was replaced?"
+   },
+   {
+    "s": "F1",
+    "t": "They said it was fine. I suspect the problem is the conveyor belt itself, which is nearly six years old."
+   },
+   {
+    "s": "M1",
+    "t": "If so, replacing it would stop production for a full day. We have a large order due Thursday."
+   },
+   {
+    "s": "F1",
+    "t": "Then we could do it on Sunday when the plant is closed. I'd need your approval for the overtime cost."
+   },
+   {
+    "s": "M1",
+    "t": "Go ahead and get a quote from the supplier first, and I'll review it tomorrow."
+   }
+  ],
+  "ja": [
+   "ミナ、梱包ラインが今朝もまたゴリゴリという音を立てていたよ。",
+   "聞いています。先月、技術者が2回点検しましたが、音が再発します。",
+   "交換したのと同じ軸受けかな。",
+   "問題ないとのことでした。私はコンベヤーベルト自体が原因だと思います。もうすぐ6年使っています。",
+   "そうだとすると、交換で丸1日生産が止まる。木曜に大口の納期がある。",
+   "なら工場が休みの日曜にできます。残業代についてはご承認が必要です。",
+   "まず業者から見積もりを取ってくれ。明日確認する。"
+  ],
+  "qs": [
+   {
+    "q": "Who most likely are the speakers?",
+    "c": [
+     "Equipment suppliers",
+     "Delivery drivers",
+     "Packaging designers",
+     "Manufacturing employees"
+    ],
+    "a": 3,
+    "e": "梱包ライン、技術者による点検、工場の休業日、生産停止といった話から、工場で働く従業員同士の会話だとわかる。業者は見積もりを取る相手として出るだけで、話者ではない。",
+    "tag": "話者・場所"
+   },
+   {
+    "q": "What does the woman think is causing the problem?",
+    "c": [
+     "A part that was installed incorrectly",
+     "Equipment that has become old",
+     "A shortage of technicians",
+     "A delay in the supplier's shipment"
+    ],
+    "a": 1,
+    "e": "女性は、ほぼ6年使ったコンベヤーベルト自体が原因だと疑っている。nearly six yearsをhas become oldに言い換え。軸受けは技術者が問題ないとした部品で、原因とは見ていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What will the woman most likely do next?",
+    "c": [
+     "Obtain a cost estimate",
+     "Approve overtime pay",
+     "Stop the line on Thursday",
+     "Ask technicians to inspect it again"
+    ],
+    "a": 0,
+    "e": "男性が「まず業者から見積もりを取って」と指示する。get a quoteをobtain a cost estimateに言い換え。残業の承認は男性の役目で、木曜は納期なので止めない。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P3-11",
+  "intro": "conversation",
+  "speakers": [
+   {
+    "k": "F1",
+    "v": "UK-F"
+   },
+   {
+    "k": "M1",
+    "v": "US-M2"
+   }
+  ],
+  "lines": [
+   {
+    "s": "F1",
+    "t": "Hi, Kevin. I need to reserve a room for Friday's supplier workshop. We expect eighteen people, counting our guests."
+   },
+   {
+    "s": "M1",
+    "t": "What time will you start?"
+   },
+   {
+    "s": "F1",
+    "t": "Around one thirty, and it should run until four. Mr. Ito's team will present slides, so we'll need a way to show them."
+   },
+   {
+    "s": "M1",
+    "t": "Do you want it near the main entrance for the visitors?"
+   },
+   {
+    "s": "F1",
+    "t": "The location doesn't matter, as long as everyone has space to sit at tables."
+   },
+   {
+    "s": "M1",
+    "t": "Understood. Let me check the system. I can book it now, but I need a cost center code."
+   },
+   {
+    "s": "F1",
+    "t": "I don't have it with me. I'll email it to you this afternoon."
+   },
+   {
+    "s": "M1",
+    "t": "That's fine. I'll hold the room until then."
+   }
+  ],
+  "ja": [
+   "ケビン、金曜の取引先向けワークショップの部屋を予約したいの。ゲストを含めて18人の見込みよ。",
+   "何時から始めますか。",
+   "1時半ごろからで、4時までの予定。伊藤さんのチームがスライドを発表するので、映す設備が要るわ。",
+   "来客のために正面入口の近くがよいですか。",
+   "場所は問いません。全員がテーブルに座れる広さがあれば大丈夫です。",
+   "了解です。システムを確認します。今予約できますが、部署コードが必要です。",
+   "手元にないの。今日の午後にメールで送るわ。",
+   "大丈夫です。それまで部屋を押さえておきます。"
+  ],
+  "graphic": {
+   "title": "Meeting Room Availability - Friday",
+   "rows": [
+    [
+     "Room",
+     "Seats",
+     "Equipment",
+     "Open"
+    ],
+    [
+     "Cedar",
+     "6",
+     "Whiteboard",
+     "9:00-17:00"
+    ],
+    [
+     "Maple",
+     "12",
+     "Projector",
+     "10:00-15:00"
+    ],
+    [
+     "Birch",
+     "20",
+     "Projector, microphone",
+     "13:00-17:00"
+    ],
+    [
+     "Oak",
+     "30",
+     "Projector, microphone",
+     "9:00-12:00"
+    ]
+   ]
+  },
+  "qs": [
+   {
+    "q": "What is the woman planning?",
+    "c": [
+     "A training session for new employees",
+     "A visit to a client's office",
+     "A meeting with outside business partners",
+     "A company-wide presentation"
+    ],
+    "a": 2,
+    "e": "金曜の取引先向けワークショップの部屋を予約する場面。supplierをoutside business partnersに言い換え。参加者にゲストを含む点も合う。新入社員研修や全社発表ではない。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "Look at the graphic. Which room will the woman most likely reserve?",
+    "c": [
+     "Cedar",
+     "Maple",
+     "Oak",
+     "Birch"
+    ],
+    "a": 3,
+    "e": "18人で、1時半から4時までスライドを映す。Birchは20席で投影機があり13時から空いている。Mapleは設備は合うが12席で足りない。Oakは設備と席数は十分でも午前のみで時間が合わない。",
+    "tag": "図表問題"
+   },
+   {
+    "q": "What will the woman send to the man?",
+    "c": [
+     "A guest list",
+     "A billing code",
+     "A presentation file",
+     "A payment receipt"
+    ],
+    "a": 1,
+    "e": "男性が部署コードを求め、女性は午後にメールすると答える。cost center codeをbilling codeに言い換えた。スライドは伊藤さんのチームが発表に使うもので、送る物ではない。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P3-12",
+  "intro": "conversation",
+  "speakers": [
+   {
+    "k": "F1",
+    "v": "AU-F"
+   },
+   {
+    "k": "M1",
+    "v": "US-M"
+   }
+  ],
+  "lines": [
+   {
+    "s": "F1",
+    "t": "I'm picking up visitors from the airport and driving them around for six days. There will be five of us with luggage."
+   },
+   {
+    "s": "M1",
+    "t": "Then you'll want something with three rows of seats. We have just one available for your dates."
+   },
+   {
+    "s": "F1",
+    "t": "Okay. What's the best rate?"
+   },
+   {
+    "s": "M1",
+    "t": "Our weekly rate applies to any rental of five days or more, so you don't have to return it early to save."
+   },
+   {
+    "s": "F1",
+    "t": "Great. Does it include insurance?"
+   },
+   {
+    "s": "M1",
+    "t": "Basic coverage is included. Full coverage costs fifteen dollars extra per day."
+   },
+   {
+    "s": "F1",
+    "t": "Basic is fine."
+   },
+   {
+    "s": "M1",
+    "t": "All right. I'll just need to see your driver's license."
+   }
+  ],
+  "ja": [
+   "空港で来客を迎え、6日間案内します。荷物を持った5人が乗ります。",
+   "それなら3列シートの車がよいでしょう。その期間に空いているのは1台だけです。",
+   "わかりました。一番お得な料金はどれですか。",
+   "5日以上のご利用には週間料金が適用されるので、節約のために早く返す必要はありません。",
+   "よかった。保険は含まれますか。",
+   "基本補償は含まれます。全額補償は1日15ドルの追加です。",
+   "基本で十分です。",
+   "わかりました。運転免許証を拝見します。"
+  ],
+  "graphic": {
+   "title": "Car Rental Rates",
+   "rows": [
+    [
+     "Vehicle",
+     "Daily",
+     "Weekly"
+    ],
+    [
+     "Compact",
+     "$45",
+     "$240"
+    ],
+    [
+     "Midsize",
+     "$58",
+     "$310"
+    ],
+    [
+     "Minivan",
+     "$80",
+     "$450"
+    ]
+   ]
+  },
+  "qs": [
+   {
+    "q": "Who most likely is the man?",
+    "c": [
+     "A car rental agent",
+     "An airline employee",
+     "A travel agent",
+     "A tour guide"
+    ],
+    "a": 0,
+    "e": "男性は貸出可能な車の台数、料金、保険、免許証の確認を行っており、レンタカー店の係員だとわかる。rental agentへの言い換え。空港は女性の送迎先として出るだけで、旅行代理店でもない。",
+    "tag": "話者・場所"
+   },
+   {
+    "q": "Look at the graphic. How much will the woman pay for the rental before tax?",
+    "c": [
+     "$240",
+     "$310",
+     "$450",
+     "$480"
+    ],
+    "a": 2,
+    "e": "5人で荷物ありのため3列の車、つまりミニバン。6日間は5日以上なので週間料金の450ドル。日額80ドルの6日分480ドルより安い。基本補償は含まれるので追加料金はなく、全額補償も選ばない。",
+    "tag": "図表問題"
+   },
+   {
+    "q": "What does the woman decide about insurance?",
+    "c": [
+     "She will add full coverage.",
+     "She will use her own policy.",
+     "She will purchase a separate policy.",
+     "She will use the coverage included in the price."
+    ],
+    "a": 3,
+    "e": "女性は追加補償の案内を受けて「基本で十分」と答える。基本補償は料金に含まれるため、含まれる補償を使うということ。fifteen dollarsは全額補償の追加料金で、選ばれていない。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P3-13",
+  "intro": "conversation",
+  "speakers": [
+   {
+    "k": "M1",
+    "v": "UK-M"
+   },
+   {
+    "k": "F1",
+    "v": "US-F2"
+   }
+  ],
+  "lines": [
+   {
+    "s": "M1",
+    "t": "Good morning. I'm here for a two o'clock tax consultation with Ms. Ortiz. Last year her office was on the fifth floor."
+   },
+   {
+    "s": "F1",
+    "t": "They moved in May. They're now directly below the law firm."
+   },
+   {
+    "s": "M1",
+    "t": "I see. I'm quite early. Is there a place to wait?"
+   },
+   {
+    "s": "F1",
+    "t": "The café in the lobby is open until three."
+   },
+   {
+    "s": "M1",
+    "t": "Thank you. Nobody told me about the move, and I almost went to the old office."
+   },
+   {
+    "s": "F1",
+    "t": "Sorry about that. But first, please sign in at the desk, and I'll print a visitor badge for you."
+   },
+   {
+    "s": "M1",
+    "t": "Sure. Should I wear it the whole time?"
+   },
+   {
+    "s": "F1",
+    "t": "Yes, until you leave the building."
+   }
+  ],
+  "ja": [
+   "おはようございます。2時にオルティスさんと税務相談の予定です。昨年は彼女の事務所は5階でした。",
+   "5月に移転しました。今は法律事務所の真下の階です。",
+   "なるほど。かなり早く着いてしまいました。待てる場所はありますか。",
+   "ロビーのカフェは3時まで開いています。",
+   "ありがとう。移転のことは誰からも聞いておらず、危うく旧事務所へ行くところでした。",
+   "申し訳ありません。その前に、受付で記帳してください。来訪者用バッジを印刷します。",
+   "はい。ずっと着けておくのですか。",
+   "はい、退館するまでお願いします。"
+  ],
+  "graphic": {
+   "title": "Building Directory",
+   "rows": [
+    [
+     "Floor",
+     "Tenant"
+    ],
+    [
+     "1",
+     "Lobby / Cafe"
+    ],
+    [
+     "2",
+     "Alder Insurance"
+    ],
+    [
+     "3",
+     "Brightline Accounting"
+    ],
+    [
+     "4",
+     "Cole & Dunn Law Office"
+    ],
+    [
+     "5",
+     "Meridian Software"
+    ]
+   ]
+  },
+  "qs": [
+   {
+    "q": "Why has the man come to the building?",
+    "c": [
+     "To rent an office",
+     "To attend a financial consultation",
+     "To meet with a lawyer",
+     "To apply for a job"
+    ],
+    "a": 1,
+    "e": "男性は冒頭で、オルティスさんとの税務相談の予定があると述べる。tax consultationをfinancial consultationに言い換え。法律事務所は目印として出るだけで、訪問先ではない。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "Look at the graphic. Which floor will the man go to?",
+    "c": [
+     "The third floor",
+     "The second floor",
+     "The fourth floor",
+     "The fifth floor"
+    ],
+    "a": 0,
+    "e": "相談相手の事務所は、法律事務所の真下の階に移転したと受付が説明する。案内図で法律事務所は4階なので、その下の3階。昨年いた5階は旧所在地で、本文の数字を使った引っかけである。",
+    "tag": "図表問題"
+   },
+   {
+    "q": "What will the man most likely do next?",
+    "c": [
+     "Wait in the café",
+     "Call Ms. Ortiz",
+     "Register his arrival",
+     "Go to the fifth floor"
+    ],
+    "a": 2,
+    "e": "女性は待つ前にまず受付で記帳するよう求める。sign inをregister his arrivalに言い換え。カフェは待つ場所として案内されただけで、まず記帳が先である。5階は旧所在地。",
+    "tag": "次の行動"
+   }
+  ]
+ }
+]

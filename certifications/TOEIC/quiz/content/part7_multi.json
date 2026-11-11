@@ -1,0 +1,422 @@
+[
+ {
+  "id": "P7M-01",
+  "docs": [
+   {
+    "type": "advertisement",
+    "text": "Lakeside Fitness Club\nAutumn Membership Offer\n\nJoin Lakeside Fitness Club this fall and enjoy our newly renovated facility on Mill Street. Every membership includes unlimited use of the main gym, the 25-meter pool, and more than 60 group classes each week.\n\nMembership plans (monthly fee):\nBasic - Weekdays, 9 A.M. to 4 P.M. only: $38\nStandard - All opening hours, 6 A.M. to 10 P.M.: $52\nPremium - Standard plus one personal training session each month: $75\n\nSpecial offers:\n- Sign up before November 30 and your first month is free. The joining fee of $60 is also waived.\n- Students under 25 with valid ID receive 20 percent off the monthly fee of any plan. This discount can be combined with other offers.\n\nTo join, visit the front desk or send an e-mail to join@lakesidefitness.example. Please note that our pool will be closed on December 24 and 25.",
+    "title": "Lakeside Fitness Club"
+   },
+   {
+    "type": "e-mail",
+    "text": "To: join@lakesidefitness.example\nFrom: Priya Nandakumar\nDate: November 18\nSubject: Joining the club\n\nDear Sir or Madam,\n\nI saw your autumn advertisement in the Millbrook Times and would like to become a member. I am a graduate student at Millbrook University, and I am 23 years old. I can show my student ID when I visit.\n\nI work part-time at a laboratory until 5 P.M. on weekdays, so I plan to swim and use the gym mostly in the evenings. I would also like to attend yoga classes on Saturday mornings.\n\nI am planning to come to the front desk this Saturday, November 21, to complete the paperwork. Could you please confirm that I will not have to pay anything on that day? I would be grateful for a quick reply.\n\nBest regards,\nPriya Nandakumar"
+   }
+  ],
+  "sum": [
+   "フィットネスクラブの秋の入会キャンペーン広告。3つの会員プランと、初月無料・入会金免除、25歳未満の学生への20％割引を案内している。",
+   "大学院生のナンダクマーさんが入会を希望し、平日の夕方以降に利用する予定であること、11月21日に手続きに行くことを伝え、当日の支払いの有無を尋ねるメール。"
+  ],
+  "qs": [
+   {
+    "q": "What is suggested about Lakeside Fitness Club?",
+    "c": [
+     "It has been in business for more than 60 years.",
+     "It offers classes only on weekends.",
+     "Its facility has recently been improved.",
+     "It has opened a second location near a university."
+    ],
+    "a": 2,
+    "e": "広告の newly renovated facility が「最近設備が改良された」に言い換えられている。60は週のクラス数で創業年数ではない。クラスは毎週60以上あり週末限定でもない。",
+    "tag": "推測"
+   },
+   {
+    "q": "The word \"valid\" in the advertisement is closest in meaning to",
+    "c": [
+     "current",
+     "reasonable",
+     "healthy",
+     "powerful"
+    ],
+    "a": 0,
+    "e": "valid ID は「有効な身分証」で、期限が切れていない current が最も近い。reasonable は「妥当な」、healthy や powerful は ID の修飾として不自然。",
+    "tag": "言い換え（同義語）"
+   },
+   {
+    "q": "Why did Ms. Nandakumar send the e-mail?",
+    "c": [
+     "To cancel a class registration",
+     "To complain about the content of an advertisement",
+     "To request a refund of a joining fee",
+     "To inquire about enrolling in a membership"
+    ],
+    "a": 3,
+    "e": "メールは広告を見て会員になりたいと述べ、手続き日と当日の支払いの有無を尋ねている。入会の問い合わせが目的で、クラスの取り消しや返金、広告への苦情は述べていない。",
+    "tag": "主旨・目的"
+   },
+   {
+    "q": "Which plan will Ms. Nandakumar most likely choose?",
+    "c": [
+     "Basic",
+     "Standard",
+     "Premium",
+     "A corporate group plan"
+    ],
+    "a": 1,
+    "e": "メールの「平日5時まで勤務し夕方に利用」と広告の Basic が平日9時〜16時限定という情報を合わせるとStandardが適する。最安のBasicは時間帯が合わない。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "How much will Ms. Nandakumar most likely pay for her first two months?",
+    "c": [
+     "$41.60",
+     "$52.00",
+     "$93.60",
+     "$112.00"
+    ],
+    "a": 0,
+    "e": "メールの「23歳の学生」と、広告の「11月30日前の申込で初月無料・入会金免除」「学生は20％引き」を合わせる。2か月目は52ドルの2割引で41.60ドル。52ドルは割引を見落とした値。",
+    "tag": "複数文書の照合"
+   }
+  ]
+ },
+ {
+  "id": "P7M-02",
+  "docs": [
+   {
+    "type": "article",
+    "text": "RIVERTON (November 9) - The Riverton City Council voted 6-1 on Monday to repair the aging Central Parking Garage, which has served downtown shoppers and workers since 1989. The council was able to secure $4.2 million in state funding, allowing the work to begin in January.\n\nTo keep part of the garage open, the work will be done in two phases. During Phase 1, from January 5 to February 27, Levels 1 through 3 will be closed. Phase 2 will follow from March 2 to April 24, when Levels 4 through 6 will be closed.\n\nThe city plans to ease the impact on drivers. A free shuttle bus will run every ten minutes between the East Lot and Main Street on weekdays from 7 A.M. to 7 P.M. Monthly permit holders whose levels are closed will be offered spaces at the East Lot at no extra charge. However, permit fees will not be returned, and parking at the East Lot will not be free for visitors, who will pay $2 per hour.\n\n\"We know this will be inconvenient,\" said Mayor Gloria Esposito. \"But the repairs are necessary for safety.\" ",
+    "title": "Central Garage to Close in Phases for Repairs"
+   },
+   {
+    "type": "letter",
+    "text": "To the Editor:\n\nI read with interest your article about the Central Parking Garage repairs. I own Whitfield Books on Main Street, and I understand that the work is necessary. However, I would like to share two concerns on behalf of local merchants.\n\nFirst, my four employees and I all hold monthly permits for Level 2, and we have parked there for years. We will need to make new arrangements during the closure, and I hope the city will provide clear information soon.\n\nSecond, and more important, most of my customers use Levels 5 and 6, which are closest to my entrance. Our biggest event of the year, the Spring Book Fair, will take place on April 10 and 11. Last year, more than 800 people attended, and many of them came from outside the city.\n\nI hope the council will consider these points when it finalizes the plan.\n\nSincerely,\nDana Whitfield\nOwner, Whitfield Books",
+    "title": "Letter to the Editor"
+   }
+  ],
+  "sum": [
+   "リバートン市議会が中央駐車場の修繕を決定した記事。工事は2期に分かれ、各期で閉鎖される階が異なる。シャトルバスなどの対策も紹介している。",
+   "書店主ホイットフィールドさんが、自店の従業員の駐車と、4月の書籍フェア時の来店客の駐車への懸念を述べた読者の手紙。"
+  ],
+  "qs": [
+   {
+    "q": "What is the article mainly about?",
+    "c": [
+     "A proposal to build a second parking garage",
+     "A plan to repair a public facility in stages",
+     "A decision to raise downtown parking fees",
+     "A change in the city's bus routes"
+    ],
+    "a": 1,
+    "e": "記事は中央駐車場の修繕を2期に分けて行う計画が中心。新しい駐車場の建設や料金の値上げ、バス路線の変更が主題ではなく、シャトルは対策の一部にすぎない。",
+    "tag": "主旨・目的"
+   },
+   {
+    "q": "The word \"secure\" in paragraph 1 of the article is closest in meaning to",
+    "c": [
+     "protect",
+     "lock",
+     "promise",
+     "obtain"
+    ],
+    "a": 3,
+    "e": "secure $4.2 million in state funding は「資金を確保する」で obtain が近い。protect や lock は物理的な保護の意味で文脈に合わない。",
+    "tag": "言い換え（同義語）"
+   },
+   {
+    "q": "What is NOT mentioned as a measure to help drivers?",
+    "c": [
+     "A free shuttle bus",
+     "Parking spaces for permit holders at another lot",
+     "Giving back permit fees",
+     "Frequent bus service on weekdays"
+    ],
+    "a": 2,
+    "e": "記事は permit fees will not be returned と述べており、返金は措置に含まれない。シャトル、東駐車場の割当、10分間隔の運行はいずれも本文にある。",
+    "tag": "NOT問題"
+   },
+   {
+    "q": "When will Ms. Whitfield's employees need to find other parking?",
+    "c": [
+     "From March 2 to April 24",
+     "From January 5 to April 24",
+     "On April 10 and 11",
+     "From January 5 to February 27"
+    ],
+    "a": 3,
+    "e": "手紙の「従業員は2階の月極許可証」と記事の「第1期（1月5日〜2月27日）に1〜3階を閉鎖」を合わせる。第2期は4〜6階のみの閉鎖なので、2階は3月以降は影響を受けない。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "What problem will Ms. Whitfield's business most likely face during the Spring Book Fair?",
+    "c": [
+     "Her employees will have nowhere to park.",
+     "Many visitors will have to park farther away than usual.",
+     "The fair will have to be moved to another city.",
+     "The garage will be closed completely for two weeks."
+    ],
+    "a": 1,
+    "e": "手紙の「客は5・6階を利用、フェアは4月10・11日」と記事の「第2期（〜4月24日）に4〜6階を閉鎖」を合わせる。客は遠い駐車場を使う必要がある。従業員の2階は影響外。",
+    "tag": "複数文書の照合"
+   }
+  ]
+ },
+ {
+  "id": "P7M-03",
+  "docs": [
+   {
+    "type": "advertisement",
+    "text": "Brightway Freight\nNow Hiring: Logistics Coordinator - Tacoma Office\n\nBrightway Freight, a regional shipping company, is looking for a Logistics Coordinator to manage deliveries between our warehouses and customers across the Pacific Northwest.\n\nResponsibilities:\n- Plan delivery routes and track shipments\n- Communicate with drivers and warehouse staff\n- Prepare weekly reports for the operations manager\n\nRequirements:\n- At least two years of experience in logistics or a related field\n- Working knowledge of inventory management software\n- Fluent Spanish is preferred but not required\n\nSalary: $48,000 to $55,000 per year, depending on experience. Benefits include health insurance, 15 days of paid vacation, and a yearly training allowance. Our Tacoma office is located five minutes from the central train station, and free parking is available for all employees.\n\nTo apply, send your resume and a cover letter to hiring@brightwayfreight.example by November 20. Interviews will be held on December 1 and 2. The successful candidate will start on January 11.",
+    "title": "Job Opening"
+   },
+   {
+    "type": "e-mail",
+    "text": "To: hiring@brightwayfreight.example\nFrom: Marcus Olsen\nDate: November 19\nSubject: Logistics Coordinator application\n\nDear Hiring Manager,\n\nPlease find my resume and cover letter attached. I have worked as a shipping planner at Delmar Transport for the past four years, where I used inventory software every day. I also speak basic Spanish, which I use with some of our suppliers.\n\nThank you for considering my application. I am very interested in joining a company with such a wide delivery network, and I would be glad to meet with your team in person to discuss how my experience could help your operations. Please note that I will be on a flight for a business trip on December 1 and will not return until late that night. I am free at any time on December 2. If possible, I would appreciate an interview on that day.\n\nSincerely,\nMarcus Olsen"
+   },
+   {
+    "type": "schedule",
+    "text": "Brightway Freight - Interview Schedule\nLogistics Coordinator (Tacoma Office, Conference Room 3)\nPrepared by Human Resources on November 23\n\nTuesday, December 1\n9:30 A.M.     Hannah Weiss\n11:00 A.M.    Tomas Ruiz\n2:00 P.M.     OPEN (video call only)\n\nWednesday, December 2\n9:30 A.M.     Grace Lim\n11:00 A.M.    OPEN (in person)\n2:00 P.M.     Samuel Okafor\n\nEach interview lasts 45 minutes and will be conducted by Ms. Daniels (Operations Manager) and Mr. Cho (Human Resources). Candidates should bring a photo ID and arrive ten minutes early. Applicants selected for a second interview will be contacted by December 7. Please notify Human Resources at least 24 hours in advance if you need to change your time. Visitors should check in at the reception desk on the second floor, where a staff member will escort them to the conference room.",
+    "title": "Interview Schedule"
+   }
+  ],
+  "sum": [
+   "物流コーディネーター職の求人広告。業務内容、経験2年以上などの条件、給与、応募期限、面接日、入社日を示している。",
+   "オルセンさんが応募書類を送り、4年の実務経験と簡単なスペイン語力を伝え、12月1日は出張のため2日の面接を希望するメール。",
+   "人事部が作成した12月1日と2日の面接日程表。空き枠が2つあり、面接官や持ち物、2次面接の連絡時期が記されている。"
+  ],
+  "qs": [
+   {
+    "q": "What is NOT mentioned as a responsibility of the Logistics Coordinator?",
+    "c": [
+     "Tracking shipments",
+     "Preparing reports for a manager",
+     "Communicating with drivers",
+     "Hiring new warehouse staff"
+    ],
+    "a": 3,
+    "e": "業務は配送経路の計画と荷物の追跡、運転手や倉庫職員との連絡、週次報告で、倉庫職員の採用は含まれない。他の3つはいずれも Responsibilities に挙がっている。",
+    "tag": "NOT問題"
+   },
+   {
+    "q": "Which requirement does Mr. Olsen exceed?",
+    "c": [
+     "Fluency in Spanish",
+     "Knowledge of inventory software",
+     "The length of work experience",
+     "The level of education"
+    ],
+    "a": 2,
+    "e": "広告の「経験2年以上」とメールの「過去4年の勤務」を合わせると、要件を上回るのは経験年数。スペイン語は基本レベルで流暢ではなく、ソフトは要件を満たす程度で、学歴は触れていない。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "What is indicated about Mr. Olsen?",
+    "c": [
+     "He has applied to the company before.",
+     "He sometimes uses a foreign language at work.",
+     "He is looking for his first job in logistics.",
+     "He lives outside Washington State."
+    ],
+    "a": 1,
+    "e": "メールの「基本的なスペイン語を仕入先との間で使っている」が、仕事で外国語を使うことの言い換え。過去の応募歴や物流の未経験、居住地についてはメールに書かれていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What is suggested about the interview process?",
+    "c": [
+     "Some applicants may be asked to come back.",
+     "All interviews will be held by video call.",
+     "Only applicants from Tacoma will be considered.",
+     "Interviews will last about two hours."
+    ],
+    "a": 0,
+    "e": "日程表の「2次面接に選ばれた応募者には12月7日までに連絡する」から、再度の面接を受ける人がいると分かる。面接は1人45分で約2時間ではなく、ビデオ通話も1枠のみ。",
+    "tag": "推測"
+   },
+   {
+    "q": "When will Mr. Olsen most likely be interviewed?",
+    "c": [
+     "At 2:00 P.M. on December 1",
+     "At 9:30 A.M. on December 2",
+     "At 11:00 A.M. on December 2",
+     "At 2:00 P.M. on December 2"
+    ],
+    "a": 2,
+    "e": "メールの「12月1日は飛行機で不在、2日は終日可能」と日程表の空き枠（1日14時ビデオ、2日11時）を合わせる。2日の他の枠は既に別の応募者で埋まっている。",
+    "tag": "複数文書の照合"
+   }
+  ]
+ },
+ {
+  "id": "P7M-04",
+  "docs": [
+   {
+    "type": "web page",
+    "text": "Ridgeline Office Supply\nDelivery and Returns Information\n\nStandard Delivery\nIn-stock items are shipped within one business day and arrive in 5 to 7 business days. Delivery is FREE on orders of $400 or more after discounts are applied. For smaller orders, a flat delivery charge of $18 applies.\n\nMade-to-Order Items\nItems marked \"MTO\" (such as bookshelves and custom desks) are built after your order is placed. They are delivered within three weeks of the order date. When an order includes both in-stock and MTO items, we ship the in-stock items immediately and send the MTO items separately at no additional charge.\n\nPromotions\nA promotion code can be entered at checkout. Only one code may be used per order.\n\nReturns\nUnused items may be returned within 30 days of delivery. Customers pay return shipping costs unless the item arrived damaged or defective. MTO items cannot be returned unless damaged or defective.\n\nItems that are out of stock will be marked clearly on the product page. Questions? Contact customer service at help@ridgelineoffice.example.",
+    "title": "Ridgeline Office Supply"
+   },
+   {
+    "type": "form",
+    "text": "Ridgeline Office Supply - Order Confirmation\nOrder No. 48213          Order date: October 26\nCustomer: Helena Brandt, 82 Cedar Lane, Dayton\n\nItem                           Qty   Unit price   Amount\nErgonomic chair (in stock)      2     $149.00     $298.00\nBookshelf, oak (MTO)            1     $120.00     $120.00\n\nSubtotal                                          $418.00\nPromotion code WELCOME10 (10% off)                -$41.80\nTotal after discount                              $376.20\nDelivery                                           $18.00\nOrder total                                       $394.20\n\nPayment: Credit card ending in 4417\nThe chairs will ship on October 27. The bookshelf will ship separately.\n\nThank you for shopping with Ridgeline Office Supply. Please keep this confirmation for your records. To change or cancel your order, please contact us within 24 hours of the order date. The return policy shown on our Web site applies to all purchases. Delivery estimates begin on the date each item ships, and tracking numbers will be sent by e-mail once your packages have left our warehouse.",
+    "title": "Order Confirmation"
+   },
+   {
+    "type": "e-mail",
+    "text": "To: help@ridgelineoffice.example\nFrom: Helena Brandt\nDate: November 5\nSubject: Order No. 48213\n\nDear Customer Service,\n\nThe two chairs I ordered arrived on November 2, and they are excellent. However, I have two questions about my order.\n\nFirst, my items came to more than $400 before the code was applied, and I understood that delivery would be free for orders over that amount. Instead, I was charged $18. Could you explain why?\n\nSecond, the bookshelf has still not arrived, and I need it for my home office by the end of this week. I ordered all three items at the same time and have been a customer of your store for several years, so I was surprised by these problems. Please tell me when I can expect it.\n\nI look forward to your reply.\n\nHelena Brandt"
+   }
+  ],
+  "sum": [
+   "オフィス用品店のウェブページ。通常配送、受注生産品、プロモーション、返品の規定を説明している。",
+   "ブラントさんの注文確認書。椅子2脚と受注生産の本棚、割引コード適用後の合計と送料が記載されている。",
+   "ブラントさんが送料の理由と未着の本棚の到着時期を問い合わせるメール。"
+  ],
+  "qs": [
+   {
+    "q": "According to the web page, what is true about made-to-order items?",
+    "c": [
+     "They are sent separately at no extra charge when ordered with in-stock items.",
+     "They can be returned within 30 days for any reason.",
+     "They usually arrive in 5 to 7 business days.",
+     "They require a promotion code to be ordered."
+    ],
+    "a": 0,
+    "e": "受注生産品は在庫品と同時注文の場合、別送でも追加料金なしと書かれている。返品は破損・欠陥時のみ可、納期は注文日から3週間以内で、プロモーションコードは注文の条件ではない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What is suggested about Ms. Brandt's order?",
+    "c": [
+     "It was paid for in cash.",
+     "It will be delivered in more than one shipment.",
+     "It was shipped by express service.",
+     "It includes an item that has been returned."
+    ],
+    "a": 1,
+    "e": "注文確認書に「椅子は10月27日に出荷、本棚は別便で出荷」とあり、複数回に分けて届くと分かる。支払いはクレジットカードで、現金払いや返品、速達の記載はない。",
+    "tag": "推測"
+   },
+   {
+    "q": "Why did Ms. Brandt write the e-mail?",
+    "c": [
+     "To return damaged chairs",
+     "To change her delivery address",
+     "To cancel part of her order",
+     "To ask about a delivery charge and a late item"
+    ],
+    "a": 3,
+    "e": "メールは送料18ドルの理由と、まだ届かない本棚の到着時期という2点を問い合わせている。椅子は良好と述べており、返品や住所変更、注文の一部取り消しの話はない。",
+    "tag": "主旨・目的"
+   },
+   {
+    "q": "Why was Ms. Brandt charged for delivery?",
+    "c": [
+     "She chose express delivery.",
+     "Her order included a made-to-order item.",
+     "Her total fell below the free-delivery limit after the discount.",
+     "She used more than one promotion code."
+    ],
+    "a": 2,
+    "e": "ウェブページの「割引後400ドル以上で送料無料」と注文書の「割引後376.20ドル」を合わせる。小計418ドルは400ドル超だが、割引後で判定されるため送料がかかる。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "What can be concluded about the bookshelf as of November 5?",
+    "c": [
+     "It has not yet passed its expected delivery period.",
+     "It is overdue and should be refunded.",
+     "It was delivered together with the chairs.",
+     "It cannot be returned because it is defective."
+    ],
+    "a": 0,
+    "e": "注文書の注文日（10月26日）と本棚が受注生産品であること、ウェブページの「注文日から3週間以内」を合わせると期限は11月16日。11月5日時点では遅れていない。",
+    "tag": "複数文書の照合"
+   }
+  ]
+ },
+ {
+  "id": "P7M-05",
+  "docs": [
+   {
+    "type": "announcement",
+    "text": "Pacific Retail Technology Forum\nMarch 11-12, Harborview Convention Center, Seattle\n\nJoin more than 600 retail professionals for two days of talks on the technology shaping stores today. Sessions cover inventory management, mobile payments, customer loyalty, and more.\n\nRegistration\n- Early registration (through January 29): $280 per person\n- Regular registration (after January 29): $350 per person\n- Group discount: Companies registering three or more people receive 10 percent off each registration, at either rate.\n\nEach registration includes entry to all sessions, lunch on both days, and a digital copy of the presentation slides. Hotel rooms and travel are not included; a list of nearby hotels with special rates is available on our Web site.\n\nRegister online at www.prtforum.example. Registrations are non-refundable, but they may be transferred to a colleague until March 1. The program for each day is provided separately.",
+    "title": "Pacific Retail Technology Forum"
+   },
+   {
+    "type": "schedule",
+    "text": "Pacific Retail Technology Forum - Friday, March 12\n\n9:00 A.M.     Keynote: The Store of the Future (Dr. Lena Park) - Hall A\n10:30 A.M.    Mobile Payments for Small Shops (Raj Mehta, PayLink) - Hall B\n12:00 P.M.    Lunch - Atrium\n1:30 P.M.     Parallel sessions:\n              Forecasting Demand with AI (Carla Soto, Kestrel Mart) - Hall A\n              Designing Better Loyalty Programs (Ben Hartley, Novo Cafe) - Hall B\n3:00 P.M.     Coffee Break - Atrium\n3:30 P.M.     Closing Panel: Where Retail Goes Next - Hall A\n4:45 P.M.     Closing Remarks\n\nNotes: Doors open at 8:15 A.M. Name badges must be worn at all times. Session rooms may change, so please check the screens near the registration desk. Slides will be e-mailed to registered attendees within one week after the forum.",
+    "title": "Friday Program"
+   },
+   {
+    "type": "online review",
+    "text": "Posted on March 15 by Joyce Tanaka, Operations Manager, Greenleaf Grocers\nRating: 4 out of 5\n\nI attended the Pacific Retail Technology Forum with two colleagues from my company, and overall it was worthwhile. We registered in early February, and the process was easy.\n\nThe highlight for me was the Friday afternoon. My team's biggest challenge is predicting how much stock to order, so I went to the session given by the speaker from Kestrel Mart. Her practical examples gave me several ideas that we can try right away. My colleague, however, wanted to hear about loyalty programs and had to miss it, so we compared notes at dinner.\n\nThe food at lunch was excellent, and the staff were helpful. My only complaint is that the two sessions I most wanted to see were scheduled at the same time. I hope next year's organizers will avoid such conflicts or record the sessions so that attendees can watch them later.\n\nI would recommend this forum to anyone in retail.",
+    "title": "Attendee Review"
+   }
+  ],
+  "sum": [
+   "小売技術フォーラムの案内。参加費（早期・通常・団体割引）、含まれるもの、含まれないものを示している。",
+   "3月12日（金）のプログラム。基調講演、午後の並行セッション、閉会パネルなどの時間と会場を記載している。",
+   "参加者タナカさんの感想。同僚2名と参加し、在庫予測の講演が有益だった一方、希望する講演が重なったことを残念がっている。"
+  ],
+  "qs": [
+   {
+    "q": "What is NOT included in the registration fee?",
+    "c": [
+     "Lunch on both days",
+     "Hotel accommodations",
+     "Entry to every session",
+     "A digital copy of the slides"
+    ],
+    "a": 1,
+    "e": "案内の Hotel rooms and travel are not included が根拠で、宿泊は含まれない。全セッションへの入場、2日間の昼食、スライドの電子版は参加費に含まれると書かれている。",
+    "tag": "NOT問題"
+   },
+   {
+    "q": "What is suggested about the afternoon of March 12?",
+    "c": [
+     "The closing panel will be held in Hall B.",
+     "Lunch will be served in Hall A.",
+     "Attendees cannot go to both 1:30 P.M. sessions.",
+     "Attendees must leave before 3:00 P.M."
+    ],
+    "a": 2,
+    "e": "13時30分に Parallel sessions として別会場で2つ同時開催されるため、両方には出られないと推測できる。閉会パネルはHall A、昼食は午前の中央のAtriumで行われる。",
+    "tag": "推測"
+   },
+   {
+    "q": "Which session did Ms. Tanaka most likely attend on March 12 at 1:30 P.M.?",
+    "c": [
+     "Forecasting Demand with AI",
+     "Designing Better Loyalty Programs",
+     "Mobile Payments for Small Shops",
+     "The Store of the Future"
+    ],
+    "a": 0,
+    "e": "感想の「金曜午後、Kestrel Mart の講演者のセッション」と日程表の「13時30分 Kestrel Mart のSoto氏、Forecasting Demand with AI」を合わせる。loyalty は同僚の希望。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "How much did Ms. Tanaka's company most likely pay for registration?",
+    "c": [
+     "$756",
+     "$840",
+     "$1,050",
+     "$945"
+    ],
+    "a": 3,
+    "e": "感想の「2月上旬に3人で登録」と案内の「1月29日以降は350ドル、3名以上は1割引」を合わせると350×0.9×3=945ドル。840ドルは早期料金で計算した誤り。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "What does Ms. Tanaka suggest the organizers do?",
+    "c": [
+     "Offer more meals during the forum",
+     "Extend the forum to a third day",
+     "Lower the registration fee for groups",
+     "Avoid holding popular sessions at the same time"
+    ],
+    "a": 3,
+    "e": "感想の後半に、見たい講演が同時刻だったので次回は重複を避けるか録画を提供してほしいとある。昼食は称賛されており、日数の延長や団体料金の引き下げは求めていない。",
+    "tag": "詳細"
+   }
+  ]
+ }
+]

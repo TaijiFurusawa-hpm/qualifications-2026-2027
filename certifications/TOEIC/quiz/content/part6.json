@@ -1,0 +1,210 @@
+[
+ {
+  "id": "P6-01",
+  "doc": "e-mail",
+  "text": "Subject: Parking lot repaving\n\nDear colleagues,\n\nBeginning Monday, June 9, the parking lot behind Building B {{1}} for repaving. The work is expected to take five days. {{2}} Employees who normally park there are asked to use the lot on Harbor Street, which has plenty of space for everyone. A free shuttle will run between the two sites every ten minutes from 7:30 A.M. to 9:30 A.M. and again from 4:30 P.M. to 6:30 P.M.\n\n{{3}}, the main entrance on Oak Avenue will remain open, so deliveries will not be affected. We apologize for any inconvenience and thank you for your {{4}}.\n\nKaren Mills\nFacilities Manager",
+  "sum": "施設管理担当者が全社員に、来週の駐車場舗装工事の期間中は別の駐車場とシャトルバスを使うよう知らせるメール。",
+  "qs": [
+   {
+    "c": [
+     "will be closed",
+     "has closed",
+     "was closed",
+     "had been closed"
+    ],
+    "a": 0,
+    "tag": "文法",
+    "e": "Beginning Monday, June 9 と、これからの予定を告げる連絡なので未来の受け身 will be closed が入る。has closed と was closed は完了・過去で時期が合わず、had been closed は過去完了で不適切。"
+   },
+   {
+    "c": [
+     "The lot will remain open to all employees throughout the project.",
+     "During that time, no vehicles will be allowed to enter the lot.",
+     "Parking permits must be renewed by the end of this month.",
+     "Our new office in Building C will open in the fall."
+    ],
+    "a": 1,
+    "tag": "文挿入",
+    "e": "直後の Employees who normally park there につながるのは、その間は車が入れないと述べる文。開放したままという文は後の代替駐車場の案内と矛盾し、更新手続きと新オフィスの話は無関係。"
+   },
+   {
+    "c": [
+     "Therefore",
+     "For instance",
+     "However",
+     "Similarly"
+    ],
+    "a": 2,
+    "tag": "文法",
+    "e": "前の文までは駐車場の不便を述べ、空所の後は入口が開いていて配送に影響しないという好都合な内容なので、逆接の However が合う。Therefore は因果、For instance は例示、Similarly は類似で流れに合わない。"
+   },
+   {
+    "c": [
+     "patient",
+     "patients",
+     "patiently",
+     "patience"
+    ],
+    "a": 3,
+    "tag": "文法",
+    "e": "your の後なので名詞が必要で、thank you for your patience で「ご辛抱に感謝します」。patients は「患者」で意味が合わず、patient は形容詞、patiently は副詞のため所有格の後に置けない。"
+   }
+  ]
+ },
+ {
+  "id": "P6-02",
+  "doc": "notice",
+  "text": "NOTICE TO LIBRARY MEMBERS\n\nStarting October 1, Eastgate Library will be open {{1}} 9:00 P.M. on weekdays, two hours later than before. The opening time of 9:00 A.M. will not change. {{2}} On Saturdays, hours remain unchanged, 10:00 A.M. to 4:00 P.M.\n\nIn addition, members may now borrow up to ten items at a time. The previous limit {{3}} six. Items not {{4}} on time will still be charged a late fee of 25 cents per day. To avoid fees, you may renew items online or by phone. Please contact the circulation desk at 555-0143 with any questions. Thank you for supporting your local library.",
+  "sum": "図書館が10月1日からの平日の開館延長と貸出冊数の増加を会員に知らせるお知らせ。",
+  "qs": [
+   {
+    "c": [
+     "since",
+     "during",
+     "until",
+     "within"
+    ],
+    "a": 2,
+    "tag": "文法",
+    "e": "open の後で終了時刻 9:00 P.M. を示すので until（~まで）。since は起点、during は期間を表す名詞を取り、within は期間内を表すため、閉館時刻を示す表現にならない。"
+   },
+   {
+    "c": [
+     "Reading rooms on the second floor will close for renovation in December.",
+     "Saturday hours will be shortened by one hour.",
+     "The library was founded in 1952 by local residents.",
+     "This change is intended to help members who cannot visit the library during the day."
+    ],
+    "a": 3,
+    "tag": "文挿入",
+    "e": "空所の後は On Saturdays と土曜の話に移るので、直前は平日の時間変更の理由を述べる文が合う。土曜の短縮は直後の「変更なし」と矛盾し、創立の話と改装の話は延長の流れから外れる。"
+   },
+   {
+    "c": [
+     "was",
+     "is",
+     "has been",
+     "will be"
+    ],
+    "a": 0,
+    "tag": "文法",
+    "e": "now と The previous limit から、以前の上限は過去のことなので過去形 was が入る。is と has been は現在につながる意味になり、will be は未来を表す。新しい上限との対比が根拠。"
+   },
+   {
+    "c": [
+     "returning",
+     "returned",
+     "return",
+     "returns"
+    ],
+    "a": 1,
+    "tag": "文法",
+    "e": "Items not ~ on time で、品物は「返される」側なので過去分詞 returned が入る。returning だと能動で主語が品物では意味が通らず、原形と returns は直前の名詞を修飾できない。"
+   }
+  ]
+ },
+ {
+  "id": "P6-03",
+  "doc": "article",
+  "text": "BRIDGEPORT (June 12) – Harlan Textiles announced that it will build a second factory in Dunmore, about 40 kilometers north of its current headquarters. The new facility {{1}} 200 jobs when it opens in early 2028, company president Elaine Voss said. Voss explained that the Bridgeport factory has reached full capacity and can no longer keep up with orders from overseas buyers. “Demand has grown steadily for three years,” she said. {{2}}\n\nDunmore officials welcomed the news. Mayor Paul Reyes said the project, {{3}} will cost an estimated $30 million, would give young residents a reason to stay in the area. {{4}}, some neighbors have expressed concern about increased truck traffic on Route 9. The company has promised to hold a public meeting next month to address such concerns.",
+  "sum": "繊維会社が隣町に第2工場を建設すると発表した記事。雇用創出への期待と、住民の交通への懸念が述べられている。",
+  "qs": [
+   {
+    "c": [
+     "created",
+     "has created",
+     "would have created",
+     "will create"
+    ],
+    "a": 3,
+    "tag": "文法",
+    "e": "when it opens in early 2028 とあり、開業はまだ先のこと。未来の見込みを述べるので will create が入る。created と has created は完了済みの事実になり、would have created は仮定法で文脈に合わない。"
+   },
+   {
+    "c": [
+     "She added that hiring is expected to begin late next year.",
+     "Harlan Textiles was founded in Bridgeport in 1974 by Voss's grandfather.",
+     "The company plans to close the Bridgeport factory by the end of next year.",
+     "Mr. Reyes added that he hopes to meet the president soon."
+    ],
+    "a": 0,
+    "tag": "文挿入",
+    "e": "直前の she は Voss を指し、彼女が付け加えた内容として採用の時期を示す文が自然につながる。工場閉鎖は能力不足の説明と矛盾し、創業の話は流れに合わず、Mr. Reyes は次の段落で初めて登場する。"
+   },
+   {
+    "c": [
+     "who",
+     "which",
+     "what",
+     "where"
+    ],
+    "a": 1,
+    "tag": "文法",
+    "e": "空所の後に動詞 will cost が続き、the project を補足する非制限用法の関係代名詞が必要なので which。who は人、what は先行詞を含む語、where は場所が先行詞のときに使うため、いずれも合わない。"
+   },
+   {
+    "c": [
+     "Similarly",
+     "Consequently",
+     "Nevertheless",
+     "Besides"
+    ],
+    "a": 2,
+    "tag": "文法",
+    "e": "前の文は歓迎の声、空所の後は一部住民の懸念で、内容が対立する。譲歩を表す Nevertheless（それでも）が合う。Similarly は類似、Consequently は結果、Besides は追加を示し、流れに合わない。"
+   }
+  ]
+ },
+ {
+  "id": "P6-04",
+  "doc": "advertisement",
+  "text": "Join Lakeview Fitness this month and take advantage of our new member offer!\n\nLakeview Fitness has been {{1}} the Greenfield community for over fifteen years, and now we are making it easier than ever to reach your goals. Sign up before August 31 and receive three months of membership for the price of two. {{2}} Our certified trainers will then design a personalized plan for you at no extra charge.\n\nOur facility features modern equipment, two swimming pools, and over 60 weekly classes. {{3}} larger chains, we limit our membership so that the gym never feels crowded.\n\nThis offer is available to new members only and cannot be combined with other promotions. To {{4}} your spot, visit our front desk or call 555-0188 today.",
+  "sum": "フィットネスクラブの新規会員向け広告。8月末までの入会で3か月分が2か月分の料金になり、無料の体力測定も付く。",
+  "qs": [
+   {
+    "c": [
+     "served",
+     "serving",
+     "serves",
+     "serve"
+    ],
+    "a": 1,
+    "tag": "文法",
+    "e": "for over fifteen years と続き、現在まで続く継続を表す現在完了進行形 has been serving が入る。has been served は受け身で目的語を取れず、serves と serve は has been の後に置けない。"
+   },
+   {
+    "c": [
+     "Existing members can upgrade to the premium plan for a small fee.",
+     "Our swimming pools will be closed for cleaning on August 15.",
+     "Every new member also receives a free fitness assessment on the first visit.",
+     "The Lakeview Café is open daily from 7:00 A.M. to 9:00 P.M."
+    ],
+    "a": 2,
+    "tag": "文挿入",
+    "e": "直後の trainers will then design（その後に作る）と結びつくのは、入会時の無料の体力測定を述べる文。既存会員の話、プールの休業、カフェの営業時間は、トレーナーが計画を作る流れにつながらない。"
+   },
+   {
+    "c": [
+     "Despite",
+     "Because of",
+     "Regarding",
+     "Unlike"
+    ],
+    "a": 3,
+    "tag": "文法",
+    "e": "後半は「他と違い人数を制限する」と述べているので、大手チェーンと対比する前置詞 Unlike が入る。Despite は譲歩、Because of は理由、Regarding は「~に関して」で、対比の意味にならない。"
+   },
+   {
+    "c": [
+     "secure",
+     "assure",
+     "insure",
+     "settle"
+    ],
+    "a": 0,
+    "tag": "語彙",
+    "e": "spot を目的語に取り「枠を確保する」は secure your spot。assure は人に確信させる、insure は保険をかける、settle は落ち着く・決着をつけるという意味で、spot を目的語にして枠を取る意味にならない。"
+   }
+  ]
+ }
+]

@@ -1,0 +1,552 @@
+[
+ {
+  "id": "P2-01",
+  "tag": "WH疑問文",
+  "vq": "US-F",
+  "va": "UK-M",
+  "prompt": "Where should I leave the delivery receipts?",
+  "c": [
+   "I'll receive it by Friday.",
+   "Ms. Alvarez at the front desk is collecting them.",
+   "Around three o'clock."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "配達の受領書はどこに置けばいいですか。",
+   "c": [
+    "金曜までに受け取ります。",
+    "受付のアルバレスさんが集めています。",
+    "3時ごろです。"
+   ]
+  },
+  "e": "受付のアルバレスさんが集めていると、置き場を間接的に示す。receiptsに近いreceiveや、Whereに時刻で答える選択肢はいずれも場所を答えていない。受領書の置き場所が分かる点が決め手。"
+ },
+ {
+  "id": "P2-02",
+  "tag": "WH疑問文",
+  "vq": "UK-M",
+  "va": "US-M",
+  "prompt": "When will the new copier be installed?",
+  "c": [
+   "Not until the vendor confirms the date.",
+   "In the supply room on the second floor.",
+   "It copies up to fifty pages a minute."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "新しいコピー機はいつ設置されますか。",
+   "c": [
+    "業者が日程を確認するまでは未定です。",
+    "2階の備品室です。",
+    "1分に50枚までコピーできます。"
+   ]
+  },
+  "e": "業者の確認待ちで日程は未定、と間接的に答える。Whenに場所で答える選択肢と、copierから連想した性能の説明は、時期を答えていないのでひっかけ。not until は未定を表す言い換え。"
+ },
+ {
+  "id": "P2-03",
+  "tag": "WH疑問文",
+  "vq": "AU-F",
+  "va": "US-F",
+  "prompt": "Who's leading the orientation for new hires?",
+  "c": [
+   "Around ten people were hired.",
+   "On the fourth floor.",
+   "Mr. Okafor's team is handling it this year."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "新入社員のオリエンテーションは誰が担当しますか。",
+   "c": [
+    "約10人が採用されました。",
+    "4階です。",
+    "今年はオカフォーさんのチームが担当します。"
+   ]
+  },
+  "e": "leadingをhandlingに言い換え、担当者をチームで答えている。hiresから連想した人数や、Whoに場所で答える選択肢は質問の疑問詞と合わない。handling は leading の言い換え。"
+ },
+ {
+  "id": "P2-04",
+  "tag": "WH疑問文",
+  "vq": "US-M",
+  "va": "UK-F",
+  "prompt": "Why was the shipment delayed?",
+  "c": [
+   "Two boxes of printer paper.",
+   "Didn't you get the e-mail from the warehouse?",
+   "By the end of the week."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "なぜ出荷が遅れたのですか。",
+   "c": [
+    "プリンター用紙2箱です。",
+    "倉庫からのメールを受け取っていませんか。",
+    "今週末までです。"
+   ]
+  },
+  "e": "理由を言わず、倉庫のメールに理由があると聞き返す間接的な応答。荷物の中身や期限を答える選択肢は、Whyの理由になっていない。聞き返しで答える型は頻出なので注意。"
+ },
+ {
+  "id": "P2-05",
+  "tag": "WH疑問文",
+  "vq": "UK-F",
+  "va": "US-M",
+  "prompt": "How did the client react to the revised proposal?",
+  "c": [
+   "I revised it twice yesterday.",
+   "It's due on Monday.",
+   "They asked for a few small changes."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "顧客は修正した提案にどう反応しましたか。",
+   "c": [
+    "昨日2回修正しました。",
+    "月曜が期限です。",
+    "いくつか小さな変更を求めてきました。"
+   ]
+  },
+  "e": "顧客の反応として小さな変更の依頼を答えている。revisedを繰り返す選択肢は主語と時制がずれ、期限を述べる選択肢はHowの答えにならない。small changes が反応の内容に当たる。"
+ },
+ {
+  "id": "P2-06",
+  "tag": "WH疑問文",
+  "vq": "US-F2",
+  "va": "UK-M",
+  "prompt": "Which candidate are you interviewing next?",
+  "c": [
+   "The one with the marketing background.",
+   "The interview room is on the left.",
+   "Yes, I'm interested in the position."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "次はどの候補者の面接をしますか。",
+   "c": [
+    "マーケティング経験のある方です。",
+    "面接室は左側です。",
+    "はい、その職に興味があります。"
+   ]
+  },
+  "e": "Whichに対しthe oneで特徴を挙げて答える定番の型。interviewから連想した部屋の説明と、疑問詞疑問文にYesで始まる応答は成り立たない。the one with 〜 は Which への定番。"
+ },
+ {
+  "id": "P2-07",
+  "tag": "WH疑問文",
+  "vq": "AU-F",
+  "va": "US-M2",
+  "prompt": "What time does the flight to Singapore board?",
+  "c": [
+   "It's a direct flight.",
+   "Let me check the itinerary.",
+   "About twelve hours long."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "シンガポール行きの便は何時に搭乗開始ですか。",
+   "c": [
+    "直行便です。",
+    "旅程表を確認させてください。",
+    "約12時間です。"
+   ]
+  },
+  "e": "時刻を知らず、旅程表を確認すると間接的に応じている。flightから連想した直行便の説明や所要時間は、搭乗時刻の質問に答えていないひっかけ。確認すると答えて時刻の回答を保留。"
+ },
+ {
+  "id": "P2-08",
+  "tag": "WH疑問文",
+  "vq": "UK-M2",
+  "va": "US-F",
+  "prompt": "Where can I find the maintenance request form?",
+  "c": [
+   "The air conditioner was repaired yesterday.",
+   "Please fill it out in pen.",
+   "It's posted on the intranet under Facilities."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "保守依頼書はどこにありますか。",
+   "c": [
+    "エアコンは昨日修理されました。",
+    "ペンで記入してください。",
+    "イントラネットの総務施設欄に載っています。"
+   ]
+  },
+  "e": "場所をイントラネット上の掲載先で答えている。maintenanceから連想した修理の話や、formから連想した記入方法は、Whereの答えになっていない。posted on 〜 が find の答えに当たる。"
+ },
+ {
+  "id": "P2-09",
+  "tag": "WH疑問文",
+  "vq": "US-M2",
+  "va": "AU-F",
+  "prompt": "How much does the booth rental cost?",
+  "c": [
+   "It depends on the size you choose.",
+   "About two hundred visitors.",
+   "Booth number twelve, near the entrance."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "ブースの賃借料はいくらですか。",
+   "c": [
+    "選ぶ大きさによります。",
+    "来場者は約200人です。",
+    "入口近くの12番ブースです。"
+   ]
+  },
+  "e": "金額を言わず、サイズ次第と条件を示す間接的な応答。How manyの答えに近い人数や、boothを使った場所の説明は、料金を答えていない。it depends on 〜 は金額を避ける型。"
+ },
+ {
+  "id": "P2-10",
+  "tag": "WH疑問文",
+  "vq": "UK-F",
+  "va": "US-M",
+  "prompt": "Who approved the travel budget?",
+  "c": [
+   "It's about two thousand dollars.",
+   "The finance director hasn't signed off yet.",
+   "I'll travel on Thursday."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "出張予算は誰が承認しましたか。",
+   "c": [
+    "約2,000ドルです。",
+    "財務部長がまだ承認していません。",
+    "木曜に出張します。"
+   ]
+  },
+  "e": "まだ承認されていないと、前提を覆して答える間接的な応答。budgetから連想した金額や、travelを使った主語と時制のずれた文は不適切。hasn't signed off は未承認の意。"
+ },
+ {
+  "id": "P2-11",
+  "tag": "YesNo疑問文",
+  "vq": "AU-F",
+  "va": "UK-F",
+  "prompt": "Have you finished the sales report?",
+  "c": [
+   "She reports to the sales director.",
+   "At the sales meeting on Monday.",
+   "I'm still waiting for the Osaka figures."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "売上報告書は仕上げましたか。",
+   "c": [
+    "彼女は営業部長に報告します。",
+    "月曜の営業会議でです。",
+    "まだ大阪の数字を待っています。"
+   ]
+  },
+  "e": "大阪の数字待ちで未完成だと間接的に伝える。reportの同語を使った主語のずれた文と、Yes/No疑問文に場所で答える文は成り立たない。still waiting は未完了の言い換え。"
+ },
+ {
+  "id": "P2-12",
+  "tag": "YesNo疑問文",
+  "vq": "US-M",
+  "va": "AU-F",
+  "prompt": "Is the supply closet locked?",
+  "c": [
+   "Yes, but the key's at the front desk.",
+   "A box of staples.",
+   "I closed the account yesterday."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "備品用の収納室は施錠されていますか。",
+   "c": [
+    "はい、ただし鍵は受付にあります。",
+    "ホチキスの針1箱です。",
+    "昨日口座を解約しました。"
+   ]
+  },
+  "e": "Yesで答え、鍵の場所を補足する直接的な応答。closetと音の近いclosedを使った文や、中身の物を答える文は質問の内容に合わない。but 以下で鍵の所在まで補足している。"
+ },
+ {
+  "id": "P2-13",
+  "tag": "YesNo疑問文",
+  "vq": "UK-M",
+  "va": "US-F2",
+  "prompt": "Do you know if the café accepts credit cards?",
+  "c": [
+   "I'll have a cup of coffee, please.",
+   "There's a sign by the register.",
+   "Yes, he's a regular customer."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "そのカフェはクレジットカードが使えるか知っていますか。",
+   "c": [
+    "コーヒーを1杯お願いします。",
+    "レジのそばに表示があります。",
+    "はい、彼は常連客です。"
+   ]
+  },
+  "e": "表示を見れば分かると、答えの確認先を示す間接的な応答。café連想の注文の文や、主語が合わないYesの文は質問に答えていない。sign は支払い方法の掲示を指す。"
+ },
+ {
+  "id": "P2-14",
+  "tag": "YesNo疑問文",
+  "vq": "US-F",
+  "va": "UK-M",
+  "prompt": "Can the technician come on Wednesday?",
+  "c": [
+   "The technical manual is on the shelf.",
+   "He came by train yesterday.",
+   "Our office is closed that day."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "技術者は水曜に来られますか。",
+   "c": [
+    "技術マニュアルは棚にあります。",
+    "彼は昨日電車で来ました。",
+    "その日は事務所が休みです。"
+   ]
+  },
+  "e": "水曜は休業と、来てもらえない事情を述べて断る間接的な応答。technicianと音の近いtechnicalや、時制のずれたcameは不適切。closed は来られない理由を表す。"
+ },
+ {
+  "id": "P2-15",
+  "tag": "否定・付加疑問文",
+  "vq": "AU-F",
+  "va": "US-M",
+  "prompt": "Isn't the quarterly meeting on Friday?",
+  "c": [
+   "No, they moved it to Thursday.",
+   "It was a quarter past nine.",
+   "The meeting room is quite warm."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "四半期会議は金曜ではないのですか。",
+   "c": [
+    "いいえ、木曜に変更されました。",
+    "9時15分でした。",
+    "会議室はかなり暑いです。"
+   ]
+  },
+  "e": "Noで金曜ではないと打ち消し、木曜への変更を補足する。quarterlyから連想したquarterを使う文や、meetingから連想した部屋の状態は話題がずれている。moved it が日程変更の言い換え。"
+ },
+ {
+  "id": "P2-16",
+  "tag": "否定・付加疑問文",
+  "vq": "US-M2",
+  "va": "UK-F",
+  "prompt": "You've already submitted your expense report, haven't you?",
+  "c": [
+   "The expensive one on the left.",
+   "I'll report to the new office next week.",
+   "Mr. Lee asked me to wait until the new form is ready."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "経費報告書はもう提出済みですよね。",
+   "c": [
+    "左側の高いものです。",
+    "来週、新しい事務所に出勤します。",
+    "リーさんから、新しい書式が整うまで待つよう頼まれました。"
+   ]
+  },
+  "e": "提出していない理由を述べる間接的な応答。expenseと音が近いexpensiveや、reportを動詞で使う文は、提出したかどうかに答えていない。待つよう頼まれたため未提出という流れ。"
+ },
+ {
+  "id": "P2-17",
+  "tag": "否定・付加疑問文",
+  "vq": "UK-F",
+  "va": "US-M",
+  "prompt": "Haven't you met our new accountant?",
+  "c": [
+   "The account number is on the invoice.",
+   "Yes, at last month's workshop.",
+   "A new apartment downtown."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "新しい経理担当にはもうお会いになりましたか。",
+   "c": [
+    "口座番号は請求書にあります。",
+    "はい、先月の研修会で会いました。",
+    "市内中心部の新しいアパートです。"
+   ]
+  },
+  "e": "Yesで会ったと認め、時と場面を補う。accountantと音の近いaccount numberや、newから連想した別の物は、会ったかを答えていない。at last month's が会った時と場面。"
+ },
+ {
+  "id": "P2-18",
+  "tag": "選択疑問文",
+  "vq": "US-F2",
+  "va": "AU-F",
+  "prompt": "Would you like to sit in the front or the back of the room?",
+  "c": [
+   "Wherever there's an outlet for my laptop.",
+   "Yes, I'd like that very much.",
+   "The room is on the third floor."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "部屋の前と後ろ、どちらに座りたいですか。",
+   "c": [
+    "ノートパソコン用のコンセントがある所ならどこでも。",
+    "はい、ぜひそうしたいです。",
+    "その部屋は3階です。"
+   ]
+  },
+  "e": "どちらでもよく、条件に合う席を求める間接的な応答。選択疑問文にYesで答える文や、roomの場所を述べる文は選択になっていない。wherever は席の位置を問わない意味。"
+ },
+ {
+  "id": "P2-19",
+  "tag": "選択疑問文",
+  "vq": "UK-M",
+  "va": "US-F",
+  "prompt": "Should we ship the order by truck or by air?",
+  "c": [
+   "The truck is parked outside.",
+   "I ordered it from the supplier.",
+   "Whichever gets there by Monday."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "注文品はトラックと空輸のどちらで出荷しましょうか。",
+   "c": [
+    "トラックは外に駐車してあります。",
+    "仕入先に注文しました。",
+    "月曜までに着くほうならどちらでも。"
+   ]
+  },
+  "e": "月曜着という条件で選ぶよう促す間接的な応答。truckを使った駐車の話や、過去の発注の話は、手段の選択に答えていない。whichever は条件次第で選ぶ意味。"
+ },
+ {
+  "id": "P2-20",
+  "tag": "依頼・提案・申し出",
+  "vq": "AU-F",
+  "va": "UK-M",
+  "prompt": "Could you cover my shift on Saturday?",
+  "c": [
+   "It was a long shift last night.",
+   "Let me check my schedule first.",
+   "The store opens at nine on Saturdays."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "土曜の私のシフトを代わっていただけますか。",
+   "c": [
+    "昨夜は長いシフトでした。",
+    "まず予定を確認させてください。",
+    "店は土曜は9時に開きます。"
+   ]
+  },
+  "e": "予定を確認してから返事すると保留する応答で、依頼に自然につながる。shiftの繰り返しや、Saturdayから連想した開店時刻は依頼への返答になっていない。check が快諾でも拒否でもない保留。"
+ },
+ {
+  "id": "P2-21",
+  "tag": "依頼・提案・申し出",
+  "vq": "US-M",
+  "va": "AU-F",
+  "prompt": "Why don't we hire a temporary worker to help with the inventory?",
+  "c": [
+   "I'm afraid the budget is already tight.",
+   "The inventory room is down the hall.",
+   "Her working hours are from nine to five."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "在庫管理を手伝う臨時スタッフを雇ってはどうでしょう。",
+   "c": [
+    "あいにく予算がすでに厳しいのです。",
+    "在庫室は廊下の先です。",
+    "彼女の勤務時間は9時から5時です。"
+   ]
+  },
+  "e": "予算の厳しさを理由に、提案に難色を示す間接的な応答。inventoryを使った場所の説明や、workerから連想した勤務時間は提案に答えていない。tight は難しいという婉曲な拒否。"
+ },
+ {
+  "id": "P2-22",
+  "tag": "依頼・提案・申し出",
+  "vq": "UK-F",
+  "va": "US-M",
+  "prompt": "Would you mind turning down the air conditioner?",
+  "c": [
+   "Turn left at the next corner.",
+   "It's about twenty degrees outside.",
+   "Not at all—it is a bit cold in here."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "エアコンの設定を下げていただけませんか。",
+   "c": [
+    "次の角を左に曲がってください。",
+    "外は約20度です。",
+    "かまいませんよ、ここは少し寒いですから。"
+   ]
+  },
+  "e": "Would you mind〜?にNot at allで快諾し、理由を添える。turnを別の意味で使う道案内や、気温から連想した外の様子は依頼への返事ではない。Not at all は承諾を表す決まり文句。"
+ },
+ {
+  "id": "P2-23",
+  "tag": "平叙文",
+  "vq": "US-F",
+  "va": "UK-M",
+  "prompt": "The projector in Room 4 isn't working.",
+  "c": [
+   "I worked on that project last year.",
+   "I'll call the IT department right away.",
+   "She's working in Room 4 until noon."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "4号室のプロジェクターが動きません。",
+   "c": [
+    "その企画には昨年携わりました。",
+    "すぐにIT部門に電話します。",
+    "彼女は正午まで4号室で作業しています。"
+   ]
+  },
+  "e": "不具合の報告に、対応する行動で応じる。projectorと音の近いprojectの話や、workingを繰り返す文は、状況への応答として成り立たない。call が不具合への対応行動に当たる。"
+ },
+ {
+  "id": "P2-24",
+  "tag": "平叙文",
+  "vq": "UK-M2",
+  "va": "US-F",
+  "prompt": "I'm having trouble logging in to the system.",
+  "c": [
+   "Did you change your password recently?",
+   "The login fee is already included.",
+   "We're ordering new log books."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "システムにログインできずに困っています。",
+   "c": [
+    "最近パスワードを変えましたか。",
+    "ログイン料はすでに含まれています。",
+    "新しい日誌帳を注文しています。"
+   ]
+  },
+  "e": "原因を探る聞き返しで、困りごとに自然に応じる。loginを使った料金の話や、logから音で連想した日誌帳の話は、問題の解決に関係しない。原因を探る質問も自然な返答になる。"
+ },
+ {
+  "id": "P2-25",
+  "tag": "平叙文",
+  "vq": "AU-F",
+  "va": "UK-M",
+  "prompt": "Our supplier raised its prices again this quarter.",
+  "c": [
+   "Yes, the prize was a gift card.",
+   "Seven hundred dollars per unit.",
+   "Then we should compare a few other vendors."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "仕入先が今四半期も価格を上げました。",
+   "c": [
+    "はい、賞品はギフトカードでした。",
+    "1台あたり700ドルです。",
+    "それなら他の業者も数社比較すべきですね。"
+   ]
+  },
+  "e": "値上げを受け、他社比較という対応策を示す。pricesと音の近いprizeを使う文や、単価を述べるだけの文は、発言に応じる返答になっていない。compare は価格上昇への対処案である。"
+ }
+]

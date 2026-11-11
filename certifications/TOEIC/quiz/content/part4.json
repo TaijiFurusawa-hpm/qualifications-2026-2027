@@ -1,0 +1,507 @@
+[
+ {
+  "id": "P4-01",
+  "intro": "telephone message",
+  "v": "UK-M",
+  "text": "Hello, Ms. Okafor. This is Daniel Reeve at Brightline Printing, returning your call about the product brochures. Your order of five hundred copies is ready, but I noticed a problem while checking the proofs. The phone number on the back cover has only nine digits, so I'm afraid customers wouldn't be able to reach you. Fixing it is simple, but I'll need your approval before we reprint the cover pages. Our press operator leaves at four o'clock today, and if I hear from you before then, I can have everything delivered to your office by tomorrow noon. Otherwise, the delivery will slip to Friday. You can reach me at extension 210. Thank you.",
+  "ja": "オコーファさん、こんにちは。ブライトライン印刷のダニエル・リーブです。製品パンフレットについてのお電話の折り返しです。ご注文の500部は仕上がっていますが、校正刷りを確認していて問題に気づきました。裏表紙の電話番号が9桁しかなく、このままではお客様がそちらに連絡できません。修正は簡単ですが、表紙を刷り直す前にあなたの承認が必要です。当社の印刷オペレーターは本日4時に退勤しますので、それまでにご連絡をいただければ、明日の正午までにすべてをお届けできます。そうでなければ、納品は金曜日にずれ込みます。内線210番までご連絡ください。よろしくお願いします。",
+  "qs": [
+   {
+    "q": "Why is the speaker calling?",
+    "c": [
+     "To report a problem with a customer's order",
+     "To confirm the number of copies needed",
+     "To offer a discount on a reprint",
+     "To change an office address"
+    ],
+    "a": 0,
+    "e": "裏表紙の電話番号が9桁しかないという問題を知らせる電話。「problem with the order」への言い換え。copies は本文の語を使ったひっかけで、部数は確認が目的ではない。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "What does the speaker need from the listener?",
+    "c": [
+     "A payment for extra copies",
+     "A list of regular customers",
+     "Authorization to make a correction",
+     "A larger order quantity"
+    ],
+    "a": 2,
+    "e": "I'll need your approval before we reprint が根拠。approval を authorization、直すことを make a correction と言い換えた。copies や order を使った選択肢は本文と無関係。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What will happen if the speaker hears back after four o'clock?",
+    "c": [
+     "The brochures will be discarded.",
+     "An extra fee will be charged.",
+     "The press will be shut down.",
+     "The delivery will be later than planned."
+    ],
+    "a": 3,
+    "e": "4時までなら明日正午に届き、そうでなければ金曜にずれ込むと言っている。slip to Friday を later than planned と言い換えた。four o'clock を使った press の選択肢は操作員の退勤を誤読させるひっかけ。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-02",
+  "intro": "announcement",
+  "v": "US-F",
+  "text": "Attention, passengers on the Harbor Line. Due to a signal problem near Millbrook Station, trains heading north are running about twenty minutes behind schedule. Trains to the south are not affected. If you're planning to transfer to the Airport Express at Central Station, please note that the Express will wait for delayed passengers until ten past six. After that, the next departure is at seven. We understand this is inconvenient. Passengers who need a delay certificate for their employer can pick one up at the information desk beside Gate 4 or download it from our Web site. Updates will be posted on the screens above each platform. Thank you for your patience.",
+  "ja": "ハーバー線をご利用のお客様にお知らせします。ミルブルック駅付近の信号トラブルのため、北行きの列車は約20分遅れて運行しています。南行きの列車は影響を受けていません。セントラル駅でエアポート急行に乗り換える予定のお客様は、急行が遅れたお客様のために6時10分まで待つことにご留意ください。それ以降の次の出発は7時です。ご不便をおかけして申し訳ございません。勤務先に提出する遅延証明書が必要なお客様は、4番ゲート横の案内所で受け取るか、ウェブサイトからダウンロードできます。最新情報は各ホーム上の画面に掲示します。ご辛抱いただきありがとうございます。",
+  "qs": [
+   {
+    "q": "What is the announcement mainly about?",
+    "c": [
+     "A new schedule for an airport service",
+     "A delay affecting one direction of a line",
+     "An increase in fares",
+     "A renovation of a station"
+    ],
+    "a": 1,
+    "e": "信号トラブルで北行き列車が約20分遅れ、南行きは平常通りと述べている。one direction は north への言い換え。airport や station を使った他の選択肢は本文の語を転用したひっかけ。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "Why does the speaker say, \"After that, the next departure is at seven\"?",
+    "c": [
+     "To indicate the cost of missing a connection",
+     "To announce a change in the timetable",
+     "To ask passengers to buy tickets earlier",
+     "To explain why a train is crowded"
+    ],
+    "a": 0,
+    "e": "急行は6時10分まで待つが、それを逃すと次は7時という流れ。乗り損ねると長く待つという不利益を示す発言。timetable の変更発表ではなく、直前の「待つ」という話の補足。",
+    "tag": "意図問題"
+   },
+   {
+    "q": "According to the speaker, what can passengers get at the information desk?",
+    "c": [
+     "A refund for their tickets",
+     "A map of the airport",
+     "A document for their workplace",
+     "A free transfer pass"
+    ],
+    "a": 2,
+    "e": "employer 向けの delay certificate を案内所でもらえる。employer を workplace、certificate を document と言い換えた。Web site のダウンロードや transfer を使った語は混同を狙うひっかけ。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-03",
+  "intro": "advertisement",
+  "v": "AU-F",
+  "text": "Are you tired of cluttered closets and crowded garages? At Tidyworks, we make space for the things you love. This month only, our Home Organization Package includes a free in-home consultation, where one of our designers measures your rooms and suggests a layout that fits your lifestyle. Choose from over fifty shelving styles, all made from recycled wood and delivered within ten days. Customers who book before November thirtieth will also receive a set of labeled storage boxes at no extra cost. Installation is available for a small fee, but many of our customers enjoy assembling the units themselves, and our video guides make it easy. Visit tidyworks dot com to schedule your consultation today.",
+  "ja": "散らかったクローゼットや物であふれたガレージにうんざりしていませんか。タイディワークスは、大切なものを置く場所をつくります。今月限り、ホーム整理パッケージには無料の訪問相談が付き、当社のデザイナーが部屋を採寸して、暮らし方に合った配置を提案します。再生木材で作られた50種類以上の棚から選べ、10日以内にお届けします。11月30日までにご予約の方には、ラベル付き収納ボックスのセットも無料で差し上げます。設置は少額の料金でお受けしますが、多くのお客様が自分で組み立てを楽しまれており、動画ガイドで簡単にできます。今すぐ tidyworks.com で相談をご予約ください。",
+  "qs": [
+   {
+    "q": "What is being advertised?",
+    "c": [
+     "A moving company",
+     "A furniture rental service",
+     "A cleaning service",
+     "A home organizing service"
+    ],
+    "a": 3,
+    "e": "散らかった収納を整える layout と shelving、storage boxes を提供するパッケージ。home organization を home organizing service と言い換えた。他は家に関する語を使った無関係な業種。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "What will customers receive if they book before November 30?",
+    "c": [
+     "A shelf design",
+     "Some storage containers",
+     "An installation service",
+     "A set of video guides"
+    ],
+    "a": 1,
+    "e": "11月30日前の予約特典は labeled storage boxes を無料で追加。boxes を containers と言い換えた。無料なのは相談で、設置は有料。video guides は組み立て説明の話で特典ではない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What does the speaker say many customers do?",
+    "c": [
+     "Put the shelves together themselves",
+     "Choose recycled materials only",
+     "Pay in installments",
+     "Visit a showroom"
+    ],
+    "a": 0,
+    "e": "assembling the units themselves が根拠。assembling を put together と言い換えた。installation は有料と述べるだけで、分割払いには触れていない。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-04",
+  "intro": "excerpt from a meeting",
+  "v": "US-M",
+  "text": "Thanks for joining, everyone. Before we get into the budget, I want to update you on the customer survey. Results came in last week, and the numbers are encouraging. Satisfaction with our mobile app rose to eighty-four percent. However, many respondents mentioned that the checkout page loads slowly, especially on older phones. Lena from the development team has already identified the cause, and she expects a fix by the end of the month. In the meantime, I'd like the marketing group to hold off on the app promotion planned for the fifteenth. It wouldn't make sense to attract new users to a page that frustrates them. Now, let's move on to the budget. Raj, could you share your screen?",
+  "ja": "皆さん、ご参加ありがとうございます。予算に入る前に、顧客調査について報告したいと思います。結果は先週届き、数字は心強いものです。モバイルアプリの満足度は84パーセントに上がりました。ただ、多くの回答者が、特に古いスマートフォンで支払いページの読み込みが遅いと述べています。開発チームのレナがすでに原因を特定し、月末までに修正できる見込みです。それまでの間、マーケティンググループには15日に予定しているアプリの販促を見合わせてもらいたい。不満を感じさせるページに新規ユーザーを呼び込んでも意味がありません。では予算の話に移りましょう。ラジ、画面を共有してもらえますか。",
+  "qs": [
+   {
+    "q": "What problem did customers report?",
+    "c": [
+     "A mobile app that is expensive to download",
+     "A survey that is difficult to complete",
+     "A web page that is slow to open",
+     "A phone that cannot be updated"
+    ],
+    "a": 2,
+    "e": "checkout page loads slowly が根拠。loads slowly を slow to open と言い換えた。survey や older phones を使った選択肢は本文の語を転用したひっかけで、アプリ自体への不満は価格ではない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What does the speaker ask the marketing group to do?",
+    "c": [
+     "Redesign the app",
+     "Conduct another survey",
+     "Contact older customers",
+     "Postpone a promotion"
+    ],
+    "a": 3,
+    "e": "hold off on the app promotion が根拠。hold off を postpone、app promotion を promotion と言い換えた。survey は本文の語を使ったひっかけで、追加調査の依頼はない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What will Raj probably do next?",
+    "c": [
+     "Fix a program error",
+     "Present some financial figures",
+     "Share survey results",
+     "Update a phone"
+    ],
+    "a": 1,
+    "e": "最後に budget に移ると述べ、Raj に画面共有を頼んでいる。予算の数字を見せると推測できる。survey は先に終えた話題で、fix は Lena の担当。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P4-05",
+  "intro": "broadcast",
+  "v": "UK-F",
+  "text": "Good morning, this is Traffic Watch on Radio Kestrel. If you're driving into the city this morning, expect delays on the Route 9 bridge, where one lane is closed for emergency repairs. Crews hope to reopen it by noon. Drivers are advised to use the Eastgate Tunnel instead, though it's busier than usual because of the marathon preparations downtown. Lakeside Drive will be closed from ten o'clock for the runners, so those heading to the stadium should leave early. Rail service is running on time, and the weather looks clear, which should help. We'll be back with another update in twenty minutes, right after this message from our sponsor.",
+  "ja": "おはようございます。ラジオ・ケストレルの「トラフィック・ウォッチ」です。今朝、市内へ車で向かわれる方は、緊急工事で1車線が閉鎖されているルート9橋で遅れが出ると見込まれます。作業班は正午までの再開を見込んでいます。代わりにイーストゲート・トンネルのご利用をお勧めしますが、中心部のマラソン準備のため、いつもより混雑しています。レイクサイド通りはランナーのため10時から閉鎖されますので、スタジアムに向かう方は早めに出発してください。鉄道は定刻通り運行しており、天気も晴れで、助けになるでしょう。20分後に最新情報をお届けします。その前にスポンサーからのお知らせです。",
+  "qs": [
+   {
+    "q": "What is causing the delay on the Route 9 bridge?",
+    "c": [
+     "Road maintenance work",
+     "A marathon event",
+     "Heavy rain",
+     "A traffic accident"
+    ],
+    "a": 0,
+    "e": "one lane is closed for emergency repairs が根拠。repairs を maintenance work と言い換えた。marathon は別の道路の混雑理由で、本文の語を使ったひっかけ。事故や雨には触れていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "Why does the speaker say, \"Rail service is running on time\"?",
+    "c": [
+     "To report an improvement in train speed",
+     "To explain why the roads are empty",
+     "To suggest another way to travel",
+     "To correct an earlier announcement"
+    ],
+    "a": 2,
+    "e": "道路閉鎖で早めの出発を促した直後に、鉄道は定刻と伝えている。車以外の移動手段を勧める意図の発言。道路が空いているとは言っておらず、先の案内の訂正でもない。鉄道は車以外の手段にあたる。",
+    "tag": "意図問題"
+   },
+   {
+    "q": "What will listeners hear next?",
+    "c": [
+     "A weather forecast",
+     "An interview with a runner",
+     "A music program",
+     "A commercial message"
+    ],
+    "a": 3,
+    "e": "最後に right after this message from our sponsor と言っている。message from our sponsor を commercial message と言い換えた。weather や runner は本文に出る語を使ったひっかけ。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P4-06",
+  "intro": "tour information",
+  "v": "AU-F",
+  "text": "Welcome to the Old Mill Brewery tour. My name is Gwen, and I'll be your guide for the next ninety minutes. We'll begin in the original stone building, which dates back to 1894, and then walk through the modern production floor. Please stay behind the yellow lines at all times, and note that photography is permitted everywhere except the bottling area. Because the floors can be wet, I recommend closed shoes; if you're wearing sandals, we have rubber boots available at the front desk. At the end of the tour, you'll receive a tasting of three beers in the garden. If you're driving today, ask me about our non-alcoholic options. Now, if everyone's ready, please follow me.",
+  "ja": "オールドミル醸造所のツアーへようこそ。ガイドを務めるグウェンです。これから90分ご案内します。1894年にさかのぼる元の石造りの建物から始め、その後、現代的な製造フロアを歩きます。常に黄色い線の後ろにいてください。撮影は瓶詰めエリアを除くどこでも可能です。床がぬれていることがあるため、つま先の覆われた靴をお勧めします。サンダルの方には、フロントでゴム長靴をご用意しています。ツアーの最後には、庭で3種類のビールの試飲があります。本日運転される方は、ノンアルコールの選択肢をお尋ねください。では、皆さんよろしければ、ついてきてください。",
+  "qs": [
+   {
+    "q": "Where most likely are the listeners?",
+    "c": [
+     "At a ferry terminal",
+     "At a beverage factory",
+     "At a historic hotel",
+     "At a garden center"
+    ],
+    "a": 1,
+    "e": "brewery tour、production floor、bottling area、beer の tasting から分かる。beverage factory は brewery の言い換え。garden を使った選択肢は本文の語のひっかけ。",
+    "tag": "話者・場所"
+   },
+   {
+    "q": "What is mentioned about the bottling area?",
+    "c": [
+     "Pictures may not be taken there.",
+     "It is in the original building.",
+     "Boots are required there.",
+     "A tasting is held there."
+    ],
+    "a": 0,
+    "e": "photography is permitted everywhere except the bottling area が根拠。photography を pictures、except を may not と言い換えた。boots や tasting は別の場面の話。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What does the speaker recommend?",
+    "c": [
+     "Wearing a name badge",
+     "Bringing protective glasses",
+     "Wearing shoes that cover the feet",
+     "Arriving at the front desk early"
+    ],
+    "a": 2,
+    "e": "I recommend closed shoes が根拠。closed shoes を shoes that cover the feet と言い換えた。front desk は長靴の貸出場所として出る語を使ったひっかけ。眼鏡や名札の話はない。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-07",
+  "intro": "talk",
+  "v": "US-M2",
+  "text": "Good morning, and welcome to Aldmere Logistics. I'm Hector Salinas from Human Resources, and I'll lead today's orientation. Over the next three days, you'll tour our facilities, meet your team leaders, and complete the safety courses that every employee must pass. You won't be allowed on the warehouse floor until you finish the online safety course, which takes about two hours. That may sound like a lot for a first morning. But the schedule has a gap after lunch, so you can finish at your own pace. Please log in with the temporary passwords in your folders. Once you've completed the course, bring your certificate to me, and I'll arrange your access card. Let's get started.",
+  "ja": "おはようございます。オルドミア・ロジスティクスへようこそ。人事部のヘクター・サリナスです。本日のオリエンテーションを担当します。今後3日間で、施設を見学し、チームリーダーに会い、全従業員が合格しなければならない安全講習を修了します。約2時間かかるオンラインの安全講習を終えるまで、倉庫フロアには入れません。初日の朝にしては長く感じるかもしれません。しかし昼食後に空き時間があるので、自分のペースで終えられます。フォルダーに入っている仮パスワードでログインしてください。講習を修了したら、修了証を私のところへ持ってきてください。入館カードを手配します。始めましょう。",
+  "qs": [
+   {
+    "q": "What is the purpose of the talk?",
+    "c": [
+     "To explain a safety regulation",
+     "To announce a staff promotion",
+     "To describe a new warehouse",
+     "To introduce a program for new employees"
+    ],
+    "a": 3,
+    "e": "新入社員に向けた welcome と orientation で、3日間の予定を説明している。new employees の言い換えが introduce a program。safety や warehouse は話の一部にすぎず、主題ではない。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "Why does the speaker say, \"That may sound like a lot for a first morning\"?",
+    "c": [
+     "To apologize for a scheduling error",
+     "To acknowledge that a task may seem demanding",
+     "To suggest shortening a course",
+     "To say that a course is optional"
+    ],
+    "a": 1,
+    "e": "2時間の講習を告げた直後の発言で、続けて But 以下で昼食後に空き時間があると和らげている。負担に感じる点を認める意図。講習は必須で、短縮や任意とは言っていない。",
+    "tag": "意図問題"
+   },
+   {
+    "q": "What should listeners do after finishing the course?",
+    "c": [
+     "Show proof of completion to the speaker",
+     "Log in with a new password",
+     "Meet their team leaders",
+     "Return to the Human Resources office"
+    ],
+    "a": 0,
+    "e": "bring your certificate to me が根拠。certificate を proof of completion と言い換えた。log in はコース開始時の指示で、後ではない。team leaders は3日間の予定の話。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P4-08",
+  "intro": "talk",
+  "v": "UK-M2",
+  "text": "Thank you, and good evening, everyone. I am truly honored to receive the Regional Small Business Award. Eleven years ago, Amberley Bakery was just me, a rented oven, and a handful of regular customers. Today we employ twenty-six people, and none of this would have been possible without my staff, especially my head baker, Mei-Lin Tan. I also want to thank the Chamber of Commerce for its mentoring program, which helped us open our second shop last spring. Next year, we plan to launch a delivery service for local offices. To anyone thinking of starting a business, I say this: ask for help early. And now, please enjoy the dessert buffet, which our team prepared for tonight.",
+  "ja": "皆さん、ありがとうございます。こんばんは。地域中小企業賞をいただき、本当に光栄です。11年前、アンバリー・ベーカリーは、私と借りたオーブン、数人の常連客だけでした。今では26人を雇用しており、これは従業員、とりわけ製パン長のメイリン・タンなしには実現しませんでした。また、商工会議所のメンタリング制度にも感謝します。おかげで昨春、2店舗目を開けました。来年は、地元のオフィス向け配達サービスを始める予定です。起業を考えている方には、早めに助けを求めてくださいと伝えたいです。では、当店のチームが今夜のために用意したデザートビュッフェをお楽しみください。",
+  "qs": [
+   {
+    "q": "Who most likely is the speaker?",
+    "c": [
+     "A government official",
+     "A head baker",
+     "A business owner",
+     "A magazine editor"
+    ],
+    "a": 2,
+    "e": "11年前は自分と借りたオーブンだけだった店が今は26人を雇う、と語る。受賞者で経営者と分かる。head baker は感謝の対象として出る別人で、本文の語を使ったひっかけ。",
+    "tag": "話者・場所"
+   },
+   {
+    "q": "What does the speaker thank the Chamber of Commerce for?",
+    "c": [
+     "Recruiting new employees",
+     "Teaching baking techniques",
+     "Providing an event venue",
+     "Supporting the growth of the business"
+    ],
+    "a": 3,
+    "e": "mentoring program が2店舗目の開店を助けたと述べている。事業の拡大を支えたと言い換えられる。baking の指導をしたのは head baker で、人の混同を狙ったひっかけ。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What does the speaker say will happen next year?",
+    "c": [
+     "A second shop will open.",
+     "A new service will begin.",
+     "An employee will be promoted.",
+     "A competition will be held."
+    ],
+    "a": 1,
+    "e": "Next year, we plan to launch a delivery service が根拠。launch を begin、delivery service を new service と言い換えた。second shop は昨春にすでに開店済みで、時期のひっかけ。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-09",
+  "intro": "announcement",
+  "v": "US-F2",
+  "text": "Good afternoon, passengers, and welcome aboard the Seabird Ferry to Calder Island. Because of rough seas this morning, our noon sailing was canceled, so this boat is the next one in service. The crossing takes about fifty minutes. After we dock, a shuttle bus to the lighthouse will wait at Pier B and leave according to the timetable posted on the dock. Please note that the lighthouse closes to visitors at five o'clock, so the shuttle schedule is strict. Life jackets are stored under every seat. If you plan to hike, you can pick up a free trail map at the dock office. Enjoy your trip.",
+  "ja": "こんにちは、乗客の皆様。シーバード・フェリーのカルダー島行きへようこそ。今朝の荒れた海のため、正午の便は欠航となり、この船が次の運航便です。航行時間は約50分です。到着後、灯台行きのシャトルバスがB桟橋で待機し、桟橋に掲示の時刻表どおりに出発します。灯台は5時に閉まるため、シャトルの時刻は厳守です。救命胴衣は各座席の下にあります。ハイキングをされる方は、桟橋の事務所で無料のトレイルマップをお受け取りください。どうぞ船旅をお楽しみください。",
+  "graphic": {
+   "title": "Calder Island Ferry and Shuttle Timetable",
+   "rows": [
+    [
+     "Ferry departs mainland",
+     "Shuttle leaves Pier B",
+     "Last shuttle back to pier"
+    ],
+    [
+     "12:00",
+     "1:10",
+     "4:00"
+    ],
+    [
+     "1:30",
+     "2:40",
+     "4:30"
+    ],
+    [
+     "3:00",
+     "4:10",
+     "5:30"
+    ]
+   ]
+  },
+  "qs": [
+   {
+    "q": "What does the speaker say about the noon sailing?",
+    "c": [
+     "It was delayed by an hour.",
+     "It did not operate.",
+     "It was moved to another dock.",
+     "It was fully booked."
+    ],
+    "a": 1,
+    "e": "our noon sailing was canceled が根拠。canceled を did not operate と言い換えた。delay は欠航を遅れと取り違えさせるひっかけで、満席や桟橋変更には触れていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "Look at the graphic. What time will the shuttle bus leave for the lighthouse?",
+    "c": [
+     "1:10",
+     "1:30",
+     "2:40",
+     "4:10"
+    ],
+    "a": 2,
+    "e": "正午便が欠航で、この船は次の1時30分発の便と分かる。表でその便に対応するシャトルは2時40分発。1時30分は船の出発時刻で、混同を狙った選択肢。2つの情報の照合が必要。",
+    "tag": "図表問題"
+   },
+   {
+    "q": "What can listeners get at the dock office?",
+    "c": [
+     "A guide to walking routes",
+     "A ticket for the lighthouse",
+     "A refund for the canceled trip",
+     "A life jacket"
+    ],
+    "a": 0,
+    "e": "free trail map が桟橋の事務所でもらえる。trail map を guide to walking routes と言い換えた。life jacket は座席の下にあり、事務所で配られるものではない。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-10",
+  "intro": "talk",
+  "v": "AU-F",
+  "text": "Good afternoon, everyone, and thank you for attending the Retail Innovation Forum. A few quick changes to this afternoon's program. The projector in Room C isn't working, and the technician can't repair it until tomorrow. So the Mobile Payments session will instead take place in the room that hosted the Customer Loyalty session this morning, since that room is free all afternoon. Everything else stays the same. Also, lunch vouchers are valid at both cafés in the lobby, not just the one by the entrance. Finally, please fill out the evaluation form on the back of your program and drop it in the box by the exit. Your comments will help us plan next year's forum. Enjoy the sessions.",
+  "ja": "皆さん、こんにちは。小売イノベーション・フォーラムにご参加いただきありがとうございます。午後のプログラムに少し変更があります。C会議室のプロジェクターが動かず、技術者は明日まで修理できません。そのため、モバイル決済のセッションは、午前に顧客ロイヤルティのセッションが開かれた部屋で行います。その部屋は午後ずっと空いているからです。それ以外は変わりません。また、昼食券はロビーの2軒のカフェのどちらでも使え、入口脇の店だけではありません。最後に、プログラム裏面の評価用紙に記入し、出口の箱に入れてください。いただいた意見は来年のフォーラムの企画に役立てます。セッションをお楽しみください。",
+  "graphic": {
+   "title": "Retail Innovation Forum: Program",
+   "rows": [
+    [
+     "Session",
+     "Time",
+     "Room"
+    ],
+    [
+     "Customer Loyalty",
+     "10:00 A.M.",
+     "Room A"
+    ],
+    [
+     "Store Layout Trends",
+     "10:00 A.M.",
+     "Room B"
+    ],
+    [
+     "Mobile Payments",
+     "2:30 P.M.",
+     "Room C"
+    ],
+    [
+     "Staff Scheduling",
+     "2:30 P.M.",
+     "Room D"
+    ]
+   ]
+  },
+  "qs": [
+   {
+    "q": "Why is a session being relocated?",
+    "c": [
+     "A room is too small.",
+     "A speaker is late.",
+     "A technician is on vacation.",
+     "Some equipment is out of order."
+    ],
+    "a": 3,
+    "e": "Room C の projector isn't working が理由。isn't working を out of order、projector を equipment と言い換えた。technician は修理が明日になる話で、休暇とは言っていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "Look at the graphic. Where will the Mobile Payments session be held?",
+    "c": [
+     "Room A",
+     "Room B",
+     "Room C",
+     "Room D"
+    ],
+    "a": 0,
+    "e": "モバイル決済は午前に顧客ロイヤルティが開かれた部屋に移る。表ではその部屋がA会議室。C会議室は元の会場で、本文に出る語を使ったひっかけ。2つの情報の照合が必要。",
+    "tag": "図表問題"
+   },
+   {
+    "q": "What are listeners asked to do before leaving?",
+    "c": [
+     "Pick up a lunch voucher",
+     "Register for next year's forum",
+     "Provide feedback on the event",
+     "Speak with a technician"
+    ],
+    "a": 2,
+    "e": "fill out the evaluation form が根拠。evaluation form に記入することを provide feedback と言い換えた。lunch vouchers は有効なカフェの話で、配布の依頼ではない。",
+    "tag": "次の行動"
+   }
+  ]
+ }
+]
