@@ -1,8 +1,8 @@
 /* TOEIC学習アプリ Service Worker
    - 本体・data.js: ネット優先→失敗時キャッシュ
    - 音声(audio/): 再生時にキャッシュ。Rangeリクエスト(Safari等)はキャッシュ済み全体から切り出して返す */
-const VERSION = 'toeic-quiz-v3';
-const CORE = ['./index.html','./manifest.webmanifest','./data/data.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
+const VERSION = 'toeic-quiz-v4';
+const CORE = ['./index.html','./manifest.webmanifest','./data/data.js','./data/vocab.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => Promise.allSettled(CORE.map(u => c.add(u)))).then(() => self.skipWaiting()));

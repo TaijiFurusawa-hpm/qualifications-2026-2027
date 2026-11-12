@@ -114,6 +114,24 @@
   .big{font-size:34px; font-weight:700; color:var(--cyan)}
   textarea.cp{width:100%; min-height:120px; background:rgba(0,0,0,.4); color:var(--ink); border:1px solid var(--line); border-radius:10px; padding:8px; font-size:12.5px}
   .flagged{color:var(--amber)}
+  .vw{font-size:30px; font-weight:700; letter-spacing:.3px; line-height:1.25; font-family:Georgia,"Times New Roman",serif}
+  .vja{font-size:18px; font-weight:600; margin:4px 0 10px}
+  .vex{font-size:16px; line-height:1.7; font-family:Georgia,"Times New Roman",serif}
+  .vex b{color:var(--cyan)}
+  .vq{font-size:18px; line-height:1.7; font-family:Georgia,"Times New Roman",serif; margin:8px 0}
+  .vstat{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0 4px}
+  .vstat div{flex:1; min-width:70px; text-align:center; border:1px solid var(--line); border-radius:12px; padding:8px 4px; background:rgba(255,255,255,.03)}
+  .vstat b{display:block; font-size:22px; color:var(--cyan); font-variant-numeric:tabular-nums}
+  .vstat span{font-size:11.5px; color:var(--sub)}
+  .vset{display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:8px; font-size:12.5px; color:var(--sub)}
+  input.vsearch{width:100%; background:rgba(0,0,0,.4); color:var(--ink); border:1px solid var(--line); border-radius:10px; padding:9px 12px; font-size:15px; margin:8px 0}
+  details.vrow{border-bottom:1px solid var(--line); padding:7px 0}
+  details.vrow summary{cursor:pointer; display:flex; gap:10px; align-items:baseline; list-style:none}
+  details.vrow summary::-webkit-details-marker{display:none}
+  details.vrow summary b{flex:0 0 38%; font-family:Georgia,"Times New Roman",serif; font-size:15.5px}
+  details.vrow summary span{flex:1; font-size:13.5px; color:var(--sub)}
+  .box{flex:0 0 auto; font-size:11px; padding:0 7px; border-radius:9px; border:1px solid var(--line); color:var(--faint)}
+  .box.l{color:var(--amber); border-color:rgba(251,191,36,.4)} .box.m{color:var(--ok); border-color:rgba(52,211,153,.4)}
   footer{color:var(--faint); font-size:11.5px; text-align:center; margin-top:26px}
   #app{animation:in .3s ease both}
   @keyframes in{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
@@ -131,6 +149,7 @@
   <footer>個人学習用 ・ すべて自作問題</footer>
 </div>
 <script src="data/data.js"></script>
+<script src="data/vocab.js"></script>
 <script>
 "use strict";
 /* ===== 設定・ストレージ ===== */
@@ -421,10 +440,10 @@ function results(mock){
 
 /* ===== ホーム・成績・おかしい一覧 ===== */
 function home(){
-  clearTimer(); stopAudio(); setWide(false);
+  clearTimer(); stopAudio(); setWide(false); V=null;
   if(!DATA){ $("#app").innerHTML=`<div class="card">問題データ（data/data.js）を読み込めません。build.py の実行後に開き直してください。</div>`; return; }
   const miss=Object.keys(loadJSON(MISS_KEY)).length, fl=Object.keys(flags()).length;
-  let h=`<h2 class="sec">パート別練習</h2>`;
+  let h=vHomeHTML()+`<h2 class="sec">パート別練習</h2>`;
   for(const p of [2,3,4,5,6,7]){
     const n=(UNITS[p]||[]).length;
     h+=`<div class="card"><div style="display:flex;align-items:center;gap:14px"><div class="stile">P${p}</div>
@@ -453,6 +472,7 @@ function statsView(){
   $("#app").innerHTML=h;
 }
 function snippet(id){
+  if(id.startsWith("V:")){const e=VBY[id.slice(2)]; return e?("単語 "+e.w+" ／ "+e.ex).slice(0,90):""}
   const u=allUnitsFlat().find(x=>x.id===id); if(!u)return "";
   const r=u.raw; let t=r.prompt||r.q||r.text||(r.lines&&r.lines[0]&&r.lines[0].t)||(r.docs&&r.docs[0]&&r.docs[0].text)||(r.qs&&r.qs[0]&&r.qs[0].q)||"";
   return String(t).replace(/\s+/g," ").slice(0,60);
@@ -476,10 +496,208 @@ function copyFlags(){
   if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(()=>m.textContent="コピーしました",fb); else fb();
 }
 
+/* ===== 英単語特訓 ===== */
+const VOC_KEY="toeic_vocab_v1", VSET_KEY="toeic_vset_v1", VLOG_KEY="toeic_vlog_v1";
+const V_INT=[0,1,3,7,14,30,90];   // 箱ごとの「次に出るまでの日数」。箱6で習得
+const V_LV={1:"730",2:"860",3:"900+"};
+const V_TYPE={mean:"意味を選ぶ",listen:"聞いて意味を選ぶ",cloze:"空所に入る語を選ぶ",rev:"英語を選ぶ"};
+let VOCAB=[], VBY={}, V=null;
+function vToday(){const d=new Date(); return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/86400000)}
+function vSet(){return Object.assign({nw:20,lv:0,auto:1},loadJSON(VSET_KEY))}
+function vSetSave(k,v){const s=vSet(); s[k]=v; saveJSON(VSET_KEY,s); home()}
+function vState(){return loadJSON(VOC_KEY)}
+function vCounts(){
+  const st=vState(), t=vToday(); let nw=0,lr=0,ms=0,due=0,weak=0;
+  for(const e of VOCAB){const r=st[e.id]; if(!r){nw++;continue} if(r.b>=6)ms++; else lr++; if(r.d<=t)due++; if(r.l>0&&r.b<6)weak++}
+  return {nw,lr,ms,due,weak};
+}
+function vAud(e,sent){return e.au?"audio/v/"+e.id+(sent?"_s":"")+".mp3":""}
+function vGloss(e){return e.ja.split(/[、，,・／\/；;]/).map(s=>s.replace(/[〜~（）()\s]|を|に|が/g,"").replace(/する$/,"")).filter(Boolean)}
+function vVerbish(e){return /(する|[うくぐすつぬぶむる])$/.test(e.ja.split(/[、，,／\/]/)[0].replace(/[（(].*?[）)]/g,"").trim())}
+function vClash(a,b){   // 意味が近く、誤答にすると正解が2つになりかねない組
+  if(a.id===b.id)return true;
+  const sa=a.syn.map(x=>x.toLowerCase()), sb=b.syn.map(x=>x.toLowerCase());
+  if(sa.includes(b.w.toLowerCase())||sb.includes(a.w.toLowerCase())||sa.some(x=>sb.includes(x)))return true;
+  const ga=vGloss(a), gb=vGloss(b);
+  return ga.some(x=>gb.some(y=>x===y||(x.length>=2&&y.length>=2&&(x.includes(y)||y.includes(x)))));
+}
+function vGroup(e){return e.pos==="前・接"?"句":e.pos}
+function vDistract(e){
+  const g=vGroup(e), vb=vVerbish(e), out=[];
+  const cand=shuffle(VOCAB.filter(x=>vGroup(x)===g&&!vClash(e,x)))
+    .map(x=>({x,k:(vVerbish(x)===vb?0:10)+Math.abs(x.lv-e.lv)})).sort((a,b)=>a.k-b.k).map(o=>o.x);
+  for(const x of cand){ if(out.length>=3)break; if(!out.some(y=>vClash(x,y)))out.push(x) }
+  return out;
+}
+function vType(e,r){
+  const au=!!e.au, pick=a=>a[Math.floor(Math.random()*a.length)];
+  if(!r)return "mean";
+  if(r.b<=1)return au?pick(["mean","listen"]):"mean";
+  if(r.b===2)return "cloze";
+  if(r.b===3)return "rev";
+  if(r.b===4)return au?"listen":"cloze";
+  if(r.b===5)return pick(["cloze","rev"]);
+  return pick(au?["mean","listen","cloze","rev"]:["mean","cloze","rev"]);
+}
+function startVocab(mode){
+  const st=vState(), t=vToday(), set=vSet();
+  let due=[], nw=[];
+  if(mode==="daily"||mode==="review"){
+    due=VOCAB.filter(e=>st[e.id]&&st[e.id].d<=t).sort((a,b)=>st[a.id].d-st[b.id].d).slice(0,80); due=shuffle(due);
+  }
+  if(mode==="daily"||mode==="new"){
+    const pool=VOCAB.filter(e=>!st[e.id]&&(!set.lv||e.lv===set.lv));
+    nw=[1,2,3].flatMap(lv=>shuffle(pool.filter(e=>e.lv===lv))).slice(0,set.nw);
+  }
+  let queue=due.concat(nw), free=false;
+  if(mode==="weak"){
+    queue=shuffle(VOCAB.filter(e=>st[e.id]&&st[e.id].l>0&&st[e.id].b<6).sort((a,b)=>st[b.id].l-st[a.id].l).slice(0,30)); free=true;
+  }
+  if(!queue.length)return;
+  V={mode,free,queue,i:0,n:0,ok:0,nw:0,miss:{},q:null};
+  vShow();
+}
+function vShow(){
+  stopAudio(); setWide(false);
+  const e=V.queue[V.i]; if(!e){vFinish();return}
+  const r=vState()[e.id], forced=V.miss[e.id]&&V.miss[e.id].type;
+  const type=forced||(V.free?(e.au?["mean","listen","cloze","rev"]:["mean","cloze","rev"])[Math.floor(Math.random()*(e.au?4:3))]:vType(e,r));
+  const q=V.q={e,type,isNew:!r,done:false,pick:-1};
+  if(type==="cloze") q.opts=shuffle([{t:e.f,ok:true}].concat(e.d.map(t=>({t,ok:false}))));
+  else q.opts=shuffle([{t:type==="rev"?e.w:e.ja,ok:true,sub:type==="rev"?e.ja:e.w}]
+    .concat(vDistract(e).map(x=>({t:type==="rev"?x.w:x.ja,ok:false,sub:type==="rev"?x.ja:x.w}))));
+  V.t=Date.now(); vPaint(); window.scrollTo(0,0);
+  if(type==="listen") playAudio(vAud(e));
+}
+function vBlank(e){return esc(e.ex).replace(new RegExp("(^|[^A-Za-z])"+esc(e.f).replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+"(?![A-Za-z])"),"$1\u0000")}
+function vPaint(){
+  const q=V.q, e=q.e, L=["1","2","3","4"];
+  const top=`<div class="topbar"><span class="pill">英単語特訓</span><span class="pill">残り ${V.queue.length-V.i}</span>
+    <span class="pill">${q.isNew?"新しい語":V.miss[e.id]?"もう一度":"復習"} ・ ${V_LV[e.lv]}</span><span class="sp"></span>
+    <button class="btn sm ghost" onclick="vFinish()">やめる</button></div>
+    <div class="bar"><i style="width:${V.i/V.queue.length*100}%"></i></div>`;
+  let head=`<div class="meta">${V_TYPE[q.type]}</div>`;
+  if(q.type==="mean") head+=`<div class="vw">${esc(e.w)} <span class="tag">${esc(e.pos)}</span></div>`;
+  if(q.type==="listen") head+=`<div style="margin:8px 0">${q.done?`<div class="vw">${esc(e.w)}</div>`:""}<button class="btn sm" onclick="playAudio(vAud(V.q.e))">▶ もう一度聞く</button> <span class="meta" id="audst"></span></div>`;
+  if(q.type==="cloze") head+=`<div class="vq">${vBlank(e).replace("\u0000",q.done?`<b style="color:var(--cyan)">${esc(e.f)}</b>`:'<span class="blank">&nbsp;</span>')}</div>`;
+  if(q.type==="rev") head+=`<div class="vja" style="font-size:22px">${esc(e.ja)} <span class="tag">${esc(e.pos)}</span></div>`;
+  const ch=q.opts.map((o,ci)=>{
+    let cl=""; if(q.done){ if(o.ok)cl="ok"; else if(q.pick===ci)cl="ng"; }
+    return `<button class="btn ${cl}" ${q.done?"disabled":""} onclick="vAnswer(${ci})"><span class="n">${L[ci]}</span>${esc(o.t)}${q.done&&o.sub?` <span class="meta">＝ ${esc(o.sub)}</span>`:""}</button>`;
+  }).join("")+(q.done?"":`<button class="btn ghost" onclick="vAnswer(-1)">わからない</button>`);
+  let after="";
+  if(q.done){
+    const ok=q.pick>=0&&q.opts[q.pick].ok;
+    after=`<div class="exp ${ok?'':'bad'}"><b>${ok?'正解':q.pick<0?'答えを確認':'不正解'}</b> <span class="meta">${esc(q.msg||"")}</span></div>`+vCard(e)+
+      `<button class="btn primary" onclick="vNext()">次へ</button>`;
+  }
+  $("#app").innerHTML=top+`<div class="card">${head}${ch}</div>`+after;
+}
+function vCard(e){
+  const ex=vBlank(e).replace("\u0000",`<b>${esc(e.f)}</b>`);
+  return `<div class="card"><div class="vw">${esc(e.w)} <span class="tag">${esc(e.pos)}</span><span class="tag">${V_LV[e.lv]}</span></div>
+    <div class="vja">${esc(e.ja)}</div><div class="vex">${ex}</div><div class="meta" style="margin:2px 0 8px">${esc(e.exja)}</div>
+    <div class="meta">言い換え： <span style="color:var(--ink)">${e.syn.map(esc).join(" ／ ")}</span></div>
+    ${e.note?`<div class="meta">メモ： ${esc(e.note)}</div>`:""}
+    ${e.au?`<div class="row2"><button class="btn sm" onclick="playAudio('${vAud(e)}')">▶ 単語</button><button class="btn sm" onclick="playAudio('${vAud(e,1)}')">▶ 例文</button></div>`:""}
+    <div style="margin-top:10px">${flagBtn("V:"+e.id)}</div></div>`;
+}
+function vAnswer(ci){
+  const q=V.q; if(!q||q.done)return;
+  const e=q.e, ok=ci>=0&&q.opts[ci].ok, st=vState(), t=vToday();
+  let r=st[e.id]; const again=!!V.miss[e.id];
+  q.done=true; q.pick=ci;
+  if(!again){ V.n++; if(ok)V.ok++; if(q.isNew)V.nw++; const lg=loadJSON(VLOG_KEY), d=lg[t]||{n:0,ok:0,nw:0}; d.n++; if(ok)d.ok++; if(q.isNew)d.nw++; lg[t]=d; saveJSON(VLOG_KEY,lg) }
+  if(!r){
+    r=st[e.id]=ok?{b:2,d:t+V_INT[2],n:1,ok:1,l:0}:{b:0,d:t,n:1,ok:0,l:0};
+    q.msg=ok?"知っている語として3日後に確認します":"このあともう一度出ます";
+  } else {
+    r.n++;
+    if(ok){ r.ok++; if(!V.free||r.b===0){ r.b=Math.min(6,r.b+1); r.d=t+V_INT[r.b] } q.msg=V.free?"":r.b>=6?"習得。90日後に確認します":"次は"+V_INT[r.b]+"日後";}
+    else { if(r.b>0)r.l=(r.l||0)+1; r.b=0; r.d=t; q.msg="このあともう一度出ます"; }
+  }
+  saveJSON(VOC_KEY,st);
+  if(ok) delete V.miss[e.id];
+  else { V.miss[e.id]={type:q.type==="listen"?"mean":q.type,w:1}; V.missed=V.missed||{}; V.missed[e.id]=1;
+    V.queue.splice(Math.min(V.queue.length,V.i+5),0,e); }
+  vPaint();
+  if(vSet().auto&&e.au) playAudio(vAud(e,q.type==="cloze"));
+}
+function vNext(){ if(!V||!V.q||!V.q.done)return; V.i++; vShow() }
+function vFinish(){
+  stopAudio(); if(!V){home();return}
+  const c=vCounts(), ids=Object.keys(V.missed||{});
+  let h=`<div class="card"><div class="meta">英単語特訓の結果</div><div class="big">${V.ok} / ${V.n}</div>
+    <div class="meta">1回目の正答率 ${V.n?Math.round(V.ok/V.n*100):0}% ・ 新しい語 ${V.nw}</div>
+    <div class="vstat"><div><b>${c.ms}</b><span>習得</span></div><div><b>${c.lr}</b><span>学習中</span></div><div><b>${c.nw}</b><span>未着手</span></div></div></div>`;
+  if(ids.length) h+=`<div class="card"><b>間違えた語（${ids.length}）</b>`+ids.map(id=>vRow(VBY[id])).join("")+`</div>`;
+  h+=(c.nw?`<button class="btn" style="text-align:center" onclick="startVocab('new')">新しい語をもう ${Math.min(vSet().nw,c.nw)} 語</button>`:"")+
+    `<button class="btn primary" onclick="home()">ホームへ</button>`;
+  V=null; $("#app").innerHTML=h; window.scrollTo(0,0);
+}
+function vRow(e,r){
+  const b=r?(r.b>=6?'<i class="box m">習得</i>':`<i class="box ${r.l?'l':''}">箱${r.b}${r.l?" ・ ミス"+r.l:""}</i>`):"";
+  return `<details class="vrow"><summary><b>${esc(e.w)}</b><span>${esc(e.ja)}</span>${b}</summary>
+    <div class="vex" style="margin-top:6px">${vBlank(e).replace("\u0000",`<b>${esc(e.f)}</b>`)}</div><div class="meta">${esc(e.exja)}</div>
+    <div class="meta">言い換え： ${e.syn.map(esc).join(" ／ ")}${e.note?"　メモ： "+esc(e.note):""}</div>
+    ${e.au?`<div class="row2"><button class="btn sm" onclick="playAudio('${vAud(e)}')">▶ 単語</button><button class="btn sm" onclick="playAudio('${vAud(e,1)}')">▶ 例文</button></div>`:""}</details>`;
+}
+function vHomeHTML(){
+  if(!VOCAB.length)return "";
+  const c=vCounts(), set=vSet(), lg=loadJSON(VLOG_KEY)[vToday()]||{n:0,ok:0,nw:0};
+  const left=VOCAB.filter(e=>!vState()[e.id]&&(!set.lv||e.lv===set.lv)).length, nn=Math.min(set.nw,left);
+  const b=(k,v,l)=>`<button class="btn sm ${set[k]===v?'on':''}" onclick="vSetSave('${k}',${v})">${l}</button>`;
+  return `<h2 class="sec">英単語特訓（900点水準 ・ ${VOCAB.length}語）</h2>
+  <div class="card">
+    <div class="vstat"><div><b>${c.due}</b><span>今日の復習</span></div><div><b>${c.ms}</b><span>習得</span></div><div><b>${c.lr}</b><span>学習中</span></div><div><b>${c.nw}</b><span>未着手</span></div></div>
+    <div class="bar" style="margin:8px 0"><i style="width:${(c.ms+c.lr*0.4)/VOCAB.length*100}%"></i></div>
+    <button class="btn primary" ${c.due+nn?"":"disabled"} onclick="startVocab('daily')">今日の特訓（復習 ${Math.min(c.due,80)} ＋ 新しい語 ${nn}）</button>
+    <div class="row2"><button class="btn sm" ${c.due?"":"disabled"} onclick="startVocab('review')">復習だけ</button>
+      <button class="btn sm" ${nn?"":"disabled"} onclick="startVocab('new')">新しい語だけ</button>
+      <button class="btn sm" ${c.weak?"":"disabled"} onclick="startVocab('weak')">苦手な語 ${c.weak}</button>
+      <button class="btn sm" onclick="vList()">単語一覧</button></div>
+    <div class="vset">新しい語 ${[10,20,30,50].map(n=>b("nw",n,n)).join("")}</div>
+    <div class="vset">レベル ${b("lv",0,"易しい順")}${b("lv",1,"730")}${b("lv",2,"860")}${b("lv",3,"900+")}　答えの後の音声 ${b("auto",1,"入")}${b("auto",0,"切")}</div>
+    <div class="meta" style="margin-top:8px">今日 ${lg.n}問（正答 ${lg.ok} ・ 新しい語 ${lg.nw}）　キー操作：1〜4で解答、Enterで次へ</div>
+  </div>`;
+}
+let VL={q:"",lv:0,stt:""};
+function vList(){
+  stopAudio(); V=null;
+  const b=(k,v,l)=>`<button class="btn sm ${VL[k]===v?'on':''}" onclick="VL.${k}=${JSON.stringify(v).replace(/"/g,"'")};vList()">${l}</button>`;
+  $("#app").innerHTML=`<div class="topbar"><button class="btn sm ghost" onclick="home()">← ホーム</button></div>
+    <div class="card"><b>単語一覧</b>
+    <input class="vsearch" id="vsq" placeholder="英語か日本語で検索" value="${esc(VL.q)}" oninput="VL.q=this.value;vListPaint()">
+    <div class="tabs">${b("lv",0,"全レベル")}${b("lv",1,"730")}${b("lv",2,"860")}${b("lv",3,"900+")}</div>
+    <div class="tabs">${b("stt","","すべて")}${b("stt","new","未着手")}${b("stt","learn","学習中")}${b("stt","weak","苦手")}${b("stt","done","習得")}</div>
+    <div class="meta" id="vln"></div><div id="vlist"></div></div>`;
+  vListPaint();
+}
+function vListPaint(){
+  const st=vState(), k=VL.q.trim().toLowerCase();
+  const rows=VOCAB.filter(e=>{
+    const r=st[e.id];
+    if(VL.lv&&e.lv!==VL.lv)return false;
+    if(VL.stt==="new"&&r)return false;
+    if(VL.stt==="learn"&&!(r&&r.b<6))return false;
+    if(VL.stt==="weak"&&!(r&&r.l>0&&r.b<6))return false;
+    if(VL.stt==="done"&&!(r&&r.b>=6))return false;
+    return !k||e.w.toLowerCase().includes(k)||e.ja.includes(k)||e.syn.some(s=>s.toLowerCase().includes(k));
+  });
+  $("#vln").textContent=rows.length+" 語";
+  $("#vlist").innerHTML=rows.map(e=>vRow(e,st[e.id])).join("");
+}
+document.addEventListener("keydown",ev=>{
+  if(!V||!V.q||ev.metaKey||ev.ctrlKey||ev.altKey)return;
+  if(!V.q.done){ const n="1234".indexOf(ev.key); if(n>=0&&n<V.q.opts.length){ev.preventDefault(); vAnswer(n)} else if(ev.key==="0"){ev.preventDefault(); vAnswer(-1)} }
+  else if(ev.key==="Enter"||ev.key===" "){ev.preventDefault(); vNext()}
+});
+
 /* ===== 起動 ===== */
 function init(){
   DATA=window.TOEIC_DATA||null;
   if(DATA) UNITS=buildUnits();
+  VOCAB=window.TOEIC_VOCAB||[]; VBY={}; for(const e of VOCAB) VBY[e.id]=e;
   home();
 }
 if(!window.TOEIC_DATA&&/[?&]sample/.test(location.search)){
