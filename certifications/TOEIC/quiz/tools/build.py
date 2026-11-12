@@ -5,11 +5,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 RATE = "165"
-NARR = "Samantha"
+# 声: "k:名前:速さ" は Kokoro（tools/tts_kokoro.py、要 tools/.venv と tools/.tts）、"say:名前" は macOS の say。
+# Mac標準の Shelley/Reed/Eddy は高音が弱くこもるので使わない（2026-11-12）。豪州の声は Kokoro に無いので Karen を残す。
+TTS_VER = "kokoro-v1"
+SR = "24000"
+NARR = "k:af_sarah:0.87"
 VOICES = {
-    "US-F": "Samantha", "US-F2": "Shelley (英語（アメリカ）)", "US-M": "Reed (英語（アメリカ）)",
-    "US-M2": "Eddy (英語（アメリカ）)", "UK-F": "Shelley (英語（イギリス）)", "UK-M": "Daniel",
-    "UK-M2": "Reed (英語（イギリス）)", "AU-F": "Karen",
+    "US-F": "k:af_heart:0.88", "US-F2": "k:af_bella:0.9", "US-M": "k:am_michael:0.98",
+    "US-M2": "k:am_fenrir:0.88", "UK-F": "k:bf_emma:0.85", "UK-M": "k:bm_george:0.9",
+    "UK-M2": "k:bm_fable:0.85", "AU-F": "say:Karen",
 }
 P2_TAGS = ["WH疑問文", "YesNo疑問文", "否定・付加疑問文", "選択疑問文", "依頼・提案・申し出", "平叙文"]
 P34_TAGS = ["主題・目的", "詳細", "次の行動", "話者・場所", "意図問題", "図表問題"]
@@ -237,7 +241,7 @@ def audio_plans(numbered):
         va = VOICES[it["va"]]
         seg = [("say", NARR, f"Number {it['num']}."), ("say", VOICES[it["vq"]], it["prompt"]), ("sil", 0.6)]
         for lab, c in zip("ABC", it["c"]):
-            seg += [("say", va, f"{lab}."), ("say", va, c)]
+            seg += [("say", "say:Samantha", f"{lab}."), ("say", va, c)]  # 記号は Samantha が読む（Kokoro は1文字の読みが崩れやすい）
         plans[it["id"]] = seg
     for k in ("part3", "part4"):
         for it in numbered[k]:
@@ -261,24 +265,54 @@ def run(cmd):
     subprocess.run(cmd, check=True)
 
 
+def mean_db(path):
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-i", path, "-af", "volumedetect", "-f", "null", "-"],
+                       capture_output=True, text=True).stderr
+    m = re.search(r"mean_volume: (-?[\d.]+) dB", r)
+    return float(m.group(1)) if m else -20.0
+
+
 def render(seg, out):
+    tools = Path(__file__).resolve().parent
     with tempfile.TemporaryDirectory() as tmp:
-        parts, sil = [], {}
+        parts, raws, job = [], {}, []
         for n, s in enumerate(seg):
             if s[0] == "say":
-                a, w = os.path.join(tmp, f"{n}.aiff"), os.path.join(tmp, f"{n}.wav")
-                run(["say", "-v", s[1], "-r", RATE, "-o", a, s[2]])
-                run(["ffmpeg", "-y", "-loglevel", "error", "-i", a, "-ar", "22050", "-ac", "1", w])
+                eng, name, *sp = s[1].split(":")
+                raw = os.path.join(tmp, f"{n}.raw.wav")
+                if eng == "k":
+                    job.append({"voice": name, "text": s[2], "out": raw, "speed": float(sp[0]) if sp else 1.0})
+                else:
+                    a = os.path.join(tmp, f"{n}.aiff")
+                    run(["say", "-v", name, "-r", RATE, "-o", a, s[2]])
+                    run(["ffmpeg", "-y", "-loglevel", "error", "-i", a, raw])
+                raws[n] = raw
+        if job:
+            jp = os.path.join(tmp, "job.json"); Path(jp).write_text(json.dumps(job))
+            for attempt in range(3):  # まれに合成が固まるので、時間切れなら作り直す
+                try:
+                    subprocess.run([str(tools / ".venv/bin/python"), str(tools / "tts_kokoro.py"), jp], check=True, timeout=240)
+                    break
+                except subprocess.TimeoutExpired:
+                    print("  合成が時間切れ。やり直します", flush=True)
+            else:
+                sys.exit("音声合成が3回続けて時間切れになりました")
+        for n, s in enumerate(seg):
+            if s[0] == "say":
+                w = os.path.join(tmp, f"{n}.wav")
+                gain = max(-12.0, min(12.0, -20.0 - mean_db(raws[n])))  # 声ごとの音量差をそろえる
+                run(["ffmpeg", "-y", "-loglevel", "error", "-i", raws[n], "-af", f"volume={gain:.1f}dB,alimiter=limit=0.9",
+                     "-ar", SR, "-ac", "1", w])
             else:
                 w = os.path.join(tmp, f"sil_{s[1]}.wav")
                 if not os.path.exists(w):
-                    run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "anullsrc=r=22050:cl=mono", "-t", str(s[1]), w])
+                    run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", f"anullsrc=r={SR}:cl=mono", "-t", str(s[1]), w])
             parts.append(w)
         lst = os.path.join(tmp, "list.txt")
         Path(lst).write_text("".join(f"file '{p}'\n" for p in parts))
         tmpout = out.with_suffix(".tmp.mp3")
         run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst,
-             "-ar", "22050", "-ac", "1", "-b:a", "96k", str(tmpout)])
+             "-ar", SR, "-ac", "1", "-b:a", "96k", str(tmpout)])
         os.replace(tmpout, out)
 
 
@@ -293,7 +327,7 @@ def audio(root, only=None):
     made = skipped = 0
     for id_, seg in plans.items():
         if only and id_ != only: continue
-        h = hashlib.sha1(json.dumps([RATE, seg], ensure_ascii=False).encode()).hexdigest()
+        h = hashlib.sha1(json.dumps([RATE, TTS_VER, seg], ensure_ascii=False).encode()).hexdigest()
         out = adir / f"{id_}.mp3"
         if out.exists() and hashes.get(id_) == h: skipped += 1; continue
         print("audio:", id_, flush=True)

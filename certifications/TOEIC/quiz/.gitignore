@@ -1,3 +1,5 @@
 # 検証用の作業ファイル（答え抜きデータと解答）
 blind/
 __pycache__/
+tools/.venv/
+tools/.tts/
