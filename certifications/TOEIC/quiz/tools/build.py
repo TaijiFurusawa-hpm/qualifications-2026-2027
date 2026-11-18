@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """TOEIC quiz builder: validate / audio / data.  Usage: build.py [validate|audio|data] [--root DIR] [--only ID]"""
-import argparse, hashlib, json, os, re, subprocess, sys, tempfile
+import argparse, copy, functools, hashlib, json, os, re, subprocess, sys, tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -15,6 +15,7 @@ VOICES = {
     "US-M2": "k:am_fenrir:0.88", "UK-F": "k:bf_emma:0.85", "UK-M": "k:bm_george:0.9",
     "UK-M2": "k:bm_fable:0.85", "AU-F": "say:Karen",
 }
+P1_TAGS = ["人物1人", "複数人物", "物・風景"]
 P2_TAGS = ["WH疑問文", "YesNo疑問文", "否定・付加疑問文", "選択疑問文", "依頼・提案・申し出", "平叙文"]
 P34_TAGS = ["主題・目的", "詳細", "次の行動", "話者・場所", "意図問題", "図表問題"]
 P5_TAGS = ["品詞", "動詞の形", "前置詞・接続詞", "代名詞・関係詞", "語彙", "語法・その他"]
@@ -22,17 +23,36 @@ P6_TAGS = ["文挿入", "語彙", "文法"]
 P7_TAGS = ["主旨・目的", "詳細", "推測", "NOT問題", "言い換え（同義語）", "意図問題", "文挿入", "複数文書の照合"]
 # (name, file, id prefix, count, first num)
 FILES = {
+    "part1": ("part1.json", "P1", 6),
     "part2": ("part2.json", "P2", 25), "part3": ("part3.json", "P3", 13), "part4": ("part4.json", "P4", 10),
     "part5": ("part5.json", "P5", 30), "part6": ("part6.json", "P6", 4),
     "part7s": ("part7_single.json", "P7S", 10), "part7m": ("part7_multi.json", "P7M", 5),
 }
-STARTS = {"part2": 7, "part3": 32, "part4": 71, "part5": 101, "part6": 131, "part7": 147}
+FREE_MOCK = 1  # 無料で開放する回
+AUDIO_PARTS = ("part1", "part2", "part3", "part4")  # 音声を作る Part
+STARTS = {"part1": 1, "part2": 7, "part3": 32, "part4": 71, "part5": 101, "part6": 131, "part7": 147}
 
 
-def load(root):
+def mocks(root):
+    """content/m01, m02 … の回番号の一覧"""
+    return sorted(int(d.name[1:]) for d in (root / "content").glob("m[0-9][0-9]") if d.is_dir())
+
+
+def prefix(m):
+    """1回目は従来の id のまま（成績・苦手の記録と音声ファイル名を保つ）。2回目以降は M02- などを付ける"""
+    return "" if m == 1 else f"M{m:02d}-"
+
+
+def img_path(item_id):
+    """Part 1 の写真の置き場所（id は回の印つき）"""
+    return f"img/{item_id}.jpg"
+
+
+@functools.lru_cache(maxsize=None)
+def _load(root, m):
     data, errs = {}, []
     for k, (fn, _, _) in FILES.items():
-        p = root / "content" / fn
+        p = root / "content" / f"m{m:02d}" / fn
         if not p.exists():
             errs.append(f"{fn}: ファイルがありません"); data[k] = []; continue
         try:
@@ -42,17 +62,29 @@ def load(root):
     return data, errs
 
 
+def load(root, m=1):
+    """回 m の content を読む（1回の実行の中では読み直さない）。呼び出し側が書きかえても元は変わらないよう写しを返す"""
+    data, errs = _load(root, m)
+    return copy.deepcopy(data), list(errs)
+
+
 def words(s):
     return len(re.findall(r"[A-Za-z0-9'’$%.,-]+", re.sub(r"\{\{\d\}\}|\[\d\]|-{3,}", " ", s)))
 
 
-def number(data):
-    """Return dict part -> list of items, with 'num' assigned (set parts get num on each q)."""
+def number(data, m=1):
+    """Return dict part -> list of items, with 'num' assigned (set parts get num on each q).
+    id には回の印（prefix）を付け、Part 1 の写真は img/{id}.jpg にする。"""
+    pre = prefix(m)
+    data = copy.deepcopy(data)
+    if pre:
+        for v in data.values():
+            for it in v: it["id"] = pre + it.get("id", "")
+    for it in data.get("part1", []): it["img"] = img_path(it["id"])
     out = {}
-    for part in ["part2", "part3", "part4", "part5", "part6"]:
+    for part in [k for k in STARTS if k != "part7"]:
         n = STARTS[part]; items = []
         for it in data.get(part, []):
-            it = json.loads(json.dumps(it))
             if "qs" in it:
                 for q in it["qs"]: q["num"] = n; n += 1
             else:
@@ -61,7 +93,6 @@ def number(data):
         out[part] = items
     n = STARTS["part7"]; items = []
     for it in data.get("part7s", []) + data.get("part7m", []):
-        it = json.loads(json.dumps(it))
         for q in it["qs"]: q["num"] = n; n += 1
         items.append(it)
     out["part7"] = items
@@ -69,11 +100,11 @@ def number(data):
 
 
 # ---------------- validate ----------------
-def validate(root):
-    data, errs = load(root)
+def validate_one(root, m):
+    data, errs = load(root, m)
     warns = []
-    E = lambda m: errs.append(m)
-    W = lambda m: warns.append(m)
+    E = lambda msg: errs.append(msg)
+    W = lambda msg: warns.append(msg)
 
     def base(k, items):
         fn, pre, cnt = FILES[k]
@@ -96,11 +127,26 @@ def validate(root):
         if tags is not None and o.get("tag") not in tags: E(f"{fn} {id_}: tag {o.get('tag')!r} が一覧にない")
         if e_needed and not str(o.get("e", "")).strip(): E(f"{fn} {id_}: e が空")
 
-    def bias(fn, ans, n):
-        if len(ans) < 8: return
+    def bias(fn, ans, n, min_n=8):
+        if len(ans) < min_n: return
         dist = [ans.count(i) for i in range(n)]
         lim = len(ans) * (0.5 if n == 3 else 0.4)
         W(f"{fn}: 正解位置の分布 {dist}") if max(dist) > lim or min(dist) == 0 else None
+
+    # Part 1
+    items = data["part1"]; base("part1", items); fn = "part1.json"; tagc = {}
+    for it in items:
+        i = it.get("id")
+        if not need(fn, i, it, ["id", "tag", "v", "c", "a", "ja", "e", "facts"]): continue
+        check_choice(fn, i, it, 4, P1_TAGS)
+        tagc[it["tag"]] = tagc.get(it["tag"], 0) + 1
+        if it["v"] not in VOICES: E(f"{fn} {i}: v={it['v']!r} は未知の声")
+        img = img_path(prefix(m) + i)
+        if not (root / img).exists(): E(f"{fn} {i}: 写真 {img} がない（tools/p1_photos.py で作る）")
+        if not isinstance(it["ja"], list) or len(it["ja"]) != 4: E(f"{fn} {i}: ja が4つではない")
+        if not it["facts"]: E(f"{fn} {i}: facts が空")
+    bias(fn, [it.get("a") for it in items], 4, min_n=6)  # 6問なら1位置3問以上で警告
+    if items and any(tagc.get(t, 0) != 2 for t in P1_TAGS): W(f"{fn}: tag配分 {tagc}（目安 各2）")
 
     # Part 2
     items = data["part2"]; base("part2", items); fn = "part2.json"; ans = []
@@ -227,9 +273,40 @@ def validate(root):
                 if tot["言い換え（同義語）"] != 2: W(f"{fn}: 同義語 {tot['言い換え（同義語）']}問（目安 2）")
                 if tot["複数文書の照合"] != 9: W(f"{fn}: 複数文書の照合 {tot['複数文書の照合']}問（目安 2文書×1〜2＋3文書×2＝8〜10）") if not 8 <= tot["複数文書の照合"] <= 10 else None
 
-    print(f"== validate: エラー {len(errs)} / 警告 {len(warns)} ==")
-    for m in errs: print("ERROR", m)
-    for m in warns: print("WARN ", m)
+    return errs, warns, data
+
+
+NAME_RE = re.compile(r"\b(?:Mr|Ms|Mrs|Dr)\. [A-Z][a-z]+|\b[A-Z][a-z]+ [A-Z][a-z]+(?: [A-Z][a-z]+)?\b")
+
+
+def texts(data):
+    """回をまたぐ重複検査に使う英文（問題文・本文・会話）"""
+    out = [it.get("prompt", "") for it in data["part2"]] + [it.get("q", "") for it in data["part5"]]
+    out += [" ".join(it.get("c", [])) for it in data["part1"]]
+    out += [" ".join(l.get("t", "") for l in it.get("lines", [])) for it in data["part3"]]
+    out += [it.get("text", "") for k in ("part4", "part6") for it in data[k]]
+    out += [d.get("text", "") for k in ("part7s", "part7m") for it in data[k] for d in it.get("docs", [])]
+    return [t for t in out if t]
+
+
+def validate(root):
+    errs, warns, seen_txt, seen_name = [], [], {}, {}
+    ms = mocks(root)
+    if not ms: errs.append("content/m01 などの回フォルダがありません")
+    for m in ms:
+        e, w, data = validate_one(root, m)
+        errs += [f"m{m:02d}/{x}" for x in e]; warns += [f"m{m:02d}/{x}" for x in w]
+        for t in texts(data):
+            k = re.sub(r"\W+", " ", t.lower()).strip()
+            if k in seen_txt and seen_txt[k] != m: errs.append(f"m{m:02d}: m{seen_txt[k]:02d} と同じ英文 {t[:50]!r}")
+            seen_txt.setdefault(k, m)
+            for n in set(NAME_RE.findall(t)):
+                seen_name.setdefault(n, set()).add(m)
+    dup = sorted(n for n, s in seen_name.items() if len(s) > 1)
+    if dup: warns.append(f"複数の回に出る人名・社名 {len(dup)}件: " + ", ".join(f"{n}({','.join(map(str, sorted(seen_name[n])))})" for n in dup[:30]))
+    print(f"== validate: {len(ms)}回分 エラー {len(errs)} / 警告 {len(warns)} ==")
+    for x in errs: print("ERROR", x)
+    for x in warns: print("WARN ", x)
     return not errs
 
 
@@ -237,6 +314,11 @@ def validate(root):
 def audio_plans(numbered):
     """id -> list of segments: ('say', voice_name, text) or ('sil', sec)"""
     plans = {}
+    for it in numbered["part1"]:
+        seg = [("say", NARR, f"Number {it['num']}."), ("sil", 0.8)]
+        for lab, c in zip("ABCD", it["c"]):
+            seg += [("say", "say:Samantha", f"{lab}."), ("say", VOICES[it["v"]], c), ("sil", 0.4)]
+        plans[it["id"]] = seg
     for it in numbered["part2"]:
         va = VOICES[it["va"]]
         seg = [("say", NARR, f"Number {it['num']}."), ("say", VOICES[it["vq"]], it["prompt"]), ("sil", 0.6)]
@@ -316,11 +398,17 @@ def render(seg, out):
         os.replace(tmpout, out)
 
 
+def all_plans(root):
+    plans = {}
+    for m in mocks(root):
+        plans.update(audio_plans(number(load(root, m)[0], m)))
+    return plans
+
+
 def audio(root, only=None):
-    data, errs = load(root)
-    plans = audio_plans(number(data))
+    plans = all_plans(root)
     if only and only not in plans:
-        print(f"ERROR: {only} は音声対象（Part 2〜4）にありません"); return False
+        print(f"ERROR: {only} は音声対象（Part 1〜4）にありません"); return False
     adir = root / "audio"; adir.mkdir(exist_ok=True)
     hp = adir / ".hashes.json"
     hashes = json.loads(hp.read_text()) if hp.exists() else {}
@@ -339,16 +427,21 @@ def audio(root, only=None):
 
 # ---------------- data ----------------
 def build_data(root):
-    data, errs = load(root)
-    nd = number(data)
-    for k in ("part2", "part3", "part4"):
-        for it in nd[k]:
-            if (root / "audio" / f"{it['id']}.mp3").exists(): it["audio"] = f"audio/{it['id']}.mp3"
-            else: print(f"WARN  音声なし: {it['id']}")
+    """data/data.js = {mocks:[{n, free, part1:[…], …, part7:[…]}]}。ファイルがそろっていない回は出さない"""
+    out = []
+    for m in mocks(root):
+        data, errs = load(root, m)
+        if errs: print(f"WARN  m{m:02d} はファイルがそろっていないので出力しません: {errs[0]}"); continue
+        nd = number(data, m)
+        for k in AUDIO_PARTS:
+            for it in nd[k]:
+                if (root / "audio" / f"{it['id']}.mp3").exists(): it["audio"] = f"audio/{it['id']}.mp3"
+                else: print(f"WARN  音声なし: {it['id']}")
+        out.append({"n": m, "free": m == FREE_MOCK, **nd})
     (root / "data").mkdir(exist_ok=True)
-    body = json.dumps(nd, ensure_ascii=False, indent=1)
+    body = json.dumps({"mocks": out}, ensure_ascii=False, indent=1)
     (root / "data" / "data.js").write_text(f"window.TOEIC_DATA = {body};\n", encoding="utf-8")
-    print("== data: data/data.js を出力 ==", {k: len(v) for k, v in nd.items()})
+    print("== data: data/data.js を出力 ==", [f"m{x['n']:02d}" for x in out])
     return True
 
 

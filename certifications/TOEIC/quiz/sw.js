@@ -1,11 +1,22 @@
 /* TOEIC学習アプリ Service Worker
    - 本体・data.js: ネット優先→失敗時キャッシュ
+   - 写真(img/): インストール時に data.js に書かれた写真をすべて保存し、以後はキャッシュ優先
+     （ファイル名が問題IDで固定のため。差し替え時は VERSION を上げる）
    - 音声(audio/): 再生時にキャッシュ。Rangeリクエスト(Safari等)はキャッシュ済み全体から切り出して返す */
-const VERSION = 'toeic-quiz-v4';
+const VERSION = 'toeic-quiz-v6';
 const CORE = ['./index.html','./manifest.webmanifest','./data/data.js','./data/vocab.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
 
+async function precache() {
+  const c = await caches.open(VERSION);
+  await Promise.allSettled(CORE.map(u => c.add(u)));
+  // 写真は少量（1枚約0.1MB）なので、オフラインで初めて開いても出るよう先に保存する
+  const res = await c.match('./data/data.js');
+  const imgs = res ? [...new Set((await res.text()).match(/img\/[\w.-]+\.jpg/g) || [])] : [];
+  await Promise.allSettled(imgs.map(u => c.add('./' + u)));
+}
+
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(VERSION).then(c => Promise.allSettled(CORE.map(u => c.add(u)))).then(() => self.skipWaiting()));
+  e.waitUntil(precache().then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== VERSION).map(k => caches.delete(k)))).then(() => self.clients.claim()));
@@ -25,7 +36,7 @@ async function rangeFromCache(req, res) {
   });
 }
 
-async function audioFetch(req) {
+async function cacheFirst(req) {
   const cache = await caches.open(VERSION);
   const key = new Request(req.url);
   const hit = await cache.match(key);
@@ -48,7 +59,7 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;
-  if (url.pathname.includes('/audio/')) { e.respondWith(audioFetch(req)); return; }
+  if (url.pathname.includes('/audio/') || url.pathname.includes('/img/')) { e.respondWith(cacheFirst(req)); return; }
   // 本体・data.js・その他: ネット優先→キャッシュ
   e.respondWith(
     fetch(req).then(res => {

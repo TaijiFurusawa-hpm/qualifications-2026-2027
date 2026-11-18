@@ -18,8 +18,7 @@ def main():
     ap.add_argument("--threshold", type=float, default=0.9)
     a = ap.parse_args()
     root = Path(a.root).resolve()
-    data, _ = build.load(root)
-    plans = build.audio_plans(build.number(data))
+    plans = build.all_plans(root)
     files = [f for f in sorted((root / "audio").glob("*.mp3")) if f.stem in plans and (not a.only or f.stem == a.only)]
     if not files: print("音声ファイルがありません"); return
     with tempfile.TemporaryDirectory() as tmp:

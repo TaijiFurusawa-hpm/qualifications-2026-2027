@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UX設計書 ― TOEIC L&amp;R 模試＋英単語アプリ</title>
+<style>
+  :root{
+    --ink:#1f2733; --sub:#5b6675; --line:#e2e6ec; --bg:#f6f7f9; --paper:#fff;
+    --accent:#2f6f6a; --accent-soft:#e8f1f0; --gold:#b5894b; --gold-soft:#fbf3e2;
+    --quiet:#3b5b8a; --quiet-soft:#eaf0f8; --warn:#a8442f; --warn-soft:#fbeee9;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%; color-scheme:light}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",-apple-system,BlinkMacSystemFont,"Segoe UI",Meiryo,sans-serif;
+    line-height:1.8; -webkit-font-smoothing:antialiased; font-size:16px}
+  .wrap{max-width:980px; margin:0 auto; padding:32px 16px 80px}
+  header.title{text-align:center; padding:30px 20px 24px; margin-bottom:18px; background:var(--paper); border:1px solid var(--line); border-radius:16px}
+  header.title .eyebrow{font-size:.76rem; letter-spacing:.3em; color:var(--accent); font-weight:700; margin-bottom:10px}
+  header.title h1{font-size:1.6rem; margin:0 0 8px; line-height:1.4; font-weight:800}
+  header.title .ver{display:inline-block; font-size:.76rem; color:var(--sub); border:1px solid var(--line); border-radius:999px; padding:3px 14px; margin:4px 3px 0}
+  section{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:22px 22px; margin-bottom:16px}
+  h2{font-size:1.2rem; margin:0 0 16px; padding-left:13px; border-left:5px solid var(--accent); line-height:1.4}
+  h2 .n{color:var(--gold); margin-right:.4em; font-weight:800}
+  h3{font-size:1.02rem; margin:26px 0 10px; padding-bottom:5px; border-bottom:1px solid var(--line); line-height:1.5}
+  h3 .id{display:inline-block; font-size:.72rem; font-weight:700; color:var(--accent); background:var(--accent-soft); border-radius:6px; padding:1px 8px; margin-right:8px; vertical-align:2px}
+  h4{font-size:.94rem; margin:18px 0 6px; color:var(--accent)}
+  p{margin:0 0 12px} ul,ol{margin:0 0 12px; padding-left:1.4em} li{margin:3px 0}
+  .muted{color:var(--sub); font-size:.9rem}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.86em; background:#f1f3f6; border:1px solid var(--line); border-radius:5px; padding:0 5px; word-break:break-all}
+  pre{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.82rem; line-height:1.6; background:#f4f6f8; border:1px solid var(--line); border-radius:10px; padding:12px 14px; overflow-x:auto; margin:0 0 12px; white-space:pre}
+  .tw{overflow-x:auto; margin:0 0 14px; -webkit-overflow-scrolling:touch}
+  table{width:100%; border-collapse:collapse; font-size:.88rem; min-width:560px}
+  table.narrow{min-width:0}
+  th,td{text-align:left; padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top}
+  thead th{font-size:.76rem; letter-spacing:.04em; color:var(--sub); border-bottom:2px solid var(--line); background:#fafbfc; white-space:nowrap}
+  td.k,th.k{font-weight:700; white-space:nowrap}
+  .src{display:inline-block; font-size:.7rem; font-weight:700; color:#56606e; background:#eef1f5; border:1px solid #dde2e9; border-radius:5px; padding:0 6px; margin:0 2px; white-space:nowrap; line-height:1.6; vertical-align:1px}
+  .unv{display:inline-block; font-size:.7rem; font-weight:700; color:#8a6d2f; background:var(--gold-soft); border:1px solid #e7d3a8; border-radius:999px; padding:0 8px; margin:0 2px; white-space:nowrap; line-height:1.6}
+  .dec{background:var(--accent-soft); border:1px solid #d3e4e2; border-radius:12px; padding:14px 16px; margin:0 0 14px}
+  .dec b.t{display:block; color:var(--accent); font-size:.8rem; letter-spacing:.08em; margin-bottom:4px}
+  .note{background:var(--gold-soft); border:1px solid #e7d3a8; border-radius:12px; padding:12px 16px; margin:0 0 14px; font-size:.92rem}
+  .risk{background:var(--warn-soft); border:1px solid #efcfc6; border-radius:12px; padding:12px 16px; margin:0 0 14px; font-size:.92rem}
+  .copy{background:#fafbfc; border:1px dashed #c9d0da; border-radius:10px; padding:10px 14px; margin:0 0 12px; font-size:.93rem}
+  .copy .lb{display:block; font-size:.7rem; color:var(--sub); font-weight:700; letter-spacing:.06em; margin-bottom:2px}
+  .two{display:grid; grid-template-columns:1fr; gap:12px; margin-bottom:14px}
+  @media (min-width:760px){.two{grid-template-columns:1fr 1fr}}
+  .layer{border-radius:12px; padding:14px 16px; border:1px solid var(--line)}
+  .layer.q{background:var(--quiet-soft); border-color:#d2deee} .layer.e{background:var(--gold-soft); border-color:#e7d3a8}
+  .layer h4{margin-top:0} .layer.q h4{color:var(--quiet)} .layer.e h4{color:#8a6d2f}
+  nav.toc{font-size:.92rem} nav.toc ol{columns:1; margin:0} @media (min-width:760px){nav.toc ol{columns:2}}
+  nav.toc a{color:var(--accent); text-decoration:none} nav.toc a:hover{text-decoration:underline}
+  .fig{border:1px solid var(--line); border-radius:12px; padding:10px; background:#fcfcfd; overflow-x:auto; margin:0 0 14px}
+  .fig svg{display:block; max-width:100%; height:auto; min-width:560px}
+  .fig.sm svg{min-width:0; margin:0 auto}
+  .cap{font-size:.8rem; color:var(--sub); margin:6px 2px 0}
+  .wires{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin:0 0 14px}
+  .wire{border:1px solid var(--line); border-radius:12px; padding:10px; background:#fcfcfd; text-align:center}
+  .wire svg{width:100%; max-width:210px; height:auto}
+  .wire b{display:block; font-size:.86rem; margin-top:4px} .wire span{font-size:.78rem; color:var(--sub)}
+  .pick{outline:3px solid var(--accent); outline-offset:-1px; background:var(--accent-soft)}
+  dl.spec{display:grid; grid-template-columns:1fr; gap:0; margin:0 0 14px; border:1px solid var(--line); border-radius:10px; overflow:hidden}
+  dl.spec dt{background:#fafbfc; font-weight:700; font-size:.82rem; color:var(--sub); padding:7px 12px; border-bottom:1px solid var(--line)}
+  dl.spec dd{margin:0; padding:9px 12px; border-bottom:1px solid var(--line); font-size:.92rem}
+  dl.spec dd:last-child{border-bottom:none}
+  @media (min-width:760px){dl.spec{grid-template-columns:150px 1fr} dl.spec dt{border-right:1px solid var(--line)} dl.spec dt:last-of-type{border-bottom:none}}
+  .steps{counter-reset:s; list-style:none; padding:0}
+  .steps>li{counter-increment:s; position:relative; padding:0 0 10px 38px; margin:0}
+  .steps>li::before{content:counter(s); position:absolute; left:0; top:2px; width:26px; height:26px; border-radius:50%; background:var(--accent); color:#fff; font-size:.8rem; font-weight:700; display:grid; place-items:center}
+  footer{color:var(--sub); font-size:.8rem; text-align:center; margin-top:22px}
+  @media print{body{background:#fff} section{break-inside:avoid-page}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="title">
+  <div class="eyebrow">UX DESIGN SPECIFICATION</div>
+  <h1>UX設計書<br>TOEIC® L&amp;R 模試＋英単語アプリ</h1>
+  <span class="ver">v1.0 ・ 2026-11-19</span><span class="ver">担当範囲：構造・流れ・ふるまい・操作の決まり</span>
+  <p class="muted" style="margin:12px 0 0">見た目（配色・書体・質感）は <code>ux/ビジュアル案.html</code> が決めます。この文書は、どの案が選ばれても変わらない部分を定めます。色や形は「主ボタン」「正解色」のように役割の名前で呼びます。</p>
+</header>
+
+<section>
+  <h2><span class="n">0</span>読み方と、先に決めたこと</h2>
+  <div class="dec"><b class="t">この文書の主な決定</b>
+    <ul style="margin:0">
+      <li><b>ナビゲーション</b>：下タブ4つ（今日／模試／練習／単語）。記録と設定は「今日」の右上から開く。問題を解いている間はタブを隠す。</li>
+      <li><b>Part 7 のレイアウト</b>：スマホは「上に文書、下に設問トレイ（3段階で上げ下げ）」。ページ全体は動かさず、文書と設問を別々にスクロールさせる。幅840px以上は左右2画面。</li>
+      <li><b>推定スコア</b>：セクション別の正答数から直線で中心を出し、「解いた問題数による揺れ＋回ごとの難しさの差＋未較正のずれ」の3つを足して幅にする。1回目は合計でおよそ±70〜90点、3回で±50〜60点。必ず「目安」と書く。</li>
+      <li><b>課金の出し方</b>：模試1の結果画面の最後に1か所、鍵のかかった回を押したときに1か所。どちらも同じ1枚のシート。勝手には開かない。</li>
+    </ul>
+  </div>
+  <h4>根拠の書き方</h4>
+  <p>各項目の末尾に、支えになる調査ファイルと箇所を札で示します。</p>
+  <div class="tw"><table class="narrow">
+    <thead><tr><th>札</th><th>ファイル</th><th>例</th></tr></thead>
+    <tbody>
+      <tr><td><span class="src">L</span></td><td><code>ux/research_learning_apps.md</code></td><td><span class="src">L#4</span>＝第4章のパターン4、<span class="src">L§5-2</span>＝5-2節</td></tr>
+      <tr><td><span class="src">A</span></td><td><code>ux/research_apple_awards.md</code></td><td><span class="src">A-P8</span>＝パターンP8、<span class="src">A§3</span>＝アンチパターン表</td></tr>
+      <tr><td><span class="src">G</span></td><td><code>ux/research_guidelines.md</code></td><td><span class="src">G§3.3</span>＝WCAG 2.2.1の節</td></tr>
+      <tr><td><span class="src">S</span></td><td><code>ux/research_store_design_awards.md</code></td><td><span class="src">S-P18</span>＝パターンP18</td></tr>
+      <tr><td><span class="src">V</span></td><td><code>ux/research_visual_motion.md</code></td><td><span class="src">V§5.3</span>＝触覚と音の対応表</td></tr>
+      <tr><td><span class="src">C</span></td><td><code>ux/current_audit.md</code></td><td><span class="src">C観察6</span>＝現行画面の観察6、<span class="src">C決定</span>＝決定済み事項</td></tr>
+      <tr><td><span class="src">SPEC</span> <span class="src">実装</span></td><td><code>SPEC.md</code>／<code>index.html</code></td><td><span class="src">実装:vAnswer</span>＝現行の関数名</td></tr>
+      <tr><td><span class="unv">未確認</span> <span class="unv">設計判断</span></td><td colspan="2">調査ファイル自身が未確認としている事項、または出典のない設計上の判断。実機か一次情報で確かめるまで仮の値として扱う。</td></tr>
+    </tbody>
+  </table></div>
+  <nav class="toc"><ol>
+    <li><a href="#s1">設計の原則と、2つの層</a></li>
+    <li><a href="#s2">情報設計</a></li>
+    <li><a href="#s3">主要な流れ</a></li>
+    <li><a href="#s4">画面ごとの仕様</a></li>
+    <li><a href="#s5">操作の手触りの決まり</a></li>
+    <li><a href="#s6">推定スコア（目安の幅）の出し方</a></li>
+    <li><a href="#s7">実装計画</a></li>
+    <li><a href="#s8">リスクと未確認事項</a></li>
+  </ol></nav>
+</section>
+
+<!-- ================= 1 ================= -->
+<section id="s1">
+  <h2><span class="n">1</span>設計の原則と、2つの層</h2>
+
+  <h3>1.1 原則（7つ）</h3>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>原則</th><th>具体的に守ること</th><th>根拠</th></tr></thead>
+    <tbody>
+      <tr><td class="k">1</td><td class="k">今日やることは1つ</td><td>「今日」画面の主ボタンは常に1つ。ほかの入口は下タブに移す。開始前に量と時間（例「約7分」）を書く。</td><td><span class="src">C観察1</span><span class="src">S-P1</span><span class="src">S-P3</span><span class="src">G§1.2</span>（目立つボタンは1画面1〜2個）</td></tr>
+      <tr><td class="k">2</td><td class="k">模試は静か、練習は手応え</td><td>演出を2つの層に分ける（1.2）。模試中は正誤も音も出さない。練習は1問ごとに短く返し、大きな演出は節目だけ。</td><td><span class="src">C要望</span><span class="src">L#1</span><span class="src">L§5-2</span><span class="src">A-P8</span><span class="src">V§0.1-11</span></td></tr>
+      <tr><td class="k">3</td><td class="k">正直に見せる</td><td>スコアは幅と「目安」。価格は1つ、買い切りと明記。数えられないもの（データ不足の弱点、未受験のスコア）は出さずに条件を書く。</td><td><span class="src">C決定</span><span class="src">L#2</span><span class="src">L#4</span><span class="src">L§5-1</span><span class="src">S-P14</span></td></tr>
+      <tr><td class="k">4</td><td class="k">間違いは罰しない。もう一度解かせる</td><td>誤答は自動で集め、解説の前に自分で解き直す。回数制限・減点・連続記録の没収はしない。</td><td><span class="src">L#5</span><span class="src">L#6</span><span class="src">L§2</span>（想起練習）<span class="src">A-P11</span></td></tr>
+      <tr><td class="k">5</td><td class="k">だれでも最後まで行ける</td><td>文字200%・読み上げ・色に頼らない正誤・時間延長。主要な流れ（初回→模試→結果→購入→単語→設定）をこの条件で完走できること。</td><td><span class="src">A-P18</span><span class="src">A-P19</span><span class="src">G§3</span><span class="src">G§6.1</span></td></tr>
+      <tr><td class="k">6</td><td class="k">端末の作法に合わせる</td><td>タブ・戻る・シートは各OSの見慣れた形。個性は問題カード・結果・単語に置く。セーフエリア、戻るボタン、消音スイッチに従う。</td><td><span class="src">A-P17</span><span class="src">G§2.5</span><span class="src">G§5</span></td></tr>
+      <tr><td class="k">7</td><td class="k">待たせない、失わせない</td><td>起動してすぐ操作できる。解答は1問ごとに保存。模試は中断しても続きから。購入は起動時に自動で確かめる。</td><td><span class="src">G§1.8</span><span class="src">G§5.7</span><span class="src">L#3</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>1.2 2つの層：「静かな試験」と「手応えのある練習」</h3>
+  <p>画面はどちらか一方の層に属します。実装では <code>Fx.layer = "quiet" | "expressive"</code> を画面の入口で切り替え、動き・音・触覚の呼び出しはすべてこの値を通します（個々の画面で判断しない）。</p>
+  <div class="tw"><table class="narrow">
+    <thead><tr><th>層</th><th>属する画面</th></tr></thead>
+    <tbody>
+      <tr><td class="k">静かな試験層</td><td>模試の準備・リスニング・切り替え・リーディング・解答状況。オンボーディングの実力チェック中もこの層。</td></tr>
+      <tr><td class="k">手応えの練習層</td><td>今日、Part別練習、解き直し、単語特訓、各結果画面（模試の結果を含む）、記録、レベル到達。</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="two">
+    <div class="layer q">
+      <h4>静かな試験層で起きること（これ以外は起きない）</h4>
+      <p><b>動き</b></p>
+      <ul>
+        <li>選択肢の選択表示の切り替え（120ms、色と枠と印）</li>
+        <li>音声の進み具合の棒（等速）</li>
+        <li>画面の入れ替え（フェード150ms。横すべりなし）</li>
+        <li>残り時間の数字の更新（1秒ごと。点滅しない）</li>
+        <li>設問トレイの上げ下げ（指に追従）</li>
+      </ul>
+      <p><b>音</b></p>
+      <ul><li>リスニングの音声だけ。画面操作の音は設定がオンでも鳴らさない。</li></ul>
+      <p><b>触覚</b></p>
+      <ul>
+        <li>選択肢を選んだときの軽い1回（設定「模試中の触覚」がオンのときだけ。既定はオフ）</li>
+        <li>それ以外なし（残り時間の知らせも触覚なし）</li>
+      </ul>
+      <p><b>出さないもの</b>：正誤、連続正解、紙吹雪、ほめ言葉、購入の案内、通知、評価の依頼、「おかしい」報告ボタン。</p>
+      <p class="muted" style="margin:0"><span class="src">L§5-2</span><span class="src">V§5.3</span>（模試中は触覚オフが既定・UI音なし）<span class="src">A-P15</span></p>
+    </div>
+    <div class="layer e">
+      <h4>手応えの練習層で起きること</h4>
+      <p><b>動き</b></p>
+      <ul>
+        <li>ボタンの押し込みと戻り</li>
+        <li>正解：チェックの線が描かれる（320ms）。不正解：×印と枠に切り替わる（揺らさない）</li>
+        <li>進み具合の棒・輪が伸びる、数字が数え上がる（結果・記録だけ）</li>
+        <li>単語カードのめくり、スワイプ</li>
+        <li>節目だけ紙吹雪：単語の段の修了、模試の自己ベスト更新、初めての模試完了</li>
+      </ul>
+      <p><b>音</b>（設定「効果音」オンのとき。既定オフ。消音スイッチに従う）</p>
+      <ul>
+        <li>正解の短い2音、不正解のやわらかい1音、節目の短い音</li>
+        <li>Part 1〜4 の練習では、音声の再生中は効果音を鳴らさない</li>
+      </ul>
+      <p><b>触覚</b>（設定「触覚」オンのとき。既定オン）</p>
+      <ul>
+        <li>選択、正解、不正解、スワイプが決まる位置、節目</li>
+      </ul>
+      <p class="muted" style="margin:0"><span class="src">A-P8</span><span class="src">A-P9</span><span class="src">A-P10</span><span class="src">S-P7</span><span class="src">L#25</span><span class="src">L#26</span><span class="src">V§4.4</span><span class="src">V§4.5</span></p>
+    </div>
+  </div>
+  <div class="note"><b>両方の層に共通の決まり</b>：正誤・状態は「色＋印（✓／×）＋文字」の3つで示す。音だけ、触覚だけ、動きだけで伝える情報は作らない。どの演出もタップで飛ばせて、終わるのを待たずに次の操作ができる。<span class="src">A-P10</span><span class="src">G§1.5</span><span class="src">G§3.1</span>（1.4.1）</div>
+</section>
+
+<!-- ================= 2 ================= -->
+<section id="s2">
+  <h2><span class="n">2</span>情報設計</h2>
+
+  <h3>2.1 ナビゲーションの型：3案の比較</h3>
+  <div class="tw"><table>
+    <thead><tr><th>案</th><th>内容</th><th>良い点</th><th>困る点</th><th>判定</th></tr></thead>
+    <tbody>
+      <tr><td class="k">A 1枚のホーム（現行）</td><td>全機能を1本の長いスクロールに並べる</td><td>作りが単純</td><td>今日やることが埋もれる。模試10回と単語6段が入ると長さが倍になる <span class="src">C観察1</span></td><td>不採用</td></tr>
+      <tr class="pick"><td class="k">B 下タブ4つ</td><td>今日／模試／練習／単語。記録・設定は「今日」右上</td><td>親指が届く。毎日使う2つ（今日・単語）と週に使う2つ（模試・練習）が1タップ。ラベルは全部1語 <span class="src">G§2.5</span><span class="src">G§1.8</span></td><td>記録が1階層深い（→結果画面と「今日」から直接行けるようにして補う）</td><td><b>採用</b></td></tr>
+      <tr><td class="k">C 下タブ5つ</td><td>B＋記録</td><td>記録が1タップ</td><td>幅320pxで5つは窮屈。記録は毎日見る画面ではない。空の状態が長く続くタブになる</td><td>不採用</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>タブは常に表示し、<b>問題を解いている間（セッション中）だけ隠す</b>。セッションは全画面で、左上に「やめる／中断」。<span class="src">A-P15</span></li>
+    <li>各タブは自分のスクロール位置を覚える。タブを押し直すと先頭に戻る。<span class="src">G§1.8</span>（前回の状態を復元）</li>
+    <li>幅840px以上（タブレット・PC）では下タブを左の縦の列に置き換える。項目は同じ。<span class="src">G§2.5</span>（600dp以上は横並び）</li>
+    <li>Android の戻るボタン：セッション中は「やめますか」の確認、タブの先頭ではアプリを閉じる、それ以外は1つ前へ。<span class="src">G§2.5</span><span class="src">G§6.3</span></li>
+    <li>画面の左右端から始まる横スワイプ操作は作らない（OSの戻る操作とぶつかる）。単語カードのスワイプはカードの上から始めたときだけ反応させる。<span class="src">G§2.5</span></li>
+  </ul>
+
+  <h3>2.2 画面の一覧</h3>
+  <div class="tw"><table>
+    <thead><tr><th>ID</th><th>画面</th><th>層</th><th>入口</th><th>現行の対応 <span class="src">実装</span></th></tr></thead>
+    <tbody>
+      <tr><td class="k">O1–O4</td><td>はじめに（目標・受験日・実力チェック・提案）</td><td>静か</td><td>初回起動、設定「はじめの案内をもう一度」</td><td>なし（新規）</td></tr>
+      <tr><td class="k">H1</td><td>今日</td><td>手応え</td><td>タブ1</td><td><code>home()</code> を作り直す</td></tr>
+      <tr><td class="k">M1</td><td>模試の一覧（10回）</td><td>手応え</td><td>タブ2</td><td>なし（<code>startMock()</code> は1回目固定）</td></tr>
+      <tr><td class="k">M2</td><td>模試の準備（時間の選択・音の確認）</td><td>静か</td><td>M1の回</td><td>なし</td></tr>
+      <tr><td class="k">M3</td><td>模試：リスニング</td><td>静か</td><td>M2</td><td><code>showUnit()</code> mode=mock</td></tr>
+      <tr><td class="k">M4</td><td>模試：リーディングへの切り替え</td><td>静か</td><td>M3の最後</td><td><code>readingGate()</code></td></tr>
+      <tr><td class="k">M5</td><td>模試：リーディング</td><td>静か</td><td>M4</td><td><code>showUnit()</code> mode=mock</td></tr>
+      <tr><td class="k">M6</td><td>解答状況（101〜200の一覧）</td><td>静か</td><td>M5の「一覧」</td><td>なし</td></tr>
+      <tr><td class="k">M7</td><td>模試の結果</td><td>手応え</td><td>M5の採点、M1の受験ずみの回、記録</td><td><code>results(true)</code></td></tr>
+      <tr><td class="k">P1</td><td>練習（Part別・苦手の解き直し）</td><td>手応え</td><td>タブ3</td><td><code>home()</code> のPart一覧</td></tr>
+      <tr><td class="k">P2</td><td>練習セッション（Part 1〜7共通の枠）</td><td>手応え</td><td>P1、H1、M7</td><td><code>showUnit()</code> mode=practice/review</td></tr>
+      <tr><td class="k">P3</td><td>練習の結果</td><td>手応え</td><td>P2の終わり</td><td><code>results(false)</code></td></tr>
+      <tr><td class="k">V1</td><td>単語（6段の階段）</td><td>手応え</td><td>タブ4</td><td><code>vHomeHTML()</code></td></tr>
+      <tr><td class="k">V2</td><td>単語セッション（4択）</td><td>手応え</td><td>V1、H1</td><td><code>vShow()</code> <code>vPaint()</code></td></tr>
+      <tr><td class="k">V3</td><td>単語の結果</td><td>手応え</td><td>V2の終わり</td><td><code>vFinish()</code></td></tr>
+      <tr><td class="k">V4</td><td>単語の一覧・検索</td><td>手応え</td><td>V1</td><td><code>vList()</code></td></tr>
+      <tr><td class="k">V5</td><td>段の到達（お祝い）</td><td>手応え</td><td>V3の直後（条件を満たしたとき）</td><td>なし</td></tr>
+      <tr><td class="k">V6</td><td>まとめて確認（めくり・スワイプ）</td><td>手応え</td><td>V1の下の段</td><td>なし</td></tr>
+      <tr><td class="k">T1</td><td>記録</td><td>手応え</td><td>H1右上、M7、P3</td><td><code>statsView()</code></td></tr>
+      <tr><td class="k">X1</td><td>設定</td><td>—</td><td>H1右上</td><td>なし（<code>vSet()</code> の一部を移す）</td></tr>
+      <tr><td class="k">X2</td><td>ライセンス／商標／プライバシー／報告した問題</td><td>—</td><td>X1</td><td><code>flagView()</code> を移す</td></tr>
+      <tr><td class="k">B1</td><td>解放シート（購入）</td><td>—</td><td>M7の最後、M1の鍵つきの回、X1</td><td>なし</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>2.3 サイトマップ</h3>
+  <div class="fig">
+    <svg viewBox="0 0 940 560" role="img" aria-labelledby="smt smd" font-family="Hiragino Sans,Yu Gothic,sans-serif" font-size="13">
+      <title id="smt">サイトマップ</title>
+      <desc id="smd">起動から、初回だけ「はじめに」を通り、下タブの今日・模試・練習・単語に入る。今日から記録と設定、模試から準備・実施・結果、練習からセッションと結果、単語からセッション・一覧・到達へ進む。解放シートは模試の結果、模試の一覧、設定から開く。</desc>
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#8792a2"/></marker>
+        <style>
+          .b{fill:#fff;stroke:#c9d0da;stroke-width:1.2}.t{fill:#e8f1f0;stroke:#2f6f6a;stroke-width:1.6}.q{fill:#eaf0f8;stroke:#9db3d3;stroke-width:1.2}.p{fill:#fbf3e2;stroke:#d9bd84;stroke-width:1.2}
+          .l{stroke:#8792a2;stroke-width:1.2;fill:none;marker-end:url(#ar)}.d{stroke-dasharray:4 4}.s{font-size:11px;fill:#5b6675}.h{font-weight:700}
+        </style>
+      </defs>
+      <!-- row 0 -->
+      <rect class="b" x="20" y="16" width="120" height="40" rx="8"/><text x="80" y="41" text-anchor="middle" class="h">起動</text>
+      <rect class="q" x="190" y="16" width="250" height="40" rx="8"/><text x="315" y="34" text-anchor="middle" class="h">O1–O4 はじめに（初回だけ）</text><text x="315" y="50" text-anchor="middle" class="s">目標 → 受験日 → 実力チェック → 提案</text>
+      <path class="l" d="M140 36H188"/><path class="l" d="M315 56V84"/>
+      <path class="l d" d="M80 56V100H118"/><text x="26" y="78" class="s">2回目以降</text>
+      <!-- tab bar -->
+      <rect x="120" y="86" width="800" height="52" rx="12" fill="#f3f6f6" stroke="#2f6f6a" stroke-width="1.2"/>
+      <text x="134" y="104" class="s">下タブ（セッション中は隠す）</text>
+      <rect class="t" x="150" y="108" width="150" height="26" rx="6"/><text x="225" y="126" text-anchor="middle" class="h">今日 H1</text>
+      <rect class="t" x="345" y="108" width="150" height="26" rx="6"/><text x="420" y="126" text-anchor="middle" class="h">模試 M1</text>
+      <rect class="t" x="540" y="108" width="150" height="26" rx="6"/><text x="615" y="126" text-anchor="middle" class="h">練習 P1</text>
+      <rect class="t" x="735" y="108" width="150" height="26" rx="6"/><text x="810" y="126" text-anchor="middle" class="h">単語 V1</text>
+      <!-- col 1 today -->
+      <path class="l" d="M225 138V168"/>
+      <rect class="p" x="150" y="170" width="150" height="46" rx="8"/><text x="225" y="189" text-anchor="middle">今日の1セット</text><text x="225" y="206" text-anchor="middle" class="s">単語→解き直し→弱点</text>
+      <path class="l" d="M225 216V238"/>
+      <rect class="b" x="150" y="240" width="150" height="34" rx="8"/><text x="225" y="262" text-anchor="middle">T1 記録</text>
+      <path class="l" d="M225 274V296"/>
+      <rect class="b" x="150" y="298" width="150" height="34" rx="8"/><text x="225" y="320" text-anchor="middle">X1 設定</text>
+      <path class="l" d="M225 332V354"/>
+      <rect class="b" x="150" y="356" width="150" height="62" rx="8"/><text x="225" y="375" text-anchor="middle">X2</text><text x="225" y="392" text-anchor="middle" class="s">ライセンス／商標</text><text x="225" y="408" text-anchor="middle" class="s">プライバシー／報告</text>
+      <!-- col 2 mock -->
+      <path class="l" d="M420 138V168"/>
+      <rect class="q" x="345" y="170" width="150" height="34" rx="8"/><text x="420" y="192" text-anchor="middle">M2 準備</text>
+      <path class="l" d="M420 204V222"/>
+      <rect class="q" x="345" y="224" width="150" height="34" rx="8"/><text x="420" y="246" text-anchor="middle">M3 リスニング</text>
+      <path class="l" d="M420 258V276"/>
+      <rect class="q" x="345" y="278" width="150" height="34" rx="8"/><text x="420" y="300" text-anchor="middle">M4 切り替え</text>
+      <path class="l" d="M420 312V330"/>
+      <rect class="q" x="345" y="332" width="150" height="46" rx="8"/><text x="420" y="351" text-anchor="middle">M5 リーディング</text><text x="420" y="368" text-anchor="middle" class="s">⇄ M6 解答状況</text>
+      <path class="l" d="M420 378V396"/>
+      <rect class="p" x="345" y="398" width="150" height="34" rx="8"/><text x="420" y="420" text-anchor="middle">M7 結果</text>
+      <path class="l" d="M420 432V456"/>
+      <rect class="b" x="345" y="458" width="150" height="46" rx="8" stroke="#a8442f"/><text x="420" y="477" text-anchor="middle" class="h">B1 解放シート</text><text x="420" y="494" text-anchor="middle" class="s">¥300・買い切り</text>
+      <path class="l d" d="M345 121H322V481H343"/><text x="318" y="448" class="s" text-anchor="end">鍵つきの回</text>
+      <path d="M300 315H322" stroke="#8792a2" stroke-width="1.2" fill="none" stroke-dasharray="4 4"/>
+      <!-- col 3 practice -->
+      <path class="l" d="M615 138V168"/>
+      <rect class="p" x="540" y="170" width="150" height="46" rx="8"/><text x="615" y="189" text-anchor="middle">P2 練習セッション</text><text x="615" y="206" text-anchor="middle" class="s">Part 1〜7／解き直し</text>
+      <path class="l" d="M615 216V238"/>
+      <rect class="p" x="540" y="240" width="150" height="34" rx="8"/><text x="615" y="262" text-anchor="middle">P3 練習の結果</text>
+      <path class="l d" d="M495 415H520V200H538"/><text x="524" y="330" class="s">解き直す</text>
+      <!-- col 4 vocab -->
+      <path class="l" d="M810 138V168"/>
+      <rect class="p" x="735" y="170" width="150" height="34" rx="8"/><text x="810" y="192" text-anchor="middle">V2 単語セッション</text>
+      <path class="l" d="M810 204V222"/>
+      <rect class="p" x="735" y="224" width="150" height="34" rx="8"/><text x="810" y="246" text-anchor="middle">V3 単語の結果</text>
+      <path class="l" d="M810 258V276"/>
+      <rect class="p" x="735" y="278" width="150" height="34" rx="8"/><text x="810" y="300" text-anchor="middle">V5 段の到達</text>
+      <rect class="p" x="735" y="332" width="150" height="34" rx="8"/><text x="810" y="354" text-anchor="middle">V6 まとめて確認</text>
+      <rect class="b" x="735" y="386" width="150" height="34" rx="8"/><text x="810" y="408" text-anchor="middle">V4 単語の一覧</text>
+      <path class="l d" d="M885 121H908V349H887"/><path class="l d" d="M908 349V403H887"/>
+      <!-- legend -->
+      <rect class="q" x="540" y="470" width="18" height="14" rx="3"/><text x="564" y="482" class="s">静かな試験層</text>
+      <rect class="p" x="660" y="470" width="18" height="14" rx="3"/><text x="684" y="482" class="s">手応えの練習層</text>
+      <rect class="b" x="790" y="470" width="18" height="14" rx="3"/><text x="814" y="482" class="s">その他</text>
+      <path class="l d" d="M540 510H590"/><text x="598" y="514" class="s">別の入口からも開く（実線は主な流れ）</text>
+    </svg>
+    <p class="cap">図1　サイトマップ。今日の1セットは V2 と P2 を順に呼び出す束で、独自の問題画面は持たない。</p>
+  </div>
+</section>
+
+<!-- ================= 3 ================= -->
+<section id="s3">
+  <h2><span class="n">3</span>主要な流れ（各ステップの画面と状態）</h2>
+
+  <h3><span class="id">3.1</span>初回起動と「はじめに」</h3>
+  <p>目的は、最初の問題までの距離を短くしながら、単語の開始段と1日の量だけは本人に合わせること。全部で4画面、長くて2分。どの画面も右上の「スキップ」で抜けられ、抜けても既定値で使い始められます。<span class="src">L#14</span><span class="src">A-P1</span><span class="src">A-P2</span><span class="src">G§1.8</span><span class="src">S-P2</span></p>
+  <div class="tw"><table>
+    <thead><tr><th>画面</th><th>聞くこと・見せること</th><th>操作</th><th>スキップ時の既定</th></tr></thead>
+    <tbody>
+      <tr><td class="k">O1 目標</td><td>「目標のスコアは？」 500／600／730／860／900以上／まだ決めていない。画面の下に商標の注記（英語の定型文）。</td><td>1つ選ぶと自動で次へ</td><td>未設定（単語は全段が対象）</td></tr>
+      <tr><td class="k">O2 受験日</td><td>「次に受ける日は？」 日付の選択／まだ決めていない。</td><td>日付を選んで「次へ」</td><td>未定（1日10語）</td></tr>
+      <tr><td class="k">O3 実力チェック</td><td>「単語を12問だけ。約90秒」。各段から2語ずつ、やさしい順に意味の4択＋「わからない」。正誤は出さず、進み具合の点だけ。</td><td>「始める」／「あとで」</td><td>〜400の段から開始（知っている語は1回の正解で先へ送られる <span class="src">実装:vAnswer</span>）</td></tr>
+      <tr><td class="k">O4 提案</td><td>「〜600 の段から始めましょう」「1日 新しい語10語 ＋ 復習」「受験日まで あと42日」。それぞれ横に「変える」。</td><td>主：「今日の1セットを始める」／副：「先に模試1を受ける（無料・約2時間）」</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+  <h4>実力チェックの決め方</h4>
+  <ul>
+    <li>出題：段1→6の順に各2語（音声のある語から無作為）。<b>3問続けて外したらそこで終わる</b>（上の段を解かせて気落ちさせない）。</li>
+    <li>開始段＝2問とも正解できなかった最初の段。12問すべて正解なら900+。</li>
+    <li>開始段より下の段は「確認ずみ」とはせず、V6「まとめて確認」で速く流せる状態にする（知っているはず、を本人の手で確かめる）。</li>
+    <li>チェックで解いた12語は通常の解答として記録する（むだにしない）。</li>
+    <li>2問ずつでは粗い。O4に「合わなければ、単語タブでいつでも変えられます」と書く。<span class="unv">設計判断</span></li>
+  </ul>
+  <h4>1日の語数の出し方</h4>
+  <pre>対象の語数 = 開始段〜目標の段のうち、まだ着手していない語
+目標の段   = 〜500→段2、600→段3、730→段4、860→段5、900以上→段6
+使える日数 = 受験日までの日数 − 7（最後の1週間は復習だけ）
+1日の新しい語 = 対象の語数 ÷ 使える日数 を5語きざみに切り上げ、5〜30の範囲に収める
+受験日が未定 → 10語</pre>
+  <p>30語でも足りないときは、無理な量を出さずに「受験日までに全部は終わりません。まず〜600の段までを目標にします」と正直に書く。<span class="src">L#8</span>（1日の上限で負荷をならす）<span class="src">L#28</span></p>
+  <ul>
+    <li>通知の許可・購入・評価の依頼は、この流れの中では出さない。<span class="src">A-P1</span><span class="src">A§3-7</span><span class="src">L§5-3</span></li>
+    <li>一度スキップしたら二度と自動では出さない。設定に「はじめの案内をもう一度」。<span class="src">G§1.8</span></li>
+  </ul>
+
+  <h3><span class="id">3.2</span>毎日の「今日の1セット」</h3>
+  <p>「今日」画面の主ボタン。3つの短いかたまりを順に出し、どこで止めても記録が残ります。<span class="src">S-P1</span><span class="src">L#12</span><span class="src">A-P4</span></p>
+  <div class="tw"><table>
+    <thead><tr><th>順</th><th>かたまり</th><th>中身</th><th>量の目安</th><th>ないとき</th></tr></thead>
+    <tbody>
+      <tr><td class="k">①</td><td>単語</td><td>期限の来た復習（最大20語）→ 新しい語（計画の語数）</td><td>約4分</td><td>復習も新語もなければ飛ばす</td></tr>
+      <tr><td class="k">②</td><td>解き直し</td><td>期限の来た誤答を最大3問。解説の前に自分でもう一度解く</td><td>約2分</td><td>誤答がなければ飛ばす</td></tr>
+      <tr><td class="k">③</td><td>弱点の1セット</td><td>正答率がいちばん低いPartから、Part 2・5は5問、Part 1は3問、Part 3・4・6・7は1セット</td><td>約2〜4分</td><td>記録が足りなければPart 5を5問</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>主ボタンの文面に中身と時間を出す：「今日の1セット　単語22・解き直し3・Part 5 5問　約8分」。<span class="src">S-P3</span></li>
+    <li><b>かたまりを1つ終えたら、その日は「やった日」</b>。3つ全部は条件にしない。<span class="src">L#12</span><span class="src">A-P4</span></li>
+    <li>かたまりの間に区切り画面を1枚（「単語おわり。次は解き直し3問」＋「続ける」／「今日はここまで」）。「ここまで」は同じ大きさのボタン。</li>
+    <li>全部終えると主ボタンの場所は「今日の分は終わりました」になり、下に小さく「もう少しやる」（単語の新語／Part練習）。追加を促す演出はしない。</li>
+    <li>休んだ日は責めない。連続日数は小さく、主に見せるのは「今週やった日」の7つの点と累計日数。途切れたときは「再開しました」とだけ書く。課金や広告での救済はない。<span class="src">A-P5</span><span class="src">A-P6</span><span class="src">S-P12</span><span class="src">L§5-1</span></li>
+  </ul>
+  <h4>主ボタンの決まり（上から順に当てはめる）</h4>
+  <ol>
+    <li>中断した模試がある → 「模試1の続きから（Part 5・118問目・残り58分）」</li>
+    <li>今日の1セットが残っている → 「今日の1セット」</li>
+    <li>終わっている → 完了の表示</li>
+  </ol>
+  <p>模試1をまだ受けていない間は、主ボタンの下に2番手の札「まず実力を知る：模試1（無料・約2時間）」を1枚置く。<span class="src">A-P3</span></p>
+
+  <h3><span class="id">3.3</span>Part別練習</h3>
+  <ol class="steps">
+    <li><b>P1 練習</b>：いちばん上に「苦手の解き直し ◯問」。その下にPart 1〜7の行（名前・これまでの正答率・解いた数）。行を押すと、その場で量の選択が開く。</li>
+    <li><b>量を選ぶ</b>：短い／標準／全部。標準は現行の <code>PART_SIZE</code>（Part 1は6問、2は10問、3・4は4セット、5は10問、6は2セット、7は3セット）、短いはその半分。各ボタンに時間の目安。任意で「タグをしぼる」（品詞、意図問題など）。<span class="src">L#21</span><span class="src">S-P10</span><span class="src">実装:PART_SIZE</span></li>
+    <li><b>P2 セッション</b>：まだ解いていない問題を先に出す（現行の <code>SEEN_KEY</code> の並びを維持）。1問（1セット）ごとに解答 → 正誤 → 解説。</li>
+    <li><b>P3 結果</b>：正答数、タグ別、間違えた問題。主ボタンは「間違えた◯問を解き直す」、なければ「練習にもどる」。</li>
+  </ol>
+  <h4>練習セッションの1問の流れ</h4>
+  <div class="tw"><table>
+    <thead><tr><th>状態</th><th>画面</th><th>下のバー</th></tr></thead>
+    <tbody>
+      <tr><td class="k">聞く・読む</td><td>Part 1〜4：最初の1問だけ大きな再生ボタンを押して始める。2問目からは自動で再生（設定で切れる）。再生・一時停止・5秒もどる・速度・進み具合の棒。</td><td>「わからない」（副ボタン）だけ。<b>「次へ」は出さない</b> <span class="src">C観察4</span></td></tr>
+      <tr><td class="k">解答した</td><td>選択肢が固定され、正解に✓、選んだ誤答に×。Part 1・2 はここで選択肢の英文と和訳が出る。</td><td>「次へ」（主ボタン）が現れる</td></tr>
+      <tr><td class="k">解説を読む</td><td>順番を固定：①判定と正解 ②スクリプト（行を押すとその行から再生／和訳は「訳を見る」で開く）③解説を「根拠・言い換え・ひっかけ」の3つに分けて ④「あとで解き直す」の印。</td><td>「次へ」</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted"><span class="src">L#9</span><span class="src">L#10</span><span class="src">S-P5</span><span class="src">S-P6</span><span class="src">S-P8</span><span class="src">A-P12</span><span class="src">G§3.2</span>（自動再生の扱い）<span class="src">SPEC</span>（解説は①根拠②言い換え③ひっかけの順で書かれている）</p>
+
+  <h3><span class="id">3.4</span>模試（通し）</h3>
+  <h4>(a) M2 準備：始める前に決めること</h4>
+  <div class="tw"><table>
+    <thead><tr><th>項目</th><th>内容</th><th>根拠</th></tr></thead>
+    <tbody>
+      <tr><td class="k">概要</td><td>「模試3　200問　約2時間（リスニング約45分＋リーディング75分）」</td><td><span class="src">S-P3</span><span class="src">L#15</span></td></tr>
+      <tr><td class="k">時間の選び方</td><td>3つから1つ（既定は本番どおり）。<br><b>本番どおり</b>：リーディング75分で自動的に終了。<br><b>時間を延ばす</b>：1.5倍／2倍。解答の間もリーディングも延びる。時間が来ても終わらず、知らせるだけ。<br><b>タイマーなし</b>：時間を数えるだけ。隠すこともできる。</td><td><span class="src">C決定</span><span class="src">G§3.3</span>（WCAG 2.2.1：開始前に切る・延ばす）</td></tr>
+      <tr><td class="k">スコアへの扱い</td><td>選択肢の下に1行：「目安のスコアの計算に使うのは『本番どおり』の回だけです」。</td><td>6章</td></tr>
+      <tr><td class="k">音の確認</td><td>「音を確かめる」ボタン（5秒の見本）。イヤホンの案内。本体の音量で調整。</td><td><span class="src">L#15</span><span class="unv">設計判断</span></td></tr>
+      <tr><td class="k">約束ごと</td><td>・リスニングの音声は1回だけ流れ、止められません<br>・リーディングでは前の問題にもどれます<br>・途中でやめても、続きから再開できます<br>・通知を止めておくと集中できます（おやすみモードなど）</td><td><span class="src">C本番らしさ</span><span class="src">L#15</span></td></tr>
+      <tr><td class="k">主ボタン</td><td>「模試を始める」。押すと3秒の間をおいて最初の音声。</td><td></td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>(b) M3 リスニング：音声は1回だけ</h4>
+  <p>3つのモードすべてで、音声は1回しか流れず、一時停止・巻きもどし・速度変更はできません。違うのは「解答の間」の長さだけです。<span class="src">C本番らしさ</span><span class="src">L#1</span><span class="src">S-P6</span><span class="src">V§4.8</span></p>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>本番どおり</th><th>時間を延ばす</th><th>タイマーなし</th></tr></thead>
+    <tbody>
+      <tr><td class="k">進み方</td><td colspan="2">時間割で自動的に進む。1つの音声が終わると解答の間があり、次の音声が始まる。</td><td>「次へ」を押すと2秒後に次の音声</td></tr>
+      <tr><td class="k">解答の間</td><td>Part 1・2：1問5秒／Part 3・4：1問8秒（3問で24秒）<span class="unv">未確認</span></td><td>左の1.5倍または2倍</td><td>制限なし</td></tr>
+      <tr><td class="k">「次へ」</td><td colspan="2">押すと次の設問が先に見える（先読み）。音声は時間割どおりの時刻に始まり、「音声まで 12秒」と出る。</td><td>いつでも押せる</td></tr>
+      <tr><td class="k">前にもどる</td><td colspan="3">できない（本番どおり）。</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>「次へ」で先の設問だけ見られるようにするのは、紙の試験でできる「先読み」を画面で再現するため。全体の所要時間は変わらない。<span class="src">C観察5</span><span class="unv">設計判断</span></li>
+    <li>画面に出すもの：問題番号、Part、音声の進み具合の棒と残り秒、選択肢。Part 1・2 は A B C（D）の大きなボタンだけ（選択肢の文は出さない）。Part 3・4 は3問を1画面に詰めて並べ、上に「32・33・34」の小さな札（解答ずみか分かり、押すとその問いへ動く）。<span class="src">C本番らしさ</span><span class="src">A-P15</span><span class="src">L#24</span></li>
+    <li>解答の間の値（5秒・8秒）は本番の公式情報で確かめてから確定する。<span class="unv">未確認</span><span class="src">G§7-10</span></li>
+  </ul>
+
+  <h4>(c) M4 切り替え</h4>
+  <ul>
+    <li>「リスニングはここまで。次はリーディング 100問・75分」。主ボタン「リーディングを始める」を押した時点から時間を数える（現行の <code>readingGate()</code> と同じ）。</li>
+    <li>1行の注記：「本番では休みなく続きます」。自動では始めない（押すまで待つ）。<span class="unv">設計判断</span></li>
+    <li>ここまでの解答は保存ずみ。「ここで中断する」も置く。</li>
+  </ul>
+
+  <h4>(d) M5 リーディング：75分、もどれる、印をつけられる</h4>
+  <ul>
+    <li>上のバー：残り時間（押すと隠せる）、問題番号「118 / 200」、「一覧」、「中断」。<span class="src">A-P16</span><span class="src">G§3.3</span>（2.2.2：数字を隠せる）</li>
+    <li>下のバー：「前へ」「あとで見直す」（印の入切）「次へ」。3つとも高さ48px以上。</li>
+    <li><b>M6 解答状況</b>：101〜200を10列の番号で並べる。状態は3つ—未解答（白抜き）、解答ずみ（塗り）、あとで見直す（塗り＋角の印）。色だけで分けない。番号を押すとその問題へ。しぼり込み「未解答だけ」「印だけ」。<span class="src">G§3.1</span>（1.4.1）</li>
+    <li>残り15分・5分で、上のバーの下に細い知らせを1回出す。自分で閉じるまで残る。音も触覚も点滅もなし。<span class="src">A-P16</span><span class="src">A§3-5</span><span class="src">V§5.3</span></li>
+    <li>時間が来たら：本番どおり＝自動で採点へ（解答はすべて保存ずみ）。延長＝「延ばした時間を過ぎました」と知らせ、続けられる。</li>
+    <li>最後の問題の「次へ」は「解答を終える」。未解答があれば「未解答が6問あります。採点しますか」＋「未解答を見る」。</li>
+    <li>Part 6・7 のレイアウトは5.4の「設問トレイ」。</li>
+    <li>「この問題はおかしい」の報告は模試中には出さない。結果の解説から送れる。<span class="src">C観察4</span><span class="src">A-P15</span></li>
+  </ul>
+
+  <h4>(e) 中断・再開・自動保存</h4>
+  <div class="tw"><table>
+    <thead><tr><th>起きたこと</th><th>ふるまい</th><th>再開したとき</th></tr></thead>
+    <tbody>
+      <tr><td class="k">解答・移動のたび</td><td>その時点の状態を保存（300ms以内にまとめて書く）。アプリが裏に回る瞬間にも必ず書く。</td><td>—</td></tr>
+      <tr><td class="k">自分で「中断」</td><td>確認「中断しますか。続きから再開できます」→ 保存して「今日」へ。時間は止まる。</td><td>リスニング：中断した問題（セット）の音声が<b>最初から</b>流れる。リーディング：同じ問題、同じ残り時間。</td></tr>
+      <tr><td class="k">電話・ほかのアプリ・画面ロック</td><td>音声と時間を自動で止める。</td><td>「中断していました」の1枚 →「続ける」。以降は上と同じ。</td></tr>
+      <tr><td class="k">イヤホンが抜けた</td><td>音声を即座に止め、時間も止める。</td><td>「続ける」で、その問題の音声を最初から。</td></tr>
+      <tr><td class="k">アプリが落ちた・電池切れ</td><td>最後に保存した状態が残る。</td><td>次の起動で「今日」の主ボタンが「続きから」になる。</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>中断の回数は記録し、結果に小さく「中断 2回」と出す。隠さないが、責めもしない。目安のスコアにはそのまま使う。<span class="unv">設計判断</span></li>
+    <li>中断した問題の音声をもう一度聞けることになるが、割り込みは本人の責任ではないので許す。<span class="src">G§3.3</span><span class="src">A-P13</span><span class="src">G§1.7</span></li>
+    <li>進行中にできる模試は1つの回につき1つ。別の回を始めるときは、前の回の続きは残す。</li>
+  </ul>
+
+  <h3><span class="id">3.5</span>結果</h3>
+  <p>上から次の順に1本で並べます。先に全体、次に内訳、最後に次の一手。<span class="src">L#4</span><span class="src">L#11</span><span class="src">L#20</span><span class="src">S-P11</span></p>
+  <ol class="steps">
+    <li><b>目安のスコア</b>：「目安 595〜765点」を大きく。下にリスニング／リーディング別の幅。数字は数え上がる（練習層）。すぐ下に注記と「どう出したか」（押すと開く）。本番どおり以外で受けた回は「参考（時間を延ばした回）」の札をつける。</li>
+    <li><b>正答数</b>：「142 / 200」、リスニング 76/100、リーディング 66/100、未解答、かかった時間、中断の回数。</li>
+    <li><b>Part別</b>：7本の横棒（正答数／問題数と％）。リーディングはPartごとの使用時間と目安を並べる。</li>
+    <li><b>タグ別の弱点</b>：正答率の低い順に3つ。1つの模試ではタグあたりの問題数が少ないので、累計で8問未満のタグは「データ不足」と書いて順位に入れない。各行に「このタグを練習する」。<span class="unv">設計判断</span>（しきい値8問）</li>
+    <li><b>間違えた問題</b>：主ボタン「間違えた58問を解き直す」。副ボタン「解説の一覧を見る」。</li>
+    <li><b>次の模試</b>：解放ずみなら「模試2の準備へ」。まだなら解放の札（3.6）。</li>
+  </ol>
+  <h4>間違い → 解き直してから解説</h4>
+  <div class="tw"><table>
+    <thead><tr><th>ステップ</th><th>画面</th></tr></thead>
+    <tbody>
+      <tr><td class="k">1 もう一度解く</td><td>前に選んだ答えは見せず、問題だけ出す。札は「解き直し」。リスニングは練習と同じく何度でも聞ける。</td></tr>
+      <tr><td class="k">2a 今度は正解</td><td>✓「解けました」→ 解説（根拠・言い換え・ひっかけ）。この問題は次の段階へ進む（下の表）。</td></tr>
+      <tr><td class="k">2b また不正解</td><td>×。「選んだ答え」と「正解」を上下に並べ、解説とスクリプト。「翌日にもう一度出します」。</td></tr>
+      <tr><td class="k">逃げ道</td><td>「解かずに解説を見る」をいつでも押せる（小さな文字ボタン）。押した問題は段階が進まない。</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted"><span class="src">L#6</span><span class="src">L§2</span>（想起練習）<span class="src">S-P8</span><span class="src">S-P4</span></p>
+  <h4>誤答が出直す間隔</h4>
+  <div class="tw"><table class="narrow">
+    <thead><tr><th>段階</th><th>次に出る日</th><th>正解したら</th><th>間違えたら</th></tr></thead>
+    <tbody>
+      <tr><td>0（間違えた直後）</td><td>当日から</td><td>段階1へ</td><td>段階0のまま翌日</td></tr>
+      <tr><td>1</td><td>翌日</td><td>段階2へ</td><td>段階0へ</td></tr>
+      <tr><td>2</td><td>3日後</td><td>段階3へ</td><td>段階0へ</td></tr>
+      <tr><td>3</td><td>7日後</td><td>一覧から外れる</td><td>段階0へ</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">間隔の具体値は仮。受験日が近いとき（14日以内）は 3日後→2日後、7日後→4日後に縮める。<span class="src">L#16</span><span class="unv">設計判断</span>（調査でも個別の最適値は未確認）</p>
+
+  <h3><span class="id">3.6</span>解放（購入）の出し方</h3>
+  <div class="dec"><b class="t">決まり</b>
+    <ul style="margin:0">
+      <li>入口は3つ：①模試1の結果のいちばん下の札 ②模試の一覧で鍵つきの回を押したとき ③設定の「模試をすべて開く」。</li>
+      <li>3つとも同じ1枚のシート（B1）を開く。<b>アプリの側からシートを自動で開くことはしない</b>。</li>
+      <li>学習の途中（模試・練習・単語の最中、解説の途中）には、札もシートも出さない。</li>
+      <li>「購入を復元」はシートの中と設定の両方に置く。起動のたびに、購入ずみかどうかを自動で確かめる。購入ずみの人には購入ボタンを見せない。</li>
+    </ul>
+    <p class="muted" style="margin:8px 0 0"><span class="src">L#2</span><span class="src">L#3</span><span class="src">L#18</span><span class="src">S-P14</span><span class="src">A-P24</span><span class="src">A§3-15</span><span class="src">G§1.9</span><span class="src">L§3</span></p>
+  </div>
+  <h4>B1 シートの中身（上から）</h4>
+  <div class="copy"><span class="lb">文面の例</span>
+    <b>模試2〜10を開く</b><br>
+    本番と同じ200問の模試が、あと9回分。<br>
+    <b>¥300</b>（買い切り・お支払いは1回だけ）<br>
+    ・月額や自動更新はありません<br>
+    ・機種を替えても「購入を復元」で元にもどせます<br>
+    ・記録はこの端末の中だけに保存されます<br>
+    ［¥300で開く］　［あとで］<br>
+    購入を復元
+  </div>
+  <ul>
+    <li>価格の文字はストアから受け取った表示（国・通貨に合った値）を使う。アプリに「¥300」を書き込まない。<span class="src">L§3-2</span></li>
+    <li>「あとで」は「開く」と同じ高さ・同じ幅。文面は中立（「いいえ、結構です」型にしない）。残り時間の表示、割引、数量限定の表現は使わない。<span class="src">L§5-1</span></li>
+    <li>「あと9回分」は、実際に収録されている回数をデータから数えて出す。収録が途中なら「いま5回分。残りは更新で追加（追加料金なし）」と書く。<span class="unv">設計判断</span></li>
+    <li>支払いの確認はOSの標準の画面に任せる。似せた画面を自作しない。<span class="src">G§1.9</span></li>
+  </ul>
+  <div class="tw"><table>
+    <thead><tr><th>状態</th><th>表示</th></tr></thead>
+    <tbody>
+      <tr><td class="k">価格を取得中</td><td>ボタンは「読み込み中…」で押せない。0.15秒以内に取れれば何も見せない。</td></tr>
+      <tr><td class="k">オフライン／ストアにつながらない</td><td>「いまストアにつながりません。通信できる場所でもう一度お試しください」。ボタンは「もう一度」。模試1と単語はそのまま使える、と添える。</td></tr>
+      <tr><td class="k">購入の手続き中</td><td>ボタンが進行表示に。シートは閉じられない状態にしない（OSの画面が前に出る）。</td></tr>
+      <tr><td class="k">保留（承認待ち・支払い待ち）</td><td>「手続きの完了を待っています。完了すると自動で開きます」。</td></tr>
+      <tr><td class="k">成功</td><td>✓「模試2〜10が開きました」→ 主ボタン「模試2の準備へ」。演出はチェックの描画と成功の触覚だけ。</td></tr>
+      <tr><td class="k">取り消した</td><td>何も言わずに元のシートへもどる。</td></tr>
+      <tr><td class="k">失敗</td><td>「購入できませんでした。料金はかかっていません」＋「もう一度」。</td></tr>
+      <tr><td class="k">復元：見つかった／なかった</td><td>「購入を確認しました。模試がすべて開きました」／「このアカウントでの購入は見つかりませんでした」。</td></tr>
+    </tbody>
+  </table></div>
+  <h4>鍵つきの回の見せ方（M1）</h4>
+  <ul>
+    <li>鍵つきの回も、構成（200問・約2時間・Part 1〜7）は見える。行の右に錠の印と「¥300ですべて開く」の文字は<b>一覧の上に1か所だけ</b>。10行すべてに価格を書かない。<span class="src">L#18</span></li>
+    <li>無料で使える範囲を削らない：模試1の全問、その解説・解き直し・Part別練習（模試1の問題）、単語の全6段、文字サイズなどの設定。<span class="src">A-P24</span></li>
+  </ul>
+
+  <h3><span class="id">3.7</span>苦手の解き直し</h3>
+  <ul>
+    <li>入口：練習タブのいちばん上、今日の1セットの②、各結果画面。「今日の解き直し 7問（約5分）」のように件数と時間を先に見せる。<span class="src">L#5</span><span class="src">S-P9</span></li>
+    <li>並び：期限の来たものを、PartとタグをまぜてM7と同じ「解き直し→解説」で出す。「Partをそろえる」に切り替えられる。<span class="src">L#17</span>（英語への効果は未確認）</li>
+    <li>1回に出すのは最大15問（現行と同じ）。残りは「あと12問あります」と書くだけで、続けるかは本人が決める。<span class="src">実装:startReview</span></li>
+    <li>空のとき：「解き直す問題はありません」＋「Part別練習へ」。0件は良い状態なので、寂しい画面にしない。<span class="src">A-P3</span></li>
+  </ul>
+
+  <h3><span class="id">3.8</span>単語特訓（6段）</h3>
+  <div class="tw"><table>
+    <thead><tr><th>段</th><th>名前</th><th>語数</th><th>終えるとできること（文面の案）</th></tr></thead>
+    <tbody>
+      <tr><td class="k">1</td><td>〜400</td><td>150</td><td>問題文の基本の語でつまずかなくなる</td></tr>
+      <tr><td class="k">2</td><td>〜500</td><td>200</td><td>Part 1・2 の動作や物の言い方が聞き取れる</td></tr>
+      <tr><td class="k">3</td><td>〜600</td><td>250</td><td>Part 5 の語彙問題で、選択肢の意味がほぼ分かる</td></tr>
+      <tr><td class="k">4</td><td>730</td><td>120</td><td>取りこぼしやすい頻出語を落とさない</td></tr>
+      <tr><td class="k">5</td><td>860</td><td>338</td><td>Part 7 の言い換えに気づける</td></tr>
+      <tr><td class="k">6</td><td>900+</td><td>267</td><td>多義語・言い回しのひっかけを見抜ける</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">語数は <code>content/vocab_words.tsv</code> の2026-11-19時点（計1,325語）。画面には実データから数えた値を出す。「できること」は文面の案で、点数の約束と読めないよう「目安」の語を段名の横に置く。<span class="src">SPEC</span><span class="src">S-P2</span><span class="src">A-P22</span></p>
+
+  <h4>段の進み方（鍵をかけない）</h4>
+  <ul>
+    <li>6段を下から上へ積んだ「階段」で見せ、いまの段に印をつける。<b>どの段も最初から開いている</b>。上の段を押すと「この段から始める」。課金とは無関係。<span class="src">A-P22</span></li>
+    <li>新しい語は「いまの段」から出る。いまの段の語をすべて出し終えると、自動で次の段に移る（小さな知らせ：「〜600の語をすべて出しました。次は730」）。</li>
+    <li>語の状態は4つ：未着手／学習中（箱0〜2）／定着中（箱3〜5）／習得（箱6）。箱と間隔は現行のまま（0・1・3・7・14・30・90日）。<span class="src">実装:V_INT</span></li>
+    <li><b>段の修了</b>＝その段の語の85%以上が「定着中」以上。ここで V5 の到達画面を出す。<span class="unv">設計判断</span></li>
+    <li>開始段より下の段は、V6「まとめて確認」で流せる。カードをめくって「知ってる／まだ」を自分で分ける。知ってる＝現行の「初回正解」と同じ扱い（箱2、3日後に4択で確かめる）。まだ＝通常の新しい語として残る。<span class="src">L#19</span><span class="src">実装:vAnswer</span></li>
+  </ul>
+  <h4>毎日の出し方（復習＋新しい語）</h4>
+  <ul>
+    <li>順番：期限の来た復習 → 新しい語。復習は古い順に取り、出す順はまぜる（現行どおり）。<span class="src">実装:startVocab</span></li>
+    <li>1回の上限：復習60語（現行80語を下げる）＋新しい語は計画の数（既定10）。今日の1セットの中では復習20語まで。<span class="src">L#8</span></li>
+    <li>復習がたまっても赤くしない。「復習 84語。今日は60語まで出します」と量を区切って見せる。<span class="src">L#8</span></li>
+    <li>間違えた語は同じ回の5語あとにもう一度（現行どおり）。</li>
+    <li>解答のあと、次に出る日を書く：「次は3日後」「習得。90日後に確かめます」（現行の <code>q.msg</code> を見やすい位置に）。<span class="src">L#7</span></li>
+    <li>V1 に「明日の復習 約18語」を1行。<span class="src">L#8</span></li>
+  </ul>
+  <h4>V5 段の到達</h4>
+  <ul>
+    <li>全画面で「〜600 の段、修了」。階段の印が1段上がる動き、紙吹雪（1.2秒）、成功の触覚、短い音。押せばすぐ飛ばせる。<span class="src">A-P8</span><span class="src">V§4.5</span></li>
+    <li>数字は事実だけ：「250語のうち218語が定着中」「かかった日数 23日」。</li>
+    <li>主ボタン「次の段へ」。副「この段をもう少し」。</li>
+  </ul>
+  <h4>操作：スワイプとキー</h4>
+  <div class="tw"><table>
+    <thead><tr><th>場面</th><th>タッチ</th><th>キーボード（PC）</th></tr></thead>
+    <tbody>
+      <tr><td class="k">V2 4択</td><td>選択肢を押す。「わからない」を押す。</td><td><code>1</code>〜<code>4</code>、<code>0</code>＝わからない（現行どおり）</td></tr>
+      <tr><td class="k">V2 解答のあと</td><td>「次へ」を押す。カードを左へ送っても次へ。</td><td><code>Enter</code>／<code>Space</code>／<code>→</code></td></tr>
+      <tr><td class="k">V2 音声</td><td>スピーカーの印を押す。</td><td><code>R</code>＝単語、<code>E</code>＝例文</td></tr>
+      <tr><td class="k">V6 めくり</td><td>押してめくる。右へ送る＝知ってる、左へ送る＝まだ。下に同じ意味の2つのボタン。</td><td><code>Space</code>＝めくる、<code>→</code>＝知ってる、<code>←</code>＝まだ、<code>Z</code>＝1つもどす</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">スワイプには必ず同じ働きのボタンを置く。決まる位置はカード幅の30%か、速さ0.5px/ms以上。<span class="src">G§3.1</span>（2.5.1・2.5.7）<span class="src">V§4.7</span></p>
+
+  <h3><span class="id">3.9</span>記録</h3>
+  <div class="tw"><table>
+    <thead><tr><th>かたまり</th><th>見せるもの</th><th>空のとき</th></tr></thead>
+    <tbody>
+      <tr><td class="k">いまの目安</td><td>直近3回までの模試から出した幅。受けた回ごとの幅を縦の帯で並べ、目標の線を1本。</td><td>「模試を1回受けると表示されます」＋「模試1へ」</td></tr>
+      <tr><td class="k">Part別</td><td>正答率の横棒7本（累計／直近30日）。</td><td>「練習か模試を解くと表示されます」</td></tr>
+      <tr><td class="k">弱点のタグ</td><td>正答率の低い順に5つ（8問以上解いたタグだけ）。行から練習へ。</td><td>「まだデータが足りません（タグごとに8問から）」</td></tr>
+      <tr><td class="k">時間の使い方</td><td>Part 5・6・7 の1問あたりの時間と目安。</td><td>同上</td></tr>
+      <tr><td class="k">単語</td><td>段ごとの4状態の内訳（積み上げ棒）、復習での正答率、明日以降7日の復習の数。</td><td>「単語を始めると表示されます」</td></tr>
+      <tr><td class="k">学習した日</td><td>月のカレンダーに点。累計の日数、今週の日数。</td><td>今日の欄だけ枠で示す</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">比べる相手は自分の過去だけ。順位・他人との比較・称号は作らない。<span class="src">A-P6</span><span class="src">A-P23</span><span class="src">L#27</span><span class="src">L#11</span><span class="src">S-P11</span><span class="src">L§5-1</span></p>
+
+  <h3><span class="id">3.10</span>設定</h3>
+  <div class="tw"><table>
+    <thead><tr><th>かたまり</th><th>項目</th><th>選択肢（太字が既定）</th><th>根拠・注</th></tr></thead>
+    <tbody>
+      <tr><td class="k" rowspan="2">表示</td><td>文字の大きさ</td><td>小／<b>標準</b>／大／特大／最大（英文の本文で15・17・19・21・24px）。下に見本の英文と解説文。</td><td><span class="src">G§4.4</span><span class="src">A-P18</span><span class="src">S-P16</span></td></tr>
+      <tr><td>外観</td><td><b>端末に合わせる</b>／明るい／暗い</td><td>Appleは端末の設定に従うことを勧めている。既定をそれにし、変えたい人のためだけに残す。<span class="src">G§1.4</span></td></tr>
+      <tr><td class="k" rowspan="4">音と触覚</td><td>効果音</td><td>入／<b>切</b></td><td>消音スイッチに従う。模試中は入でも鳴らない。<span class="src">L#25</span><span class="src">G§1.7</span></td></tr>
+      <tr><td>触覚</td><td><b>入</b>／切</td><td><span class="src">G§1.6</span><span class="src">A-P9</span></td></tr>
+      <tr><td>模試中の触覚</td><td>入／<b>切</b></td><td><span class="src">V§5.3</span></td></tr>
+      <tr><td>動きを減らす</td><td><b>端末に合わせる</b>／いつも減らす</td><td><span class="src">G§1.5</span><span class="src">V§4.11</span></td></tr>
+      <tr><td class="k" rowspan="3">練習の音声</td><td>速さの既定</td><td>0.8／<b>1.0</b>／1.2（現行の3段）</td><td>模試には効かない、と添える。<span class="src">実装:setSpeed</span><span class="src">L#9</span></td></tr>
+      <tr><td>次の問題で自動的に再生</td><td><b>入</b>／切</td><td><span class="src">G§3.2</span></td></tr>
+      <tr><td>単語：答えのあとに発音</td><td><b>入</b>／切</td><td><span class="src">実装:vSet().auto</span></td></tr>
+      <tr><td class="k" rowspan="2">学習の計画</td><td>目標スコア／受験日</td><td>O1・O2と同じ</td><td></td></tr>
+      <tr><td>1日の新しい語</td><td>5／<b>10</b>／15／20／30（おすすめの値に印）</td><td><span class="src">L#8</span></td></tr>
+      <tr><td class="k" rowspan="2">購入</td><td>模試をすべて開く</td><td>未購入のときだけ表示 → B1</td><td></td></tr>
+      <tr><td>購入を復元</td><td>いつも表示。購入ずみなら「購入ずみ」と状態を出す。</td><td><span class="src">L#3</span><span class="src">G§1.9</span></td></tr>
+      <tr><td class="k" rowspan="3">記録</td><td>はじめの案内をもう一度</td><td>—</td><td><span class="src">G§1.8</span></td></tr>
+      <tr><td>記録を消す</td><td>3つに分ける：成績／単語の進み具合／すべて。</td><td>押すと何が消えるかを書いた確認を出し、消す側のボタンは主ボタンにしない。購入は消えない、と明記。</td></tr>
+      <tr><td>報告した問題</td><td>一覧とコピー（現行の <code>flagView()</code>）</td><td></td></tr>
+      <tr><td class="k" rowspan="4">このアプリについて</td><td>商標について</td><td>TOEIC is a registered trademark of ETS. This product is not endorsed or approved by ETS.</td><td>定型文は英語のまま。下に日本語の説明を1行。<span class="src">C前提</span><span class="src">S§4-D</span></td></tr>
+      <tr><td>プライバシー</td><td>「学習の記録は端末の中だけに保存し、外へ送りません」＋方針の全文へのリンク</td><td><span class="src">G§1.9</span>（5.1.1(i)）<span class="src">L§5-3</span></td></tr>
+      <tr><td>ライセンス</td><td>書体（OFL）、写真の出典、使用した部品</td><td><span class="src">V§6</span><span class="src">SPEC</span></td></tr>
+      <tr><td>版</td><td>アプリの版、収録している模試の回数と語数</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">通知（学習の時刻の知らせ）は初版には入れない。入れるなら、最初の1セットを終えたあとに任意でたずね、1日1回まで・時刻は本人が決める・文面は事実だけ、とする。<span class="src">L#13</span><span class="src">A-P7</span></p>
+</section>
+
+<!-- ================= 4 ================= -->
+<section id="s4">
+  <h2><span class="n">4</span>画面ごとの仕様</h2>
+
+  <h3><span class="id">4.0</span>全画面に共通の決まり</h3>
+  <div class="tw"><table>
+    <thead><tr><th>項目</th><th>決まり</th><th>根拠</th></tr></thead>
+    <tbody>
+      <tr><td class="k">押せる大きさ</td><td>すべて48×48px以上、となりとの間は8px以上。文字だけのボタンも見えない余白で48pxにする。</td><td><span class="src">G§6.1</span><span class="src">G§2.1</span></td></tr>
+      <tr><td class="k">押した手応え</td><td>すべてのボタンに押している間の見た目を持たせる。決定は指を離したとき（<code>click</code>）。押した瞬間（<code>touchstart</code>）では決めない。</td><td><span class="src">G§1.2</span><span class="src">G§3.1</span>（2.5.2）<span class="src">G§5.3</span></td></tr>
+      <tr><td class="k">文字の拡大</td><td>アプリ内の5段階＋端末の文字サイズで、合わせて200%まで崩れない。横並びは縦積みに変える。文字を「…」で切らない。高さを固定しない。下タブのラベルだけは拡大しない。</td><td><span class="src">G§1.3</span><span class="src">G§3.1</span>（1.4.4・1.4.10・1.4.12）<span class="src">A-P18</span></td></tr>
+      <tr><td class="k">色に頼らない</td><td>正誤＝色＋✓／×＋「正解」「不正解」の文字。選択中＝色＋太い枠＋塗りの印。鍵＝錠の印＋文字。</td><td><span class="src">A-P10</span><span class="src">G§3.1</span>（1.4.1）</td></tr>
+      <tr><td class="k">明るさの差</td><td>本文4.5:1以上、枠・印・進み具合の棒は3:1以上。明るい外観・暗い外観の両方で測る。</td><td><span class="src">G§1.4</span><span class="src">G§3.1</span></td></tr>
+      <tr><td class="k">読み上げ</td><td>全体は <code>lang="ja"</code>、英文の問題・選択肢・単語は <code>lang="en"</code>。画面が替わったら見出しへ焦点を移す。正誤・保存・残り時間の節目は <code>role="status"</code> で伝える（毎秒は読ませない）。飾りの印は <code>aria-hidden</code>。</td><td><span class="src">G§1.10</span><span class="src">G§3.1</span>（3.1.2・4.1.3）</td></tr>
+      <tr><td class="k">キーボード（PC）</td><td>すべての操作に <code>Tab</code> で届き、焦点の枠が見える。下の固定バーが焦点を隠さない。<code>?</code> でキーの一覧。</td><td><span class="src">G§3.1</span>（2.4.7・2.4.11）</td></tr>
+      <tr><td class="k">余白と端</td><td>左右は16px以上と端末のセーフエリアの大きいほう。下の固定バーはホームの線を避ける。</td><td><span class="src">G§5.2</span></td></tr>
+      <tr><td class="k">知らせ</td><td>数秒で勝手に消える知らせは使わない。閉じるまで残すか、画面の中に書く。</td><td><span class="src">A§3-5</span><span class="src">G§1.10</span></td></tr>
+      <tr><td class="k">読み込み</td><td>データは同梱なので待ちはほぼない。0.15秒を超える処理だけ進行表示を出す。データが壊れていたら「問題データを読み込めません。アプリを入れ直してください」と対処を書く。</td><td><span class="src">V§4.9</span><span class="src">G§1.8</span></td></tr>
+      <tr><td class="k">長押し</td><td>長押しだけでしか出せない機能は作らない。使うのは補助だけ（英文の語の選択＝練習層のみ、単語の行＝発音）。写真は長押しの保存メニューを出さない。</td><td><span class="src">G§5.3</span><span class="src">G§1.10</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="id">H1</span>今日</h3>
+  <dl class="spec">
+    <dt>目的</dt><dd>今日やる1つを、迷わず始めさせる。</dd>
+    <dt>主な操作</dt><dd>「今日の1セット」を始める（中断した模試があれば「続きから」）。</dd>
+    <dt>画面の区分</dt><dd>①上：日付と「受験日まで あと42日」、右上に記録・設定の印 ②主の札：今日の1セット（中身と時間、3つのかたまりの進み具合）③今週の7つの点と累計日数 ④2番手の札（1〜2枚）：模試1の案内、または「いまの目安 595〜765」→記録へ ⑤いちばん下：商標の注記（小さく）⑥下タブ。</dd>
+    <dt>状態</dt><dd><b>初日</b>：③は今日の枠だけ、④は模試1の案内。<b>模試が途中</b>：②が「続きから」。<b>今日は完了</b>：②が完了表示。<b>受験日が過ぎた</b>：「おつかれさまでした。次の受験日を決めますか」（決めなくても使える）。<b>問題データなし</b>：対処つきの文。通信の有無は関係しない。</dd>
+    <dt>操作の細部</dt><dd>主の札は全体が押せる。下に引いて更新する操作はない。PC：<code>Enter</code>で主ボタン、<code>1</code>〜<code>4</code>でタブ。</dd>
+    <dt>読み上げ・拡大</dt><dd>主ボタンの名前：「今日の1セットを始める。単語22語、解き直し3問、Part 5を5問。約8分」。7つの点は「今週は月、火、木に学習」と1つにまとめて読む。200%では札を1列に、数字の横並びを縦に。</dd>
+    <dt>文面の例</dt><dd>「今日の1セット　約8分」／「今日の分は終わりました」／「再開しました。今週2日目です」</dd>
+  </dl>
+  <p class="muted"><span class="src">S-P1</span><span class="src">S-P3</span><span class="src">A-P3</span><span class="src">A-P5</span><span class="src">C観察1</span></p>
+
+  <h3><span class="id">M1</span>模試の一覧</h3>
+  <dl class="spec">
+    <dt>目的</dt><dd>10回の状態を見せ、次に受ける回を選ばせる。</dd>
+    <dt>主な操作</dt><dd>次の未受験の回の「準備へ」。</dd>
+    <dt>画面の区分</dt><dd>①上：「いまの目安」1行（あれば）②未購入のときだけ、解放の案内1行＋ボタン1つ ③回の行×10（番号、状態、目安の幅か「未受験」、受けた日）。</dd>
+    <dt>状態（行ごと）</dt><dd><b>未受験</b>：「200問・約2時間」。<b>途中</b>：「Part 5・118問目で中断」＋「続きから」。<b>受験ずみ</b>：幅と日付。押すと結果／もう一度受ける。<b>鍵つき</b>：錠の印＋「未購入」。押すとB1。<b>未収録</b>（データがまだない回）：「準備中」と書き、押せない。</dd>
+    <dt>操作の細部</dt><dd>受験ずみの回をもう一度受けるときは「2回目からは問題を覚えているので、目安のスコアには使いません」と確認。PC：<code>↑↓</code>で行、<code>Enter</code>で開く。</dd>
+    <dt>読み上げ・拡大</dt><dd>行の名前：「模試3、未受験、200問、約2時間」「模試4、未購入、押すと購入の案内」。200%では行の中を2段に。</dd>
+    <dt>文面の例</dt><dd>「模試2〜10は ¥300 ですべて開きます（買い切り）」</dd>
+  </dl>
+  <p class="muted"><span class="src">L#18</span><span class="src">S-P14</span></p>
+
+  <h3><span class="id">M3</span>模試：リスニング</h3>
+  <dl class="spec">
+    <dt>目的</dt><dd>本番と同じ条件で聞いて答える。それ以外のことをさせない。</dd>
+    <dt>主な操作</dt><dd>選択肢を選ぶ。</dd>
+    <dt>画面の区分</dt><dd>①上のバー：「Part 3」「32–34 / 100」、中断 ②音声の帯：状態（再生中／解答の時間／音声まで◯秒）と進み具合の棒 ③本体：Part 1は写真、Part 3・4の図表つきは図表、その下に設問 ④下のバー：「次へ」（先読み用。副ボタンの見た目）。</dd>
+    <dt>状態</dt><dd><b>音声の前</b>：「音声まで 12秒」。<b>再生中</b>：棒が進む。<b>解答の時間</b>：残り秒を輪で。<b>中断から復帰</b>：1枚の案内。<b>音声ファイルが読めない</b>：「この問題の音声を再生できません。この問題は採点から外します」と書き、次へ進める（黙って無音にしない）。</dd>
+    <dt>操作の細部</dt><dd>選び直しは解答の時間が終わるまで何度でも。再生・一時停止・シークの操作は置かない。写真の拡大（つまんで広げる）は可。PC：<code>A</code>〜<code>D</code>（または<code>1</code>〜<code>4</code>）、<code>Enter</code>で次へ。</dd>
+    <dt>読み上げ・拡大</dt><dd>音声の識別だけを名前にする：「Part 3、会話、設問32から34」。スクリプトは出さない（試験なので）。選択の変化は「Bを選択」。Part 3・4 は200%で1問ずつの表示に切り替える（上の番号札で移動）。聞こえない・聞こえにくい人向けの模試の代わりは未解決（8章）。</dd>
+    <dt>文面の例</dt><dd>「写真に最も合う説明を選びましょう」「質問への応答として最もよいものを選びましょう」（公式の指示文は使わず、独自の短い文に統一）<span class="src">C前提</span><span class="src">S§4-B</span></dd>
+  </dl>
+  <p class="muted"><span class="src">A-P15</span><span class="src">G§3.2</span>（1.1.1の試験の例外）<span class="src">L#1</span></p>
+
+  <h3><span class="id">M5／M6</span>模試：リーディングと解答状況</h3>
+  <dl class="spec">
+    <dt>目的</dt><dd>75分を自分で配分して100問を解く。飛ばす・もどる・見直すを楽にする。</dd>
+    <dt>主な操作</dt><dd>選択肢を選んで「次へ」。</dd>
+    <dt>画面の区分</dt><dd>①上のバー：残り時間、番号、一覧、中断 ②本体：Part 5は設問だけ。Part 6・7は文書＋設問トレイ（5.4）③下のバー：前へ／あとで見直す／次へ。</dd>
+    <dt>状態</dt><dd><b>残り15分・5分</b>：細い知らせ。<b>時間切れ</b>：本番どおりは採点へ。<b>未解答あり</b>で終える：確認。<b>タイマーを隠した</b>：時計の印だけ。</dd>
+    <dt>操作の細部</dt><dd>選んだ答えは押し直しで替えられる（同じ選択肢をもう一度押すと未解答にもどせる）。英文の文字選択は模試中は切る（辞書を引けてしまうため）<span class="unv">設計判断</span>。PC：<code>A</code>〜<code>D</code>、<code>←</code><code>→</code>で前後、<code>F</code>で印、<code>G</code>で一覧、<code>D</code>でトレイの上げ下げ。</dd>
+    <dt>読み上げ・拡大</dt><dd>残り時間は節目（15分・5分・1分）だけ読み上げる。番号の一覧は「118、解答ずみ、あとで見直す」。200%では下のバーの文字を印＋短い語に。</dd>
+    <dt>文面の例</dt><dd>「残り15分です」「未解答が6問あります。採点しますか」「未解答を見る」「採点する」</dd>
+  </dl>
+  <p class="muted"><span class="src">A-P16</span><span class="src">G§3.3</span><span class="src">S-P13</span><span class="src">S-P18</span></p>
+
+  <h3><span class="id">M7</span>模試の結果</h3>
+  <dl class="spec">
+    <dt>目的</dt><dd>いまの位置を幅で正直に伝え、次にやること（解き直し）へつなぐ。</dd>
+    <dt>主な操作</dt><dd>「間違えた◯問を解き直す」。</dd>
+    <dt>画面の区分</dt><dd>3.5の①〜⑥の順。主ボタンは下に固定せず、⑤の位置に置く（全体を読んでから押す画面のため）。</dd>
+    <dt>状態</dt><dd><b>本番どおり・1回目</b>：目安を出す。<b>延長／タイマーなし／2回目以降／途中で終えて未解答が多い</b>（どちらかのセクションで20問以上）：「参考」の札をつけ、「いまの目安」には使わない。<b>全問正解</b>：⑤は「間違いはありません」＋「次の模試へ」。<b>自己ベスト</b>：数字のあとに小さな祝い（紙吹雪1回）。</dd>
+    <dt>操作の細部</dt><dd>数え上がりは押すと即座に終わる。「どう出したか」は開閉式。Partの棒を押すとそのPartの誤答だけにしぼる。</dd>
+    <dt>読み上げ・拡大</dt><dd>「目安のスコア、595点から765点。本番の点数を保証するものではありません」と、注記まで1つの名前で読む。棒グラフは表としても読める（Part、正答数、問題数）。</dd>
+    <dt>文面の例</dt><dd>6.4の注記。「おつかれさまでした。2時間、最後まで解きました」（ほめ言葉は事実の1行だけ）</dd>
+  </dl>
+  <p class="muted"><span class="src">L#4</span><span class="src">A-P6</span><span class="src">A-P8</span><span class="src">S-P4</span></p>
+
+  <h3><span class="id">P2</span>練習セッション（Part 1〜7・解き直し共通）</h3>
+  <dl class="spec">
+    <dt>目的</dt><dd>1問ごとに「解く→分かる」を完結させる。</dd>
+    <dt>主な操作</dt><dd>解答前は選択肢、解答後は「次へ」。</dd>
+    <dt>画面の区分</dt><dd>①上のバー：やめる、進み具合の棒、「3 / 10」、その他（⋯）②音声の帯（Part 1〜4）：再生／一時停止、5秒もどる、速さ、進み具合の棒（つまんで動かせる）③本体 ④解説（解答後に下へ現れる）⑤下のバー。</dd>
+    <dt>状態</dt><dd><b>解答前</b>／<b>解答後</b>／<b>解き直し</b>（札が変わる）／<b>音声なし</b>（「音声を再生できません。スクリプトで確認できます」＋スクリプトを開く）。</dd>
+    <dt>操作の細部</dt><dd>「この問題はおかしい」は ⋯ の中に移す（主な操作と並べない）<span class="src">C観察4</span>。解説の英文は文字を選べる（辞書・コピー）。スクリプトの行を押すとその行から再生。Part 6・7 は5.4のトレイ。PC：<code>1</code>〜<code>4</code>／<code>A</code>〜<code>D</code>、<code>Enter</code>次へ、<code>Space</code>再生・停止、<code>←</code>5秒もどる、<code>S</code>スクリプト。</dd>
+    <dt>読み上げ・拡大</dt><dd>解答すると「不正解。正解はB、Call the front desk」と読む。再生ボタンは「再生」「一時停止」と状態で名前を替える。速さは「速さ 1.0倍、変更」。</dd>
+    <dt>文面の例</dt><dd>「正解」／「不正解　解き直しの一覧に入れました」／解説の小見出し「根拠」「言い換え」「ひっかけ」</dd>
+  </dl>
+  <p class="muted"><span class="src">L#9</span><span class="src">L#10</span><span class="src">S-P4</span><span class="src">S-P8</span><span class="src">A-P12</span><span class="src">A-P14</span></p>
+
+  <h3><span class="id">V1</span>単語（6段の階段）</h3>
+  <dl class="spec">
+    <dt>目的</dt><dd>いまどの段にいて、今日どれだけやるかを見せる。</dd>
+    <dt>主な操作</dt><dd>「今日の単語（復習18＋新しい語10　約4分）」。</dd>
+    <dt>画面の区分</dt><dd>①主ボタン ②階段：6段を下から上へ。各段に名前、語数、4状態の内訳の棒、いまの段の印 ③「明日の復習 約18語」④副の入口：苦手な語／単語の一覧／（下の段があれば）まとめて確認。現行の設定ボタンの列（語数・レベル・音声）は設定へ移す <span class="src">C観察2</span>。</dd>
+    <dt>状態</dt><dd><b>始める前</b>：階段は全部が未着手、主ボタンは「最初の10語」。<b>今日の分が終わった</b>：「今日の単語は終わりました」＋副「新しい語をもう10語」。<b>復習がたまっている</b>：量を区切って表示。<b>全段修了</b>：「全1,325語が定着中以上です。復習だけ続きます」。</dd>
+    <dt>操作の細部</dt><dd>段を押すと、その段の内訳と「この段から始める」「この段の単語を見る」。PC：<code>Enter</code>で主ボタン。</dd>
+    <dt>読み上げ・拡大</dt><dd>段の名前：「段3、600点までの目安、250語、習得40、定着中92、学習中38、未着手80、いまの段」。内訳の棒は数字でも書く。</dd>
+    <dt>文面の例</dt><dd>「いまここ」「復習 84語。今日は60語まで出します」</dd>
+  </dl>
+  <p class="muted"><span class="src">A-P22</span><span class="src">L#8</span><span class="src">L#19</span><span class="src">S-P12</span></p>
+
+  <h3><span class="id">V2</span>単語セッション</h3>
+  <dl class="spec">
+    <dt>目的</dt><dd>1語ごとに思い出させ、すぐ確かめさせる。</dd>
+    <dt>主な操作</dt><dd>4つの選択肢から選ぶ。</dd>
+    <dt>画面の区分</dt><dd>①上のバー：やめる、進み具合、残りの数 ②札：「新しい語／復習／もう一度」と段 ③問い（見出し語・音声・空所つきの例文・日本語の意味のいずれか。現行の4形式）④選択肢4つ＋「わからない」⑤解答後：単語カード（語、品詞、意味、例文と訳、言い換え、メモ、発音の2ボタン）と「次は3日後」⑥下のバー「次へ」。</dd>
+    <dt>状態</dt><dd><b>解答前</b>／<b>正解</b>／<b>不正解</b>（「このあともう一度出ます」）／<b>わからない</b>（判定は「答えを確認」と中立に）／<b>音声なしの語</b>（聞き取りの形式を出さない。現行どおり）。</dd>
+    <dt>操作の細部</dt><dd>3.8のキーとスワイプ。選択肢は毎回並べ替える（現行どおり）。「おかしい」はカードの ⋯ の中。</dd>
+    <dt>読み上げ・拡大</dt><dd>聞き取りの形式では、問いの名前を「音声を聞いて意味を選ぶ。もう一度聞く」とする（語そのものを読み上げない）。空所は「空所」と読む。200%では選択肢の番号の印を上に、文を下に。</dd>
+    <dt>文面の例</dt><dd>「知っている語として、3日後に確かめます」「習得。90日後に確かめます」（現行の文面を維持）<span class="src">実装:vAnswer</span></dd>
+  </dl>
+  <p class="muted"><span class="src">A-P21</span><span class="src">L#7</span><span class="src">C観察3</span></p>
+
+  <h3><span class="id">T1・X1・B1</span>記録／設定／解放シート</h3>
+  <div class="tw"><table>
+    <thead><tr><th>画面</th><th>目的</th><th>主な操作</th><th>とくに守ること</th></tr></thead>
+    <tbody>
+      <tr><td class="k">T1 記録</td><td>自分の過去と比べる。</td><td>なし（見る画面）。弱点の行から練習へ。</td><td>空の欄は「どうすれば表示されるか」を書く。グラフは数字の表でも読める。期間の切り替え（30日／全期間）はボタンで。数え上がりは開いた最初の1回だけ。</td></tr>
+      <tr><td class="k">X1 設定</td><td>読みやすさと音・触覚を自分に合わせる。</td><td>なし。</td><td>切り替えは押したその場で効く（保存ボタンなし）。文字の大きさは見本を見ながら。触覚の切り替えは、入れた瞬間に1回だけ触覚で応える。消す操作は確認つき。</td></tr>
+      <tr><td class="k">B1 解放</td><td>何が・いくらで・1回だけ、を誤解なく伝える。</td><td>「¥300で開く」。</td><td>3.6の文面と状態。読み上げの順は 見出し→中身→価格→注意→開く→あとで→復元。<code>Esc</code>・外側を押す・下へ引く、のどれでも閉じる。</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ================= 5 ================= -->
+<section id="s5">
+  <h2><span class="n">5</span>操作の手触りの決まり</h2>
+  <p>ここは「どの出来事で、何が、どの強さで起きるか」の対応だけを定めます。音色・動きの個性（弾み方、押し込みの深さ）は見た目の方向性ごとに差し替えますが、<b>出来事との対応と、起きる・起きないは変えません</b>。<span class="src">V§5.3</span></p>
+
+  <h3><span class="id">5.1</span>触覚の対応表</h3>
+  <div class="tw"><table>
+    <thead><tr><th>出来事</th><th>iOS の種類</th><th>Android の対応</th><th>当面の呼び出し（@capacitor/haptics）</th><th>層</th></tr></thead>
+    <tbody>
+      <tr><td class="k">選択肢を選ぶ</td><td>Selection</td><td>SEGMENT_TICK（34以上）／KEYBOARD_TAP</td><td><code>impact({style:Light})</code></td><td>練習。模試は設定が入のときだけ</td></tr>
+      <tr><td class="k">主ボタンを押す</td><td>Impact light（自作なら soft）</td><td>VIRTUAL_KEY</td><td><code>impact({style:Light})</code></td><td>練習</td></tr>
+      <tr><td class="k">正解</td><td>Notification success</td><td>CONFIRM（30以上）</td><td><code>notification({type:Success})</code></td><td>練習</td></tr>
+      <tr><td class="k">不正解</td><td>Notification warning</td><td>REJECT（30以上）</td><td><code>notification({type:Warning})</code></td><td>練習</td></tr>
+      <tr><td class="k">スワイプが決まる位置を越えた</td><td>Selection</td><td>GESTURE_THRESHOLD_ACTIVATE（34以上）</td><td><code>selectionChanged()</code></td><td>練習（V6）</td></tr>
+      <tr><td class="k">切り替えスイッチ</td><td>Selection</td><td>TOGGLE_ON／OFF（34以上）</td><td><code>impact({style:Light})</code></td><td>設定</td></tr>
+      <tr><td class="k">セットを終えた</td><td>Impact medium</td><td>CONFIRM</td><td><code>impact({style:Medium})</code></td><td>練習</td></tr>
+      <tr><td class="k">節目（段の修了・自己ベスト・初の模試完了）</td><td>Success のあと medium を1回</td><td>CONFIRM を2回（間をあけて）</td><td><code>notification(Success)</code> → 120ms → <code>impact(Medium)</code></td><td>練習</td></tr>
+      <tr><td class="k">購入できた／復元できた</td><td>Notification success</td><td>CONFIRM</td><td><code>notification({type:Success})</code></td><td>—</td></tr>
+      <tr><td class="k">購入に失敗</td><td>Notification error</td><td>REJECT</td><td><code>notification({type:Error})</code></td><td>—</td></tr>
+      <tr><td class="k">模試の採点に入る</td><td>Impact medium を1回</td><td>CONFIRM</td><td><code>impact({style:Medium})</code></td><td>結果へ移る瞬間</td></tr>
+      <tr><td class="k">残り時間の知らせ、スクロール、タブの切り替え、もどる、文字の入力</td><td colspan="3">なし</td><td>すべて</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>不正解は error ではなく warning にする。間違いは何度も起きる出来事で、強い拒否の触覚を繰り返すと罰に感じられるため。error は購入の失敗のような「本当にうまくいかなかった」ときだけ。<span class="src">A-P9</span><span class="src">A-P11</span>（<span class="src">G§1.6</span> は error を挙げており、調査間で割れている。実機で両方を比べて確定）</li>
+    <li>1つの出来事に触覚は1回。80ms以内に重なったら後のほうを捨てる。見た目の変化と同じ瞬間に出す。<span class="src">G§2.4</span><span class="src">V§5.1</span></li>
+    <li><code>vibrate()</code> は使わない。<code>impact()</code> は必ず強さを指定する（指定しないといちばん強くなる）。呼び出しは <code>Fx.haptic(名前)</code> の1か所にまとめる。<span class="src">G§5.1</span></li>
+    <li>触覚の出ない端末・設定が切のときは何もしないで成立する（触覚だけで伝える情報はない）。<span class="src">G§1.6</span></li>
+    <li>標準の部品はAndroidで振動が長め（43〜60ms）で、iOSでは事前の準備をしない。実機で鈍いと感じたら、薄い自作の部品（iOSは準備つき・soft対応、Androidは <code>performHapticFeedback</code>）に替える。表の2・3列目はそのときの対応先。<span class="src">V§5.2</span></li>
+  </ul>
+
+  <h3><span class="id">5.2</span>音の対応表</h3>
+  <div class="tw"><table>
+    <thead><tr><th>音</th><th>いつ</th><th>長さ・性格</th><th>鳴らし方</th><th>消音スイッチ</th></tr></thead>
+    <tbody>
+      <tr><td class="k">リスニングの音声</td><td>模試・練習・単語の発音</td><td>収録のまま</td><td><code>&lt;audio&gt;</code>（いまの <code>new Audio()</code> のまま）</td><td>消音でも鳴る（語学の音声は中身そのもの）。準備画面に「消音にしていても音声は流れます」と書く。</td></tr>
+      <tr><td class="k">正解</td><td>練習・単語で正解したとき</td><td>上がる2音、0.2秒以内</td><td rowspan="4">Web Audio（短い音を先に読み込んで使い回す）。最初の操作のときに準備する。</td><td rowspan="4">消音なら鳴らない</td></tr>
+      <tr><td class="k">不正解</td><td>同、不正解のとき</td><td>低めのやわらかい1音、0.15秒</td></tr>
+      <tr><td class="k">セット完了</td><td>練習・単語・解き直しを終えたとき</td><td>0.3秒</td></tr>
+      <tr><td class="k">節目</td><td>段の修了・自己ベスト</td><td>0.5秒以内</td></tr>
+      <tr><td class="k">押す音、めくる音、タブの音</td><td colspan="4">作らない</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>効果音は既定で切。入れても、模試の層では鳴らない。リスニングの音声が流れている間も鳴らない（聞き取りのじゃまになる）。<span class="src">L#25</span><span class="src">L§5-2</span></li>
+    <li>音量はリスニングの音声より小さく（目安 −6〜−10dB）。同じ音が続くときは高さをわずかに変える。<span class="src">V§5.4</span>（提案値）</li>
+    <li>イヤホンが抜けたらすべての音を止める。着信などで止まったあとは自動で鳴らし直さず、「続ける」を待つ。<span class="src">G§1.7</span><span class="src">A-P13</span></li>
+    <li>端末の音量ボタン・コントロールセンターの働きは変えない。<span class="src">G§1.7</span></li>
+    <li>「<code>&lt;audio&gt;</code> は消音でも鳴り、Web Audio は鳴らない」というふるまいは、アプリの中の画面でも同じかどうか実機で確かめていない。<span class="unv">未確認</span><span class="src">G§5.6</span><span class="src">V§8-1</span></li>
+  </ul>
+
+  <h3><span class="id">5.3</span>動きの対応表</h3>
+  <div class="tw"><table>
+    <thead><tr><th>出来事</th><th>動き</th><th>時間・緩急</th><th>「動きを減らす」のとき</th><th>層</th></tr></thead>
+    <tbody>
+      <tr><td class="k">ボタンを押す</td><td>押し込む（縮むか沈むかは見た目の案による）</td><td>押す 80ms／もどる 220ms（弾まない）</td><td>色の変化だけ</td><td>練習</td></tr>
+      <tr><td class="k">選択肢を選ぶ</td><td>枠と印の切り替え</td><td>120ms</td><td>即時</td><td>両方</td></tr>
+      <tr><td class="k">正解</td><td>✓の線を描く＋行の色が左から満ちる</td><td>320ms／<code>cubic-bezier(.65,0,.35,1)</code></td><td>✓を静止で表示</td><td>練習</td></tr>
+      <tr><td class="k">不正解</td><td>×と枠に切り替わる。<b>揺らさない</b></td><td>160ms のフェード</td><td>即時</td><td>練習</td></tr>
+      <tr><td class="k">解説が現れる</td><td>フェード＋8px 上がる</td><td>220ms</td><td>フェード 100ms</td><td>練習</td></tr>
+      <tr><td class="k">画面の移動</td><td>練習：フェード＋16px。模試：フェードのみ</td><td>200ms／150ms</td><td>フェード 100ms</td><td>両方</td></tr>
+      <tr><td class="k">シート・設問トレイ</td><td>指に追従。離すと近い段へ落ち着く</td><td>300ms（わずかに行き過ぎてもどる。模試では行き過ぎなし）</td><td>即時に段へ</td><td>両方</td></tr>
+      <tr><td class="k">進み具合の棒</td><td>幅が伸びる</td><td>300ms</td><td>即時</td><td>両方（模試は等速）</td></tr>
+      <tr><td class="k">輪・棒グラフ</td><td>0から値まで伸びる</td><td>600ms</td><td>最終の形を表示</td><td>結果・記録</td></tr>
+      <tr><td class="k">数字の数え上がり</td><td>0（または前回の値）から</td><td>900ms、終わりほどゆっくり。桁の幅をそろえる</td><td>最終の数字を表示</td><td>結果・記録</td></tr>
+      <tr><td class="k">カードをめくる</td><td>横に回る</td><td>420ms</td><td>入れ替えのフェード 120ms</td><td>練習（V6）</td></tr>
+      <tr><td class="k">カードを送る</td><td>指に追従して傾く。決まれば外へ、足りなければもどる</td><td>出る 200ms／もどる 300ms</td><td>傾けず、フェードで入れ替え</td><td>練習</td></tr>
+      <tr><td class="k">階段の印が上がる</td><td>印が1段上へ移る</td><td>500ms</td><td>位置だけ替える</td><td>V5</td></tr>
+      <tr><td class="k">紙吹雪</td><td>40〜80粒、画面の3分の2まで</td><td>1.2秒。1日に数回まで</td><td>出さない。札を静止で表示</td><td>節目だけ</td></tr>
+      <tr><td class="k">残り時間の知らせ</td><td>フェードで現れる</td><td>150ms。点滅なし</td><td>即時</td><td>模試</td></tr>
+    </tbody>
+  </table></div>
+  <ul>
+    <li>動かすのは位置・大きさ（<code>transform</code>）と透明度（<code>opacity</code>）だけ。幅・高さ・余白は動かさない（進み具合の棒は <code>scaleX</code> で伸ばす）。<span class="src">G§5.5</span></li>
+    <li>動きが終わるのを待たせない。動いている最中の次の操作を受けつけ、押されたら最後の形へ飛ぶ。<span class="src">A§3-1</span><span class="src">V§4.10</span></li>
+    <li>弾む緩急（<code>linear()</code>）は iOS 17.2 未満では使えない。使えないときは <code>cubic-bezier(.2,0,0,1)</code> に落とす。<span class="src">V§1.3</span><span class="src">V§4.0</span></li>
+    <li>毎問起きる動きは0.35秒以内。1秒を超えるのは節目の演出だけ。<span class="src">L#25</span><span class="src">A-P8</span></li>
+    <li>点滅は使わない。ずっと繰り返す動きは置かない（待ちの進行表示を除く）。<span class="src">G§3.1</span>（2.3.1）</li>
+    <li>端末の「視差効果を減らす」に画面の側が連動するかは実機で確かめる。連動しない場合に備えて、設定に「いつも減らす」を置いている。<span class="unv">未確認</span><span class="src">V§8-2</span></li>
+  </ul>
+
+  <h3><span class="id">5.4</span>Part 7（と Part 6）の読むレイアウト</h3>
+  <h4>いまの不具合の原因</h4>
+  <p>現行は、ページ全体を縦にスクロールさせたまま、文書の枠だけを画面の上に貼りつけています（<code>.pane-d{position:sticky; top:0; max-height:42vh}</code>）。下へ送ると設問と選択肢が文書の枠の下をくぐり、半透明の背景ごしに重なって見えます。上のバーも流れて消えます。<b>ページ全体が動く作りをやめない限り、貼りつけの調整では直りません。</b><span class="src">C観察6</span><span class="src">実装:.pane-d</span></p>
+
+  <h4>4つの型の比較</h4>
+  <div class="wires">
+    <div class="wire">
+      <svg viewBox="0 0 120 200" role="img" aria-label="型A：上に文書を貼りつけ、下の設問がページごと動く"><rect x="4" y="4" width="112" height="192" rx="12" fill="#fff" stroke="#c9d0da"/><rect x="12" y="14" width="96" height="78" rx="5" fill="#eaf0f8" stroke="#9db3d3"/><text x="60" y="56" font-size="10" text-anchor="middle" fill="#3b5b8a">文書（貼りつけ）</text><rect x="12" y="70" width="96" height="30" rx="5" fill="#fbeee9" stroke="#a8442f" stroke-dasharray="3 2" opacity=".9"/><text x="60" y="89" font-size="9" text-anchor="middle" fill="#a8442f">重なる</text><rect x="12" y="104" width="96" height="20" rx="4" fill="#f1f3f6"/><rect x="12" y="128" width="96" height="20" rx="4" fill="#f1f3f6"/><rect x="12" y="152" width="96" height="20" rx="4" fill="#f1f3f6"/><path d="M114 110v50" stroke="#8792a2" stroke-width="2"/></svg>
+      <b>A 上に貼りつけ（現行）</b><span>ページ全体が動く</span>
+    </div>
+    <div class="wire pick">
+      <svg viewBox="0 0 120 200" role="img" aria-label="型B：上が文書の領域、下が設問トレイ。それぞれ別にスクロールする"><rect x="4" y="4" width="112" height="192" rx="12" fill="#fff" stroke="#c9d0da"/><rect x="12" y="12" width="96" height="12" rx="3" fill="#e2e6ec"/><rect x="12" y="28" width="96" height="74" rx="5" fill="#eaf0f8" stroke="#9db3d3"/><text x="60" y="68" font-size="10" text-anchor="middle" fill="#3b5b8a">文書（単独で動く）</text><path d="M104 36v40" stroke="#8792a2" stroke-width="2"/><rect x="8" y="106" width="104" height="76" rx="8" fill="#e8f1f0" stroke="#2f6f6a" stroke-width="1.5"/><rect x="50" y="110" width="20" height="3" rx="1.5" fill="#2f6f6a"/><text x="60" y="127" font-size="9" text-anchor="middle" fill="#2f6f6a">147 ・148・149</text><rect x="16" y="133" width="88" height="10" rx="3" fill="#fff"/><rect x="16" y="146" width="88" height="10" rx="3" fill="#fff"/><rect x="16" y="159" width="88" height="10" rx="3" fill="#fff"/><rect x="12" y="184" width="96" height="8" rx="3" fill="#e2e6ec"/></svg>
+      <b>B 設問トレイ（採用）</b><span>上下を別々に動かす。3段階</span>
+    </div>
+    <div class="wire">
+      <svg viewBox="0 0 120 200" role="img" aria-label="型C：文書と設問をボタンで全画面ごと切り替える"><rect x="4" y="4" width="112" height="192" rx="12" fill="#fff" stroke="#c9d0da"/><rect x="12" y="12" width="96" height="12" rx="3" fill="#e2e6ec"/><rect x="12" y="28" width="46" height="14" rx="4" fill="#2f6f6a"/><text x="35" y="38" font-size="8" text-anchor="middle" fill="#fff">文書</text><rect x="62" y="28" width="46" height="14" rx="4" fill="#f1f3f6"/><text x="85" y="38" font-size="8" text-anchor="middle" fill="#5b6675">設問</text><rect x="12" y="46" width="96" height="134" rx="5" fill="#eaf0f8" stroke="#9db3d3"/><text x="60" y="116" font-size="10" text-anchor="middle" fill="#3b5b8a">どちらか一方</text><rect x="12" y="184" width="96" height="8" rx="3" fill="#e2e6ec"/></svg>
+      <b>C 切り替え</b><span>文書か設問か、片方だけ</span>
+    </div>
+    <div class="wire">
+      <svg viewBox="0 0 120 200" role="img" aria-label="型D：上下を半分ずつに固定"><rect x="4" y="4" width="112" height="192" rx="12" fill="#fff" stroke="#c9d0da"/><rect x="12" y="12" width="96" height="12" rx="3" fill="#e2e6ec"/><rect x="12" y="28" width="96" height="74" rx="5" fill="#eaf0f8" stroke="#9db3d3"/><text x="60" y="68" font-size="10" text-anchor="middle" fill="#3b5b8a">文書 50%</text><rect x="12" y="106" width="96" height="74" rx="5" fill="#f1f3f6" stroke="#c9d0da"/><text x="60" y="146" font-size="10" text-anchor="middle" fill="#5b6675">設問 50%</text><rect x="12" y="184" width="96" height="8" rx="3" fill="#e2e6ec"/></svg>
+      <b>D 上下に固定</b><span>半分ずつ、動かせない</span>
+    </div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>型</th><th>重なり</th><th>文書と設問を同時に見る</th><th>長い文書の読みやすさ</th><th>文字200%</th><th>作る手間</th><th>判定</th></tr></thead>
+    <tbody>
+      <tr><td class="k">A 貼りつけ</td><td>起きる</td><td>できる（重なりつつ）</td><td>42%の高さに閉じこめられる</td><td>崩れる</td><td>—</td><td>不採用</td></tr>
+      <tr class="pick"><td class="k">B 設問トレイ</td><td>起きない</td><td>できる（半分の段）</td><td>トレイを下げれば全画面で読める</td><td>2段階に減らせば成り立つ（実質C）</td><td>中（指で上げ下げする部品）</td><td><b>採用</b></td></tr>
+      <tr><td class="k">C 切り替え</td><td>起きない</td><td>できない。行き来のたびに1タップ、設問文を覚えて読むことになる</td><td>最もよい</td><td>最もよい</td><td>小</td><td>Bの拡大時の姿として採用</td></tr>
+      <tr><td class="k">D 上下に固定</td><td>起きない</td><td>できる</td><td>半分で固定。3文書の問題では狭い</td><td>どちらも数行しか見えない</td><td>小</td><td>不採用</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">調査でも、スマホは「文書を貼りつけにせず、設問を下のシートで上げ下げ」、広い画面は左右2画面、という型が挙げられている。長文と設問の往復について受賞作の直接の手本は見つかっていないため、試作での確認が前提。<span class="src">S-P18</span><span class="src">A-P15</span><span class="src">V§6.4</span></p>
+
+  <h4>採用する型Bの仕様</h4>
+  <div class="tw"><table>
+    <thead><tr><th>項目</th><th>決まり</th></tr></thead>
+    <tbody>
+      <tr><td class="k">枠組み</td><td>セッションの画面は高さを画面いっぱいに固定し、<b>ページ全体はスクロールさせない</b>。縦に「上のバー／読む領域／下のバー」。読む領域の中に、文書（単独でスクロール）と設問トレイ（単独でスクロール）を置く。</td></tr>
+      <tr><td class="k">トレイの3段階</td><td><b>小</b>：番号の札（147・148・149、解答ずみか分かる）＋いまの設問文の1行目。<b>中</b>（既定）：読む領域の46%。設問文と4つの選択肢。<b>大</b>：読む領域いっぱい。</td></tr>
+      <tr><td class="k">重ならない仕組み</td><td>文書の下の余白を、いつも「いまのトレイの高さ＋16px」にする。文書の最後の行までトレイの上に出せる。トレイの背景は不透明。</td></tr>
+      <tr><td class="k">上げ下げ</td><td>つまみを指で動かす。<b>つまみを押すだけでも</b> 小⇄中 が切り替わる（「設問を広げる」「設問をたたむ」という名前のボタン）。番号の札を押すと、その設問を出して中へ。文書をスクロールしてもトレイは動かない。</td></tr>
+      <tr><td class="k">設問の出し方</td><td>トレイには1問ずつ。番号の札か、下のバーの前へ／次へで移る。セットの最後で「次へ」を押すと次の文書へ。</td></tr>
+      <tr><td class="k">複数の文書</td><td>読む領域のいちばん上に切り替え（「1 e-mail」「2 form」「3 notice」）を固定。文書ごとにスクロール位置を覚える。</td></tr>
+      <tr><td class="k">Part 6</td><td>同じ枠組み。本文の空所の番号を押すと、その設問がトレイに出る。いまの設問の空所に印。</td></tr>
+      <tr><td class="k">文字が大きい・画面が低い</td><td>文字が「特大」以上、または読む領域が480px未満のときは、段階を 小／大 の2つにする（型Cと同じ使い方になる）。</td></tr>
+      <tr><td class="k">広い画面</td><td>幅840px以上は左右2画面（左に文書、右に設問を全部並べる）。トレイは使わない。現行の900px以上の2列と同じ考え。</td></tr>
+      <tr><td class="k">英文の体裁</td><td>本文17px・行間1.6を既定（設定で替えられる）。1行は35〜45字程度。行の自動分割（ハイフン）はしない。表は横にスクロールできる枠に入れる。</td></tr>
+      <tr><td class="k">読み上げ</td><td>順番は 文書の切り替え → 文書 → トレイのつまみ → 設問 → 選択肢。トレイを上げ下げしたら「設問を表示」「文書を表示」と伝える。</td></tr>
+    </tbody>
+  </table></div>
+  <pre>/* 骨組み（色・影は見た目の案に従う） */
+.session   { height:100vh; height:100dvh;              /* iOS 15.4 未満は 100vh にもどる */
+             display:grid; grid-template-rows:auto minmax(0,1fr) auto; overflow:hidden; }
+.reader    { position:relative; min-height:0; }
+.doc       { position:absolute; inset:0; overflow-y:auto; overscroll-behavior:contain;
+             padding:16px 16px calc(var(--tray-h) + 16px); }
+.tray      { position:absolute; left:0; right:0; bottom:0; height:var(--tray-h);
+             display:grid; grid-template-rows:auto minmax(0,1fr); }  /* 背景は不透明 */
+.tray-body { overflow-y:auto; overscroll-behavior:contain; }
+/* --tray-h : 小=112px ／ 中=46% ／ 大=100% を JS で切り替える。
+   指で動かしている間だけ transform で追従させ、離したら高さを確定する */
+@media (min-width:840px){
+  .reader  { display:grid; grid-template-columns:minmax(0,1fr) minmax(360px,44%); gap:16px; }
+  .doc,.tray{ position:static; height:auto; padding-bottom:16px; }
+}</pre>
+  <p class="muted"><span class="src">G§3.1</span>（1.4.10 幅320pxで折り返す／2.5.7 引く操作に押す操作の代わり／2.4.11 固定バーが焦点を隠さない）<span class="src">G§4.4</span><span class="src">G§5.3</span>（<code>overscroll-behavior</code>）<span class="src">V§6.4</span></p>
+</section>
+
+<!-- ================= 6 ================= -->
+<section id="s6">
+  <h2><span class="n">6</span>推定スコア（目安の幅）の出し方</h2>
+
+  <h3><span class="id">6.1</span>前提：何が言えて、何が言えないか</h3>
+  <ul>
+    <li>この模試は自作で、本番のスコアと照らし合わせた調整（較正）をしていない。公式の換算表は非公開で、使わないと決めている。<span class="src">C決定</span><span class="src">L§6-1</span></li>
+    <li>だから言えるのは「この模試で何問正解したか」と「そこから仮の決まりで置きかえた点数の幅」まで。「本番で何点取れる」は言えない。</li>
+    <li>点を1つだけ出すと、正確に見えてしまう。必ず幅で出し、幅の理由を画面で読めるようにする。<span class="src">L#4</span><span class="src">S-P11</span><span class="src">A-P6</span></li>
+  </ul>
+
+  <h3><span class="id">6.2</span>計算の手順</h3>
+  <ol class="steps">
+    <li><b>セクションごとの正答数を数える</b>。リスニング（Part 1〜4）とリーディング（Part 5〜7）、各100問。未解答は不正解として数える。音声が再生できず採点から外した問題があれば、残りの問題数での正答率を100問あたりに直す。</li>
+    <li><b>中心の点を出す</b>（セクションごと）。正答数 r（0〜100）を、5〜495点の目盛りに直線で置く。5点きざみに丸める。
+      <pre>中心 = 5 + 4.9 × r　（r=0 → 5点、r=100 → 495点）</pre>
+      これは<b>このアプリが仮に置いた決まり</b>で、公式の換算ではない。回ごとの補正値（<code>offset[n]</code>、初期値0）を足せる形にしておき、較正のデータが集まったら直す。</li>
+    <li><b>幅を出す</b>（セクションごと、±の片側）。3つの揺れを足し合わせる。
+      <pre>片側の幅 = 4.9 × √( ( 1.28² × 100 × p × (1−p) ＋ F² ) ÷ k ＋ B² )　→ 5点きざみに丸める
+
+p = そのセクションの正答率（r ÷ 100）
+k = 計算に使う模試の回数（1〜3）
+F = 5問 … 回ごとの難しさの差（自作なので回によって難しさがそろっていない分）
+B = 4問 … 全体のずれ（較正していないことによる、回数を重ねても消えない分）</pre>
+    </li>
+    <li><b>合計にする</b>。合計の中心＝2つの中心の和。合計の幅＝2つの幅の<b>単純な和</b>（全体のずれは両方に同じ向きに効くと考え、狭く見積もらない）。下は10点、上は990点で止める。</li>
+    <li><b>表示する</b>。「目安 595〜765点」。下にリスニング 320〜400、リーディング 275〜365。</li>
+  </ol>
+  <div class="tw"><table>
+    <thead><tr><th>幅の部品</th><th>何の揺れか</th><th>大きさ</th><th>回数を重ねると</th><th>根拠</th></tr></thead>
+    <tbody>
+      <tr><td class="k">①問題数による揺れ</td><td>100問という限られた数で測ることによる偶然のぶれ（当てずっぽうで当たる・うっかり外す）</td><td>正答率50%で最大。標準的なぶれ5問に1.28を掛けた約6.4問</td><td>√k で小さくなる</td><td>正答率の標準誤差 √(p(1−p)/n) という一般的な統計の式</td></tr>
+      <tr><td class="k">②回ごとの難しさの差 F</td><td>模試3が模試1より難しい、といった差</td><td>5問ぶん</td><td>√k で小さくなる（ならされる）</td><td><span class="unv">設計判断</span> 仮の値</td></tr>
+      <tr><td class="k">③全体のずれ B</td><td>自作の模試が全体として本番より易しい・難しい可能性</td><td>4問ぶん</td><td><b>小さくならない</b></td><td><span class="unv">設計判断</span> 仮の値</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">F と B は、いまは根拠となる実測のない<b>仮の値</b>です。「幅を狭く見せない」側に倒して置いています。1.28 は「仮定が正しければ、およそ5回に4回は入る」幅に当たる倍率ですが、F と B が仮の値である以上、<b>画面では確率の言い方をしません</b>（「80%の確率で」などと書かない）。</div>
+
+  <h3><span class="id">6.3</span>幅の大きさと、狭まり方</h3>
+  <div class="tw"><table class="narrow">
+    <thead><tr><th>セクションの正答率</th><th>1回</th><th>2回</th><th>3回</th></tr></thead>
+    <tbody>
+      <tr><td>30%</td><td>±45</td><td>±35</td><td>±30</td></tr>
+      <tr><td>50%</td><td>±45</td><td>±35</td><td>±30</td></tr>
+      <tr><td>70%</td><td>±45</td><td>±35</td><td>±30</td></tr>
+      <tr><td>90%</td><td>±35</td><td>±30</td><td>±25</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">セクションごとの片側の幅（点）。合計はこの2つの和なので、<b>1回でおよそ±70〜90点、2回で±60〜70点、3回で±50〜60点</b>。どれだけ受けても、較正するまではセクションあたり±20点（合計±40点）より狭くはならない（Bの分）。</p>
+  <div class="fig sm">
+    <svg viewBox="0 0 520 190" role="img" aria-labelledby="rgt rgd" font-family="Hiragino Sans,Yu Gothic,sans-serif" font-size="12" style="max-width:520px">
+      <title id="rgt">受けた回数と幅の狭まり</title>
+      <desc id="rgd">合計の中心が680点の例。1回では595から765、2回では610から750、3回では620から740。較正前の下限はプラスマイナス40点。</desc>
+      <line x1="90" y1="20" x2="90" y2="150" stroke="#c9d0da"/><line x1="90" y1="150" x2="500" y2="150" stroke="#c9d0da"/>
+      <text x="82" y="34" text-anchor="end" fill="#5b6675">800</text><text x="82" y="94" text-anchor="end" fill="#5b6675">680</text><text x="82" y="154" text-anchor="end" fill="#5b6675">560</text>
+      <line x1="90" y1="90" x2="500" y2="90" stroke="#b5894b" stroke-dasharray="4 4"/>
+      <rect x="140" y="47.5" width="56" height="85" rx="6" fill="#e8f1f0" stroke="#2f6f6a"/><text x="168" y="42" text-anchor="middle">595〜765</text><text x="168" y="168" text-anchor="middle" fill="#5b6675">1回</text>
+      <rect x="250" y="55" width="56" height="70" rx="6" fill="#e8f1f0" stroke="#2f6f6a"/><text x="278" y="49" text-anchor="middle">610〜750</text><text x="278" y="168" text-anchor="middle" fill="#5b6675">2回</text>
+      <rect x="360" y="60" width="56" height="60" rx="6" fill="#e8f1f0" stroke="#2f6f6a"/><text x="388" y="54" text-anchor="middle">620〜740</text><text x="388" y="168" text-anchor="middle" fill="#5b6675">3回</text>
+      <rect x="450" y="70" width="30" height="40" rx="6" fill="none" stroke="#a8442f" stroke-dasharray="3 3"/><text x="465" y="64" text-anchor="middle" fill="#a8442f">下限</text><text x="465" y="168" text-anchor="middle" fill="#a8442f">±40</text>
+      <text x="90" y="186" fill="#5b6675">例：どの回もリスニング72問・リーディング64問正解だった場合</text>
+    </svg>
+  </div>
+  <h4>「この回の目安」と「いまの目安」</h4>
+  <div class="tw"><table>
+    <thead><tr><th></th><th>この回の目安（M7）</th><th>いまの目安（今日・模試の一覧・記録）</th></tr></thead>
+    <tbody>
+      <tr><td class="k">使う回</td><td>その回だけ（k=1）</td><td>条件を満たす直近の回、最大3つ（k=1〜3）。正答数は単純な平均。</td></tr>
+      <tr><td class="k">条件</td><td colspan="2">①時間の選び方が「本番どおり」 ②その回を受けるのが1回目 ③自分で途中で終えた場合、どちらのセクションも未解答が20問未満。満たさない回は「参考」の札つきで幅だけ見せ、「いまの目安」には入れない。</td></tr>
+      <tr><td class="k">古い回</td><td>—</td><td>90日より前の回は使わない（力が変わっているため）。<span class="unv">設計判断</span></td></tr>
+    </tbody>
+  </table></div>
+  <p>「受けるほど幅が狭まる」は事実ですが、<b>購入を促す言い方には使いません</b>。解放シートに「精度が上がる」とは書かず、結果の「どう出したか」の中で仕組みとして説明するだけにします。<span class="src">L§5-1</span>（根拠のない成績の訴えをしない）</p>
+
+  <h3><span class="id">6.4</span>注記の文面（このまま使う）</h3>
+  <div class="copy"><span class="lb">短い注記（数字のすぐ下に、いつも出す）</span>目安です。本番の点数を保証するものではありません。</div>
+  <div class="copy"><span class="lb">「どう出したか」（押すと開く）</span>
+    この点数は、この模試の正答数から出した<b>目安</b>です。<br>
+    ・リスニングとリーディングそれぞれの正答数を、5〜495点の目盛りに置きかえています。置きかえ方はこのアプリ独自のもので、公式の換算ではありません。<br>
+    ・このアプリの模試は自作です。本番の結果と照らし合わせた調整は、まだ行っていません。<br>
+    ・そのため、点を1つに決めず、幅で示しています。幅には、問題数による偶然のぶれ、回ごとの難しさの差、調整前であることによるずれを見込んでいます。<br>
+    ・「本番どおり」で受けた回が増えると、幅は少し狭くなります（最大3回分を使います）。<br>
+    実際のTOEIC® L&amp;R のスコアを予測・保証するものではありません。
+  </div>
+  <div class="copy"><span class="lb">「参考」の札の説明</span>この回は時間を延ばして受けたため（／2回目のため／未解答が多いため）、「いまの目安」には使っていません。</div>
+  <div class="copy"><span class="lb">まだ受けていないとき</span>模試を「本番どおり」で1回受けると、目安のスコアが表示されます。</div>
+  <h4>書かないこと</h4>
+  <ul>
+    <li>「予測スコア」「換算スコア」「あなたのスコアは◯点」「精度◯%」「◯点アップ」。<span class="src">L§5-1</span></li>
+    <li>「〜600の段を終えると600点」のような、単語の段と点数を結ぶ約束。段名は語の難しさの目安。<span class="src">S-P2</span></li>
+    <li>Part別の「点数」。Part別は正答数と正答率だけ（問題数が少なく、点に直すと幅が大きすぎる）。</li>
+    <li>ストアの説明文・画像でも同じ（「目安」と幅で書く）。<span class="src">S-P15</span><span class="src">S§4-D</span></li>
+  </ul>
+
+  <h3><span class="id">6.5</span>あとから確かにしていく道筋</h3>
+  <ol>
+    <li>発売前：作者本人と協力者が、模試を「本番どおり」で受けた結果と、近い時期の公式スコアの組を集める（任意・手作業）。数組でも、中心の直線と B の大きさが大きく外れていないかを確かめられる。</li>
+    <li>組がたまったら、回ごとの補正値 <code>offset[n]</code> と F・B をデータの更新で直す。直したら「どう出したか」の文面も合わせて変える（「調整はまだ」→「◯人分の結果で調整」）。</li>
+    <li>アプリは利用者の成績を外へ送らないので、利用者からの自動の収集はしない。<span class="src">L§5-3</span></li>
+  </ol>
+</section>
+
+<!-- ================= 7 ================= -->
+<section id="s7">
+  <h2><span class="n">7</span>実装計画</h2>
+
+  <h3><span class="id">7.1</span>いまの作りと、変えるところ</h3>
+  <p>現行の <code>index.html</code> は、素のJSで画面ごとの関数が <code>#app</code> の中身を書きかえる作り（<code>home()</code> <code>showUnit()</code> <code>results()</code> <code>vShow()</code> など）。記録は <code>loadJSON/saveJSON</code> が <code>localStorage</code> を直接読み書きし、模試は <code>DATA.mocks[0]</code> だけを使う。この作りは保ち、外部ライブラリも入れずに、下の部品を足します。</p>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>部品</th><th>いま</th><th>変更</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="k">Store（保存）</td><td><code>loadJSON(k)</code> が毎回 <code>localStorage</code> を読む（同期）</td><td>起動時に全キーをメモリへ読みこみ、<code>loadJSON</code> はメモリから返す（呼び出し側は変えない）。<code>saveJSON</code> はメモリ＋保存先へ書く。保存先はアプリでは Capacitor Preferences、Webでは <code>localStorage</code>。書きこみは300msまとめ、裏に回る瞬間に必ず流す。</td></tr>
+      <tr><td>2</td><td class="k">Router／Shell（画面の枠）</td><td>各関数が <code>#app</code> 全体を書きかえ。ヘッダーに「本人専用」</td><td><code>Router.show(画面, 引数)</code> に一本化。枠は「上のバー／本体／下のバー／下タブ」の4つの差し込み口。もどるための履歴を持つ。固定のヘッダーとフッターは外す。</td></tr>
+      <tr><td>3</td><td class="k">操作の受け口</td><td>HTMLに <code>onclick="…"</code> を埋めこみ</td><td>根元で1つの <code>click</code> を受け、<code>data-act</code> で振り分ける。押した手応え・触覚・二度押しの防止を1か所で扱える。</td></tr>
+      <tr><td>4</td><td class="k">Fx（動き・音・触覚）</td><td>なし</td><td><code>Fx.layer</code> と設定を見て、5章の対応表どおりに出す・出さないを決める唯一の場所。</td></tr>
+      <tr><td>5</td><td class="k">Player（音声）</td><td><code>playAudio(src)</code> と小さな状態文字</td><td>状態（準備中／再生中／一時停止／終了／失敗）と進み具合を知らせる部品に。<code>lock</code>（模試：止められない）、外からの一時停止の検知、速さ。<code>&lt;audio&gt;</code> は使いつづける。</td></tr>
+      <tr><td>6</td><td class="k">Session（解く流れ）</td><td><code>S</code> に練習・復習・模試が同居</td><td>枠組みは保つ。模試には <code>S.mock={n, mode, 時間割, 印, 中断回数}</code> を足し、<code>pick()</code> と <code>go()</code> に自動保存を差しこむ。リスニングの時間割（Timeline）を新設。</td></tr>
+      <tr><td>7</td><td class="k">複数の模試</td><td><code>init()</code> が <code>mocks[0]</code> だけを <code>DATA</code> に入れる</td><td><code>MOCKS=DATA.mocks</code>。<code>unitsOf(n)</code> が回ごとに作って覚える。練習・解き直しの対象は「使える回」だけ（<code>mock.free || 解放ずみ</code>）。問題のIDは回の印つき（<code>M02-P2-01</code>）なので、成績や誤答のキーは回をまたいでも重ならない。<span class="src">SPEC</span></td></tr>
+      <tr><td>8</td><td class="k">Score（目安）</td><td><code>results()</code> は正答数だけ</td><td>6章の計算を純粋な関数に。結果は履歴に保存。</td></tr>
+      <tr><td>9</td><td class="k">Review（解き直し）</td><td><code>MISS_KEY</code> は間違えた回数だけ</td><td>段階と次に出る日を持つ形へ。古い記録は「段階0・今日」として引きつぐ。</td></tr>
+      <tr><td>10</td><td class="k">Vocab（単語）</td><td><code>vHomeHTML()</code> に設定が同居。段の指定は <code>vSet().lv</code></td><td>階段の画面、いまの段、実力チェック、まとめて確認、修了の判定（<code>vFinish()</code> のあと）。箱と間隔、出題形式、誤答の作り方は変えない。</td></tr>
+      <tr><td>11</td><td class="k">Entitlement（購入の状態）</td><td>なし</td><td>7.3。</td></tr>
+      <tr><td>12</td><td class="k">CSS</td><td>色を直接指定。px固定。<code>.pane-d</code> の貼りつけ</td><td>役割の名前の変数（<code>--c-primary</code> <code>--c-correct</code> など）を見た目の案から受けとる。文字は <code>rem</code>。5.4の枠組み。<code>viewport-fit=cover</code> とセーフエリア。</td></tr>
+      <tr><td>13</td><td class="k">記号</td><td>⚑ ⏱ ▶ などの文字</td><td>埋めこみのSVGの印に替える（同梱の書体に入っていない字があるため）。<span class="src">V§0.1-10</span></td></tr>
+      <tr><td>14</td><td class="k">sw.js</td><td>いつも登録</td><td>Web版だけで登録。アプリの中では登録しない。<span class="src">G§5.7</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="id">7.2</span>データと状態の形</h3>
+  <pre>// 問題データ（build.py が出す。いまと同じ）
+window.TOEIC_DATA = { mocks: [ { n:1, free:true, part1:[…], …, part7:[…] }, { n:2, free:false, … }, … ] }
+
+// 保存するキー（★は新設。ほかは現行のまま）
+toeic_schema       { v:2 }                                             ★ 形の版。引きつぎの判定に使う
+toeic_profile_v1   { target:730|null, exam:"2027-01-24"|null,          ★ はじめに・計画
+                     onboarded:1, placedLv:3, curLv:3, newPerDay:10 }
+toeic_prefs_v1     { text:1, theme:"auto", sfx:0, haptic:1,            ★ 設定（toeic_speed_v1 と toeic_vset_v1 を吸収）
+                     hapticMock:0, motion:"auto", speed:1, autoplay:1, vAuto:1 }
+toeic_ent_v1       { unlocked:false, product:"unlock_all_mocks",       ★ 購入の状態の控え（正はストア）
+                     checkedAt:0, pending:false }
+toeic_mockrun_v1:N { mode:"real"|"x1.5"|"x2"|"none", attempt:1,        ★ 回Nの途中の状態（回ごとに別キー）
+                     phase:"L"|"gate"|"R", i:42, ans:{qid:{pick,ms}},
+                     mark:{qid:1}, skip:{qid:1}, lClock:0, rLeft:4500000,
+                     pauses:0, startedAt:0, savedAt:0 }
+toeic_mockhist_v1  [ { n:1, attempt:1, mode:"real", at:0, L:72, R:64,  ★ 受けた回の結果
+                       un:3, byPart:{1:[5,6],…}, secs:{5:..,6:..,7:..},
+                       pauses:0, counts:true, picks:{qid:pick} } ]
+toeic_review_v1    { qid:{ st:0, due:20776, n:2 } }                    ★ 解き直しの段階（toeic_miss_v1 から引きつぐ）
+toeic_day_v1       { 20776:{ w:1, r:1, p:0, m:0 } }                    ★ その日に終えたかたまり
+toeic_stat_v1 / toeic_seen_v1 / toeic_flag_v1 / toeic_vocab_v1 / toeic_vlog_v1   現行のまま</pre>
+  <ul>
+    <li><b>引きつぎ</b>：<code>toeic_schema</code> がなければ現行の記録とみなし、<code>toeic_miss_v1</code>→<code>toeic_review_v1</code>、<code>toeic_speed_v1</code>・<code>toeic_vset_v1</code>→<code>toeic_prefs_v1</code>／<code>toeic_profile_v1</code> に移す。元のキーは消さずに残す（やり直せるように）。</li>
+    <li><b>購入の状態の決まり</b>：正しいのはストアの答え。<code>toeic_ent_v1</code> は、オフラインでもすぐ画面を出すための控え。ストアに聞けなかった・失敗したときは控えを<b>変えない</b>。「購入なし」とはっきり返ってきたときだけ未購入にもどす（その場合も記録は消さない）。<span class="src">G§5.7</span><span class="src">L#3</span></li>
+    <li>問題データが大きくなって起動が遅くなる場合は、<code>data/m01.js</code>…と回ごとに分け、使うときに読みこむ形を <code>build.py</code> 側に求める（この文書の範囲の外。必要になってから）。<span class="unv">設計判断</span></li>
+  </ul>
+
+  <h3><span class="id">7.3</span>Capacitor まわり</h3>
+  <div class="tw"><table>
+    <thead><tr><th>項目</th><th>やること</th><th>根拠・注</th></tr></thead>
+    <tbody>
+      <tr><td class="k">保存</td><td><code>@capacitor/preferences</code>。値は文字列（JSON）。起動時に全キーを読んでから最初の画面を描く。裏に回るとき（<code>App</code> の <code>pause</code>）に書き残しを流す。</td><td>iOSでは空き容量が減るとWeb側の保存が消されることがある。<span class="src">G§5.7</span><span class="src">C決定</span></td></tr>
+      <tr><td class="k">触覚</td><td>まず <code>@capacitor/haptics</code> を <code>Fx.haptic()</code> の後ろに置く。実機で比べ、鈍ければ薄い自作の部品に差しかえる（呼び出し側は変わらない）。</td><td><span class="src">G§5.1</span><span class="src">V§5.2</span></td></tr>
+      <tr><td class="k">音声</td><td>リスニングは <code>&lt;audio&gt;</code>、効果音は Web Audio。裏での再生はしない（裏に回ったら止めて中断の扱い）。外からの一時停止（イヤホン抜け・着信・ロック画面の操作）は <code>pause</code> の出来事で受け、模試では中断の流れへ。</td><td><span class="src">G§1.7</span><span class="src">G§5.6</span> 消音・着信後の復帰は実機で確認が必要 <span class="unv">未確認</span></td></tr>
+      <tr><td class="k">画面を消さない</td><td>模試のリスニング中は操作のない時間が続くので、画面が自動で消えないようにする（Wake Lock、だめなら専用の部品）。模試を出たら必ず解除。</td><td>調査ファイルに記載なし。<span class="unv">未確認</span><span class="unv">設計判断</span></td></tr>
+      <tr><td class="k">セーフエリア</td><td><code>viewport-fit=cover</code>。余白は <code>max(16px, env(safe-area-inset-*))</code>。Androidは注入される変数も併用：<code>var(--safe-area-inset-top, env(safe-area-inset-top, 0px))</code>。下の固定バーと下タブはホームの線を避ける。</td><td><span class="src">G§5.2</span></td></tr>
+      <tr><td class="k">システムのバー</td><td>iOS：<code>@capacitor/status-bar</code> で文字色を外観に合わせる。Android：端から端までの表示が強制されるので SystemBars でインセットを処理。</td><td><span class="src">G§5.2</span><span class="src">G§2.6</span></td></tr>
+      <tr><td class="k">起動画面</td><td>最初の画面の背景と同じ1色、文字・ロゴなし。明るい／暗いの両方。最初の描画がすんだらすぐ隠す。Webビューの背景色も同じ色に。</td><td><span class="src">G§1.8</span><span class="src">G§5.2</span></td></tr>
+      <tr><td class="k">もどるボタン（Android）</td><td><code>@capacitor/app</code> の <code>backButton</code>。Router の履歴で1つもどる／セッション中は確認／先頭では閉じる。</td><td><span class="src">G§2.5</span> 予測型のもどる操作との関係は <span class="unv">未確認</span></td></tr>
+      <tr><td class="k">タップとスクロール</td><td><code>touch-action:manipulation</code>、タップの強調を消して自前の押した見た目、<code>overscroll-behavior:contain</code>。文字の選択を切るのはボタン・写真・模試中の英文だけ。</td><td><span class="src">G§5.3</span></td></tr>
+      <tr><td class="k">文字の大きさ</td><td>アプリ内の5段階を正とする。端末の文字サイズへの連動（<code>font: -apple-system-body</code> など）は実機で確かめてから。</td><td><span class="src">G§1.3</span><span class="src">A-P18</span> <span class="unv">未確認</span></td></tr>
+      <tr><td class="k">購入（StoreKit／Play Billing）</td><td>商品は1つ：買い切り（非消耗型）<code>unlock_all_mocks</code>。<br>・起動時と前面にもどるたび、購入ボタンを出す前に、持っている権利を確かめる<br>・購入の完了・保留・取り消し・払いもどしの知らせを受ける<br>・Androidは3日以内に受領の確認（acknowledge）<br>・「購入を復元」は明示の操作としても残す<br>部品は、外部のサーバーやアカウントを必要としない薄いものを選ぶ（候補：<code>@capgo/native-purchases</code>、<code>cordova-plugin-purchase</code>）。成績や利用者の情報を第三者に送る型の部品は方針に合わない。</td><td><span class="src">L§3-1</span><span class="src">L§3-2</span><span class="src">G§1.9</span> 候補の部品の現行版・Capacitor 8 対応は、この文書では確かめていない <span class="unv">未確認</span></td></tr>
+      <tr><td class="k">最低の対応</td><td>Capacitor 8 の下限（iOS 15／Android 7）。新しい機能（<code>linear()</code>、画面遷移API、<code>100dvh</code>）は必ず代わりの書き方を持つ。</td><td><span class="src">V§4.0</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="id">7.4</span>段階と、合格の条件</h3>
+  <div class="tw"><table>
+    <thead><tr><th>段階</th><th>作るもの</th><th>合格の条件（すべて満たす）</th></tr></thead>
+    <tbody>
+      <tr><td class="k">0 土台<br><span class="muted">Webのまま</span></td><td>Store、Router／Shell、下タブ、操作の受け口、役割の名前のCSS変数、印のSVG化、記録の引きつぎ</td><td>・現行の機能がすべて動く<br>・現行の記録を入れた状態で開いても、成績・誤答・単語の進み具合が1件も減らない<br>・幅320pxで横スクロールが出ない<br>・すべての押せるものが48px以上</td></tr>
+      <tr><td class="k">1 解く画面</td><td>セッションの枠、Player、解答後の解説の型、設問トレイ（Part 6・7）、解き直しの流れ、練習の量の選択</td><td>・Part 7：幅320／375／430px × 文字5段階のすべてで、文書と設問が重ならず、文書の最後の行と4つの選択肢に届く<br>・解答前に「次へ」が出ない<br>・解き直しで、解く前に前回の答え・正解が見えない<br>・キーだけでPart 5の10問とPart 7の1セットを終えられる<br>・正誤が色を消しても（白黒表示で）分かる</td></tr>
+      <tr><td class="k">2 模試</td><td>模試の一覧・準備、時間の3つの選び方、リスニングの時間割、切り替え、解答状況、自動保存と再開、結果と目安、履歴、複数の回</td><td>・リスニング中、どの操作でも音声を止める・もどす・速くすることができない<br>・どの時点でアプリを落としても、開き直すと同じ問題にもどり、解答が1つも消えず、残り時間の差が2秒以内<br>・「本番どおり」は75分で採点へ、「延ばす」「なし」は終わらない<br>・目安の数字が、6.2の式を手で計算した値と一致（見本10組）<br>・「参考」になる3つの条件が正しく効く<br>・模試中に、正誤・効果音・購入の案内が一度も出ない</td></tr>
+      <tr><td class="k">3 毎日の流れ</td><td>はじめに（実力チェック・提案）、今日、単語の階段・まとめて確認・段の到達、記録、設定</td><td>・初回起動から最初の問題まで、スキップを使えば2タップ以内<br>・実力チェックが90秒前後で終わり、結果の段を変えられる<br>・今日の1セットをどのかたまりで止めても、その日が「やった日」になる<br>・単語の箱と間隔のふるまいが現行と同じ（同じ操作の列で同じ <code>toeic_vocab_v1</code> になる）<br>・記録の空の欄すべてに、表示される条件が書いてある</td></tr>
+      <tr><td class="k">4 アプリ化</td><td>Capacitor の組みこみ、Preferences、触覚、セーフエリア、起動画面、もどるボタン、音声の割り込み、画面を消さない</td><td>・機内モードで初回起動 → 模試1を最後まで受けられる<br>・ノッチのあるiPhoneと、3ボタン／ジェスチャのAndroidで、バーに隠れる操作がない<br>・起動時に白い一瞬がない<br>・消音スイッチ入でリスニングが鳴り、効果音は鳴らない（実機）<br>・着信・イヤホン抜け・画面ロックのあと、3.4(e)のとおりに再開できる<br>・リスニング45分の間、画面が自動で消えない</td></tr>
+      <tr><td class="k">5 購入</td><td>購入の部品、解放シート、鍵、復元、起動時の確認</td><td>・テスト環境で：購入／取り消し／失敗／保留／復元（あり・なし）／払いもどし後、の全状態が3.6の表のとおり<br>・オフラインで起動しても、購入ずみの人は全部の回が使える<br>・アプリを入れ直し → 起動だけで（復元を押さなくても）開く<br>・購入ずみの人に購入ボタンが出ない<br>・シートが自動で開く場面がない<br>・表示価格がストアの価格と一致</td></tr>
+      <tr><td class="k">6 仕上げ・提出</td><td>動き・音・紙吹雪の調整、読み上げと拡大の通し確認、端末ごとの確認、商標・プライバシー・ライセンスの表示、ストアの画像と説明</td><td>・VoiceOver と TalkBack のそれぞれで、初回→模試1（短縮データ可）→結果→購入→単語→設定を完走<br>・文字200%・暗い外観・動きを減らす、の各条件で同じ流れを完走<br>・明るい／暗い両方で、本文4.5:1・部品3:1以上<br>・ストアの説明と画像に、点数の約束・「No.1」などの自己申告がない<br>・<span class="src">G§6</span> の提出前の一覧をすべて確認</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">段階0〜3はWeb版のまま進められ、見た目の方向性が決まる前でも着手できる（色・形は変数で後から入る）。段階4以降は実機が要る。</p>
+
+  <h3><span class="id">7.5</span>テストの計画</h3>
+  <div class="tw"><table>
+    <thead><tr><th>種類</th><th>対象</th><th>やり方</th></tr></thead>
+    <tbody>
+      <tr><td class="k">計算の確認</td><td>目安の計算、解き直しの段階、1日の語数、実力チェックの判定、リスニングの時間割、単語の箱</td><td><code>index.html?test</code> で動く小さな確認の一覧を同じファイルに持つ（入力と期待する答えの組）。外部の道具は足さない。</td></tr>
+      <tr><td class="k">記録の引きつぎ</td><td>現行の記録 → 新しい形</td><td>現行版で作った記録の見本を3種類（空／少し／多い）保存しておき、読みこませて件数を比べる。</td></tr>
+      <tr><td class="k">流れの通し</td><td>3章の全部の流れ</td><td>手順書（1流れ1枚）を作り、段階ごとに通す。模試は各Part 2問ずつの短縮データ（<code>?sample</code> を拡張）で回す。</td></tr>
+      <tr><td class="k">中断</td><td>模試の各場面（音声の前・再生中・解答の時間・切り替え・リーディング）</td><td>場面ごとに、アプリを落とす／裏に回す／着信／イヤホン抜け／画面ロック、を1回ずつ。</td></tr>
+      <tr><td class="k">画面の大きさ</td><td>幅320・375・430・768・1024px、縦と横</td><td>文字5段階と掛けあわせる。Part 7、結果、単語の階段、解放シートを重点に。</td></tr>
+      <tr><td class="k">だれでも使えるか</td><td>読み上げ、拡大、色、動き、キー</td><td>段階6の条件で完走。色は白黒表示で正誤・選択・鍵が分かるかを見る。</td></tr>
+      <tr><td class="k">端末</td><td>iOS：下限の版と最新、ノッチあり・ホームボタンあり。Android：下限に近い版と最新、WebViewの古い端末、3ボタンとジェスチャ</td><td><span class="src">G§6.4</span> の最後の関門。触覚と音は必ず実機で。</td></tr>
+      <tr><td class="k">購入</td><td>3.6の状態の表</td><td>各ストアのテスト環境。払いもどし・承認待ちも含める。</td></tr>
+      <tr><td class="k">長時間</td><td>模試を通しで1回（2時間）</td><td>電池、発熱、記録の大きさ、画面が消えないこと。</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ================= 8 ================= -->
+<section id="s8">
+  <h2><span class="n">8</span>リスクと未確認事項</h2>
+
+  <h3><span class="id">8.1</span>リスク</h3>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>リスク</th><th>影響</th><th>手当て</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="k">目安の計算の中心（直線）と F・B が仮の値</td><td>目安が本番と大きくずれると、信頼を失う。</td><td>幅を広めに取り、注記で仮の決まりだと明かす。発売前に6.5の手順1を必ず行い、大きく外れていれば直線を直すか、発売時は正答数だけにして目安を後から足す。</td></tr>
+      <tr><td>2</td><td class="k">アプリの大きさ</td><td>音声はいま模試の分が約35MB（1回と少し）、単語が約45MB（725語分）。10回・1,325語では数百MBになりうる。入れるのをためらわれる。初回に追加で取りこむ方式にすると、容量の表示と同意が要る。</td><td>音声の圧縮率の見直し。それでも大きければ「模試1と単語は同梱、2回目以降は購入後に取りこむ（容量を表示）」に切りかえる。その場合、鍵つきの回の準備画面に取りこみの段を足す。<span class="src">G§1.8</span><span class="src">G§6.2</span></td></tr>
+      <tr><td>3</td><td class="k">「Webを包んだだけ」と見なされる</td><td>ストアの審査で落ちる。</td><td>触覚・オフライン・ストアの購入と復元・端末の作法（もどる、セーフエリア、音の割り込み）を実質のあるものにする。<span class="src">A-P17</span><span class="src">G§6.2</span><span class="src">G§6.3</span></td></tr>
+      <tr><td>4</td><td class="k">収録が10回そろわないまま発売</td><td>「あと9回分」と書くと事実と違う。</td><td>シートの回数はデータから数えて出す（3.6）。ストアの説明も同じ。</td></tr>
+      <tr><td>5</td><td class="k">設問トレイが使いにくい</td><td>Part 7は54問。ここでつまずくと模試全体の印象が落ちる。</td><td>段階1のはじめに試作し、片手で3セット解いて確かめる。だめなら型C（切り替え）に落とせるよう、トレイの段階を設定値にしておく。<span class="src">S§5</span>（試作が次の一手とされている）</td></tr>
+      <tr><td>6</td><td class="k">リスニングの時間割で「次へ」＝先読み、が分かりにくい</td><td>押したのに音が始まらない、と感じる。</td><td>「音声まで ◯秒」をはっきり出す。準備画面の約束ごとに1行足す。試して分かりにくければ、本番どおりでも「次へ」で即座に次の音声、に改める。</td></tr>
+      <tr><td>7</td><td class="k">中断で音声を聞き直せる</td><td>わざと中断すれば2回聞ける。</td><td>自分の練習のためのアプリなので防がない。中断の回数を結果に出すにとどめる。</td></tr>
+      <tr><td>8</td><td class="k">記録が端末の中だけ</td><td>機種を替えると成績と単語の進み具合が消える（購入は復元できる）。</td><td>解放シートと設定に正直に書く。OSの端末バックアップで引きつがれるかは確認する。必要なら後の版で、記録の書き出し・読みこみ（ファイル）を足す。</td></tr>
+      <tr><td>9</td><td class="k">鍵つきの回の問題もアプリの中に入っている</td><td>中身を取り出される可能性。</td><td>¥300という価格では実害が小さいと見て、凝った保護はしない。<span class="unv">設計判断</span></td></tr>
+      <tr><td>10</td><td class="k">外観を自分で選べる設定</td><td>Appleは端末の設定に従うことを勧めており、独自の切りかえは二重の設定になる。</td><td>既定を「端末に合わせる」にして残す。審査や使い勝手で問題になれば外す。<span class="src">G§1.4</span></td></tr>
+      <tr><td>11</td><td class="k">段の名前（〜600、730）が点数の約束に読める</td><td>誇大な表示と受けとられる。</td><td>「語の難しさの目安」と添える。段を終えても点数には触れない（6.4）。</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="id">8.2</span>未確認の事項（確かめるまで仮の値）</h3>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>事項</th><th>この文書での仮の扱い</th><th>確かめ方</th><th>元</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>本番のリスニングの解答の間（秒数）、所要時間</td><td>Part 1・2は5秒、Part 3・4は8秒、リスニング約45分</td><td>運営団体の公式の案内で確認</td><td><span class="src">G§7-10</span></td></tr>
+      <tr><td>2</td><td>アプリの中の画面で、消音スイッチ入のとき <code>&lt;audio&gt;</code> が鳴り Web Audio が鳴らないか</td><td>そうなる前提</td><td>実機（配布前のテスト版）</td><td><span class="src">G§5.6</span><span class="src">V§8-1</span></td></tr>
+      <tr><td>3</td><td>着信・イヤホン抜けのあと、音が出なくなる不具合の有無。<code>pause</code> の出来事で検知できるか</td><td>検知できる前提</td><td>実機</td><td><span class="src">G§1.7</span><span class="src">G§5.6</span></td></tr>
+      <tr><td>4</td><td>端末の文字サイズ設定に、アプリの中の画面が連動するか（iOS・Android）</td><td>連動しない前提で、アプリ内の5段階を正とする</td><td>実機</td><td><span class="src">A-P18</span><span class="src">G§2.2</span></td></tr>
+      <tr><td>5</td><td>端末の「動きを減らす」に連動するか</td><td>連動しない場合に備え、設定に「いつも減らす」</td><td>実機</td><td><span class="src">V§8-2</span></td></tr>
+      <tr><td>6</td><td>標準の触覚の部品の手触り（Androidの長さ、iOSの遅れ）</td><td>まず標準、だめなら自作</td><td>実機で2〜3台</td><td><span class="src">V§5.2</span></td></tr>
+      <tr><td>7</td><td>不正解の触覚は warning か error か</td><td>warning</td><td>実機で比べる</td><td><span class="src">A-P9</span><span class="src">G§1.6</span></td></tr>
+      <tr><td>8</td><td>購入の部品の選定（現行版、Capacitor 8 対応、保留・払いもどしの扱い）</td><td>候補2つ</td><td>各部品の公式の文書と見本で確認</td><td>この文書</td></tr>
+      <tr><td>9</td><td>画面を消さない方法がアプリの中で効くか</td><td>Wake Lock、だめなら専用の部品</td><td>実機</td><td>この文書</td></tr>
+      <tr><td>10</td><td><code>100dvh</code> の対応する版、キーボードや回転での高さの変化</td><td>使えなければ <code>100vh</code></td><td>下限の版の実機</td><td>この文書</td></tr>
+      <tr><td>11</td><td>Android の予測型のもどる操作との関係</td><td>通常のもどるとして扱う</td><td>実機</td><td><span class="src">G§7-6</span></td></tr>
+      <tr><td>12</td><td>聞こえない・聞こえにくい人が模試を使うときの代わりの手段</td><td>未定。練習と解説ではスクリプトを出せる</td><td>方針を決める（例：模試に「スクリプトつき」の選び方を足し、その回は「参考」にする）</td><td><span class="src">A-P14</span><span class="src">G§3.2</span></td></tr>
+      <tr><td>13</td><td>解き直しの間隔（1・3・7日）、弱点とみなす最小の問題数（8問）、段の修了（85%）、実力チェックの問題数（12問）</td><td>すべて仮の値。設定値として1か所にまとめる</td><td>発売後、作者と協力者の使用感で直す</td><td><span class="src">L§6-5</span><span class="src">L§6-6</span></td></tr>
+      <tr><td>14</td><td>家族での共有（ファミリー共有）を認めるか、端末バックアップで記録が引きつがれるか</td><td>未定</td><td>各ストアの設定と実機</td><td><span class="src">L§6-4</span></td></tr>
+      <tr><td>15</td><td>調査ファイルの中の外部の数字（他社の継続率、誤差、価格など）</td><td>この文書では設計の根拠に数字を使っていない（型だけを借りている）</td><td>ストアの説明などに使うなら、一次情報で確認してから</td><td><span class="src">L§0</span><span class="src">A§5</span><span class="src">S§5</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="id">8.3</span>見た目の担当へ渡す条件</h3>
+  <ul>
+    <li>役割の名前で必要な色：主ボタン、面（下地・一段上）、本文、補助の文字、枠、選択中、正解、不正解、注意、鍵。それぞれ明るい外観・暗い外観で、本文4.5:1・部品3:1を満たすこと。<span class="src">G§1.4</span></li>
+    <li>正解と不正解は、色を消しても形（✓と×）と文字で分かること。赤と緑だけの対にしない。<span class="src">G§1.4</span></li>
+    <li>模試の層では、質感や飾り（ぼかし、光り、背景の動き）を止められること。<span class="src">V§0.1-1</span><span class="src">A-P15</span></li>
+    <li>どの案でも、5章の対応表（何が起きるか・起きないか）は変えない。変えてよいのは、押し込みの深さ、弾み方、音色、紙吹雪の色と形。</li>
+    <li>文字を200%にしても、ボタンの中の文字が折り返せる形であること（高さを固定した丸い札などを主要な操作に使わない）。<span class="src">A-P18</span></li>
+  </ul>
+</section>
+
+<footer>UX設計書 v1.0 ・ 2026-11-19 ・ 対象：<code>certifications/TOEIC/quiz/</code> ・ この文書は構造とふるまいを定め、見た目は <code>ux/ビジュアル案.html</code> に従う</footer>
+
+</div>
+</body>
+</html>

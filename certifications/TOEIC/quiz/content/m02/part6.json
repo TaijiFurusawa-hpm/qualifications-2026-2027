@@ -1,0 +1,210 @@
+[
+ {
+  "id": "P6-01",
+  "doc": "e-mail",
+  "text": "Subject: Your subscription\n\nDear Ms. Ibsen,\n\nThank you for reading Hearth and Field magazine. We are writing to inform you of an important change. Beginning with the March issue, the magazine {{1}} only in digital form. Rising paper and postage costs have made it difficult to continue the print edition.\n\n{{2}} Your subscription will run until its original end date in October, and the price will stay the same. To {{3}} the digital edition, simply log in to our Web site using the account number shown on your mailing label.\n\nIf you would prefer a refund for the remaining issues, please reply to this e-mail by February 15. {{4}}, your subscription will be switched to the digital edition automatically.\n\nSincerely,\nDorothy Hanlon\nSubscriber Services",
+  "sum": "雑誌の購読者に、3月号から紙の版をやめてデジタル版だけにすること、購読の条件は変わらないこと、返金を望む場合は2月15日までに返信することを知らせるメール。",
+  "qs": [
+   {
+    "c": [
+     "was published",
+     "has been published",
+     "will be published",
+     "had been published"
+    ],
+    "a": 2,
+    "tag": "文法",
+    "e": "Beginning with the March issue とこれからの変更を知らせ、返金を望む人は2月15日までに返信とあるので、3月号はまだ先。未来の受け身 will be published が入る。過去形・現在完了・過去完了では、すでに起きたことになり合わない。"
+   },
+   {
+    "c": [
+     "Please note that this change does not affect the terms of your subscription.",
+     "Subscribers living overseas will continue to receive printed copies.",
+     "To celebrate, we are offering a free tote bag to new print subscribers.",
+     "Our customer service office will be closed on national holidays."
+    ],
+    "a": 0,
+    "tag": "文挿入",
+    "e": "直後に購読は10月まで続き料金も変わらないとあるので、この変更は購読の条件に影響しないと前置きする文が合う。海外の読者に紙の号が届くという文は「デジタル版のみ」と矛盾し、紙の新規購読の特典も同じ。休業日の話は無関係。"
+   },
+   {
+    "c": [
+     "attend",
+     "admit",
+     "assume",
+     "access"
+    ],
+    "a": 3,
+    "tag": "語彙",
+    "e": "ウェブサイトにログインしてデジタル版を読む流れなので、access（〜を利用する・〜にアクセスする）が合う。attend は会や授業に出席する、admit は認める・入場を許す、assume は想定する・引き受けるの意味で、デジタル版を目的語にすると意味が通らない。"
+   },
+   {
+    "c": [
+     "Therefore",
+     "Otherwise",
+     "Likewise",
+     "For example"
+    ],
+    "a": 1,
+    "tag": "文法",
+    "e": "前の文は、返金を望むなら2月15日までに返信するよう求めている。空所の後は自動でデジタル版に切り替わるという内容なので、「返信しなければ」を表す Otherwise が合う。Therefore は因果、Likewise は類似、For example は例示で流れに合わない。"
+   }
+  ]
+ },
+ {
+  "id": "P6-02",
+  "doc": "memo",
+  "text": "To: All staff\nFrom: Naomi Kimura, Finance Department\nDate: April 3\nSubject: New expense reporting system\n\nStarting May 1, all travel and business expenses must be submitted through Clearpath, our new online reporting tool. Paper forms will no longer be accepted after that date. {{1}} Clearpath, you can photograph receipts with your phone and attach them directly to a report, so there is no need to keep the originals.\n\nTraining sessions will be held in Room 4B throughout April. Each session covers the same material, so you only need to attend {{2}}. A sign-up sheet is available on the finance page of the intranet.\n\n{{3}} Reports submitted by the 20th of each month will be paid with that month's salary. Those received {{4}} will be processed the following month.",
+  "sum": "経理部が全社員に、5月1日から経費精算を新しいオンラインのツールで行うこと、4月に研修があること、精算の支払い日程は今までどおりであることを知らせる社内連絡。",
+  "qs": [
+   {
+    "c": [
+     "With",
+     "Despite",
+     "Unless",
+     "Although"
+    ],
+    "a": 0,
+    "tag": "文法",
+    "e": "空所の後は名詞 Clearpath とコンマなので前置詞が入る。「Clearpath を使えば」とレシートを添付できる利点を述べているので With が合う。Despite は「〜にもかかわらず」で意味が合わない。Unless と Although は接続詞で後ろに節が必要。"
+   },
+   {
+    "c": [
+     "all",
+     "each",
+     "them",
+     "one"
+    ],
+    "a": 3,
+    "tag": "文法",
+    "e": "どの回も同じ内容なので出席は1回でよい、という流れで one が入る。only need to ともかみ合う。all・each・them はどれも全部の回に出ることになり、「同じ内容」という前半や only と矛盾する。代名詞はどれも文法上は入るので、文脈で決める。"
+   },
+   {
+    "c": [
+     "Original receipts should be mailed to the Finance Department.",
+     "Please note that the reimbursement schedule will not change.",
+     "Paper forms will continue to be accepted until the end of the year.",
+     "Clearpath is also available in several other languages."
+    ],
+    "a": 1,
+    "tag": "文挿入",
+    "e": "直後に、20日までの申請はその月の給与で支払うと日程の説明が続くので、精算の日程は変わらないと前置きする文が合う。原本の郵送は「原本を保管する必要はない」と、紙の書式の受付は「5月1日以降は受け付けない」と矛盾する。言語の話は後に続かない。"
+   },
+   {
+    "c": [
+     "beforehand",
+     "instead",
+     "later",
+     "nearby"
+    ],
+    "a": 2,
+    "tag": "語彙",
+    "e": "20日までに出した申請はその月に支払われ、それより後に届いたものは翌月に回るという対比なので、later（それより後に）が合う。beforehand（前もって）では20日より前になり、前の文と矛盾する。instead と nearby は意味が通らない。"
+   }
+  ]
+ },
+ {
+  "id": "P6-03",
+  "doc": "article",
+  "text": "ROWANFORD (September 8) — The Rowanford Growers' Cooperative will open a year-round indoor market next spring in the former Jessop's department store on Pine Street. For the past twelve years, the cooperative's farmers {{1}} their produce at an outdoor market that runs only from May to October.\n\n\"Our members have wanted a permanent home for a long time,\" said cooperative director Ellen Hargrove. \"{{2}}\"\n\nThe building's ground floor will be divided into forty stalls, and the upper floor will host cooking classes and a small café. Renovation work is {{3}} to begin in November. The cooperative is still looking for vendors for about ten of the stalls. Local food producers {{4}} are interested in renting space should contact the cooperative by October 15.",
+  "sum": "地元の生産者協同組合が、元百貨店の建物に通年営業の屋内市場を来春開くという記事。11月に改装が始まり、残りの売り場の出店者を募集している。",
+  "qs": [
+   {
+    "c": [
+     "had been selling",
+     "have been selling",
+     "will be selling",
+     "were selling"
+    ],
+    "a": 1,
+    "tag": "文法",
+    "e": "For the past twelve years は12年前から今まで続くことを表すので、現在完了進行形が入る。屋外市場は今も5〜10月に開かれている。過去完了進行形は過去の基準となる時がなく、未来進行形と過去進行形は期間の表現と合わない。"
+   },
+   {
+    "c": [
+     "Most of the stalls will be rented to clothing and furniture stores.",
+     "That is why we sold the building to a developer last year.",
+     "This building will finally allow us to serve customers through the winter.",
+     "Tickets for the opening ceremony sold out within an hour."
+    ],
+    "a": 2,
+    "tag": "文挿入",
+    "e": "直前で常設の拠点を長く望んでいたと述べ、本文では今の市場は5〜10月だけとある。新しい建物で冬も客に売れると続く文が自然。衣料・家具店への貸し出しは食品生産者を募る記述と、建物を売った話は開業と食い違う。開業式の券は本文に根拠がない。"
+   },
+   {
+    "c": [
+     "scheduled",
+     "eligible",
+     "reluctant",
+     "entitled"
+    ],
+    "a": 0,
+    "tag": "語彙",
+    "e": "be scheduled to do で「〜する予定だ」となり、改装工事は11月に始まる予定という意味。eligible（資格がある）、reluctant（気が進まない）、entitled（権利がある）も be ~ to do の形はとれるが、工事が主語では意味が通らない。"
+   },
+   {
+    "c": [
+     "whose",
+     "what",
+     "which",
+     "who"
+    ],
+    "a": 3,
+    "tag": "文法",
+    "e": "空所の後に are interested と動詞が続き、先行詞の Local food producers は人なので、主格の関係代名詞 who が入る。which は人以外に使い、whose は後ろに名詞が必要。what は先行詞を含むので名詞の後には置けない。"
+   }
+  ]
+ },
+ {
+  "id": "P6-04",
+  "doc": "letter",
+  "text": "Dear Ms. Haddad,\n\nThank you for agreeing to speak at the Coastal Tourism Conference on June 18. Your session will take place at 10:30 A.M. in the main hall.\n\nWe have reserved a room for you at the Bellmont Hotel for the nights of June 17 and 18. The cost of the room will be {{1}} to the conference, so you will not need to pay at check-in. We will also cover your travel expenses up to $400. {{2}}, please keep your receipts and submit them with the attached form within thirty days of the event.\n\n{{3}} If you plan to use slides, please send the file to our technical team by June 10 for testing.\n\nWe look forward to {{4}} you in June.\n\nSincerely,\nLeona Jarvis\nProgram Coordinator",
+  "sum": "観光業の会議の担当者が講演者に、ホテルの手配、交通費の精算方法、スライドの事前送付について知らせる手紙。",
+  "qs": [
+   {
+    "c": [
+     "donated",
+     "admitted",
+     "delivered",
+     "charged"
+    ],
+    "a": 3,
+    "tag": "語彙",
+    "e": "後に you will not need to pay at check-in とあるので、部屋代は会議側に請求するという意味の charged が合う。donated は寄付する、admitted は認める、delivered は届けるの意味で、費用が主語では通じない。"
+   },
+   {
+    "c": [
+     "Having reimbursed",
+     "To be reimbursed",
+     "Being reimbursed",
+     "Reimbursed"
+    ],
+    "a": 1,
+    "tag": "文法",
+    "e": "後ろは please keep your receipts という命令文で、「払い戻しを受けるには」と目的を表す不定詞が入る。Having reimbursed は読み手が払う側になり、Being reimbursed と Reimbursed は「払い戻されて」で合わない。"
+   },
+   {
+    "c": [
+     "This year, all sessions will be held online.",
+     "Unfortunately, we are unable to cover any travel costs.",
+     "The main hall is equipped with a projector and a wireless microphone.",
+     "Hotel guests may use the fitness center free of charge."
+    ],
+    "a": 2,
+    "tag": "文挿入",
+    "e": "直後にスライドを使うならファイルを送るよう求めているので、講演会場のメインホールの設備を説明する文が合う。オンライン開催はホテルやホールの手配と、交通費を出せないは400ドルまで負担するという記述と矛盾する。ジムの話はスライドにつながらない。"
+   },
+   {
+    "c": [
+     "welcoming",
+     "welcome",
+     "welcomed",
+     "be welcoming"
+    ],
+    "a": 0,
+    "tag": "文法",
+    "e": "look forward to の to は前置詞なので、後ろは動名詞の welcoming で「6月にお迎えするのを楽しみにしています」の意味。to 不定詞と考えて原形 welcome を選ぶのが典型的なひっかけ。welcomed と be welcoming も入らない。"
+   }
+  ]
+ }
+]

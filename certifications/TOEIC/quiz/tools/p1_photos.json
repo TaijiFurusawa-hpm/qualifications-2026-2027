@@ -1,0 +1,15 @@
+{
+ "_note": "Part 1 写真の台帳。src=Unsplash の写真ID。blur/crop は画像サイズに対する比率 [x0,y0,x1,y1]。tools/p1_photos.py が img/{id}.jpg を作る",
+ "P1-01": {"src": "q4-N9h6vx8w", "by": "Centre for Ageing Better", "license": "Public Domain + Unsplash License", "blur": [[[0.262, 0.372], [0.296, 0.366], [0.42, 0.64], [0.392, 0.656]], [0.402, 0.848, 0.452, 0.888]]},
+ "P1-02": {"src": "wEcjmkYyeFI", "by": "Centre for Ageing Better", "license": "Public Domain + Unsplash License"},
+ "P1-03": {"src": "ZlOlRnWk8zU", "by": "Centre for Ageing Better", "license": "Public Domain + Unsplash License"},
+ "P1-04": {"src": "wdJ2ueQlRpo", "by": "Centre for Ageing Better", "license": "Public Domain + Unsplash License"},
+ "P1-05": {"src": "ULh0i2txBCY", "by": "Unsplash contributor", "license": "Unsplash License"},
+ "P1-06": {"src": "mNuLRRjLwjA", "by": "Unsplash contributor", "license": "Unsplash License", "blur": [[0.315, 0.165, 0.375, 0.195], [[0.655, 0.655], [0.715, 0.63], [0.8, 0.775], [0.745, 0.81]]]},
+ "M02-P1-01": {"src": "KJBTFR6pD7Y", "by": "Centre for Ageing Better", "license": "Public Domain + Unsplash License"},
+ "M02-P1-02": {"src": "VVB_jyHxJFk", "by": "Centre for Ageing Better", "license": "Public Domain + Unsplash License", "blur": [[0.545, 0.52, 0.59, 0.59]]},
+ "M02-P1-03": {"src": "4e7qyvAxLJQ", "by": "Centre for Ageing Better", "license": "Public Domain + Unsplash License", "blur": [[0.895, 0.835, 0.98, 0.915]]},
+ "M02-P1-04": {"src": "V0ogk2x_WdA", "by": "Centre for Ageing Better", "license": "Public Domain + Unsplash License"},
+ "M02-P1-05": {"src": "SUXcGaSnZyY", "by": "Unsplash contributor", "license": "Unsplash License", "blur": [[0.115, 0.765, 0.205, 0.83]]},
+ "M02-P1-06": {"src": "3amdrkkozvU", "by": "Unsplash contributor", "license": "Unsplash License", "crop": [0, 0, 1, 0.88], "blur": [[0.535, 0.43, 0.59, 0.485], [[0.775, 0.53], [0.855, 0.47], [0.87, 0.56], [0.79, 0.63]]]}
+}

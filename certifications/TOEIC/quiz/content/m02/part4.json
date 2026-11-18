@@ -1,0 +1,507 @@
+[
+ {
+  "id": "P4-01",
+  "intro": "telephone message",
+  "v": "UK-F",
+  "text": "Hello, Mr. Jansen. This is Bianca from the service department at Pinecrest Motors. We've finished inspecting your delivery van, and the brakes are in excellent condition. However, our technician found a leak in the cooling system, and the replacement part has to be shipped from the manufacturer's warehouse. That usually takes three business days. Now, I remember you said your drivers use that van every morning. We have one loaner vehicle free this week. It's a bit smaller than yours, but it should be fine for local routes. If you'd like it, please call me back before five o'clock today so I can hold it for you. Otherwise, it'll go to the next customer on our list.",
+  "ja": "ジャンセンさん、こんにちは。パインクレスト・モーターズ整備部門のビアンカです。お預かりした配送用バンの点検が終わり、ブレーキはとても良い状態でした。ただ、整備士が冷却装置の漏れを見つけまして、交換部品をメーカーの倉庫から送ってもらう必要があります。通常は3営業日かかります。ところで、運転手の方々が毎朝あのバンを使うとおっしゃっていましたね。今週は代車が1台空いています。お使いの車より少し小さいですが、近距離の配送なら十分だと思います。ご希望でしたら、確保しておけるよう本日5時までに折り返しお電話ください。そうでなければ、リストの次のお客様にお回しします。",
+  "qs": [
+   {
+    "q": "What problem does the speaker mention?",
+    "c": [
+     "The brakes are badly worn.",
+     "A replacement part is not immediately available.",
+     "The van cannot be inspected this week.",
+     "A loaner vehicle has been damaged."
+    ],
+    "a": 1,
+    "e": "交換部品をメーカーの倉庫から送ってもらう必要があり、3営業日かかると言っている。これを「すぐには手に入らない」と言い換えた。ブレーキはとても良い状態と言っているので逆。点検はすでに終わっており、代車の損傷には触れていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "Why does the speaker say, \"I remember you said your drivers use that van every morning\"?",
+    "c": [
+     "To ask the listener to change a delivery schedule",
+     "To explain why the inspection took several days",
+     "To recommend that the listener buy a new van",
+     "To suggest that the listener may need a temporary vehicle"
+    ],
+    "a": 3,
+    "e": "修理に3営業日かかると伝えた直後にこう述べ、続けて代車が1台空いていると申し出ている。毎朝使う車がないと困るはずだと示し、代車の提案につなげる発言。配送予定の変更や新車の購入は勧めておらず、点検はすでに終わっている。",
+    "tag": "意図問題"
+   },
+   {
+    "q": "Why does the speaker ask the listener to call back before five o'clock?",
+    "c": [
+     "So that a vehicle can be reserved for him",
+     "So that a repair can be approved",
+     "So that a part can be ordered",
+     "So that the van can be picked up"
+    ],
+    "a": 0,
+    "e": "so I can hold it for you が根拠で、5時までに連絡があれば代車を確保しておくという意味。hold を reserve と言い換えた。修理の承認や部品の注文を求める話はなく、バンの引き取りにも触れていない。5時を過ぎると代車は次の客に回る。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-02",
+  "intro": "announcement",
+  "v": "US-M",
+  "text": "Good afternoon, shoppers, and thank you for choosing Copperfield Market. We'd like to let you know that our bakery counter has moved from the back of the store to the front entrance, right next to the flower stand. The change gives us room for our expanded deli section, which opens next week. While you're at the bakery, please stop by for a free sample of our new olive and rosemary bread, baked fresh every morning. Also, this weekend is our rewards member sale. Members will receive fifteen percent off all frozen foods and household goods. Not a member yet? You can sign up in less than a minute at any checkout lane. All you need is a phone number.",
+  "ja": "お客様、こんにちは。コパーフィールド・マーケットをご利用いただきありがとうございます。パン売り場が店の奥から正面入口の、花売り場のすぐ隣に移りましたのでお知らせします。この移動で、来週オープンする拡張版のデリコーナーの場所を確保しました。パン売り場にお立ち寄りの際は、毎朝焼き上げる新商品のオリーブとローズマリーのパンをぜひ無料でご試食ください。また、今週末はリワード会員セールです。会員の方は冷凍食品と日用品が全品15パーセント引きになります。まだ会員でない方は、どのレジでも1分足らずでご登録いただけます。必要なのは電話番号だけです。",
+  "qs": [
+   {
+    "q": "Where is the announcement most likely being made?",
+    "c": [
+     "At a bakery",
+     "At a flower shop",
+     "At a grocery store",
+     "At a restaurant"
+    ],
+    "a": 2,
+    "e": "パン売り場・デリコーナー・冷凍食品・日用品・レジがそろった店なので食料品店。Copperfield Market の market を grocery store と言い換えた。パン屋と花屋は店内の売り場の名前を使ったひっかけで、店全体を指してはいない。",
+    "tag": "話者・場所"
+   },
+   {
+    "q": "Why was the bakery counter moved?",
+    "c": [
+     "To make space for another department",
+     "To be closer to the flower stand",
+     "To reduce waiting times at checkout",
+     "To display a new product"
+    ],
+    "a": 0,
+    "e": "room for our expanded deli section が根拠。デリを広げる場所を作るためで、room を space、deli section を another department と言い換えた。花売り場の隣は移動先、新しいパンは試食の案内で、理由ではない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What will rewards members receive this weekend?",
+    "c": [
+     "A discount on every purchase",
+     "A free loaf of bread",
+     "Faster service at checkout",
+     "Reduced prices on certain products"
+    ],
+    "a": 3,
+    "e": "会員は冷凍食品と日用品が15パーセント引きになると言っているので、特定の商品の値引き。all frozen foods の all につられて全商品の値引きを選ばないこと。パンは誰でもできる試食で、レジは会員登録の場所として出ただけ。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-03",
+  "intro": "advertisement",
+  "v": "AU-F",
+  "text": "Tired of working at your kitchen table? Juniper Desk offers quiet workspaces at four locations across the city. Every membership includes high-speed internet, unlimited coffee, and access to private phone booths for those important calls. Need to meet a client? Our conference rooms can be booked by the hour from our mobile app. And unlike many shared offices, we never lock you into a long-term contract. Pay by the day, the week, or the month, and cancel whenever you like. Plus, during March, first-time visitors can try any of our locations free for a full day. Just download the app and show your welcome code at the front desk. Juniper Desk: your office, minus the commute.",
+  "ja": "キッチンのテーブルで仕事をするのに疲れていませんか。ジュニパー・デスクは、市内4か所で静かなワークスペースをご用意しています。どの会員プランにも、高速インターネット、コーヒー飲み放題、大事な通話のための個室電話ブースの利用が含まれます。顧客と会う必要がありますか。会議室はモバイルアプリから1時間単位で予約できます。そして多くのシェアオフィスと違い、長期契約で縛ることは決してありません。1日、1週間、1か月単位でお支払いいただき、いつでも解約できます。さらに3月中は、初めての方はどの拠点も丸1日無料でお試しいただけます。アプリをダウンロードして、受付でウェルカムコードを見せるだけです。ジュニパー・デスク。通勤のいらない、あなたのオフィス。",
+  "qs": [
+   {
+    "q": "What is being advertised?",
+    "c": [
+     "A furniture store",
+     "A video conferencing service",
+     "A coffee delivery service",
+     "A shared office space"
+    ],
+    "a": 3,
+    "e": "市内4か所のワークスペースを会員制で貸し、会議室や電話ブースも使えると宣伝しているのでシェアオフィス。unlike many shared offices という比較からもわかる。コーヒーや通話は会員特典の一部で、それ自体を売っているのではない。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "According to the speaker, how is Juniper Desk different from many similar businesses?",
+    "c": [
+     "It is open 24 hours a day.",
+     "It does not require a long-term commitment.",
+     "It provides free parking.",
+     "It has locations in several countries."
+    ],
+    "a": 1,
+    "e": "we never lock you into a long-term contract が根拠。長期契約で縛らないことを long-term commitment を求めないと言い換えた。拠点は市内4か所だけで、営業時間や駐車場には触れていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What must first-time visitors do to receive a free day?",
+    "c": [
+     "Book a conference room",
+     "Sign a monthly contract",
+     "Present a code at reception",
+     "Bring a client with them"
+    ],
+    "a": 2,
+    "e": "初めての人は1日無料で、アプリを入れて受付でウェルカムコードを見せるだけと言っている。show を present、front desk を reception と言い換えた。会議室の予約はアプリでできることの説明、顧客は会議室の話に出ただけで、無料の条件ではない。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-04",
+  "intro": "talk",
+  "v": "US-M2",
+  "text": "Okay, everyone, a quick update before we open for dinner. Our seafood supplier called this morning. Because of the storm along the coast, their boats couldn't go out, so we won't get any fresh salmon until Thursday. That means the grilled salmon special is off the menu for the next two nights. Chef Kowalski has created a mushroom risotto to replace it, and servers, I'd like you to taste it before the doors open so you can describe it to guests. I know a lot of our regulars come here just for the salmon. If anyone asks for it, explain that it'll be back on Thursday, and offer them a free dessert with their meal. Let's get set up.",
+  "ja": "では皆さん、ディナーの開店前に手短に連絡です。今朝、魚介の仕入れ先から電話がありました。沿岸の嵐で船が出られず、木曜日まで新鮮なサーモンが入りません。つまり、サーモンのグリルの特別料理は今後2晩メニューから外れます。コワルスキー料理長が代わりにキノコのリゾットを考えてくれました。ホール係の皆さんは、お客様に説明できるよう、開店前に試食してください。常連のお客様の多くはサーモン目当てで来店されています。もし尋ねられたら、木曜日には戻ると説明して、お食事にデザートを無料でお付けしてください。準備にかかりましょう。",
+  "qs": [
+   {
+    "q": "Why is a dish unavailable?",
+    "c": [
+     "Bad weather affected a supplier.",
+     "A delivery truck broke down.",
+     "The chef changed the seasonal menu.",
+     "A supplier raised its prices."
+    ],
+    "a": 0,
+    "e": "沿岸の嵐で仕入れ先の船が出られず、木曜までサーモンが入らないと言っている。storm を bad weather と言い換え、船が出られないことを仕入れ先が影響を受けたとまとめた。料理長は代わりの料理を考えただけで、季節のメニュー変更ではない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What will the servers most likely do before the restaurant opens?",
+    "c": [
+     "Print updated menus",
+     "Call some regular customers",
+     "Sample a dish",
+     "Prepare desserts"
+    ],
+    "a": 2,
+    "e": "I'd like you to taste it before the doors open が根拠。代わりのリゾットの試食で、taste を sample と言い換えた。常連客には来店時に説明するだけで電話はしない。デザートは客に出すもので、準備するとは言っていない。",
+    "tag": "次の行動"
+   },
+   {
+    "q": "Why does the speaker say, \"I know a lot of our regulars come here just for the salmon\"?",
+    "c": [
+     "To suggest raising the price of a dish",
+     "To warn that some customers may be disappointed",
+     "To praise the quality of a supplier",
+     "To explain why Thursdays are busy"
+    ],
+    "a": 1,
+    "e": "サーモンが2晩出せないと伝えた後にこう述べ、尋ねられたら木曜に戻ると説明して無料のデザートを出すよう指示している。がっかりする客が出ることへの備えを促す発言。値上げや仕入れ先の評価の話ではなく、木曜は再入荷の日。",
+    "tag": "意図問題"
+   }
+  ]
+ },
+ {
+  "id": "P4-05",
+  "intro": "broadcast",
+  "v": "UK-M",
+  "text": "This is Northvale Radio with your morning news. City officials announced yesterday that Corwick's bike-sharing program will add sixty new stations by the end of summer, most of them outside the downtown area. Since the program began two years ago, riders have complained that bikes are hard to find once they leave the city center. The expansion will be partly funded by Kessler Insurance, which has agreed to sponsor the program for five years. Prices will stay the same, but monthly pass holders will now be able to ride for forty-five minutes at no extra charge, up from thirty. Residents can suggest locations for the new stations on the city's Web site until the end of the month.",
+  "ja": "ノースベール・ラジオの朝のニュースです。市の担当者は昨日、コーウィックのシェアサイクル事業が夏の終わりまでに新たに60か所のステーションを増やすと発表しました。その多くは中心街の外に置かれます。2年前の事業開始以来、利用者からは中心部を離れると自転車が見つけにくいという苦情が出ていました。拡大の費用の一部はケスラー保険が負担し、同社は5年間事業のスポンサーになることに合意しています。料金は据え置きですが、月額パスの利用者は、これまでの30分から45分まで追加料金なしで乗れるようになります。住民は今月末まで、市のウェブサイトで新しいステーションの場所を提案できます。",
+  "qs": [
+   {
+    "q": "What is the broadcast mainly about?",
+    "c": [
+     "The opening of an insurance office",
+     "The construction of a new road",
+     "A change in parking regulations",
+     "The growth of a bicycle rental program"
+    ],
+    "a": 3,
+    "e": "シェアサイクル事業がステーションを60か所増やすというニュース。bike-sharing program を bicycle rental program、add stations を growth と言い換えた。保険会社は費用を出すスポンサーで、事務所の開設の話ではない。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "According to the speaker, what have riders complained about?",
+    "c": [
+     "High monthly fees",
+     "A shortage of bicycles in some areas",
+     "Poorly maintained bicycles",
+     "A confusing payment system"
+    ],
+    "a": 1,
+    "e": "bikes are hard to find once they leave the city center が根拠。中心部の外で自転車が見つけにくいことを「一部の地域での不足」と言い換えた。料金・整備・支払い方法への苦情には触れていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What will change for monthly pass holders?",
+    "c": [
+     "They will be able to ride longer without paying extra.",
+     "Their monthly fees will be reduced.",
+     "They will receive an insurance discount.",
+     "They will be able to reserve bicycles."
+    ],
+    "a": 0,
+    "e": "月額パスの利用者は、追加料金なしで乗れる時間が30分から45分に延びる。at no extra charge を without paying extra と言い換えた。料金は据え置きと言っているので値下げは誤り。保険会社はスポンサーで、割引の話ではない。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-06",
+  "intro": "tour information",
+  "v": "US-F",
+  "text": "Welcome to the Glenmoor Theater, and thank you for joining today's backstage tour. My name is Noriko. Over the next hour, we'll visit the costume workshop, the dressing rooms, and the stage itself, where you'll see how the scenery for our current production is changed between acts. Most of these areas are closed to the public, so this is a rare chance to see them. Please stay close to the group at all times, because our crew is already getting ready for tonight's performance, and we don't want to get in their way. Finally, your tour ticket includes ten percent off seats for any show this season. Just present it at the box office when you book.",
+  "ja": "グレンムーア劇場へようこそ。本日のバックステージツアーにご参加いただきありがとうございます。ノリコと申します。これから1時間で、衣装の工房、楽屋、そして舞台そのものを回ります。舞台では、上演中の作品の舞台装置が幕間にどう転換されるかをご覧いただきます。これらの場所のほとんどは一般には公開していませんので、ご覧いただけるまたとない機会です。スタッフがすでに今夜の公演の準備を始めていて、作業の邪魔をしたくないので、常にグループのそばを離れないでください。最後に、ツアーのチケットで、今シーズンのどの公演の座席も10パーセント引きになります。予約の際にチケット売り場でご提示ください。",
+  "qs": [
+   {
+    "q": "What does the speaker say is special about the tour?",
+    "c": [
+     "It visits areas that are usually off-limits to visitors.",
+     "It is led by a member of the cast.",
+     "It ends with a short performance.",
+     "It is offered only once a year."
+    ],
+    "a": 0,
+    "e": "Most of these areas are closed to the public が根拠。衣装工房や楽屋など、ふだん一般公開していない場所を回ることを usually off-limits と言い換えた。案内役が出演者だとも、最後に上演があるとも言っていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "Why are listeners asked to stay close to the group?",
+    "c": [
+     "Some areas are under renovation.",
+     "Another tour will start soon.",
+     "Staff members are preparing for a show.",
+     "The building is easy to get lost in."
+    ],
+    "a": 2,
+    "e": "our crew is already getting ready for tonight's performance が根拠。crew を staff members、getting ready を preparing と言い換えた。改装や次のツアーの話はない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What does the speaker say the tour ticket can be used for?",
+    "c": [
+     "Free entry to tonight's performance",
+     "A gift from the theater shop",
+     "A drink at the theater café",
+     "A discount on a future show"
+    ],
+    "a": 3,
+    "e": "ten percent off seats for any show this season が根拠。値引きを discount、今シーズンの公演を future show と言い換えた。今夜の公演は準備中の話として出ただけで、無料で見られるのではない。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-07",
+  "intro": "podcast",
+  "v": "UK-M2",
+  "text": "Welcome back to The Ledger Hour, the podcast for people who run their own businesses. I'm your host, Gideon Huang. Today's topic shows up in almost every e-mail we receive: pricing. Many of you tell me you're afraid to raise your prices because you'll lose customers. Well, I raised mine by ten percent last year. I lost two clients out of about a hundred and fifty. Of course, every business is different, so I've invited Dr. Kiera Jaffe to join us. She teaches marketing at Penbrook University and studies how shoppers react to price changes. She'll also share a simple way to test a new price before committing to it. But first, a word from our sponsor.",
+  "ja": "『レジャー・アワー』へようこそ。自分で事業を営む人のためのポッドキャストです。司会のギデオン・ホアンです。今日の話題は、届くメールのほとんどに出てくる価格設定です。値上げをすると顧客を失うのではないかと不安だという声を多くいただきます。さて、私は昨年、料金を10パーセント上げました。失った顧客は、約150のうち2件でした。もちろん事業はそれぞれ違いますので、キエラ・ジャフィ博士をお招きしました。ペンブルック大学でマーケティングを教え、価格の変化に買い手がどう反応するかを研究しています。新しい価格を本格的に採用する前に試す簡単な方法も紹介していただきます。でもその前に、スポンサーからのお知らせです。",
+  "qs": [
+   {
+    "q": "What is the topic of today's episode?",
+    "c": [
+     "Managing customer e-mail",
+     "Deciding how much to charge",
+     "Hiring new employees",
+     "Finding business sponsors"
+    ],
+    "a": 1,
+    "e": "Today's topic ... pricing が根拠。価格設定を「いくら請求するかを決めること」と言い換えた。メールは話題が寄せられる手段、スポンサーは番組の広告主として出てきただけで、どちらも今日の主題ではない。",
+    "tag": "主題・目的"
+   },
+   {
+    "q": "Why does the speaker say, \"I lost two clients out of about a hundred and fifty\"?",
+    "c": [
+     "To explain why he lowered his prices",
+     "To complain about a difficult year",
+     "To ask listeners to share their results",
+     "To suggest that a common fear may be exaggerated"
+    ],
+    "a": 3,
+    "e": "値上げで顧客を失うのが怖いという声を紹介した直後に、10パーセント上げても約150のうち2件しか失わなかったと述べている。その不安は思うほど大きくないと示す発言。値下げはしておらず、苦しい年だったと嘆いてもいない。",
+    "tag": "意図問題"
+   },
+   {
+    "q": "What will Dr. Jaffe explain?",
+    "c": [
+     "How to find a sponsor",
+     "How to write a marketing plan",
+     "How to try out a price before adopting it",
+     "How to attract new clients online"
+    ],
+    "a": 2,
+    "e": "a simple way to test a new price before committing to it が根拠。test を try out、commit を adopt と言い換えた。マーケティングは博士が教える科目で、計画の書き方を話すとは言っていない。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P4-08",
+  "intro": "introduction",
+  "v": "US-F2",
+  "text": "Good morning, and welcome to the second day of the City Housing Forum. It's my pleasure to introduce our keynote speaker, Rosalind Kaplan. Ms. Kaplan founded Ironleaf Architects, a firm that turns empty factories and warehouses into affordable apartments. When she started eight years ago, few developers believed such projects could make money. Today, Ironleaf has completed more than forty buildings, and last year it opened its first office abroad. Ms. Kaplan will talk about how she persuaded city governments to update their building rules. She'll take questions at the end, so please write yours on the cards on your tables. Her new book is on sale at the registration desk, and she's agreed to sign copies during lunch.",
+  "ja": "おはようございます。シティ・ハウジング・フォーラム2日目へようこそ。基調講演者のロザリンド・カプランさんをご紹介できて光栄です。カプランさんは、空き工場や倉庫を手ごろな価格の集合住宅に変える設計事務所、アイアンリーフ・アーキテクツを創業しました。8年前に始めたときは、そうした事業で利益が出ると考える開発業者はほとんどいませんでした。今ではアイアンリーフは40棟を超える建物を手がけ、昨年は初の海外事務所を開きました。カプランさんには、市の行政に建築規則の見直しをどう説得したかをお話しいただきます。最後に質疑応答がありますので、ご質問はテーブルのカードにお書きください。カプランさんの新刊が受付で販売されており、昼食の時間にサインをしていただけることになっています。",
+  "qs": [
+   {
+    "q": "What does Ms. Kaplan's firm do?",
+    "c": [
+     "Builds new factories",
+     "Sells construction equipment",
+     "Converts old industrial buildings into homes",
+     "Designs public parks"
+    ],
+    "a": 2,
+    "e": "turns empty factories and warehouses into affordable apartments が根拠。空き工場や倉庫を住宅に変えることを言い換えた。factories は改装前の建物で、工場を新しく建てるのではない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "According to the speaker, what happened last year?",
+    "c": [
+     "Ms. Kaplan's firm began operating in another country.",
+     "Ms. Kaplan received an industry award.",
+     "Ms. Kaplan joined a city government.",
+     "The forum moved to a larger venue."
+    ],
+    "a": 0,
+    "e": "last year it opened its first office abroad が根拠。海外に初の事務所を開いたことを「別の国で業務を始めた」と言い換えた。市の行政は規則の見直しを説得した相手で、そこに加わったのではない。受賞や会場の移転には触れていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "What are listeners asked to do?",
+    "c": [
+     "Buy tickets at the registration desk",
+     "Submit questions in writing",
+     "Help collect some cards",
+     "Return to their seats after lunch"
+    ],
+    "a": 1,
+    "e": "please write yours on the cards on your tables が根拠で、質問をカードに書いて出すよう求めている。カードは書くためのもので、集めるよう頼まれてはいない。受付は新刊を売る場所として出ただけで、チケットの話はない。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P4-09",
+  "intro": "excerpt from a meeting",
+  "v": "AU-F",
+  "text": "The last thing on today's agenda is office chairs. As many of you have pointed out, the chairs in the design studio are uncomfortable, and a few of them are broken. I asked four suppliers for quotes, and they're on your handout. Six new designers start on the first of next month. That's only about two and a half weeks from now, and they'll need somewhere to sit on day one. So any supplier that can't deliver by then is out. Of the ones that can, I'd go with whichever is cheaper. Before we place the full order, though, I'll ask for a sample chair so a few of you can test it. Could I get two volunteers?",
+  "ja": "今日の議題の最後は事務用の椅子です。多くの方から指摘があったように、デザインスタジオの椅子は座り心地が悪く、壊れているものもいくつかあります。4社に見積もりを頼み、配布資料に載せてあります。来月1日に新しいデザイナーが6人入ります。あと2週間半ほどしかなく、初日から座る場所が必要です。ですから、それまでに納品できない会社は対象外です。間に合う会社のうち、安いほうにしたいと思います。ただ、全数を発注する前に見本の椅子を1脚頼んで、何人かに試してもらうつもりです。ボランティアを2人お願いできますか。",
+  "graphic": {
+   "title": "Office Chair Quotes",
+   "rows": [
+    [
+     "Supplier",
+     "Price per Chair",
+     "Delivery Time"
+    ],
+    [
+     "Ostrand Office",
+     "$185",
+     "5 weeks"
+    ],
+    [
+     "Kinsey Furnishings",
+     "$240",
+     "1 week"
+    ],
+    [
+     "Talbot Interiors",
+     "$195",
+     "4 weeks"
+    ],
+    [
+     "Merrow Supply",
+     "$210",
+     "2 weeks"
+    ]
+   ]
+  },
+  "qs": [
+   {
+    "q": "What problem does the speaker mention?",
+    "c": [
+     "A delivery was delayed.",
+     "Some chairs are in poor condition.",
+     "Some designers have resigned.",
+     "The budget has been reduced."
+    ],
+    "a": 1,
+    "e": "デザインスタジオの椅子は座り心地が悪く、壊れているものもあると言っている。それを「状態が悪い」と言い換えた。デザイナーは辞めるのではなく新しく入る。納品の時期は業者選びの条件として出ただけで、遅れは起きていない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "Look at the graphic. Which supplier does the speaker prefer?",
+    "c": [
+     "Ostrand Office",
+     "Kinsey Furnishings",
+     "Talbot Interiors",
+     "Merrow Supply"
+    ],
+    "a": 3,
+    "e": "新人が入る約2週間半後までに届くことが条件で、間に合う中では安いほうを選ぶと言っている。表で間に合うのは納期1週間と2週間の2社で、安いのは210ドルの社。185ドルと195ドルの社は5週間・4週間かかって間に合わず、最も早い社は240ドルと高い。",
+    "tag": "図表問題"
+   },
+   {
+    "q": "What does the speaker say she will do before placing the full order?",
+    "c": [
+     "Request a sample product",
+     "Visit a supplier's showroom",
+     "Meet with the new designers",
+     "Get approval from the finance team"
+    ],
+    "a": 0,
+    "e": "Before we place the full order, though, I'll ask for a sample chair が根拠。見本の椅子を頼むことを sample product の依頼と言い換えた。試すのは会議の出席者で、新人デザイナーと会うとは言っていない。",
+    "tag": "次の行動"
+   }
+  ]
+ },
+ {
+  "id": "P4-10",
+  "intro": "telephone message",
+  "v": "UK-M",
+  "text": "Hello, this is Callum Hirst from Brennan Consulting. I'm calling about the invoice for the training workshop we held at your conference center last Thursday. Everything went smoothly, and our staff loved the room. But one charge doesn't look right. We did request the projector and microphones, but two days before the event, I told your events coordinator that we'd shortened the session to a morning, so we wouldn't need lunch. We'll pay the rest of the bill right away, but could you send me a corrected invoice? Also, we're planning a similar workshop in the spring, so I'd like to know whether you have any dates available in April. You can reach me at 555-0172. Thanks.",
+  "ja": "もしもし、ブレナン・コンサルティングのカラム・ハーストです。先週の木曜日にそちらの会議センターで開いた研修ワークショップの請求書についてお電話しました。すべて順調に進み、うちのスタッフも部屋をとても気に入っていました。ただ、1つだけ請求がおかしいようです。プロジェクターとマイクは確かにお願いしましたが、開催の2日前に、研修を午前だけに短縮したので昼食は不要だと、そちらのイベント担当の方にお伝えしました。残りはすぐにお支払いしますので、修正した請求書を送っていただけますか。また、春にも同じようなワークショップを計画しているので、4月に空いている日があるか教えてください。555-0172までご連絡ください。よろしくお願いします。",
+  "graphic": {
+   "title": "Invoice: Training Workshop",
+   "rows": [
+    [
+     "Item",
+     "Amount"
+    ],
+    [
+     "Meeting room (half day)",
+     "$600"
+    ],
+    [
+     "Projector and microphones",
+     "$150"
+    ],
+    [
+     "Lunch for 25 guests",
+     "$375"
+    ],
+    [
+     "Morning coffee service",
+     "$90"
+    ]
+   ]
+  },
+  "qs": [
+   {
+    "q": "Where does the listener most likely work?",
+    "c": [
+     "At a consulting firm",
+     "At an event venue",
+     "At a catering company",
+     "At an equipment rental shop"
+    ],
+    "a": 1,
+    "e": "your conference center で開いた研修の請求書の件で電話しているので、聞き手は会議センターの人。conference center を event venue と言い換えた。コンサルティング会社は話し手の勤務先、昼食やプロジェクターは請求の項目にすぎない。",
+    "tag": "話者・場所"
+   },
+   {
+    "q": "Look at the graphic. Which amount does the speaker believe should be removed?",
+    "c": [
+     "$90",
+     "$150",
+     "$375",
+     "$600"
+    ],
+    "a": 2,
+    "e": "研修を午前だけに短縮したので昼食は不要だと2日前に伝えたと言っている。表で昼食は375ドル。プロジェクターとマイクは確かに頼んだと言うので150ドルは正しい請求。部屋は半日料金で、コーヒーには触れていない。",
+    "tag": "図表問題"
+   },
+   {
+    "q": "What does the speaker want to know?",
+    "c": [
+     "Whether dates are open for a future event",
+     "How much it costs to rent a projector",
+     "Who the events coordinator is",
+     "Where guests should park"
+    ],
+    "a": 0,
+    "e": "whether you have any dates available in April が根拠で、春の研修のため4月の空き日を尋ねている。available を open と言い換えた。イベント担当者にはすでに連絡済みで、誰かを尋ねてはいない。",
+    "tag": "詳細"
+   }
+  ]
+ }
+]

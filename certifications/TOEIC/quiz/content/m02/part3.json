@@ -1,0 +1,1263 @@
+[
+  {
+    "id": "P3-01",
+    "intro": "conversation",
+    "speakers": [
+      {
+        "k": "M1",
+        "v": "UK-M"
+      },
+      {
+        "k": "F1",
+        "v": "US-F"
+      }
+    ],
+    "lines": [
+      {
+        "s": "M1",
+        "t": "Erin, the truck from Fairmont Packaging just pulled in, but there are only six pallets on it. The purchase order lists eight."
+      },
+      {
+        "s": "F1",
+        "t": "Oh, I meant to tell you. Their warehouse called this morning. The other two are being shipped separately on Thursday."
+      },
+      {
+        "s": "M1",
+        "t": "Okay. Should I still sign the delivery receipt, then?"
+      },
+      {
+        "s": "F1",
+        "t": "Yes, but write the number of pallets you actually received next to your signature. That way, we won't be billed for the full order yet."
+      },
+      {
+        "s": "M1",
+        "t": "Got it. And where should I put them? Aisle twelve is blocked off while the new shelving is being installed."
+      },
+      {
+        "s": "F1",
+        "t": "Use the overflow area beside the loading dock for now. Someone on the night shift can move them later."
+      },
+      {
+        "s": "M1",
+        "t": "All right. I'll grab a forklift and start unloading."
+      }
+    ],
+    "ja": [
+      "エリン、フェアモント・パッケージングのトラックが今着いたんだけど、パレットが6つしか載っていないんだ。発注書には8つとあるのに。",
+      "ああ、言うのを忘れていたわ。今朝、先方の倉庫から電話があったの。残りの2つは木曜日に別便で発送されるそうよ。",
+      "わかった。それでも受領書にはサインしていいのかな。",
+      "ええ、でも署名の横に、実際に受け取ったパレットの数を書いておいて。そうすれば、まだ注文全額を請求されずに済むから。",
+      "了解。それで、どこに置けばいい？12番通路は新しい棚の設置中で通れないんだ。",
+      "ひとまず搬入口の横の予備スペースを使って。後で夜勤の誰かに移してもらえばいいわ。",
+      "わかった。フォークリフトを取ってきて荷下ろしを始めるよ。"
+    ],
+    "qs": [
+      {
+        "q": "What problem does the man mention?",
+        "c": [
+          "A truck arrived later than scheduled.",
+          "A shipment is smaller than what was ordered.",
+          "Some pallets were damaged during delivery.",
+          "A purchase order cannot be located."
+        ],
+        "a": 1,
+        "e": "男性が「パレットが6つしかないが、発注書には8つとある」と述べている。届いた量が注文より少ないことを「注文より小さい出荷」と言い換えた選択肢が正解。遅れや破損の話はなく、発注書（purchase order）という語は出るが紛失したわけではない。",
+        "tag": "主題・目的"
+      },
+      {
+        "q": "What does the woman ask the man to do when he signs the receipt?",
+        "c": [
+          "Attach a copy of the purchase order",
+          "Ask the driver to sign it as well",
+          "Record the quantity that was delivered",
+          "Write down the date of the next delivery"
+        ],
+        "a": 2,
+        "e": "女性は「署名の横に、実際に受け取ったパレット数を書いて」と頼んでいる。これを受け取った数量の記録と言い換えた選択肢が正解。木曜日は残りの発送日として出るだけで、次の配送日を書くよう頼んではいない。",
+        "tag": "詳細"
+      },
+      {
+        "q": "Why is aisle twelve unavailable?",
+        "c": [
+          "It is reserved for Thursday's shipment.",
+          "A forklift is being repaired there.",
+          "The night shift is using it.",
+          "Storage units are being put in."
+        ],
+        "a": 3,
+        "e": "男性が「12番通路は新しい棚の設置中で通れない」と言っている。shelving is being installed を storage units are being put in と言い換えた選択肢が正解。木曜日は残りの発送日、夜勤は後でパレットを移す人として出るだけ。",
+        "tag": "詳細"
+      }
+    ]
+  },
+  {
+    "id": "P3-02",
+    "intro": "conversation",
+    "speakers": [
+      {
+        "k": "M1",
+        "v": "US-M"
+      },
+      {
+        "k": "F1",
+        "v": "AU-F"
+      }
+    ],
+    "lines": [
+      {
+        "s": "M1",
+        "t": "Good morning, Glenmore Hotel front desk. How can I help you?"
+      },
+      {
+        "s": "F1",
+        "t": "Hi. I checked out yesterday, and I think I left my laptop charger in my room. It was room 514, under the name Sofia Duarte."
+      },
+      {
+        "s": "M1",
+        "t": "Let me check our lost-and-found log, Ms. Duarte... Yes, housekeeping turned in a charger from that room. We can mail it to you for a small fee, if you'd like."
+      },
+      {
+        "s": "F1",
+        "t": "Thanks, but that won't be necessary. I'll be back in town on the twentieth for a medical equipment exhibition, and I've already booked another stay with you."
+      },
+      {
+        "s": "M1",
+        "t": "Then we'll keep it at the front desk. Just mention it when you check in."
+      },
+      {
+        "s": "F1",
+        "t": "Perfect. Will I need to bring anything?"
+      },
+      {
+        "s": "M1",
+        "t": "Only a photo ID, so we can confirm that it belongs to you."
+      }
+    ],
+    "ja": [
+      "おはようございます、グレンモア・ホテルのフロントでございます。ご用件をお伺いします。",
+      "もしもし。昨日チェックアウトしたのですが、部屋にノートパソコンの充電器を忘れたようなんです。514号室で、名前はソフィア・ドゥアルテです。",
+      "遺失物の記録を確認いたします、ドゥアルテ様……はい、客室係がその部屋から充電器を届けております。ご希望でしたら、少額の手数料で郵送いたしますが。",
+      "ありがとうございます。でも、その必要はありません。20日に医療機器の展示会でまたそちらへ行きますし、次の宿泊もすでにそちらで予約してあるので。",
+      "では、こちらのフロントでお預かりしておきます。チェックインの際にお申し付けください。",
+      "よかった。何か持っていく必要はありますか。",
+      "写真付きの身分証明書だけお持ちください。お客様のものであることを確認いたしますので。"
+    ],
+    "qs": [
+      {
+        "q": "Why is the woman calling?",
+        "c": [
+          "To ask about an item she left behind",
+          "To extend her stay at the hotel",
+          "To complain about the housekeeping service",
+          "To register for an exhibition"
+        ],
+        "a": 0,
+        "e": "女性は冒頭で「部屋に充電器を忘れたようだ」と述べている。忘れ物（left my laptop charger）について問い合わせるのが目的。展示会は再訪の理由として出るだけで登録の話ではなく、客室係は充電器を届けた人として出るので苦情でもない。",
+        "tag": "主題・目的"
+      },
+      {
+        "q": "What does the man offer to do?",
+        "c": [
+          "Waive a cancellation fee",
+          "Contact an exhibition organizer",
+          "Upgrade the woman's next room",
+          "Ship the item to the woman"
+        ],
+        "a": 3,
+        "e": "男性は「少額の手数料で郵送できる」と申し出ている。mail it to you を ship the item と言い換えた選択肢が正解。手数料（fee）という語は出るが、免除するという話ではない。展示会の主催者への連絡や部屋のアップグレードは話に出ていない。",
+        "tag": "詳細"
+      },
+      {
+        "q": "Why does the woman decline the man's offer?",
+        "c": [
+          "She has bought a new charger.",
+          "She will be staying at the hotel again soon.",
+          "She thinks the fee is too high.",
+          "She plans to pick up the item today."
+        ],
+        "a": 1,
+        "e": "女性は「20日に展示会でまた来るし、次の宿泊も予約済みだ」と言って郵送を断っている。これを「近いうちに再びホテルに泊まる」とまとめた選択肢が正解。手数料が高いとは言っておらず、今日取りに行くとも言っていない。",
+        "tag": "詳細"
+      }
+    ]
+  },
+  {
+    "id": "P3-03",
+    "intro": "conversation",
+    "speakers": [
+      {
+        "k": "M1",
+        "v": "US-M2"
+      },
+      {
+        "k": "F1",
+        "v": "UK-F"
+      }
+    ],
+    "lines": [
+      {
+        "s": "M1",
+        "t": "Fatima, I just got a call from Dorset Home Goods. They'd like an extra five thousand of our blue coffee mugs by the end of the month. Can we fit that in?"
+      },
+      {
+        "s": "F1",
+        "t": "Hmm. The kilns are already running around the clock."
+      },
+      {
+        "s": "M1",
+        "t": "I was afraid of that. But they're one of our biggest accounts."
+      },
+      {
+        "s": "F1",
+        "t": "I know. Well, we do have about two thousand mugs that are glazed and waiting to be fired."
+      },
+      {
+        "s": "M1",
+        "t": "Could those be ready in time?"
+      },
+      {
+        "s": "F1",
+        "t": "If we push back a smaller order by a few days, yes, by the thirtieth. But the other three thousand wouldn't be done until the middle of next month."
+      },
+      {
+        "s": "M1",
+        "t": "So we'd ship it in two parts. Let me call their buyer and see if that's acceptable."
+      }
+    ],
+    "ja": [
+      "ファティマ、今ドーセット・ホームグッズから電話があったんだ。月末までに、うちの青いコーヒーマグを追加で5000個ほしいそうだ。組み込めるかな。",
+      "うーん。窯はもう24時間フル稼働しているのよ。",
+      "そう言われると思った。でも、うちの最大の取引先のひとつなんだ。",
+      "わかってる。そうね、釉薬をかけて焼成待ちのマグが2000個ほどあるわ。",
+      "それは間に合うかな。",
+      "小口の注文を数日後ろにずらせば、ええ、30日までには。でも残りの3000個は来月の半ばまでかかるわ。",
+      "じゃあ2回に分けて出荷することになるね。先方の購買担当に電話して、それで構わないか確かめてみるよ。"
+    ],
+    "qs": [
+      {
+        "q": "What does the man want to know?",
+        "c": [
+          "Whether a large additional order can be finished on time",
+          "Whether a new glaze color is available",
+          "How much a rush order would cost",
+          "When a client's account will be reviewed"
+        ],
+        "a": 0,
+        "e": "男性は「月末までに追加で5000個ほしいそうだ。組み込めるか」と尋ねている。追加の大口注文が期限に間に合うかを知りたいという選択肢が正解。釉薬（glazed）は在庫の状態として出るだけで新色の話ではなく、費用も尋ねていない。",
+        "tag": "主題・目的"
+      },
+      {
+        "q": "What does the woman imply when she says, \"The kilns are already running around the clock\"?",
+        "c": [
+          "The equipment is due for an inspection.",
+          "The mugs have already been shipped.",
+          "It will be hard to take on more work.",
+          "Energy costs at the factory have risen."
+        ],
+        "a": 2,
+        "e": "追加注文を組み込めるかと聞かれて「窯はもう24時間動いている」と答えている。生産能力に余裕がなく、これ以上の仕事は受けにくいという含み。直後に男性が「そう言われると思った」と応じていることからも分かる。点検や光熱費の話ではない。",
+        "tag": "意図問題"
+      },
+      {
+        "q": "What will the man most likely do next?",
+        "c": [
+          "Postpone a smaller order",
+          "Ask a client about delivering an order in stages",
+          "Visit the production area",
+          "Send an invoice to a buyer"
+        ],
+        "a": 1,
+        "e": "男性は最後に「2回に分けて出荷することになる。購買担当に電話して確かめる」と言っている。ship it in two parts を delivering in stages と言い換えた選択肢が正解。小口注文を後ろにずらすのは女性の案である。",
+        "tag": "次の行動"
+      }
+    ]
+  },
+  {
+    "id": "P3-04",
+    "intro": "conversation with three speakers",
+    "speakers": [
+      {
+        "k": "F1",
+        "v": "UK-F"
+      },
+      {
+        "k": "M1",
+        "v": "US-M"
+      },
+      {
+        "k": "F2",
+        "v": "AU-F"
+      }
+    ],
+    "lines": [
+      {
+        "s": "F1",
+        "t": "Before we open, I want to let you both know that we're getting rid of the paper sign-in sheets. Starting on the first, patients will check in on tablets in the waiting room."
+      },
+      {
+        "s": "M1",
+        "t": "That'll save us a lot of data entry. But some of our older patients might struggle with touch screens."
+      },
+      {
+        "s": "F1",
+        "t": "That's a fair point, Owen. The supplier recommends having someone stand by the tablets for the first couple of weeks."
+      },
+      {
+        "s": "F2",
+        "t": "I could do that in the mornings. That's when most of our regular patients come in, and I know a lot of them by name."
+      },
+      {
+        "s": "F1",
+        "t": "Thanks, Nadia. Owen, could you cover the afternoons?"
+      },
+      {
+        "s": "M1",
+        "t": "Sure. Will we get any training beforehand?"
+      },
+      {
+        "s": "F1",
+        "t": "Yes. A technician from Delphine Systems is coming on Thursday to walk us through everything."
+      }
+    ],
+    "ja": [
+      "開院前に、お二人に知らせておきたいことがあるの。紙の受付表を廃止します。1日から、患者さんは待合室のタブレットで受付をすることになります。",
+      "データ入力の手間がかなり省けますね。でも、年配の患者さんの中にはタッチパネルに苦労する方もいるかもしれません。",
+      "もっともな指摘ね、オーウェン。導入業者は、最初の2週間ほどはタブレットのそばに誰かを立たせることを勧めているの。",
+      "午前中なら私がやれます。常連の患者さんの多くは午前に来られますし、名前を存じ上げている方も多いので。",
+      "ありがとう、ナディア。オーウェン、午後をお願いできる？",
+      "もちろんです。事前に研修はありますか。",
+      "ええ。木曜日にデルフィン・システムズの技術者が来て、一通り説明してくれます。"
+    ],
+    "qs": [
+      {
+        "q": "What is the conversation mainly about?",
+        "c": [
+          "A shortage of reception staff",
+          "Complaints about waiting times",
+          "The opening of a new clinic",
+          "A change to how patients register on arrival"
+        ],
+        "a": 3,
+        "e": "冒頭で女性が「紙の受付表をやめ、1日から患者はタブレットで受付する」と伝え、その後も導入の段取りを話している。これを来院時の受付方法の変更と言い換えた選択肢が正解。Before we open は朝の始業前のことで、新しい診療所の開業ではない。",
+        "tag": "主題・目的"
+      },
+      {
+        "q": "What concern does the man raise?",
+        "c": [
+          "The new devices may be costly to maintain.",
+          "Some patients may have difficulty using the new system.",
+          "Data entry will take more time.",
+          "The waiting room may become crowded."
+        ],
+        "a": 1,
+        "e": "男性は「年配の患者の中にはタッチパネルに苦労する人がいるかもしれない」と述べている。struggle with touch screens を have difficulty using と言い換えた選択肢が正解。データ入力は「省ける」と言っており、時間が増えるのは逆。",
+        "tag": "詳細"
+      },
+      {
+        "q": "Why does Nadia offer to work in the mornings?",
+        "c": [
+          "She knows many of the patients who visit at that time.",
+          "She has already been trained by the supplier.",
+          "She is not available in the afternoons.",
+          "The technician will be visiting in the morning."
+        ],
+        "a": 0,
+        "e": "ナディアは「常連の患者の多くは午前に来るし、名前を知っている人も多い」と理由を述べている。これを「その時間帯に来る患者の多くを知っている」と言い換えた選択肢が正解。研修は木曜日にこれから行われるもので、午後に都合が悪いとも言っていない。",
+        "tag": "詳細"
+      }
+    ]
+  },
+  {
+    "id": "P3-05",
+    "intro": "conversation",
+    "speakers": [
+      {
+        "k": "F1",
+        "v": "US-F2"
+      },
+      {
+        "k": "M1",
+        "v": "UK-M2"
+      }
+    ],
+    "lines": [
+      {
+        "s": "F1",
+        "t": "Hi. I need a gallon of this color for my living room. It's called Desert Sand, and I bought it here about two years ago."
+      },
+      {
+        "s": "M1",
+        "t": "Let me look it up... I'm sorry, but that line was discontinued last spring. The manufacturer replaced it with a new low-odor formula."
+      },
+      {
+        "s": "F1",
+        "t": "Is the color exactly the same? I'm only repainting one wall, so it has to match the other three."
+      },
+      {
+        "s": "M1",
+        "t": "It should be very close, but the new version has a slightly glossier finish. Why don't you take a sample can home first? It's free, and it'll cover a small patch of wall."
+      },
+      {
+        "s": "F1",
+        "t": "That's a good idea. I'd rather test it than end up repainting the whole room."
+      },
+      {
+        "s": "M1",
+        "t": "I'll mix one for you now. It'll only take about five minutes."
+      }
+    ],
+    "ja": [
+      "こんにちは。リビング用にこの色を1ガロンほしいんです。デザートサンドという色で、2年ほど前にここで買いました。",
+      "お調べします……申し訳ございません、その商品シリーズは昨年の春に製造中止になりました。メーカーが新しい低臭タイプの製品に切り替えたんです。",
+      "色はまったく同じですか。壁を1面だけ塗り直すので、残りの3面と合わないと困るんです。",
+      "かなり近いはずですが、新しいほうは仕上がりが少しつやっぽくなります。まずサンプル缶をお持ち帰りになってはいかがでしょう。無料で、壁の小さな範囲なら塗れますよ。",
+      "いい考えですね。部屋全体を塗り直す羽目になるより、試してみたほうがいいわ。",
+      "今お作りしますね。5分ほどで済みます。"
+    ],
+    "qs": [
+      {
+        "q": "Where most likely are the speakers?",
+        "c": [
+          "At an interior design firm",
+          "At a home improvement store",
+          "At a furniture showroom",
+          "At a construction site"
+        ],
+        "a": 1,
+        "e": "女性が色の名前を挙げて「ここで2年前に買った」と言い、男性が在庫を調べてその場で塗料を調合すると言っている。塗料を売っている店なので住宅用品店が正解。リビングや壁の話は出るが、内装デザイン会社や家具の展示場ではない。",
+        "tag": "話者・場所"
+      },
+      {
+        "q": "What does the man say about the product the woman asks for?",
+        "c": [
+          "It will be restocked in the spring.",
+          "Its price has recently increased.",
+          "It is sold only in small cans.",
+          "It is no longer being made."
+        ],
+        "a": 3,
+        "e": "男性は「その商品シリーズは昨年の春に製造中止になった」と言っている。discontinued を no longer being made と言い換えた選択肢が正解。春（spring）は中止の時期で、再入荷の時期ではない。小さな缶はサンプルの話として出るだけ。",
+        "tag": "詳細"
+      },
+      {
+        "q": "What does the man suggest the woman do?",
+        "c": [
+          "Paint the entire room",
+          "Choose a paint with less shine",
+          "Try out a small amount first",
+          "Come back later in the week"
+        ],
+        "a": 2,
+        "e": "男性は「まず無料のサンプル缶を持ち帰ってはどうか」と勧めている。sample can を a small amount と言い換えた選択肢が正解。部屋全体を塗るのは女性が避けたいことで、つやの少ない塗料を選ぶよう勧めてもいない。",
+        "tag": "詳細"
+      }
+    ]
+  },
+  {
+    "id": "P3-06",
+    "intro": "conversation",
+    "speakers": [
+      {
+        "k": "M1",
+        "v": "UK-M"
+      },
+      {
+        "k": "F1",
+        "v": "AU-F"
+      }
+    ],
+    "lines": [
+      {
+        "s": "M1",
+        "t": "Have you seen the floor plan the organizers sent for the outdoor equipment expo? Our booth has been moved right next to the main entrance."
+      },
+      {
+        "s": "F1",
+        "t": "Next to the entrance? We only ordered four hundred printed catalogs."
+      },
+      {
+        "s": "M1",
+        "t": "Good point. Almost every visitor will walk past us. Is it too late to get more printed?"
+      },
+      {
+        "s": "F1",
+        "t": "I'm afraid so. The printer needs at least two weeks, and the expo starts in ten days."
+      },
+      {
+        "s": "M1",
+        "t": "What if we put up a sign with a QR code? People could download the catalog onto their phones."
+      },
+      {
+        "s": "F1",
+        "t": "That could work. And we wouldn't have to carry so many boxes of paper."
+      },
+      {
+        "s": "M1",
+        "t": "Great. I'll ask the design team to make the sign this afternoon."
+      }
+    ],
+    "ja": [
+      "アウトドア用品見本市の主催者から届いた会場図は見た？うちのブースが正面入口のすぐ隣に移されたんだ。",
+      "入口の隣？印刷したカタログは400部しか注文していないわよ。",
+      "確かに。来場者のほぼ全員がうちの前を通るからね。追加で印刷するのはもう間に合わないかな。",
+      "残念ながらね。印刷会社は最低2週間かかるし、見本市は10日後に始まるもの。",
+      "QRコードの看板を出すのはどう？来場者がスマホにカタログをダウンロードできる。",
+      "それならいけそう。それに、紙の箱をたくさん運ばなくて済むわね。",
+      "よし。今日の午後、デザインチームに看板を作ってもらうよう頼むよ。"
+    ],
+    "qs": [
+      {
+        "q": "What are the speakers preparing for?",
+        "c": [
+          "A sports competition",
+          "A trade show",
+          "A store opening",
+          "A product launch party"
+        ],
+        "a": 1,
+        "e": "男性が主催者から届いた「アウトドア用品の見本市（expo）の会場図」と自社ブースの位置について話している。expo と booth から、出展者として準備している展示会が正解。アウトドア用品（outdoor equipment）は扱う商品の話で、スポーツの大会ではない。",
+        "tag": "主題・目的"
+      },
+      {
+        "q": "Why does the woman say, \"We only ordered four hundred printed catalogs\"?",
+        "c": [
+          "To point out an error on an invoice",
+          "To suggest that the booth is too small",
+          "To express concern that the materials may run out",
+          "To explain why a delivery was delayed"
+        ],
+        "a": 2,
+        "e": "ブースが入口の隣に移ったと聞いてこう言い、男性も「ほぼ全員が前を通る」と応じて増刷を検討している。来場者が増えてカタログが足りなくなる心配を伝えている。請求書の誤りやブースの広さ、配送の遅れの話ではない。",
+        "tag": "意図問題"
+      },
+      {
+        "q": "What will the man do next?",
+        "c": [
+          "Arrange for a sign to be made",
+          "Place an order with a printer",
+          "Contact the expo organizers",
+          "Move some boxes to the booth"
+        ],
+        "a": 0,
+        "e": "男性は最後に「今日の午後、デザインチームに看板を作るよう頼む」と言っている。これを看板の作成を手配すると言い換えた選択肢が正解。増刷は間に合わないと結論が出ており、箱を運ぶ話は女性の感想として出るだけ。",
+        "tag": "次の行動"
+      }
+    ]
+  },
+  {
+    "id": "P3-07",
+    "intro": "conversation",
+    "speakers": [
+      {
+        "k": "F1",
+        "v": "US-F"
+      },
+      {
+        "k": "M1",
+        "v": "UK-M2"
+      }
+    ],
+    "lines": [
+      {
+        "s": "F1",
+        "t": "Hello, this is Ingrid Falk. I own the café on Grove Street, and about three weeks ago I applied for an outdoor seating permit. I haven't heard anything since."
+      },
+      {
+        "s": "M1",
+        "t": "Let me pull up your file, Ms. Falk... I see what happened. Your application didn't include a certificate of liability insurance, so it was never sent for review."
+      },
+      {
+        "s": "F1",
+        "t": "Oh, I assumed my insurance company had sent that directly to you."
+      },
+      {
+        "s": "M1",
+        "t": "Unfortunately, we have no record of it. If you upload it through our online portal today, your application can be reviewed at next Tuesday's committee meeting."
+      },
+      {
+        "s": "F1",
+        "t": "And if I mail it instead?"
+      },
+      {
+        "s": "M1",
+        "t": "Then it probably won't arrive in time, and the following meeting isn't until the end of the month."
+      },
+      {
+        "s": "F1",
+        "t": "I'll call my insurer and upload it this afternoon."
+      }
+    ],
+    "ja": [
+      "もしもし、イングリッド・フォークです。グローブ通りでカフェを経営していて、3週間ほど前に屋外席の許可を申請したのですが、それから何の連絡もないんです。",
+      "記録をお調べします、フォーク様……事情がわかりました。申請書に賠償責任保険の証明書が添付されていなかったため、審査に回されていないんです。",
+      "あら、保険会社がそちらに直接送ったものだと思っていました。",
+      "あいにく、こちらには受け取った記録がありません。本日中にオンライン窓口からアップロードしていただければ、来週火曜日の委員会で審査できます。",
+      "郵送した場合は？",
+      "それですとおそらく間に合わず、その次の会議は月末までありません。",
+      "保険会社に電話して、今日の午後にアップロードします。"
+    ],
+    "qs": [
+      {
+        "q": "Why is the woman calling?",
+        "c": [
+          "To renew a business license",
+          "To dispute an insurance charge",
+          "To check on the progress of an application",
+          "To reserve space for a meeting"
+        ],
+        "a": 2,
+        "e": "女性は「3週間前に屋外席の許可を申請したが、何の連絡もない」と述べている。申請がどうなっているかを確かめる電話なので、申請の進み具合を確認する目的が正解。保険は不足書類として出るだけで、請求に異議を唱えてはいない。",
+        "tag": "主題・目的"
+      },
+      {
+        "q": "According to the man, why has the application not been reviewed?",
+        "c": [
+          "A fee has not been paid.",
+          "A required document is missing.",
+          "The committee meeting was canceled.",
+          "The café is located in a restricted area."
+        ],
+        "a": 1,
+        "e": "男性は「賠償責任保険の証明書が添付されていないので審査に回っていない」と説明している。証明書を a required document と言い換えた選択肢が正解。委員会は来週火曜日に予定どおり開かれ、中止されてはいない。",
+        "tag": "詳細"
+      },
+      {
+        "q": "According to the man, what is the benefit of uploading the document today?",
+        "c": [
+          "It is the only method the office accepts.",
+          "It costs less than sending it by mail.",
+          "It lets the woman track her payment.",
+          "It will allow the application to be reviewed sooner."
+        ],
+        "a": 3,
+        "e": "男性は「今日オンラインで出せば来週火曜日の委員会で審査できるが、郵送だと間に合わず次は月末」と説明している。これを「より早く審査される」と言い換えた選択肢が正解。郵送も受け付けているので唯一の方法ではなく、費用の話も出ていない。",
+        "tag": "詳細"
+      }
+    ]
+  },
+  {
+    "id": "P3-08",
+    "intro": "conversation with three speakers",
+    "speakers": [
+      {
+        "k": "F1",
+        "v": "UK-F"
+      },
+      {
+        "k": "M1",
+        "v": "US-M2"
+      },
+      {
+        "k": "M2",
+        "v": "UK-M"
+      }
+    ],
+    "lines": [
+      {
+        "s": "F1",
+        "t": "Luca, have you seen tomorrow's forecast? Heavy rain is expected after one o'clock, right when your group is scheduled for the walking tour of the old town."
+      },
+      {
+        "s": "M1",
+        "t": "That's the thirty engineers from the conference. Could we switch things around? We'd do the walking tour in the morning and the indoor food market after lunch."
+      },
+      {
+        "s": "F1",
+        "t": "That should work. Gordon, would that change cause any problems for you?"
+      },
+      {
+        "s": "M2",
+        "t": "Not really, but the market's parking lot is closed on weekdays for repaving. I'd have to drop everyone off at the north gate, which is a short walk away."
+      },
+      {
+        "s": "M1",
+        "t": "That's fine, as long as they have umbrellas for that part."
+      },
+      {
+        "s": "F1",
+        "t": "Good. Luca, can you let the group leader know about the new schedule?"
+      },
+      {
+        "s": "M1",
+        "t": "Sure, I'll send her a text right now."
+      }
+    ],
+    "ja": [
+      "ルカ、明日の天気予報は見た？午後1時以降に大雨の予報なの。ちょうどあなたのグループの旧市街の徒歩ツアーの時間よ。",
+      "会議に来ている30人の技術者のグループですね。順番を入れ替えられませんか。午前中に徒歩ツアーをして、昼食後に屋内の食品市場に行くんです。",
+      "それでいけそうね。ゴードン、その変更で何か困ることはある？",
+      "特には。ただ、市場の駐車場は平日、舗装工事で閉鎖されているんです。北門で皆さんを降ろすことになりますが、そこから歩いてすぐです。",
+      "それなら大丈夫です。その区間で傘があれば。",
+      "よかった。ルカ、新しい予定をグループのリーダーに知らせてくれる？",
+      "はい、今すぐ彼女にメッセージを送ります。"
+    ],
+    "qs": [
+      {
+        "q": "What are the speakers mainly discussing?",
+        "c": [
+          "Rearranging a tour schedule because of the weather",
+          "Finding a larger vehicle for a group",
+          "Booking a restaurant for lunch",
+          "Choosing a new conference venue"
+        ],
+        "a": 0,
+        "e": "女性が「午後に大雨の予報で、徒歩ツアーの時間と重なる」と切り出し、徒歩ツアーと市場見学の順番を入れ替える相談をしている。天候を理由にツアーの予定を組み替える話が正解。昼食（lunch）は時間の目安として出るだけで、店の予約の話ではない。",
+        "tag": "主題・目的"
+      },
+      {
+        "q": "What does Gordon say about the market?",
+        "c": [
+          "It requires an advance reservation.",
+          "It closes early on weekdays.",
+          "Its parking area cannot be used.",
+          "It has moved to a new location."
+        ],
+        "a": 2,
+        "e": "ゴードンは「市場の駐車場は平日、舗装工事で閉鎖されている」と言っている。parking lot is closed を cannot be used と言い換えた選択肢が正解。平日（weekdays）という語につられて早じまいを選ばないこと。予約の話はしていない。",
+        "tag": "詳細"
+      },
+      {
+        "q": "What will Luca most likely do next?",
+        "c": [
+          "Purchase some umbrellas",
+          "Message a group's representative",
+          "Drive to the north gate",
+          "Check the weather forecast again"
+        ],
+        "a": 1,
+        "e": "女性に「新しい予定をグループのリーダーに知らせて」と頼まれ、ルカは「今すぐ彼女にメッセージを送る」と答えている。group leader を group's representative と言い換えた選択肢が正解。傘は参加者が持っていればよいという話で、買うとは言っていない。",
+        "tag": "次の行動"
+      }
+    ]
+  },
+  {
+    "id": "P3-09",
+    "intro": "conversation",
+    "speakers": [
+      {
+        "k": "M1",
+        "v": "US-M"
+      },
+      {
+        "k": "F1",
+        "v": "UK-F"
+      }
+    ],
+    "lines": [
+      {
+        "s": "M1",
+        "t": "Ms. Gerrard, it's Theo from Elmstead Homes. I have some news. We've received an offer on your house."
+      },
+      {
+        "s": "F1",
+        "t": "Already? It's only been on the market for a week. What are they offering?"
+      },
+      {
+        "s": "M1",
+        "t": "Twelve thousand dollars below your asking price. But the buyers have already been approved for a mortgage, and they'd like to close in thirty days."
+      },
+      {
+        "s": "F1",
+        "t": "Thirty days? I haven't even found a place to rent yet."
+      },
+      {
+        "s": "M1",
+        "t": "I understand. One option is to make a counteroffer. You could accept their price if they agree to close in sixty days instead."
+      },
+      {
+        "s": "F1",
+        "t": "That sounds reasonable. I'd hate to lose a serious buyer over the timing."
+      },
+      {
+        "s": "M1",
+        "t": "Then I'll draw up the counteroffer and email it to you for your signature this afternoon."
+      }
+    ],
+    "ja": [
+      "ジェラード様、エルムステッド・ホームズのテオです。お知らせがあります。お宅に購入の申し込みが入りました。",
+      "もう？売りに出してまだ1週間なのに。いくらの申し出ですか。",
+      "ご希望価格より1万2000ドル低い額です。ただ、買い手はすでに住宅ローンの承認を受けていて、30日で決済したいとのことです。",
+      "30日？まだ借りる部屋も見つけていないのよ。",
+      "お察しします。ひとつの手は、こちらから条件を返すことです。決済を60日後にしてもらえるなら先方の価格を受け入れる、という形で。",
+      "それは妥当ね。時期のせいで本気の買い手を逃したくはないもの。",
+      "では対案を作成し、今日の午後、ご署名用にメールでお送りします。"
+    ],
+    "qs": [
+      {
+        "q": "Who most likely is the man?",
+        "c": [
+          "A mortgage lender",
+          "A building inspector",
+          "A moving company employee",
+          "A real estate agent"
+        ],
+        "a": 3,
+        "e": "男性は女性の家に購入の申し込みが入ったと伝え、価格や決済時期について対案を勧めている。売り主の側に立って交渉しているので不動産仲介業者が正解。住宅ローン（mortgage）は買い手の状況として出るだけで、男性は融資担当者ではない。",
+        "tag": "話者・場所"
+      },
+      {
+        "q": "What does the woman imply when she says, \"I haven't even found a place to rent yet\"?",
+        "c": [
+          "She plans to rent out her house.",
+          "She is worried the proposed timeline is too short.",
+          "She has decided not to sell the house.",
+          "She would like help finding a rental agent."
+        ],
+        "a": 1,
+        "e": "買い手が30日で決済したいと聞いてこう言っている。まだ引っ越し先も決まっていないので、30日では早すぎるという心配の表明。直後に男性が決済を60日に延ばす対案を出していることからも分かる。売却をやめるとは言っていない。",
+        "tag": "意図問題"
+      },
+      {
+        "q": "What will the man do this afternoon?",
+        "c": [
+          "Show the house to other buyers",
+          "Post a new listing online",
+          "Send a document to the woman",
+          "Meet with the buyers' lender"
+        ],
+        "a": 2,
+        "e": "男性は最後に「対案を作成して、今日の午後、署名用にメールで送る」と言っている。email the counteroffer を send a document と言い換えた選択肢が正解。他の買い手への内覧や新しい物件情報の掲載、買い手側の金融機関との面会の話は出ていない。",
+        "tag": "次の行動"
+      }
+    ]
+  },
+  {
+    "id": "P3-10",
+    "intro": "conversation",
+    "speakers": [
+      {
+        "k": "F1",
+        "v": "AU-F"
+      },
+      {
+        "k": "M1",
+        "v": "US-M2"
+      }
+    ],
+    "lines": [
+      {
+        "s": "F1",
+        "t": "Hi. I'd like to send these product samples to a buyer in Lisbon. They need to arrive by Friday."
+      },
+      {
+        "s": "M1",
+        "t": "Sure. What's in the box?"
+      },
+      {
+        "s": "F1",
+        "t": "Three portable speakers. They're for a trade meeting next week."
+      },
+      {
+        "s": "M1",
+        "t": "Do they have built-in batteries? If so, you'll need an extra customs form, and on that route they can't go by express air."
+      },
+      {
+        "s": "F1",
+        "t": "Hmm. The batteries are removable. Would it help if I took them out?"
+      },
+      {
+        "s": "M1",
+        "t": "Yes. Without the batteries, the speakers can go express, and they'd be there by Thursday. Your buyer could pick up batteries locally."
+      },
+      {
+        "s": "F1",
+        "t": "That's much simpler. Could I borrow some tape? I'll repack the box over at that counter."
+      },
+      {
+        "s": "M1",
+        "t": "Of course. Here you go."
+      }
+    ],
+    "ja": [
+      "こんにちは。この製品サンプルをリスボンのバイヤーに送りたいんです。金曜日までに届く必要があります。",
+      "かしこまりました。箱の中身は何でしょうか。",
+      "ポータブルスピーカーが3台です。来週の商談で使うものです。",
+      "電池は内蔵されていますか。その場合は税関用の書類が別に必要で、その路線では航空速達便が使えません。",
+      "うーん。電池は取り外せます。取り出したほうがいいですか。",
+      "はい。電池がなければスピーカーは速達便で送れて、木曜日までに届きます。電池は先方が現地で買えますし。",
+      "そのほうがずっと簡単ね。テープをお借りできますか。あちらのカウンターで箱を詰め直します。",
+      "どうぞ、こちらです。"
+    ],
+    "qs": [
+      {
+        "q": "Where most likely are the speakers?",
+        "c": [
+          "At an electronics store",
+          "At a shipping company counter",
+          "At a customs office",
+          "At a trade fair"
+        ],
+        "a": 1,
+        "e": "女性は「サンプルをリスボンのバイヤーに送りたい」と言い、男性が中身や電池の有無、航空速達便が使えるかを説明している。荷物を発送する窓口での会話なので運送会社の窓口が正解。税関用の書類（customs form）は出るが、税関そのものではない。",
+        "tag": "話者・場所"
+      },
+      {
+        "q": "What does the man say about items with built-in batteries?",
+        "c": [
+          "They must be packed in separate boxes.",
+          "They are not allowed into the destination country.",
+          "They are charged an extra handling fee.",
+          "They cannot be sent by the fastest service."
+        ],
+        "a": 3,
+        "e": "男性は「電池内蔵ならその路線では航空速達便で送れない」と言っている。express air を the fastest service と言い換えた選択肢が正解。必要になるのは追加の書類で、追加料金や持ち込み禁止とは言っていない。",
+        "tag": "詳細"
+      },
+      {
+        "q": "What will the woman most likely do next?",
+        "c": [
+          "Buy some batteries",
+          "Fill out a customs form",
+          "Repack a shipment",
+          "Call a buyer in Lisbon"
+        ],
+        "a": 2,
+        "e": "女性は電池を取り出すことにし、「テープを借りて、あちらのカウンターで箱を詰め直す」と言っている。repack the box を repack a shipment と表した選択肢が正解。電池は先方が現地で買う話で、電池を外せば税関用の書類も不要になる。",
+        "tag": "次の行動"
+      }
+    ]
+  },
+  {
+    "id": "P3-11",
+    "intro": "conversation",
+    "speakers": [
+      {
+        "k": "M1",
+        "v": "UK-M2"
+      },
+      {
+        "k": "F1",
+        "v": "US-F2"
+      }
+    ],
+    "lines": [
+      {
+        "s": "M1",
+        "t": "Garland Uniform Supply, Felix speaking."
+      },
+      {
+        "s": "F1",
+        "t": "Hi, Felix. This is Marisol Eades from Copper Pot Bistros. We're opening our fourth location next month, and I'd like to order sixty chef jackets for the kitchen staff."
+      },
+      {
+        "s": "M1",
+        "t": "Certainly. Will you need anything else?"
+      },
+      {
+        "s": "F1",
+        "t": "Yes, forty-five aprons as well. Both in black, please, with our logo on the chest."
+      },
+      {
+        "s": "M1",
+        "t": "Got it. Just so you know, those two items count together toward our volume discount. And if you added fifty caps, you'd reach the next discount level."
+      },
+      {
+        "s": "F1",
+        "t": "Thanks, but we bought new caps for all our restaurants last month. Let's keep it to the jackets and aprons."
+      },
+      {
+        "s": "M1",
+        "t": "No problem. I'll mail you some fabric samples so you can choose the material before we start production."
+      }
+    ],
+    "ja": [
+      "ガーランド・ユニフォーム・サプライ、フェリックスでございます。",
+      "もしもし、フェリックスさん。コッパー・ポット・ビストロのマリソル・イーズです。来月4店舗目を開くので、厨房スタッフ用のコックコートを60着注文したいんです。",
+      "承知しました。ほかに必要なものはございますか。",
+      "ええ、エプロンも45枚お願いします。どちらも黒で、胸にうちのロゴを入れてください。",
+      "かしこまりました。なお、その2品目は合算して数量割引の対象になります。それから、帽子を50個追加されると、次の割引段階に届きますよ。",
+      "ありがとう。でも帽子は先月、全店舗分を新しくしたばかりなんです。コートとエプロンだけにしておきます。",
+      "承知しました。生産に入る前に素材を選んでいただけるよう、生地見本を郵送いたします。"
+    ],
+    "graphic": {
+      "title": "Volume Discounts",
+      "rows": [
+        [
+          "Items per order",
+          "Discount"
+        ],
+        [
+          "1-49",
+          "None"
+        ],
+        [
+          "50-99",
+          "5%"
+        ],
+        [
+          "100-149",
+          "10%"
+        ],
+        [
+          "150 or more",
+          "15%"
+        ]
+      ]
+    },
+    "qs": [
+      {
+        "q": "What kind of business does the woman work for?",
+        "c": [
+          "A restaurant chain",
+          "A clothing manufacturer",
+          "A hotel group",
+          "A culinary school"
+        ],
+        "a": 0,
+        "e": "女性は「来月4店舗目を開く」と言い、厨房スタッフ用のコックコートを注文し、「全レストランの帽子を先月買った」とも述べている。複数店舗の飲食店なのでレストランチェーンが正解。制服を作るのは男性の会社で、女性の勤め先ではない。",
+        "tag": "話者・場所"
+      },
+      {
+        "q": "Look at the graphic. What discount will the woman most likely receive?",
+        "c": [
+          "None",
+          "5%",
+          "10%",
+          "15%"
+        ],
+        "a": 2,
+        "e": "注文はコックコート60着とエプロン45枚で、男性は「2品目は合算して割引の対象になる」と言っている。合計105点なので表では10％。帽子50個を足せば155点で15％だが、女性は断っている。コート60着だけで見て5％を選ばないこと。",
+        "tag": "図表問題"
+      },
+      {
+        "q": "What will the man send to the woman?",
+        "c": [
+          "A catalog of caps",
+          "A revised price list",
+          "A logo design",
+          "Some material samples"
+        ],
+        "a": 3,
+        "e": "男性は最後に「生産前に素材を選べるよう、生地見本を郵送する」と言っている。fabric samples を material samples と言い換えた選択肢が正解。帽子は女性が断った品で、ロゴは胸に入れるよう頼まれただけ。価格表を送るとは言っていない。",
+        "tag": "次の行動"
+      }
+    ]
+  },
+  {
+    "id": "P3-12",
+    "intro": "conversation",
+    "speakers": [
+      {
+        "k": "F1",
+        "v": "US-F2"
+      },
+      {
+        "k": "M1",
+        "v": "UK-M"
+      }
+    ],
+    "lines": [
+      {
+        "s": "F1",
+        "t": "Jonah, have you seen the forecast for our movie night in Elderberry Park? It's supposed to rain heavily on Friday."
+      },
+      {
+        "s": "M1",
+        "t": "I saw that. We'll have to move it. The day before won't work, though. The park is hosting a jazz concert on Thursday evening."
+      },
+      {
+        "s": "F1",
+        "t": "What about Sunday? More families would probably come on a weekend."
+      },
+      {
+        "s": "M1",
+        "t": "Maybe, but we can't put up the inflatable screen in strong winds. It'd be too risky."
+      },
+      {
+        "s": "F1",
+        "t": "Right. Then let's go with the day that's only supposed to be cloudy. A few clouds won't bother anyone."
+      },
+      {
+        "s": "M1",
+        "t": "Agreed. But our permit is for Friday, so we'll need to get it changed."
+      },
+      {
+        "s": "F1",
+        "t": "I'll call the parks department this morning."
+      }
+    ],
+    "ja": [
+      "ジョナ、エルダーベリー公園での映画の夜の天気予報は見た？金曜日は大雨みたいよ。",
+      "見たよ。日にちを変えないとね。でも前の日はだめだ。木曜の夜は公園でジャズコンサートがあるんだ。",
+      "日曜はどう？週末のほうが家族連れも多く来そうだし。",
+      "かもしれないけど、強風の中では空気で膨らませるスクリーンを立てられない。危なすぎるよ。",
+      "そうね。じゃあ、曇りの予報になっている日にしましょう。少しくらい雲があっても誰も気にしないわ。",
+      "賛成。でも許可は金曜日で取っているから、変更してもらわないと。",
+      "今朝、公園管理課に電話するわ。"
+    ],
+    "graphic": {
+      "title": "Weather Forecast",
+      "rows": [
+        [
+          "Day",
+          "Forecast"
+        ],
+        [
+          "Thursday",
+          "Sunny"
+        ],
+        [
+          "Friday",
+          "Heavy rain"
+        ],
+        [
+          "Saturday",
+          "Cloudy"
+        ],
+        [
+          "Sunday",
+          "Strong winds"
+        ]
+      ]
+    },
+    "qs": [
+      {
+        "q": "What kind of event are the speakers planning?",
+        "c": [
+          "A music performance",
+          "A sports tournament",
+          "A family picnic",
+          "An outdoor film screening"
+        ],
+        "a": 3,
+        "e": "女性が「公園での映画の夜（movie night）」と言い、男性も空気で膨らませるスクリーンに触れている。屋外での映画上映が正解。ジャズコンサートは木曜日に公園で予定されている別の催しで、二人の企画ではない。家族連れは来場者の話として出るだけ。",
+        "tag": "主題・目的"
+      },
+      {
+        "q": "Look at the graphic. On which day will the event most likely be held?",
+        "c": [
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "a": 2,
+        "e": "金曜は大雨、木曜は公園でジャズコンサートがあり、日曜は強風でスクリーンを立てられない。女性が「曇りの予報の日にしよう」と言い、表で曇り（Cloudy）は土曜日。週末なら家族が多く来るという話につられて日曜を選ばないこと。",
+        "tag": "図表問題"
+      },
+      {
+        "q": "What will the woman do this morning?",
+        "c": [
+          "Contact a city office",
+          "Rent a different kind of screen",
+          "Buy tickets for a concert",
+          "Post an update on a website"
+        ],
+        "a": 0,
+        "e": "許可を金曜日から変更する必要があるという話を受けて、女性は「今朝、公園管理課に電話する」と言っている。parks department を a city office と言い換えた選択肢が正解。スクリーンやチケット、告知の話は出ていない。",
+        "tag": "次の行動"
+      }
+    ]
+  },
+  {
+    "id": "P3-13",
+    "intro": "conversation",
+    "speakers": [
+      {
+        "k": "F1",
+        "v": "US-F"
+      },
+      {
+        "k": "M1",
+        "v": "US-M"
+      }
+    ],
+    "lines": [
+      {
+        "s": "F1",
+        "t": "Ahmed, the October sales figures just came in. Our newest blend did better than I expected. It outsold everything except the house blend."
+      },
+      {
+        "s": "M1",
+        "t": "That's impressive, considering it's only been on the shelves for six weeks."
+      },
+      {
+        "s": "F1",
+        "t": "And there's more. Fairview Markets wants to carry it in all twenty of their stores starting in January."
+      },
+      {
+        "s": "M1",
+        "t": "Can we roast that much? We'd need at least another thousand pounds of beans a month."
+      },
+      {
+        "s": "F1",
+        "t": "I checked with our importer, and that won't be a problem. What worries me is the bags. We're already running low on the large ones."
+      },
+      {
+        "s": "M1",
+        "t": "Then we should increase our next order. I'll email the packaging company and ask how quickly they can deliver."
+      }
+    ],
+    "ja": [
+      "アーメッド、10月の売上の数字が今届いたわ。一番新しいブレンドが思った以上に好調よ。ハウスブレンド以外の全部より売れたの。",
+      "それはすごいね。店頭に並んでまだ6週間なのに。",
+      "それだけじゃないの。フェアビュー・マーケッツが、1月から全20店舗でそれを扱いたいって。",
+      "そんなに焙煎できるかな。少なくとも月にあと1000ポンドは豆が必要になる。",
+      "輸入業者に確認したら、それは問題ないそうよ。心配なのは袋のほう。大きいサイズはもう残り少ないの。",
+      "じゃあ次の注文を増やすべきだね。包装会社にメールして、どのくらい早く納品できるか聞いてみるよ。"
+    ],
+    "graphic": {
+      "title": "October Sales by Blend",
+      "rows": [
+        [
+          "Blend",
+          "Bags sold"
+        ],
+        [
+          "Golden Hour",
+          "1,800"
+        ],
+        [
+          "House Blend",
+          "4,200"
+        ],
+        [
+          "Velvet Dusk",
+          "2,500"
+        ],
+        [
+          "Mountain Mist",
+          "3,100"
+        ]
+      ]
+    },
+    "qs": [
+      {
+        "q": "Who most likely are the speakers?",
+        "c": [
+          "Employees at a coffee roasting company",
+          "Managers at a grocery chain",
+          "Servers at a café",
+          "Researchers at a marketing firm"
+        ],
+        "a": 0,
+        "e": "二人は自社のブレンドの売上を話し、「それだけの量を焙煎できるか」「豆が月に1000ポンド必要」と言っている。コーヒー豆を焙煎して売る会社の社員が正解。食料品チェーンは商品を置きたいと言ってきた取引先で、二人の勤め先ではない。",
+        "tag": "話者・場所"
+      },
+      {
+        "q": "Look at the graphic. Which blend are the speakers discussing?",
+        "c": [
+          "Golden Hour",
+          "House Blend",
+          "Velvet Dusk",
+          "Mountain Mist"
+        ],
+        "a": 3,
+        "e": "女性は「一番新しいブレンドはハウスブレンド以外のすべてより売れた」と言っている。つまり売上が2位のブレンドで、表では3,100袋の Mountain Mist。会話に出てくるハウスブレンドは比べる相手で、話題のブレンドそのものではない。",
+        "tag": "図表問題"
+      },
+      {
+        "q": "What will the man do next?",
+        "c": [
+          "Inquire about getting more packaging",
+          "Contact a coffee bean importer",
+          "Visit a grocery store chain",
+          "Reduce the price of a product"
+        ],
+        "a": 0,
+        "e": "大袋が足りなくなりそうだという女性の心配を受けて、男性は「注文を増やすべきだ。包装会社にメールして納期を聞く」と言っている。これを包装資材の追加について問い合わせると言い換えた選択肢が正解。豆の輸入業者には女性がすでに確認している。",
+        "tag": "次の行動"
+      }
+    ]
+  }
+]

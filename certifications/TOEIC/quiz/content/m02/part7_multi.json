@@ -1,0 +1,420 @@
+[
+ {
+  "id": "P7M-01",
+  "docs": [
+   {
+    "type": "memo",
+    "title": "Travel Expense Changes",
+    "text": "MEMO\n\nTo: Sales and service staff\nFrom: Lydia Varga, Finance Director\nDate: May 2\nSubject: Changes to travel expense claims\n\nStarting June 1, Kelbridge Instruments will no longer reimburse meals on the basis of individual receipts. Instead, employees traveling on company business will receive a fixed daily meal allowance. The amount depends on the destination:\n\nCategory A (Boston, Chicago, New York, San Francisco)   $70 per day\nCategory B (all other U.S. cities)                       $55 per day\nInternational destinations                               $85 per day\n\nThe full rate applies to each complete day away from home. For the day of departure and the day of return, travelers will receive 75 percent of the daily rate.\n\nThere is no change to the rules for hotels: rooms booked through the company travel portal will continue to be paid for in full. Taxi fares between airports and hotels are also covered. However, rental cars must now be approved in advance by your department manager, and requests made after a rental has begun will not be accepted. Receipts are still required for all lodging and transportation costs.\n\nClaims should be filed in the online expense system within 30 days of your return. Claims filed after this period will be processed only with written approval from a director.\n\nQuestions about these changes may be directed to Ian Walsh in the finance department (ext. 418)."
+   },
+   {
+    "type": "e-mail",
+    "text": "To: Ian Walsh\nFrom: Marisa Rowe\nDate: June 18\nSubject: Question about my Denver claim\n\nHello Ian,\n\nI am preparing my expense claim for my visit to our client Brisco Foods in Denver. I flew out on the morning of June 15 and returned late on the evening of June 17. Since this was my first trip under the new rules, I want to make sure I get everything right.\n\nBrisco's plant is about forty minutes from the airport, and there is no train or bus service anywhere near it, so I rented a car for the three days. My manager, Neil Sorensen, was at a trade show in Seoul that week, and I was not able to reach him before I left. He has since told me that he is happy to approve the rental now. Will that be enough for the cost to be covered?\n\nMy hotel was booked through the travel portal, and I have receipts for the car and the fuel. Please let me know if you need anything else from me.\n\nThanks,\nMarisa Rowe"
+   }
+  ],
+  "sum": [
+   "経理部長からのメモ。6月1日から出張の食費を日額手当に切り替え、行き先別の金額、出発日と帰着日は75％とする規則、レンタカーの事前承認などを説明している。",
+   "ロウさんが6月15日〜17日のデンバー出張の精算について、上司の事前承認を得られなかったレンタカー代が認められるかを経理担当者に尋ねるメール。"
+  ],
+  "qs": [
+   {
+    "q": "What is the main purpose of the memo?",
+    "c": [
+     "To announce a reduction in business travel",
+     "To describe changes to how travel costs are reimbursed",
+     "To introduce a new system for booking hotel rooms",
+     "To remind staff about a deadline for an upcoming trip"
+    ],
+    "a": 1,
+    "e": "メモは6月1日から食費を領収書精算から日額手当に切り替えることや、レンタカーの事前承認など、出張費の精算方法の変更を説明している。出張の削減は述べておらず、旅行ポータルは従来からあるもので新しい予約システムではない。",
+    "tag": "主旨・目的"
+   },
+   {
+    "q": "According to the memo, what is true about hotel costs?",
+    "c": [
+     "They will be paid at 75 percent on the day of return.",
+     "They must be approved in advance by a director.",
+     "They will continue to be reimbursed as before.",
+     "They no longer need to be supported by receipts."
+    ],
+    "a": 2,
+    "e": "メモの There is no change to the rules for hotels が「これまでどおり精算される」に言い換えられている。75％は食事手当の規則、取締役の承認は期限後の申請に必要なもので、宿泊費の領収書は引き続き必要。",
+    "tag": "詳細"
+   },
+   {
+    "q": "How much will Ms. Rowe most likely receive as a meal allowance for her trip?",
+    "c": [
+     "$123.75",
+     "$137.50",
+     "$165.00",
+     "$175.00"
+    ],
+    "a": 1,
+    "e": "メールの「デンバーへ6月15日出発、17日帰着」とメモの区分を照合する。デンバーは区分Bで日額55ドル、出発日と帰着日は75％の41.25ドルなので計137.50ドル。165ドルは75％規則の見落とし、175ドルは区分Aで計算した値。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "What problem does Ms. Rowe's claim most likely have?",
+    "c": [
+     "Her hotel was not booked through the company portal.",
+     "It will be filed after the deadline.",
+     "She does not have receipts for her fuel.",
+     "Her car rental was not approved beforehand."
+    ],
+    "a": 3,
+    "e": "メモは「レンタカーは事前に部長の承認が必要で、利用開始後の申請は受け付けない」と定める。メールでは出発前に上司と連絡が取れず、承認は事後になる。ホテルはポータル経由、燃料の領収書もあり、帰着の翌日で期限内。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "Why did Ms. Rowe rent a car?",
+    "c": [
+     "Her manager asked her to drive to a trade show.",
+     "No taxis were available at the airport.",
+     "Her client's plant is hard to reach without one.",
+     "She had to visit several clients in one day."
+    ],
+    "a": 2,
+    "e": "メールに、顧客の工場は空港から40分で近くに電車もバスもないとあり、「車がないと行きにくい」と言い換えている。上司は見本市に出ていただけで運転を頼んでおらず、空港でタクシーがなかったことや複数の顧客訪問の記述もない。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P7M-02",
+  "docs": [
+   {
+    "type": "letter",
+    "title": "Price Adjustment",
+    "text": "Northcrest Packaging\n2150 Industrial Parkway, Elmford\n\nAugust 4\n\nMs. Ruth Sandoval\nPurchasing Manager\nTidewell Tea Company\n88 Quayside Road, Port Ellery\n\nDear Ms. Sandoval,\n\nFor more than a year, the cost of the recycled paperboard used in our products has risen steadily, as have fuel and shipping costs. Until now, we have absorbed these increases ourselves so that our customers would not be affected. Unfortunately, this is no longer possible, and we must adjust some of our prices, effective October 1. The new prices per 1,000 units are shown below.\n\nProduct                     Current price   New price\nShipping carton, large      $410            $445\nShipping carton, small      $260            $285\nPrinted gift box            $780            $780\nKraft paper pouch           $95             $110\n\nAny order placed before October 1 will be invoiced at current prices, even if it is delivered after that date.\n\nWe would also like to offer our long-standing customers a way to limit the impact of these changes. If you sign a twelve-month supply agreement with us by September 15, your current prices will be guaranteed until March 31 of next year.\n\nYour account manager, Owen Tanner, will be glad to answer any questions you may have. We truly value our partnership with Tidewell and thank you for your understanding.\n\nSincerely,\n\nFrances Whitcombe\nSales Director\nNorthcrest Packaging"
+   },
+   {
+    "type": "e-mail",
+    "text": "To: Theo Rasmussen\nFrom: Ruth Sandoval\nDate: August 21\nSubject: Northcrest's new prices\n\nHi Theo,\n\nI'm sure you've seen the letter from Northcrest by now. We order their large cartons only a few times a year, so the change that worries me most is the one to the paper pouches, which we go through faster than anything else.\n\nNormally I would jump at the twelve-month agreement, but any contract of that length has to be approved by the management committee, and the committee doesn't meet again until September 24.\n\nHere's what I suggest instead. Could you work out how many pouches we will need for the rest of the year? If the number is reasonable, I'd like to place one large order for all of them before the new prices take effect. Please send me your figure by Friday.\n\nThanks,\nRuth"
+   }
+  ],
+  "sum": [
+   "包装資材メーカーが取引先の紅茶会社に、原材料費などの上昇で10月1日から一部製品を値上げすると知らせる手紙。9月15日までに1年契約を結べば現行価格を3月末まで保証するという。",
+   "購買担当のサンドバルさんが同僚に、委員会の承認が間に合わず1年契約は難しいため、値上げ前にパウチをまとめて注文したいので必要数を算出してほしいと頼むメール。"
+  ],
+  "qs": [
+   {
+    "q": "Why did Ms. Whitcombe write the letter?",
+    "c": [
+     "To apologize for a delayed shipment",
+     "To introduce a new account manager",
+     "To request payment of an overdue invoice",
+     "To inform a customer of upcoming price changes"
+    ],
+    "a": 3,
+    "e": "手紙は原材料費や輸送費の上昇を理由に、10月1日から一部製品の価格を改定すると取引先に知らせている。出荷の遅れや請求の督促には触れておらず、タナー氏は今の担当者として名前が挙がっているだけで新任ではない。",
+    "tag": "主旨・目的"
+   },
+   {
+    "q": "In the letter, the word \"absorbed\" in paragraph 1 is closest in meaning to",
+    "c": [
+     "covered",
+     "soaked",
+     "attracted",
+     "studied"
+    ],
+    "a": 0,
+    "e": "absorbed these increases ourselves は「値上がり分を自社で負担してきた」の意味で、費用を引き受ける covered が近い。soaked は液体を吸い込む、attracted は引きつける、studied は学ぶの意味で、費用の文脈に合わない。",
+    "tag": "言い換え（同義語）"
+   },
+   {
+    "q": "What is suggested about orders placed with Northcrest in September?",
+    "c": [
+     "They must be delivered before October 1.",
+     "They require a twelve-month agreement.",
+     "They will be charged at the current prices.",
+     "They will qualify for a special discount."
+    ],
+    "a": 2,
+    "e": "手紙に、10月1日より前の注文は配送がそれ以後でも現行価格で請求するとあり、9月の注文は値上げ前の価格になると分かる。10月1日までの配送や1年契約は条件ではなく、特別な割引も述べられていない。",
+    "tag": "推測"
+   },
+   {
+    "q": "Why is Tidewell Tea Company most likely unable to accept Northcrest's special offer?",
+    "c": [
+     "The required approval cannot be obtained before the offer ends.",
+     "Its management committee rejected the agreement.",
+     "The agreement would not cover the paper pouches.",
+     "It orders large cartons only a few times a year."
+    ],
+    "a": 0,
+    "e": "手紙の「9月15日までに1年契約を結べば現行価格を保証」と、メールの「1年契約には委員会の承認が必要で、次の会合は9月24日」を照合すると、期限までに承認が得られない。委員会はまだ開かれておらず、却下したわけではない。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "What does Ms. Sandoval ask Mr. Rasmussen to do?",
+    "c": [
+     "Contact Mr. Tanner about the new prices",
+     "Estimate how much of a product will be needed",
+     "Find a new supplier of shipping cartons",
+     "Attend a committee meeting on her behalf"
+    ],
+    "a": 1,
+    "e": "メールで、年内に必要なパウチの数を算出して金曜までに知らせるよう頼んでおり、「必要な量を見積もる」と言い換えている。タナー氏への連絡や新しい仕入先探しは頼んでおらず、委員会への代理出席も求めていない。",
+    "tag": "詳細"
+   }
+  ]
+ },
+ {
+  "id": "P7M-03",
+  "docs": [
+   {
+    "type": "announcement",
+    "title": "Green Business Awards",
+    "text": "Corrin Valley Business Council\nGreen Business Awards - Call for Nominations\n\nDoes a local company deserve recognition for its work to protect the environment? The Corrin Valley Business Council is now accepting nominations for its fifth annual Green Business Awards. Anyone may submit a nomination, including employees, customers, and business owners themselves.\n\nCategories and prizes\n- Energy Efficiency: $4,000\n- Waste Reduction: $3,000\n- Sustainable Transportation: $3,000\n\nTo be eligible, a business must have operated in Corrin Valley for at least three years. Nominations must be made on the official form and received by March 14. Finalists will be contacted in April and asked to provide supporting documents, such as energy bills or recycling records.\n\nWinners will be honored at the council's annual dinner on May 8 at the Ferncliff Hotel. In addition to the prize money, each winner will receive a commemorative plaque and will be featured in the summer issue of Valley Business Quarterly."
+   },
+   {
+    "type": "form",
+    "title": "Nomination Form",
+    "text": "Green Business Awards - Nomination Form\n\nName of business: Westbury Glass Studio\nAddress: 14 Kiln Street, Corrin Falls\nYear established: 2016\nNumber of employees: 22\nCategory: Waste Reduction\n\nNominated by: Alan Stroud\nRelationship to business: Customer (head chef, Bistro Calla)\nDate submitted: March 9\n\nReason for nomination (100 words maximum):\nWestbury Glass Studio makes drinking glasses, bowls, and vases almost entirely from recycled glass. Every week, the studio's van collects empty bottles from about thirty restaurants in the valley. My own kitchen at Bistro Calla was the first to take part. The bottles are crushed and melted down at the studio, and last year Westbury reused nearly 15 tons of glass that would otherwise have gone to a landfill. The studio also sells its seconds - pieces with small flaws - at half price instead of throwing them away. Westbury shows that a small company can make a real difference."
+   },
+   {
+    "type": "article",
+    "title": "Glassmaker Among Green Award Winners",
+    "text": "CORRIN FALLS (May 10) - Three local businesses were honored at the Corrin Valley Business Council's annual dinner on May 8.\n\nThe Energy Efficiency award went to Pinecroft Dairy, which installed solar panels on the roofs of its barns last year. Tessaly Couriers won in the Sustainable Transportation category after replacing its entire delivery fleet with electric vans.\n\nWestbury Glass Studio received the Waste Reduction award. Owner Nadia Thorne said the studio's bottle-collection program began four years ago with just one restaurant. \"A chef who buys our glassware told me how much glass his kitchen was throwing away every night,\" she said. \"He asked whether we could do something with it, and that conversation changed our business.\" The studio now collects from about thirty restaurants.\n\nMs. Thorne plans to put the prize money toward a second glass crusher, which will allow the studio to accept bottles from local hotels as well. \"Several hotels have already asked to join,\" she said.\n\nThis year's judges reviewed 41 nominations, the largest number since the awards were first presented."
+   }
+  ],
+  "sum": [
+   "地域の経済団体による環境賞の推薦募集。3部門と賞金額、3年以上の営業という応募資格、3月14日の締切、5月8日の表彰式と副賞を案内している。",
+   "料理長のストラウドさんがウェストベリー・ガラス工房を廃棄物削減部門に推薦する用紙。飲食店から瓶を回収して再利用し、傷のある品を半額で売る取り組みを紹介している。",
+   "環境賞の受賞3社を伝える記事。ガラス工房の店主ソーンさんは、あるシェフの一言で瓶の回収を始めたことや、賞金で2台目の粉砕機を買う計画を語っている。"
+  ],
+  "qs": [
+   {
+    "q": "What is the purpose of the announcement?",
+    "c": [
+     "To invite people to recommend local businesses for awards",
+     "To announce the winners of an environmental competition",
+     "To promote a new recycling service for businesses",
+     "To sell tickets to a council's annual dinner"
+    ],
+    "a": 0,
+    "e": "告知は、環境保護に取り組む地元企業を表彰する賞の推薦を、従業員や顧客、事業主自身を含む誰からでも受け付けると案内している。受賞者の発表は後の記事の内容で、リサイクル事業の宣伝や夕食会の券の販売ではない。",
+    "tag": "主旨・目的"
+   },
+   {
+    "q": "What is NOT mentioned as something that winners will receive?",
+    "c": [
+     "Prize money",
+     "A plaque",
+     "Coverage in a publication",
+     "A free council membership"
+    ],
+    "a": 3,
+    "e": "告知には賞金に加えて記念の盾と季刊誌夏号での紹介が挙がっているが、評議会の無料会員資格には触れていない。「出版物での紹介」は featured in the summer issue of Valley Business Quarterly の言い換え。",
+    "tag": "NOT問題"
+   },
+   {
+    "q": "According to the nomination form, what does Westbury Glass Studio do?",
+    "c": [
+     "It delivers glassware to restaurants every day.",
+     "It buys most of its glass from a supplier.",
+     "It sells imperfect items at a reduced price.",
+     "It employs more than thirty people."
+    ],
+    "a": 2,
+    "e": "推薦書の sells its seconds - pieces with small flaws - at half price が「欠点のある品を値下げして売る」に言い換えられている。従業員は22人で30は飲食店の数、ガラスは回収した瓶で、毎日の配達の記述もない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "How much prize money did Westbury Glass Studio receive?",
+    "c": [
+     "$3,000",
+     "$4,000",
+     "$7,000",
+     "$10,000"
+    ],
+    "a": 0,
+    "e": "記事の「ウェストベリーは廃棄物削減部門で受賞」と、告知の「廃棄物削減部門の賞金は3,000ドル」を照合する。4,000ドルはエネルギー効率部門の額、10,000ドルは3部門の合計で、7,000ドルは2部門分を足した値。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "Who most likely gave Ms. Thorne the idea for the bottle-collection program?",
+    "c": [
+     "A member of the judging panel",
+     "The person who nominated her studio",
+     "A manager at a local hotel",
+     "The owner of Pinecroft Dairy"
+    ],
+    "a": 1,
+    "e": "記事でソーン氏は「当社のグラスを買うシェフの一言で、1軒の飲食店から回収を始めた」と語る。推薦書のストラウド氏は顧客の料理長で、自店が最初の参加店だと書いており、推薦者だと分かる。ホテルは今後の回収先。",
+    "tag": "複数文書の照合"
+   }
+  ]
+ },
+ {
+  "id": "P7M-04",
+  "docs": [
+   {
+    "type": "memo",
+    "title": "Office Move",
+    "text": "MEMO\n\nTo: All staff\nFrom: Gwen Tolliver, Office Manager\nDate: August 27\nSubject: Our move to the Larchmont Building\n\nAs you know, Brackenridge Design Group will be moving to new offices on the 14th and 15th floors of the Larchmont Building next month. To keep disruption to a minimum, the move will take place in two stages, each over a weekend.\n\nStage 1 - Interior Design and Engineering\nPack by: Friday, September 12, 5 P.M.\nMoving day: Saturday, September 13\n\nStage 2 - Accounting and Administration\nPack by: Friday, September 19, 5 P.M.\nMoving day: Saturday, September 20\n\nIn the new building, Interior Design and Administration will be on the 14th floor, and Engineering and Accounting will be on the 15th floor.\n\nYou will each receive colored labels for your boxes and furniture: blue for the 14th floor and yellow for the 15th floor. Please write your name and desk number on every label. Computers and monitors will be disconnected and moved by our IT team, so please do not pack them yourself.\n\nStaff in Stage 1 will work from home on Monday, September 15, while the IT team sets up the network in the new offices.\n\nGwen"
+   },
+   {
+    "type": "e-mail",
+    "text": "To: Gwen Tolliver\nFrom: Craig Vance\nDate: August 29\nSubject: Your September move\n\nDear Ms. Tolliver,\n\nThank you for choosing Steadfast Movers. This e-mail confirms that our crew will carry out your move on September 13 and 20. Please share the following points with your staff.\n\n1. We will deliver 120 flat boxes to your office on September 8. Most employees should need no more than four.\n2. Desks and filing cabinets do not need to be emptied, but all drawers must be locked or taped shut.\n3. For safety reasons, our crew cannot move plants, open containers of liquid, or any box weighing more than 20 kilograms.\n4. The Larchmont Building allows movers to use its freight elevator on Saturdays only between 7 A.M. and 1 P.M. For this reason, we will begin loading at your current office at 6 A.M. on both moving days.\n\nIf you have any questions, please call me directly at 555-0182.\n\nCraig Vance\nProject Coordinator, Steadfast Movers"
+   },
+   {
+    "type": "text-message chain",
+    "text": "Rhea Sutton (10:12 A.M.): Hi Dev. I'm on the 14th floor of the Larchmont Building, where Interior Design is supposed to be, but I can't find a single one of my boxes.\n\nDev Whitaker (10:14 A.M.): Really? Everything else from our team came up first thing this morning. Did you label them the way Gwen asked?\n\nRhea Sutton (10:15 A.M.): Yes, I wrote my name and desk number on every label. I used the yellow ones.\n\nDev Whitaker (10:16 A.M.): Well, that explains it.\n\nRhea Sutton (10:17 A.M.): Oh no. OK, I'll go and look for them right now. By the way, my fern is still sitting on my old desk. Do you know why the movers didn't bring it?\n\nDev Whitaker (10:19 A.M.): I'm not sure, but they left mine behind, too. Let's ask Gwen when she gets here.\n\nRhea Sutton (10:20 A.M.): Good idea."
+   }
+  ],
+  "sum": [
+   "総務担当トリバーさんのメモ。オフィス移転を2回の週末に分けて行う日程、部署ごとの新しい階、階ごとのラベルの色、第1段階の職員の在宅勤務日を伝えている。",
+   "引っ越し業者のバンスさんが作業日を確認し、段ボールの配達、引き出しの固定、植物や重い箱は運べないこと、エレベーターの利用時間の都合で6時に作業を始めることを伝えるメール。",
+   "移転当日のサトンさんとウィテカーさんのメッセージ。サトンさんは14階で自分の箱が見つからず、黄色のラベルを使ったと話し、旧オフィスに残った植物についても尋ねている。"
+  ],
+  "qs": [
+   {
+    "q": "What can be inferred about the Engineering team?",
+    "c": [
+     "It will be located on the 14th floor.",
+     "It must finish packing by September 19.",
+     "Its members will work remotely on September 15.",
+     "Its members will move their own computers."
+    ],
+    "a": 2,
+    "e": "メモでエンジニアリングは第1段階に含まれ、第1段階の職員は9月15日に在宅勤務とあるので、その日は遠隔で働くと推測できる。新しい席は15階、梱包の期限は9月12日で、パソコンはIT部門が運ぶ。",
+    "tag": "推測"
+   },
+   {
+    "q": "According to the e-mail, why will the crew start work at 6 A.M.?",
+    "c": [
+     "Traffic near the new building is heavy later in the day.",
+     "The boxes will be delivered early that morning.",
+     "Ms. Tolliver asked to have the move completed by noon.",
+     "The use of an elevator is limited to certain hours."
+    ],
+    "a": 3,
+    "e": "メールに、新しいビルは土曜の午前7時〜午後1時しか貨物用エレベーターを使わせないため6時に積み込みを始めるとあり、「使える時間が限られている」と言い換えている。箱の配達は9月8日で、交通事情や正午までの完了依頼の記述はない。",
+    "tag": "詳細"
+   },
+   {
+    "q": "At 10:16 A.M., what does Mr. Whitaker most likely mean when he writes, \"Well, that explains it\"?",
+    "c": [
+     "He has realized why Ms. Sutton's boxes are missing.",
+     "He thinks Gwen's instructions were unclear.",
+     "He believes the movers lost some boxes.",
+     "He understands why Ms. Sutton arrived late."
+    ],
+    "a": 0,
+    "e": "直前にサトンさんが「黄色のラベルを使った」と書いたのを受けた発言で、箱が見つからない理由が分かったという意味。指示が分かりにくかった、業者が箱をなくしたとは言っておらず、遅刻の話も出ていない。",
+    "tag": "意図問題"
+   },
+   {
+    "q": "Where are Ms. Sutton's boxes most likely located?",
+    "c": [
+     "At the old office",
+     "On the 14th floor",
+     "On the 15th floor",
+     "In the freight elevator"
+    ],
+    "a": 2,
+    "e": "メッセージの「インテリアデザインの14階にいるが、黄色のラベルを使った」と、メモの「黄色は15階、青は14階」を照合すると、箱は15階に運ばれたと考えられる。14階は本来の行き先だが、ラベルの色を誤っている。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "Why was Ms. Sutton's fern most likely left behind?",
+    "c": [
+     "Her team is scheduled to move the following weekend.",
+     "The moving company does not transport plants.",
+     "It was put in a box that was too heavy.",
+     "It was too large for the freight elevator."
+    ],
+    "a": 1,
+    "e": "メッセージの「シダが旧オフィスの机に残っている」と、メールの「安全上の理由で植物は運べない」を照合する。サトンさんの部署は第1段階で翌週の移転ではなく、シダは箱に入れず机に置いたままで、大きさの記述もない。",
+    "tag": "複数文書の照合"
+   }
+  ]
+ },
+ {
+  "id": "P7M-05",
+  "docs": [
+   {
+    "type": "web page",
+    "title": "Night Market Vendors",
+    "text": "City of Selbury - Events Office\nWeller Square Night Market: Vendor Applications\n\nThe Weller Square Night Market returns this summer! The market will be held every Friday evening in June, July, and August, from 5 P.M. to 11 P.M.\n\nVendor spaces\nZone A - Food trucks (electrical hookup provided): $120 per night\nZone B - Food stalls under tents (no electricity): $75 per night\nZone C - Crafts, clothing, and other non-food goods: $40 per night\n\nHow to apply\nSubmit the online application form by April 30. All vendors must provide proof of liability insurance. Food vendors must also include a copy of a current health permit issued by the county.\n\nSpace assignments\nSpaces are limited, especially in Zone A. Priority will be given to vendors who commit to the full season. Assignments will be announced by May 16, and vendors must pay for all of their reserved nights before their first night at the market."
+   },
+   {
+    "type": "form",
+    "title": "Vendor Application",
+    "text": "Weller Square Night Market - Vendor Application\nDate submitted: April 22\n\nBusiness name: Copper Spoon Kitchen\nContact person: Maya Velasquez\nType of business: Food truck (empanadas and fresh fruit drinks)\nZone requested: A\nElectricity needed: Yes (for a refrigerator and blenders)\nNights requested: Every Friday in July and August\n\nDocuments attached:\n[x] Proof of liability insurance\n[x] Menu and price list\n[ ] Health permit\n\nComments: Our health permit is currently being renewed, and I will send a copy of the new one as soon as I receive it. This will be our first season at the night market, but we have sold our food at the Selbury Farmers Market every Sunday since last spring."
+   },
+   {
+    "type": "e-mail",
+    "text": "To: Maya Velasquez\nFrom: Simon Rourke\nDate: May 14\nSubject: Your night market application\n\nDear Ms. Velasquez,\n\nThank you for applying to sell at the Weller Square Night Market. I am pleased to tell you that Copper Spoon Kitchen has been offered a space for all of the nights you requested. However, because we received a record number of applications this year, every space in Zone A has gone to a vendor who will be at the market each week of the season. We can instead offer you space B-7 in Zone B, which is right next to the main entrance. If you need power, you may bring a quiet portable generator, as long as our staff have checked it before you use it.\n\nPlease also note that we have not yet received one of the documents we require for your type of business. It must reach us by June 20, or we will have to give your space to the next vendor on our waiting list.\n\nIf a space in Zone A becomes available, I will contact you immediately. Please reply by May 23 to let us know whether you accept space B-7.\n\nBest regards,\nSimon Rourke\nEvents Office, City of Selbury"
+   }
+  ],
+  "sum": [
+   "セルベリー市のナイトマーケット出店者募集。夏の毎週金曜に開かれ、3つの区画と料金、4月30日の申込期限、必要書類、全期間出店する業者を優先することを案内している。",
+   "ベラスケスさんのフードトラックの出店申込書。A区画・電気の使用・7〜8月の毎週金曜を希望し、保健許可証は更新中のため後で送ると書いている。",
+   "市の担当者ロークさんが出店を認めつつ、A区画は全期間の出店者で埋まったためB区画を提案し、未着の書類を6月20日までに届けるよう求めるメール。"
+  ],
+  "qs": [
+   {
+    "q": "What is NOT mentioned on the web page as a requirement for vendors?",
+    "c": [
+     "Submitting an application by a deadline",
+     "Providing proof of insurance",
+     "Paying in advance for reserved nights",
+     "Attending a training session"
+    ],
+    "a": 3,
+    "e": "ウェブページには、4月30日までの申し込み、賠償責任保険の証明、出店初日までの全予約日分の支払いが条件として書かれているが、研修への参加は求めていない。前払いは pay ... before their first night の言い換え。",
+    "tag": "NOT問題"
+   },
+   {
+    "q": "On the web page, the word \"priority\" in the last paragraph is closest in meaning to",
+    "c": [
+     "importance",
+     "preference",
+     "urgency",
+     "sequence"
+    ],
+    "a": 1,
+    "e": "Priority will be given to vendors ... は「全期間出店する業者を優先する」の意味で、優遇を表す preference が近い。importance は重要性、urgency は緊急性、sequence は順序の意味で、文脈に合わない。",
+    "tag": "言い換え（同義語）"
+   },
+   {
+    "q": "Why was Copper Spoon Kitchen most likely not given a space in Zone A?",
+    "c": [
+     "It did not apply for every week of the season.",
+     "It did not need an electrical hookup.",
+     "It submitted its application after the deadline.",
+     "It sells goods that are not allowed in Zone A."
+    ],
+    "a": 0,
+    "e": "メールの「A区画はすべて毎週出店する業者に割り当てた」と、申込書の「7月と8月の毎週金曜」を照合すると、6月を含む全期間を申し込まなかったことが理由。電気は必要と記入しており、4月22日の申し込みは期限内。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "What must Ms. Velasquez send to the city by June 20?",
+    "c": [
+     "Proof of liability insurance",
+     "A list of menu items and prices",
+     "A copy of a health permit",
+     "A photo of her food truck"
+    ],
+    "a": 2,
+    "e": "メールの「業種に必要な書類が未着で6月20日までに必要」に、ウェブページの「食品業者は保健許可証の写しが必要」と、申込書で保健許可証だけ未添付だったことを合わせる。保険の証明とメニューは添付済み。",
+    "tag": "複数文書の照合"
+   },
+   {
+    "q": "What does Mr. Rourke offer to do?",
+    "c": [
+     "Lend Ms. Velasquez a portable generator",
+     "Reduce the fee for space B-7",
+     "Give Ms. Velasquez more time to reply",
+     "Contact Ms. Velasquez if a space in her preferred zone opens up"
+    ],
+    "a": 3,
+    "e": "メールの最後に「A区画に空きが出ればすぐ連絡する」とあり、「希望した区画に空きが出たら知らせる」と言い換えている。発電機は自分で持ち込むもので貸し出しではなく、料金の値下げや返信期限の延長は申し出ていない。",
+    "tag": "詳細"
+   }
+  ]
+ }
+]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""blind.py export | compare blind/answers_xxx.json   [--root DIR]"""
+"""blind.py export | compare blind/mNN/answers_xxx.json   [--mock N] [--root DIR]"""
 import argparse, json, sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -12,11 +12,14 @@ def clean(d):
     return {k: v for k, v in d.items() if k not in STRIP}
 
 
-def questions(root):
-    """Return (listing, r56, r7, answers) with answers keyed by qid."""
-    data, _ = build.load(root)
-    nd = build.number(data)
-    ans, L, R, S = {}, [], [], []
+def questions(root, m=1):
+    """Return (photos, listing, r56, r7, answers) with answers keyed by qid."""
+    data, _ = build.load(root, m)
+    nd = build.number(data, m)
+    ans, P, L, R, S = {}, [], [], [], []
+    for it in nd["part1"]:
+        P.append({"qid": it["id"], "part": 1, "num": it["num"], "img": it["img"], "c": it["c"]})
+        ans[it["id"]] = it["a"]
     for it in nd["part2"]:
         L.append({"qid": it["id"], "part": 2, "num": it["num"], "question": it["prompt"], "c": it["c"]})
         ans[it["id"]] = it["a"]
@@ -47,7 +50,7 @@ def questions(root):
             S.append({"qid": qid, "part": 7, "num": q["num"], "set": it["id"], "docs": it["docs"],
                       "question": q["q"], "c": q["c"]})
             ans[qid] = q["a"]
-    return L, R, S, ans
+    return P, L, R, S, ans
 
 
 def main():
@@ -55,14 +58,15 @@ def main():
     ap.add_argument("cmd", choices=["export", "compare"])
     ap.add_argument("file", nargs="?")
     ap.add_argument("--root", default=str(build.ROOT))
+    ap.add_argument("--mock", type=int, default=1, help="回番号（1〜）")
     a = ap.parse_args()
     root = Path(a.root).resolve()
-    L, R, S, ans = questions(root)
+    P, L, R, S, ans = questions(root, a.mock)
     if a.cmd == "export":
-        b = root / "blind"; b.mkdir(exist_ok=True)
-        for name, v in (("listening", L), ("reading56", R), ("reading7", S)):
+        b = root / "blind" / f"m{a.mock:02d}"; b.mkdir(parents=True, exist_ok=True)
+        for name, v in (("photos", P), ("listening", L), ("reading56", R), ("reading7", S)):
             (b / f"{name}.json").write_text(json.dumps(v, ensure_ascii=False, indent=1), encoding="utf-8")
-            print(f"blind/{name}.json: {len(v)}問")
+            print(f"{b.relative_to(root)}/{name}.json: {len(v)}問")
     else:
         if not a.file: ap.error("compare には答えファイルを指定")
         given = json.loads(Path(a.file).read_text(encoding="utf-8"))

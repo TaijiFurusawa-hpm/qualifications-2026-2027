@@ -1,0 +1,497 @@
+[
+  {
+    "id": "P7S-01",
+    "docs": [
+      {
+        "type": "advertisement",
+        "title": "Verdant Desk",
+        "text": "VERDANT DESK\nPlant Care for the Workplace\n\nPlants brighten any office, but busy employees rarely have time to look after them. Let Verdant Desk take care of them for you. For a flat fee of $60 a month, one of our trained horticulturists will visit every two weeks to water, trim, and feed up to 25 plants. Any plant that does not survive in our care will be replaced at no charge. Want more greenery? We also lease potted plants and planters, so there is nothing to buy up front.\n\nCall 555-0186 to arrange a free consultation at your office. Businesses that sign a twelve-month service agreement before May 31 will receive their first month free."
+      }
+    ],
+    "sum": [
+      "職場の植物の世話を請け負う業者の広告。月額料金の内容、枯れた植物の無料交換、鉢植えの貸し出し、期限内の年間契約で1か月無料になる特典を案内している。"
+    ],
+    "qs": [
+      {
+        "q": "What is being advertised?",
+        "c": [
+          "A store that sells office furniture",
+          "A service that maintains plants in offices",
+          "A training course for gardeners",
+          "A company that delivers fresh flowers"
+        ],
+        "a": 1,
+        "tag": "主旨・目的",
+        "e": "冒頭で、忙しい社員に代わって職場の植物の世話をすると述べ、専門家が2週間ごとに水やりや剪定をすると説明している。look after them が maintains に言い換えられている。trained から講座を連想させる誤答に注意。家具や花の配達も扱っていない。"
+      },
+      {
+        "q": "How can a business receive one month of service at no cost?",
+        "c": [
+          "By requesting a consultation at its office",
+          "By leasing at least 25 plants",
+          "By referring another business to Verdant Desk",
+          "By committing to a year of service by a certain date"
+        ],
+        "a": 3,
+        "tag": "詳細",
+        "e": "最後の文に、5月31日までに12か月の契約を結ぶと最初の1か月が無料とある。sign a twelve-month service agreement が、1年の利用を約束することに言い換えられている。相談は誰でも無料で、25は世話する鉢数の上限。"
+      }
+    ]
+  },
+  {
+    "id": "P7S-02",
+    "docs": [
+      {
+        "type": "text-message chain",
+        "text": "Tessa Lowell (8:12 A.M.): Paolo, the movers just arrived, but another tenant has the freight elevator booked until 10:00.\nPaolo Mendez (8:14 A.M.): So the crew will stand around for two hours? We're paying them by the hour.\nTessa Lowell (8:15 A.M.): I know. Could they carry the boxes down the stairs first? We're only on the third floor.\nPaolo Mendez (8:16 A.M.): The boxes, sure. The filing cabinets will have to wait for the elevator, though.\nTessa Lowell (8:18 A.M.): Agreed. I'll talk to the crew leader. Oh, did you remember to stop the water delivery here?\nPaolo Mendez (8:19 A.M.): Way ahead of you. I moved it to the new office last Friday.\nTessa Lowell (8:20 A.M.): Perfect. See you there around noon."
+      }
+    ],
+    "sum": [
+      "引っ越し業者が着いたが貨物用エレベーターが10時まで使えないため、先に階段で箱を運ぶ相談をし、水の配達の住所変更も確かめる二人のやり取り。"
+    ],
+    "qs": [
+      {
+        "q": "At 8:19 A.M., what does Mr. Mendez mean when he writes, \"Way ahead of you\"?",
+        "c": [
+          "He will arrive at the new office before Ms. Lowell.",
+          "He thinks the movers should have started earlier.",
+          "He has already taken care of the matter.",
+          "He forgot to contact the water supplier."
+        ],
+        "a": 2,
+        "tag": "意図問題",
+        "e": "水の配達を止めたか聞かれ、先週金曜に新しい事務所へ切り替えたと続けている。Way ahead of you は「もう済ませてある」という意味。先に新事務所へ着くという字句どおりの読みや、連絡を忘れたという逆の内容は合わない。"
+      },
+      {
+        "q": "What is indicated about the moving crew?",
+        "c": [
+          "They are paid according to the time they work.",
+          "They arrived later than planned.",
+          "They will move the filing cabinets first.",
+          "They have been asked to come back at 10:00."
+        ],
+        "a": 0,
+        "tag": "詳細",
+        "e": "8:14に Mendez さんが「時間単位で払っている」と書いている。paying them by the hour が、働いた時間に応じた支払いに言い換えられている。出直しは頼まれず先に階段で箱を運ぶ案が出ており、書類棚はエレベーター待ちで先には運ばない。"
+      }
+    ]
+  },
+  {
+    "id": "P7S-03",
+    "docs": [
+      {
+        "type": "notice",
+        "title": "Pemberton Tower",
+        "text": "NOTICE TO ALL TENANTS\nFrom Pemberton Tower Property Management\n\nOn April 7, Pemberton Tower will switch to a new waste-collection contractor, and the way recyclable materials are handled will change. Paper, plastic, and glass will no longer need to be placed in separate containers. Instead, all three may be put together in the blue bins on each floor. Food waste should still go into the green bins in the kitchens.\n\nCardboard boxes must be flattened and left beside the loading dock rather than in the hallways, as the new contractor will collect them only from that location. Old computers, printers, and other electronic devices will be accepted at the lobby security desk on the first Monday of each month.\n\nPlease share this information with your staff. Questions may be sent to facilities@pembertontower.example."
+      }
+    ],
+    "sum": [
+      "ビルの管理会社が、4月7日の回収業者の変更に伴い、資源ごみの分別、段ボールの置き場所、電子機器の回収日が変わることを入居者に知らせる告知。"
+    ],
+    "qs": [
+      {
+        "q": "What is the notice mainly about?",
+        "c": [
+          "Changes to how waste is collected in a building",
+          "The renovation of a loading dock",
+          "A schedule for repairing office computers",
+          "A plan to reduce the amount of food waste"
+        ],
+        "a": 0,
+        "tag": "主旨・目的",
+        "e": "冒頭で4月7日から廃棄物の回収業者が替わり、資源ごみの扱いが変わると述べ、分別、段ボール、電子機器の出し方を説明している。建物のごみ回収方法の変更が主題。搬入口の改修やパソコンの修理、食品ごみの削減は述べていない。"
+      },
+      {
+        "q": "What is suggested about the current waste-collection arrangements at Pemberton Tower?",
+        "c": [
+          "Electronic devices are collected every day.",
+          "Food waste cannot be thrown away in the kitchens.",
+          "Recyclable items must be separated by type.",
+          "Waste is collected by the building's own employees."
+        ],
+        "a": 2,
+        "tag": "推測",
+        "e": "紙・プラスチック・ガラスは「もう別々の容器に入れなくてよい」とあるので、今は種類ごとに分ける必要があると分かる。食品ごみは still とあり今も台所で捨てられ、new contractor から今も業者が回収しており、自社の社員ではない。"
+      }
+    ]
+  },
+  {
+    "id": "P7S-04",
+    "docs": [
+      {
+        "type": "form",
+        "title": "Corvane Language Partners",
+        "text": "CORVANE LANGUAGE PARTNERS\nTranslation Request Form\n\nClient name: Imogen Pruitt\nCompany: Talbridge Medical Devices\nE-mail: i.pruitt@talbridge.example\nDate submitted: September 22\n\nDocument: User manual for the TB-40 blood pressure monitor (approx. 6,800 words)\nTranslate from: English\nTranslate into: Portuguese, Polish\n\nService level:\n  [ ] Standard (8 business days)\n  [x] Priority (4 business days, 25% surcharge)\nCertified translation required:  [ ] Yes   [x] No\nFormat: Please keep the layout of the original file, including all diagrams.\nDelivery: Translated files to the e-mail address above\nBilling: Please send the invoice to accounts@talbridge.example and include purchase order number 55018.\n\nComments: We will launch the monitor in Brazil and Poland next spring. The manual has already been approved by our regulatory team, so the English text is final. If any medical terms are unclear, please contact our product engineer, Mateo Larkin, at m.larkin@talbridge.example rather than me."
+      }
+    ],
+    "sum": [
+      "医療機器会社の担当者が、取扱説明書をポルトガル語とポーランド語に訳すよう依頼した記入済みの申込書。優先サービスを選び、用語の質問先を指定している。"
+    ],
+    "qs": [
+      {
+        "q": "What is NOT indicated on the form?",
+        "c": [
+          "The translated manual will be used in more than one country.",
+          "Ms. Pruitt will pay an extra charge for faster service.",
+          "The original document contains illustrations.",
+          "The translations must be officially certified."
+        ],
+        "a": 3,
+        "tag": "NOT問題",
+        "e": "ブラジルとポーランドで発売(コメント欄)、25%の追加料金で4営業日の優先サービス(サービス欄)、図を含む元の体裁(書式欄)は書かれている。証明付き翻訳は No に印があり不要なので、認証が必要という内容だけが合わない。"
+      },
+      {
+        "q": "Why most likely does Ms. Pruitt ask the translators to contact Mr. Larkin?",
+        "c": [
+          "He is in charge of the product launch in Brazil.",
+          "He has detailed knowledge of the product.",
+          "He speaks both Portuguese and Polish.",
+          "He works at the translation company's office."
+        ],
+        "a": 1,
+        "tag": "推測",
+        "e": "医療用語が不明なら自分ではなく製品技術者の Larkin さんに連絡するよう書いている。製品の技術者なので製品の中身に詳しいからだと考えられる。our product engineer とあり翻訳会社の人ではなく、発売の担当や語学力の記述もない。"
+      }
+    ]
+  },
+  {
+    "id": "P7S-05",
+    "docs": [
+      {
+        "type": "e-mail",
+        "text": "To: Hiroko Nakamura <h.nakamura@kettlewoodtea.example>\nFrom: Olivia Marchetti <o.marchetti@foldwellpack.example>\nDate: February 3\nSubject: Your spring packaging order\n\nDear Ms. Nakamura,\n\nThank you for your order of 20,000 gift boxes for Kettlewood's spring collection. Before we begin production, I want to let you know about a change at our plant. As of this month, all of our boxes are made from 100 percent recycled board rather than the standard board we used previously. Because the new material is slightly thicker, the boxes will be about 2 millimeters taller than the samples you approved in December. Your tea tins should still fit comfortably, but you may wish to have your staff confirm this. Although the recycled board costs us more, we will honor the price we quoted you last year.\n\nI have sent three of the new boxes by express courier to your warehouse on Pratt Road, and they should arrive by Wednesday. If they meet your needs, please reply by February 10 so that we can keep to the delivery date of March 2.\n\nBest regards,\nOlivia Marchetti\nAccount Manager, Foldwell Packaging"
+      }
+    ],
+    "sum": [
+      "包装資材会社の担当者が、再生紙への切り替えで箱が少し高くなることを顧客に伝え、価格は据え置くとしたうえで、新しい箱の確認と期限までの返信を求めるメール。"
+    ],
+    "qs": [
+      {
+        "q": "Why did Ms. Marchetti write to Ms. Nakamura?",
+        "c": [
+          "To announce that a product's price will increase",
+          "To apologize for a delay in a shipment",
+          "To inform a client of a change that affects an order",
+          "To request payment for some sample boxes"
+        ],
+        "a": 2,
+        "tag": "主旨・目的",
+        "e": "注文への礼に続き、生産前に工場の変更(再生紙に替わり箱が約2ミリ高くなる)を知らせ、確認を求めている。注文に関わる変更の連絡が目的。価格は昨年の見積もりのままで、配送の遅れや見本の代金は述べていない。"
+      },
+      {
+        "q": "The word \"honor\" in paragraph 1 is closest in meaning to",
+        "c": [
+          "maintain",
+          "praise",
+          "award",
+          "celebrate"
+        ],
+        "a": 0,
+        "tag": "言い換え（同義語）",
+        "e": "honor the price we quoted は「提示した価格を守る」の意味で、条件をそのまま保つ maintain が最も近い。praise(称賛する)、award(賞を与える)、celebrate(祝う)は人をたたえる意味の honor で、価格には合わない。"
+      },
+      {
+        "q": "What is suggested about the samples Ms. Nakamura approved in December?",
+        "c": [
+          "They were slightly taller than the new boxes.",
+          "They did not fit the tea tins.",
+          "They were sent by express courier.",
+          "They were made from a different material."
+        ],
+        "a": 3,
+        "tag": "推測",
+        "e": "今月から全製品が従来の板紙に代えて再生紙100%になったとある。12月に承認した見本は切り替え前なので、別の素材だったと分かる。背が高いのは新しい箱で、缶は still fit とあり、速達で送ったのも新しい箱。"
+      }
+    ]
+  },
+  {
+    "id": "P7S-06",
+    "docs": [
+      {
+        "type": "web page",
+        "title": "Quillfield Studios",
+        "text": "QUILLFIELD STUDIOS\nHome | Rooms | Rates | FAQ\n\nRecord with Confidence\nWhether you are launching a company podcast or producing training videos, Quillfield Studios gives you a professional recording space without the expense of building your own. [1] Our two soundproof rooms are on the fourth floor of the Larchmont Building, a five-minute walk from Ferris Square Station.\n\nROOMS\nStudio A seats up to four people and is ideal for interviews and panel discussions. Studio B is a single-person booth designed for voice-overs and audiobook narration. Both rooms are fully air-conditioned and have high-speed internet access. [2]\n\nRATES\nStudio A: $70 per hour\nStudio B: $45 per hour\nAll bookings must be at least two hours long. Every booking includes the services of a sound engineer, who will set up the microphones and monitor recording levels throughout your session. [3]\n\nEDITING\nNeed help after your session? Our editors can remove background noise, add music, and deliver finished files within three business days for an additional $40 per hour of recorded audio.\n\nCANCELLATIONS\nSessions canceled more than 48 hours in advance may be rescheduled at no charge. [4] Later cancellations will be billed at half the booking price."
+      }
+    ],
+    "sum": [
+      "録音スタジオのウェブページ。2つの部屋の用途、料金と最低予約時間、技術者の付き添い、編集サービス、キャンセル規定を説明している。"
+    ],
+    "qs": [
+      {
+        "q": "What is the minimum amount a client would pay to book Studio A?",
+        "c": [
+          "$45",
+          "$70",
+          "$90",
+          "$140"
+        ],
+        "a": 3,
+        "tag": "詳細",
+        "e": "料金欄に Studio A は1時間70ドル、予約は最低2時間とあるので、最低でも140ドルかかる。70ドルは1時間分だけ。90ドルは Studio B の最低料金(45ドル×2時間)、45ドルは Studio B の1時間分で、どれも合わない。"
+      },
+      {
+        "q": "What will happen if a client cancels a session one day before it is scheduled?",
+        "c": [
+          "The client will be charged 50 percent of the booking price.",
+          "The session will be rescheduled for free.",
+          "The client will receive a full refund.",
+          "The client will be asked to pay for editing."
+        ],
+        "a": 0,
+        "tag": "詳細",
+        "e": "キャンセル欄に、48時間より前なら無料で日程を変更でき、それより後は予約料金の半額を請求するとある。前日の取り消しは後者に当たり、half が50 percent に言い換えられている。無料の変更は48時間より前の場合に限られる。"
+      },
+      {
+        "q": "In which of the positions marked [1], [2], [3], and [4] does the following sentence best belong?\n\"This person can also offer tips on microphone technique to clients who are new to recording.\"",
+        "c": [
+          "[1]",
+          "[2]",
+          "[3]",
+          "[4]"
+        ],
+        "a": 2,
+        "tag": "文挿入",
+        "e": "This person は人を指すので、直前に人物が出る位置が必要。[3]の前に、マイクを設置し録音レベルを見守る sound engineer の説明があり、マイクの使い方の助言ともつながる。他の位置の前には This person が指せる人物がいない。"
+      }
+    ]
+  },
+  {
+    "id": "P7S-07",
+    "docs": [
+      {
+        "type": "memo",
+        "title": "Brennick Instruments",
+        "text": "MEMO\n\nTo: All staff, Brennick Instruments head office\nFrom: Lucia Navarro, Operations Director\nDate: Thursday, June 5\nSubject: New telephone system\n\nOver the weekend of June 14-15, our desk telephones will be replaced by Telvara, an internet-based calling system. Once the change is complete, you will be able to make and receive work calls through an application on your laptop or company mobile phone, whether you are at your desk or on the road.\n\nPlease note the following:\n- Your extension number will stay the same, so there is no need to update your e-mail signature or business cards.\n- Saved voicemail messages will not be transferred to the new system. If you have messages you wish to keep, please write down any important details by Friday, June 13.\n- Leave your old telephone on your desk. Technicians will collect all of the old equipment over the weekend.\n- Each employee will be given a headset on Monday, June 16.\n\nThirty-minute training sessions will be held in the second-floor training room on June 11 and 12 at 10:00 A.M. and 3:00 P.M. Attendance is optional, but anyone who does not attend should watch the recorded session, which will be posted on the intranet afterward.\n\nIf you have any questions, please contact Grant Pike at extension 224."
+      }
+    ],
+    "sum": [
+      "業務部長が、週末に机の電話がインターネット通話の仕組みに替わることを伝え、内線番号、留守電、古い電話、ヘッドセット、研修についての注意点を示すメモ。"
+    ],
+    "qs": [
+      {
+        "q": "What is the purpose of the memo?",
+        "c": [
+          "To announce that the head office will relocate",
+          "To prepare employees for a change to their phone system",
+          "To ask staff to sign up for a training course",
+          "To introduce a new member of the technical staff"
+        ],
+        "a": 1,
+        "tag": "主旨・目的",
+        "e": "冒頭で、6月14〜15日の週末に机の電話がインターネット通話の仕組みに替わると伝え、留守電や機器、研修の注意点を並べている。電話の切り替えに備えさせるメモ。研修は任意で申込みの依頼はなく、移転や新人の紹介もない。"
+      },
+      {
+        "q": "What will most likely happen to voicemail messages saved on the current system?",
+        "c": [
+          "They will be sent to employees by e-mail.",
+          "They will be moved to the new application.",
+          "They will be posted on the intranet.",
+          "They will no longer be available after the change."
+        ],
+        "a": 3,
+        "tag": "推測",
+        "e": "保存された留守電は新しい仕組みに移されず、残したい人は6月13日までに要点を書き留めるよう求めている。つまり切り替え後は聞けなくなる。新しいアプリへの移行は本文と逆で、メールでの送付やイントラネットへの掲載は述べていない。"
+      },
+      {
+        "q": "What are employees NOT asked to do?",
+        "c": [
+          "Make notes of important information in saved messages",
+          "Leave their current phones where they are",
+          "Update the contact information on their business cards",
+          "Watch a recorded session if they miss the training"
+        ],
+        "a": 2,
+        "tag": "NOT問題",
+        "e": "留守電の要点を書き留める、古い電話を机に置いたままにする、研修に出ない人は録画を見る、はいずれも求められている。内線番号は変わらないのでメール署名や名刺を直す必要はないとあり、名刺の更新だけが求められていない。"
+      }
+    ]
+  },
+  {
+    "id": "P7S-08",
+    "docs": [
+      {
+        "type": "online chat discussion",
+        "text": "Rhea Malhotra (9:02 A.M.): Good morning, everyone. The forecast for Thursday now shows heavy rain all day, and that's our only day at Brookhaven Park for the catalog shoot.\nSimon Lachance (9:04 A.M.): And the city won't move our permit. I asked last week, and the next available date isn't until the end of the month.\nInes Okoro (9:05 A.M.): That's too late. The printer needs the final images by the 22nd.\nRhea Malhotra (9:07 A.M.): Could we shoot indoors instead? I'm just worried that the patio sets will look strange in an ordinary studio.\nSimon Lachance (9:09 A.M.): Not necessarily. Westcourt Photo has a studio with a glass roof and a garden backdrop. I did a shoot there last year, and the natural light was excellent.\nInes Okoro (9:10 A.M.): What does it cost?\nSimon Lachance (9:12 A.M.): About $900 for the day, so more than the park permit. But we wouldn't need to rent the generator, which was going to be $350.\nRhea Malhotra (9:13 A.M.): Say no more. Can you find out whether they're free on Thursday?\nSimon Lachance (9:14 A.M.): Calling them now.\nSimon Lachance (9:20 A.M.): They are. I've put a hold on the space until 5:00 today.\nInes Okoro (9:21 A.M.): Great. I'll let the models know about the new location."
+      }
+    ],
+    "sum": [
+      "雨の予報で公園でのカタログ撮影ができなくなり、印刷の締め切りに間に合わせるため、ガラス屋根のスタジオに場所を移すと決めるチャット。"
+    ],
+    "qs": [
+      {
+        "q": "What problem does Ms. Malhotra mention?",
+        "c": [
+          "Bad weather is expected on the day of a photo shoot.",
+          "A park has been closed for repairs.",
+          "Some furniture has not been delivered.",
+          "A printer has changed its deadline."
+        ],
+        "a": 0,
+        "tag": "詳細",
+        "e": "冒頭で、木曜は一日中大雨の予報で、その日が公園でのカタログ撮影の唯一の日だと書いている。heavy rain が bad weather に言い換えられている。公園の閉鎖や家具の未着は述べておらず、印刷会社の期限が変わったわけでもない。"
+      },
+      {
+        "q": "Why can the shoot not take place at the end of the month?",
+        "c": [
+          "The models are unavailable then.",
+          "The images must be delivered before that time.",
+          "The studio is fully booked.",
+          "The city has canceled the permit."
+        ],
+        "a": 1,
+        "tag": "詳細",
+        "e": "公園の次の空きは月末だと聞いた Okoro さんが、印刷会社は22日までに最終画像を必要としていると答えている。月末では締め切りに間に合わない。モデルやスタジオの都合は理由ではなく、許可は取り消されたのではなく日程を動かせないだけ。"
+      },
+      {
+        "q": "At 9:13 A.M., what does Ms. Malhotra most likely mean when she writes, \"Say no more\"?",
+        "c": [
+          "She thinks the studio is too expensive.",
+          "She is convinced that the studio is a good option.",
+          "She wants more details before making a decision.",
+          "She would like to end the discussion for today."
+        ],
+        "a": 1,
+        "tag": "意図問題",
+        "e": "スタジオは許可より高いが発電機の350ドルが不要になると説明された直後の発言で、すぐに木曜の空きの確認を頼んでいる。もう説明は十分で賛成だという意味。高すぎる、もっと情報がほしい、は逆で、話し合いもこの後続いている。"
+      },
+      {
+        "q": "What is suggested about the generator?",
+        "c": [
+          "It costs more to rent than the studio.",
+          "It has already been paid for.",
+          "It will be delivered to Westcourt Photo.",
+          "It was intended for use at the outdoor location."
+        ],
+        "a": 3,
+        "tag": "推測",
+        "e": "スタジオなら発電機を借りる必要がなく350ドルが浮くとあるので、発電機は公園での屋外撮影のために予定していたと分かる。was going to be から支払いはまだで、約900ドルのスタジオより安く、スタジオに運ぶ話もない。"
+      }
+    ]
+  },
+  {
+    "id": "P7S-09",
+    "docs": [
+      {
+        "type": "letter",
+        "title": "Palisade Museum of Art",
+        "text": "Palisade Museum of Art\n45 Corliss Avenue, Westmoor\n\nAugust 18\n\nMs. Adele Moreau\n29 Vantage Road\nWestmoor\n\nDear Ms. Moreau,\n\nOn behalf of the Palisade Museum of Art, thank you for agreeing to lend Orchard in Winter by Elsa Varga to our autumn exhibition, Light on the Land: Regional Painters, 1890-1940. The exhibition will run from October 10 to January 25, and your painting will hang in the main gallery beside two other works by the same artist.\n\nAs you discussed with our registrar, Julian Nwosu, the museum will cover every cost related to the loan. A team of specialist art handlers will pack the painting at your home on September 22, and it will be transported in a climate-controlled vehicle. From the moment it leaves your home until it is returned, the painting will be insured for its full value under the museum's policy, so you will not need to arrange any coverage of your own.\n\nUnless you instruct us otherwise, the label beside the painting and the entry in the exhibition catalog will read \"Lent by a private collector.\" If you would prefer to have your name appear, please inform Mr. Nwosu by September 1, when the catalog goes to the printer.\n\nI am also pleased to invite you and a guest to a preview reception for lenders and museum members on the evening of October 9. A formal invitation will follow next month.\n\nTwo copies of the loan agreement are enclosed. Please sign both, keep one for your records, and return the other in the envelope provided.\n\nSincerely,\n\nGabriel Ocampo\nChief Curator"
+      }
+    ],
+    "sum": [
+      "美術館の主任学芸員が、展覧会に絵画を貸し出す収蔵家に礼を述べ、梱包・輸送・保険、作品表示の名義、内覧会への招待、契約書の返送について説明する手紙。"
+    ],
+    "qs": [
+      {
+        "q": "Why did Mr. Ocampo write to Ms. Moreau?",
+        "c": [
+          "To ask her to sell a painting to the museum",
+          "To invite her to become a museum member",
+          "To request a donation for an upcoming exhibition",
+          "To confirm the arrangements for borrowing her artwork"
+        ],
+        "a": 3,
+        "tag": "主旨・目的",
+        "e": "冒頭で絵画の貸し出しへの礼を述べ、梱包・輸送・保険、作品表示、内覧会、契約書の返送と、借り受けの手配を説明している。購入や寄付の依頼は書かれていない。内覧会は会員も対象だが、会員になるよう勧めてはいない。"
+      },
+      {
+        "q": "What is NOT mentioned as something the museum will provide?",
+        "c": [
+          "Packing of the painting by experts",
+          "Insurance for the painting",
+          "A copy of the exhibition catalog",
+          "An invitation to an evening event"
+        ],
+        "a": 2,
+        "tag": "NOT問題",
+        "e": "専門の作業員による梱包と全額の保険(第2段落)、夕方の内覧会への招待(第4段落)は述べられている。図録は作品の表記と印刷に回す時期に触れるだけで、Moreau さんに1部渡すとは書かれていない。図録だけが合わない。"
+      },
+      {
+        "q": "What will most likely happen if Ms. Moreau does not contact Mr. Nwosu by September 1?",
+        "c": [
+          "She will not be identified by name in the catalog.",
+          "Her painting will be removed from the exhibition.",
+          "She will have to arrange her own insurance.",
+          "She will not be invited to the reception."
+        ],
+        "a": 0,
+        "tag": "推測",
+        "e": "指示がなければ作品の表示と図録は「個人収蔵家より貸与」となり、名前を載せたい場合は9月1日までに Nwosu さんに伝えるよう求めている。連絡しなければ図録に名前は出ない。展示や保険、招待への影響は書かれていない。"
+      },
+      {
+        "q": "What is indicated about Elsa Varga?",
+        "c": [
+          "She will attend the preview reception.",
+          "More than one of her works will be on display.",
+          "She was a member of the Palisade Museum of Art.",
+          "She painted Orchard in Winter in 1940."
+        ],
+        "a": 1,
+        "tag": "詳細",
+        "e": "第1段落に、絵は本館の展示室で同じ画家の他の2作品と並べて掛けられるとある。two other works by the same artist が、彼女の作品が複数展示されることに言い換えられている。内覧会への出席や会員か否か、制作年は書かれていない。"
+      }
+    ]
+  },
+  {
+    "id": "P7S-10",
+    "docs": [
+      {
+        "type": "article",
+        "title": "Used Laptops Find New Homes",
+        "text": "Used Laptops Find New Homes\nBy Maya Lennox\n\nPRESTON FALLS (March 12) - When large companies replace their computers, the old machines often end up in storage rooms or recycling centers. Relaptic, a company based here in Preston Falls, has built a fast-growing business by giving those machines a second life. [1]\n\nFounded in 2017 by former IT technician Darius Mensah, Relaptic buys used laptops in bulk from corporations, replaces worn parts such as batteries and keyboards, and installs new software. The refurbished machines are then sold to schools, charities, and small businesses for roughly half the price of a new model. Each one comes with a two-year warranty, twice what many manufacturers offer on new laptops. [2]\n\nDemand has risen sharply. Last year Relaptic sold 18,000 laptops, up from 11,000 the year before, and the company now employs 64 people. To keep pace, it will move in June from its cramped workshop on Colvin Street to a former printing plant on the city's east side, which offers four times the floor space and room for a dedicated testing area. [3] The move is expected to create about 30 new jobs, most of them for technicians.\n\nAccording to Mr. Mensah, securing a steady supply of used machines is now his biggest challenge. \"Companies are holding on to their computers longer than they used to. Many now wait five years instead of three before replacing them,\" he explained. To address this, Relaptic recently signed an agreement with Halberd Insurance, which will send it every laptop the insurer retires over the next five years, an estimated 4,000 units a year.\n\nMr. Mensah also hopes to expand the company's training program, which teaches local high school graduates to repair electronics. [4] \"Many of our best technicians got their start with us that way,\" he said."
+      }
+    ],
+    "sum": [
+      "企業の中古ノートパソコンを再生して安く売る地元企業の記事。需要の伸びと移転・増員の計画、中古機の確保という課題、地元の若者向けの研修制度を紹介している。"
+    ],
+    "qs": [
+      {
+        "q": "What is the article mainly about?",
+        "c": [
+          "A school that teaches computer programming",
+          "A recycling center that collects electronics",
+          "A business that restores and resells used computers",
+          "An insurance company's plan to buy new equipment"
+        ],
+        "a": 2,
+        "tag": "主旨・目的",
+        "e": "企業が手放したノートパソコンを買い取り、部品の交換とソフトの導入をして学校などに安く売る会社を、創業から移転計画まで紹介している。refurbished が restores に言い換えられている。リサイクル施設や保険会社は話の一部にすぎない。"
+      },
+      {
+        "q": "What does the article suggest about the warranties that many manufacturers offer on new laptops?",
+        "c": [
+          "They cover only batteries and keyboards.",
+          "They last for one year.",
+          "They are longer than Relaptic's warranty.",
+          "They can be extended for an extra fee."
+        ],
+        "a": 1,
+        "tag": "推測",
+        "e": "第2段落に、Relaptic の2年保証は多くのメーカーが新品に付ける保証の2倍だとある。ここから多くのメーカーの保証は1年だと分かる。Relaptic より長いは逆。電池とキーボードは交換する部品の例で、延長の料金は書かれていない。"
+      },
+      {
+        "q": "The word \"securing\" in paragraph 4 is closest in meaning to",
+        "c": [
+          "obtaining",
+          "fastening",
+          "protecting",
+          "approving"
+        ],
+        "a": 0,
+        "tag": "言い換え（同義語）",
+        "e": "securing a steady supply は「安定した供給を確保すること」で、obtaining(手に入れる)が最も近い。fastening(固定する)と protecting(守る)は secure の別の意味で文脈に合わない。approving(承認する)も通らない。"
+      },
+      {
+        "q": "In which of the positions marked [1], [2], [3], and [4] does the following sentence best belong?\n\"Of the 22 people who have completed it so far, 15 now work full-time at Relaptic.\"",
+        "c": [
+          "[1]",
+          "[2]",
+          "[3]",
+          "[4]"
+        ],
+        "a": 3,
+        "tag": "文挿入",
+        "e": "挿入文の it は修了できるものを指し、22人中15人が今は社員だと続く。[4]の直前に地元の高卒者に修理を教える研修制度があり、直後の「優秀な技術者の多くはそこから始めた」とも自然につながる。他の位置の前に修了できるものはない。"
+      }
+    ]
+  }
+]

@@ -13,6 +13,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+LEVELS = range(1, 7)  # 1=〜400 2=〜500 3=〜600 4=730 5=860 6=900+
 import build
 
 POS = ["動", "名", "形", "副", "前・接", "句"]
@@ -78,7 +79,7 @@ def validate(root):
         if s in seen: errs.append(f"{w}: id が {seen[s]} と重複")
         seen[s] = w
         if e["pos"] not in POS: errs.append(f"{w}: pos {e['pos']!r}")
-        if e["lv"] not in (1, 2, 3): errs.append(f"{w}: lv {e['lv']!r}")
+        if e["lv"] not in LEVELS: errs.append(f"{w}: lv {e['lv']!r}")
         if not e["ja"].strip() or len(e["ja"]) > 22: errs.append(f"{w}: ja が空か長い（{len(e['ja'])}字）")
         if count_f(e) != 1: errs.append(f"{w}: ex の中の f={e['f']!r} が {count_f(e)} 回")
         n = len(e["ex"].split())

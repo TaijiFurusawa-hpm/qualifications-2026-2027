@@ -1,0 +1,422 @@
+[
+ {
+  "id": "P5-01",
+  "tag": "品詞",
+  "q": "Shoppers at Altamura Foods have found the new self-checkout kiosks ------- to use, and lines at the registers have become shorter.",
+  "c": [
+   "convenience",
+   "convenient",
+   "conveniently",
+   "more conveniently"
+  ],
+  "a": 1,
+  "ja": "アルタムーラ・フーズの買い物客は新しいセルフレジを使いやすいと感じており、レジの列は短くなった。",
+  "e": "find + 目的語 + 補語 の形で、目的語 kiosks の性質を表す形容詞 convenient が入る。便利だと感じたから列が短くなった、と文意も通る。名詞 convenience は冠詞なしで kiosks の補語にならず、副詞の形はどちらも補語になれない。"
+ },
+ {
+  "id": "P5-02",
+  "tag": "動詞の形",
+  "q": "Please notify Mr. Chandran as soon as the replacement parts ------- at the loading dock.",
+  "c": [
+   "arrive",
+   "will arrive",
+   "arriving",
+   "had arrived"
+  ],
+  "a": 0,
+  "ja": "交換部品が荷受け場に届いたらすぐに、チャンドランさんに知らせてください。",
+  "e": "as soon as は時を表す接続詞で、未来のことでも節の中は現在形を使うので arrive が入る。主語 parts は複数で -s は付かない。will arrive は時の節では使わず、had arrived は過去の基準がなく、arriving は節の動詞になれない。"
+ },
+ {
+  "id": "P5-03",
+  "tag": "語彙",
+  "q": "Because of rising fuel costs, the airline will ------- a surcharge on all international flights starting in April.",
+  "c": [
+   "deposit",
+   "acquire",
+   "impose",
+   "inspect"
+  ],
+  "a": 2,
+  "ja": "燃料費の高騰により、その航空会社は4月から全国際線に追加料金を課す。",
+  "e": "impose A on B で「BにAを課す」。a surcharge と on all international flights に合うのは impose だけ。deposit（預ける）、acquire（獲得する）、inspect（検査する）は、追加料金を課す意味にならない。"
+ },
+ {
+  "id": "P5-04",
+  "tag": "前置詞・接続詞",
+  "q": "------- its downtown location, Bellcourt Hotels operates two properties near the airport.",
+  "c": [
+   "Even though",
+   "As soon as",
+   "Whether",
+   "In addition to"
+  ],
+  "a": 3,
+  "ja": "ベルコート・ホテルズは、中心街のホテルに加えて、空港近くで2軒を運営している。",
+  "e": "後ろが名詞句 its downtown location なので前置詞が必要で、In addition to（〜に加えて）が入る。中心街に加えて空港近くにも2軒、と意味も通る。Even though、As soon as、Whether は接続詞で、後ろに節が要る。"
+ },
+ {
+  "id": "P5-05",
+  "tag": "品詞",
+  "q": "Please direct all ------- about the revised travel reimbursement policy to Mr. Albrecht in the finance department.",
+  "c": [
+   "inquiries",
+   "inquire",
+   "inquiring",
+   "inquired"
+  ],
+  "a": 0,
+  "ja": "改定された出張費精算規定に関するお問い合わせはすべて、経理部のアルブレヒトさんにお寄せください。",
+  "e": "direct の目的語で all の後に置ける名詞の複数形 inquiries（問い合わせ）が入る。direct A to B は「AをBに回す」。原形 inquire、-ing 形 inquiring、過去形 inquired は、all の後で目的語になる名詞の働きをしない。"
+ },
+ {
+  "id": "P5-06",
+  "tag": "語彙",
+  "q": "The results of this year's customer survey are ------- with the findings of last year's study.",
+  "c": [
+   "persistent",
+   "insistent",
+   "consistent",
+   "resistant"
+  ],
+  "a": 2,
+  "ja": "今年の顧客調査の結果は、昨年の調査結果と一致している。",
+  "e": "be consistent with 〜 で「〜と一致している」。今年と昨年の調査結果を比べる文脈に合う。persistent（粘り強い）と insistent（しつこく求める）は人の態度を表し、resistant は to と組む語で、with と結びつかない。"
+ },
+ {
+  "id": "P5-07",
+  "tag": "代名詞・関係詞",
+  "q": "The awards banquet will be held at the Corwin Center, ------- last year's product launch took place.",
+  "c": [
+   "which",
+   "where",
+   "what",
+   "whom"
+  ],
+  "a": 1,
+  "ja": "授賞晩餐会はコーウィン・センターで開かれる。そこは昨年の製品発表会が行われた場所だ。",
+  "e": "先行詞 the Corwin Center は場所で、後ろの節は欠けのない完全な文なので関係副詞 where が入る。which は節の中で主語か目的語が欠ける場合に使う。what は先行詞を取らず、whom は人に使う。"
+ },
+ {
+  "id": "P5-08",
+  "tag": "品詞",
+  "q": "Online sales at Baxendale Outfitters have ------- increased since the company redesigned its Web site.",
+  "c": [
+   "steady",
+   "steadiness",
+   "steadied",
+   "steadily"
+  ],
+  "a": 3,
+  "ja": "バクセンデール・アウトフィッターズのオンライン売上は、同社がウェブサイトを刷新して以来、着実に増えている。",
+  "e": "have と過去分詞 increased の間に入り、動詞を修飾する副詞 steadily（着実に）が正解。形容詞 steady は動詞を修飾できず、名詞 steadiness は語順が合わない。steadied は動詞の過去形・過去分詞で、increased と並べて置けない。"
+ },
+ {
+  "id": "P5-09",
+  "tag": "動詞の形",
+  "q": "The main lobby ------- this week, so visitors are asked to use the entrance on the north side of the building.",
+  "c": [
+   "is repainting",
+   "has repainted",
+   "is being repainted",
+   "repaints"
+  ],
+  "a": 2,
+  "ja": "正面ロビーは今週塗り直し中のため、来訪者は建物の北側の入口を使うよう求められている。",
+  "e": "主語 the main lobby は塗られる側なので受動態が必要で、今週進行中の作業を表す進行形の受動態 is being repainted が入る。is repainting、has repainted、repaints は能動態で、ロビーが自ら塗る意味になる。"
+ },
+ {
+  "id": "P5-10",
+  "tag": "語彙",
+  "q": "Ms. Cavanagh will ------- the negotiations with the new supplier while Mr. Bautista is on leave.",
+  "c": [
+   "oversee",
+   "overlook",
+   "overcome",
+   "overtake"
+  ],
+  "a": 0,
+  "ja": "バウティスタさんの休暇中は、キャバナーさんが新しい仕入先との交渉を監督する。",
+  "e": "oversee は「〜を監督する・取り仕切る」で、休暇中の同僚に代わって交渉を担う文脈に合う。形の似た overlook は「見落とす・見渡す」、overcome は「克服する」、overtake は「追い越す」で、negotiations を目的語にすると意味が通らない。"
+ },
+ {
+  "id": "P5-11",
+  "tag": "前置詞・接続詞",
+  "q": "The east parking lot will remain closed ------- the repaving work is finished.",
+  "c": [
+   "by",
+   "until",
+   "during",
+   "within"
+  ],
+  "a": 1,
+  "ja": "東側の駐車場は、再舗装工事が終わるまで閉鎖されたままとなる。",
+  "e": "後ろに節 the repaving work is finished が続き、remain closed（閉じたままでいる）という継続を表すので、接続詞 until（〜まで）が入る。by は期限を表す前置詞で節を取れず、during と within も前置詞なので節は続かない。"
+ },
+ {
+  "id": "P5-12",
+  "tag": "品詞",
+  "q": "Mr. Coelho's careful ------- to detail helped the audit team identify several billing errors.",
+  "c": [
+   "attend",
+   "attentive",
+   "attentively",
+   "attention"
+  ],
+  "a": 3,
+  "ja": "コエーリョさんが細部まで注意深く目を配ったことが、監査チームによる請求ミスの発見に役立った。",
+  "e": "所有格 Mr. Coelho's と形容詞 careful の後なので名詞が必要で、attention to detail（細部への注意）が入る。動詞 attend、形容詞 attentive、副詞 attentively は、careful に修飾される名詞の位置に置けない。"
+ },
+ {
+  "id": "P5-13",
+  "tag": "語彙",
+  "q": "Due to ------- demand, the bakery has extended its weekend hours until 9 P.M.",
+  "c": [
+   "popular",
+   "crowded",
+   "numerous",
+   "plentiful"
+  ],
+  "a": 0,
+  "ja": "多くの要望に応えて、そのパン屋は週末の営業時間を午後9時まで延長した。",
+  "e": "due to popular demand で「多くの要望に応えて」という定番表現。要望が多いので営業時間を延ばした、と文意が通る。crowded は場所が混んだ様子、numerous は複数形の名詞に使い、plentiful は物が豊富なことで、demand と結びつかない。"
+ },
+ {
+  "id": "P5-14",
+  "tag": "動詞の形",
+  "q": "The number of customers who order groceries online ------- risen sharply over the past year.",
+  "c": [
+   "have",
+   "are",
+   "has",
+   "having"
+  ],
+  "a": 2,
+  "ja": "ネットで食料品を注文する顧客の数は、この1年で急増した。",
+  "e": "主語の中心は The number（数）で単数扱いなので、現在完了は has risen になる。直前の customers に引かれて have を選ぶのがひっかけ（A number of 〜 なら複数）。are risen は成り立たず、having は述語にならない。"
+ },
+ {
+  "id": "P5-15",
+  "tag": "品詞",
+  "q": "Coralline Shipping offers ------- rates to businesses that sign a one-year service contract.",
+  "c": [
+   "compete",
+   "competitive",
+   "competitively",
+   "competition"
+  ],
+  "a": 1,
+  "ja": "コラライン海運は、1年間のサービス契約を結ぶ企業に、他社に負けない料金を提示している。",
+  "e": "名詞 rates を前から修飾する形容詞が必要で、competitive rates は「競争力のある（割安な）料金」。副詞 competitively は名詞を直接修飾できず、動詞 compete は名詞の前に置けない。competition rates という言い方もしない。"
+ },
+ {
+  "id": "P5-16",
+  "tag": "代名詞・関係詞",
+  "q": "At the Ashcombe Arts Society, annual membership fees for students are much lower than ------- for regular members.",
+  "c": [
+   "them",
+   "it",
+   "theirs",
+   "those"
+  ],
+  "a": 3,
+  "ja": "アシュクーム芸術協会では、学生の年会費が正会員の年会費よりずっと安い。",
+  "e": "比べる対象は前に出た fees で、名詞の繰り返しを避け、後ろに for regular members を伴えるのは those。fees は複数なので単数の it は合わない。them は後ろに修飾語を付けて名詞の代わりにできず、theirs は所有代名詞で文意が通らない。"
+ },
+ {
+  "id": "P5-17",
+  "tag": "語彙",
+  "q": "All contractors working on the site must ------- with the safety regulations posted at the entrance.",
+  "c": [
+   "comply",
+   "obey",
+   "follow",
+   "observe"
+  ],
+  "a": 0,
+  "ja": "現場で働くすべての請負業者は、入口に掲示された安全規則に従わなければならない。",
+  "e": "直後に with があるので、自動詞で comply with 〜（〜に従う）の形を取る comply が入る。obey、follow、observe も「従う・守る」の意味だが他動詞で、with を置かずに目的語を直接取るため、この形には入らない。"
+ },
+ {
+  "id": "P5-18",
+  "tag": "前置詞・接続詞",
+  "q": "------- the contract has been signed by both parties, construction can begin immediately.",
+  "c": [
+   "Unless",
+   "Although",
+   "Once",
+   "Until"
+  ],
+  "a": 2,
+  "ja": "契約書に双方が署名すれば、すぐに着工できる。",
+  "e": "「いったん〜すれば」を表す接続詞 Once が入り、署名が済めばすぐ着工できると意味が通る。Unless（〜しない限り）、Although（〜だけれども）、Until（〜するまで）は、署名と即時の着工の関係を正しく表せない。"
+ },
+ {
+  "id": "P5-19",
+  "tag": "品詞",
+  "q": "All ------- in the leadership workshop will receive a certificate of completion.",
+  "c": [
+   "participate",
+   "participation",
+   "participatory",
+   "participants"
+  ],
+  "a": 3,
+  "ja": "リーダーシップ研修の参加者は全員、修了証を受け取る。",
+  "e": "will receive（受け取る）の主語は人なので、all の後には人を表す複数名詞 participants が入る。participation（参加）は行為を表す名詞で、修了証を受け取る主語にならない。participate は動詞、participatory は形容詞。"
+ },
+ {
+  "id": "P5-20",
+  "tag": "動詞の形",
+  "q": "By the end of this year, Arvella Cosmetics ------- new stores in twelve countries.",
+  "c": [
+   "has opened",
+   "will have opened",
+   "had opened",
+   "was opening"
+  ],
+  "a": 1,
+  "ja": "今年の終わりまでに、アルヴェラ化粧品は12か国に新店舗を開いていることになる。",
+  "e": "By the end of this year は未来の一時点で、それまでに完了する動作は未来完了 will have opened で表す。has opened は未来の期限と合わず、had opened と was opening は過去を表すので今年末という時点と矛盾する。"
+ },
+ {
+  "id": "P5-21",
+  "tag": "語彙",
+  "q": "The revised overtime policy will take ------- on the first day of next month.",
+  "c": [
+   "effect",
+   "part",
+   "charge",
+   "turns"
+  ],
+  "a": 0,
+  "ja": "改定された残業規定は来月1日に発効する。",
+  "e": "take effect で「（規則などが）効力を生じる」。主語が policy で来月1日という開始日があるので effect が入る。take part は「参加する」、take charge は「責任を引き受ける」、take turns は「交代でする」で、人が主語の表現。"
+ },
+ {
+  "id": "P5-22",
+  "tag": "前置詞・接続詞",
+  "q": "Sales of outdoor furniture remained strong ------- the summer, even as other categories declined.",
+  "c": [
+   "while",
+   "whether",
+   "throughout",
+   "unless"
+  ],
+  "a": 2,
+  "ja": "ほかの部門が落ち込む中でも、屋外用家具の売上は夏の間ずっと好調だった。",
+  "e": "空所の後が名詞句 the summer なので前置詞が必要で、throughout（〜の間ずっと）が remained strong の継続と合う。while、whether、unless はいずれも接続詞で、後ろに主語と動詞のそろった節が要るため、名詞だけは続かない。"
+ },
+ {
+  "id": "P5-23",
+  "tag": "品詞",
+  "q": "Ms. Bianchi has proven herself ------- of managing several large accounts at the same time.",
+  "c": [
+   "capable",
+   "capably",
+   "capability",
+   "capabilities"
+  ],
+  "a": 0,
+  "ja": "ビアンキさんは、複数の大口顧客を同時に担当できることを実証してきた。",
+  "e": "prove oneself + 形容詞 で「自分が〜だと示す」。of と組む形容詞 capable が入り、capable of 〜ing（〜できる）となる。副詞 capably は補語になれず、名詞 capability(ies) は herself と同じものを表せない。"
+ },
+ {
+  "id": "P5-24",
+  "tag": "語法・その他",
+  "q": "The ------- you register for the conference, the more you will save on fees.",
+  "c": [
+   "early",
+   "earlier",
+   "earliest",
+   "earliness"
+  ],
+  "a": 1,
+  "ja": "会議への登録が早ければ早いほど、料金を多く節約できる。",
+  "e": "the more you will save と対になる「the + 比較級 〜, the + 比較級 …」（〜するほど…）の構文なので比較級 earlier が入る。原級 early や最上級 earliest はこの構文に合わず、名詞 earliness は節の前に置けない。"
+ },
+ {
+  "id": "P5-25",
+  "tag": "語彙",
+  "q": "Thanks to thorough planning, the renovation of the reception area was finished on time and well within -------.",
+  "c": [
+   "account",
+   "revenue",
+   "balance",
+   "budget"
+  ],
+  "a": 3,
+  "ja": "綿密な計画のおかげで、受付エリアの改装は予定どおり、しかも予算内に十分収まって完了した。",
+  "e": "within budget で「予算内で」。on time（予定どおり）と並べ、費用も予定を超えなかったと述べる定番表現。account（口座・取引先）、revenue（収益）、balance（残高）は within と組んでも、工事費が収まったことを表せない。"
+ },
+ {
+  "id": "P5-26",
+  "tag": "代名詞・関係詞",
+  "q": "Ms. Ahlberg will award a gift certificate to ------- submits the best name for the new product line.",
+  "c": [
+   "anyone",
+   "those",
+   "whoever",
+   "whomever"
+  ],
+  "a": 2,
+  "ja": "アールバーグさんは、新製品シリーズに最もよい名前を提案した人にギフト券を贈る。",
+  "e": "前置詞 to の目的語となる名詞節を作り、節の中で submits の主語になる複合関係代名詞 whoever（〜する人は誰でも）が入る。whomever は目的格で主語になれない。anyone と those は、後に who がなければ submits とつながらない。"
+ },
+ {
+  "id": "P5-27",
+  "tag": "品詞",
+  "q": "Third-quarter profits at Corvista Pharmaceuticals were ------- higher than analysts had predicted.",
+  "c": [
+   "considerably",
+   "considerable",
+   "consider",
+   "consideration"
+  ],
+  "a": 0,
+  "ja": "コルビスタ製薬の第3四半期の利益は、アナリストの予想をかなり上回った。",
+  "e": "比較級 higher を修飾するのは副詞なので considerably（かなり）が入る。much や far と同様の強調。形容詞 considerable は形容詞を修飾できず、consider と consideration は were と higher の間に置けない。"
+ },
+ {
+  "id": "P5-28",
+  "tag": "動詞の形",
+  "q": "We look forward to ------- you at the grand opening of our new showroom.",
+  "c": [
+   "welcome",
+   "welcomed",
+   "be welcomed",
+   "welcoming"
+  ],
+  "a": 3,
+  "ja": "新しいショールームのグランドオープンで皆さまをお迎えできるのを楽しみにしております。",
+  "e": "look forward to の to は前置詞なので、後ろは動名詞の welcoming になる。to を不定詞と考えて原形 welcome を選ぶのが典型的なひっかけ。welcomed は前置詞の後に置けず、be welcomed は受け身で you を目的語に取れない。"
+ },
+ {
+  "id": "P5-29",
+  "tag": "前置詞・接続詞",
+  "q": "Applicants may submit their résumés ------- by e-mail or through our online portal.",
+  "c": [
+   "both",
+   "neither",
+   "either",
+   "not only"
+  ],
+  "a": 2,
+  "ja": "応募者は、メールかオンラインの応募窓口のどちらかで履歴書を提出できる。",
+  "e": "後ろの or と対になって「AかBのどちらか」を表す either が入る。提出方法を二つから選べるという文意にも合う。both は and、neither は nor、not only は but (also) と組むので、or と結びつかない。"
+ },
+ {
+  "id": "P5-30",
+  "tag": "語彙",
+  "q": "Mr. Adeyemi ------- reviews the maintenance logs to make sure every inspection has been recorded.",
+  "c": [
+   "mutually",
+   "routinely",
+   "formerly",
+   "nearly"
+  ],
+  "a": 1,
+  "ja": "アデイェミさんは、すべての点検が記録されているか確かめるため、保守記録を定期的に確認している。",
+  "e": "現在形 reviews が習慣を表し、点検の記録漏れを防ぐ目的とも合う routinely（定期的に）が入る。formerly（以前は）は現在形と合わず、mutually（互いに）は一人の動作に使えない。nearly（ほぼ）は reviews を修飾しても意味をなさない。"
+ }
+]

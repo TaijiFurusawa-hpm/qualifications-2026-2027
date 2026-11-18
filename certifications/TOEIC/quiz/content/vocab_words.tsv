@@ -1,727 +1,1327 @@
 # 英単語特訓の見出し語（レベル<TAB>語<TAB>狙う意味のヒント）
-# レベル 1=730〜800点（取りこぼし防止） 2=860点 3=900点以上（多義語・難語・言い回し）
-1	accommodate	収容する・（要望に）応じる
-1	acknowledge
-1	acquire
-1	address	（問題に）対処する
-1	allocate
-1	anticipate
-1	assess
-1	assign
-1	authorize
-1	compensate
-1	comply
-1	conduct	（調査などを）実施する
-1	coordinate
-1	designate
-1	distribute
-1	enclose
-1	enhance
-1	ensure
-1	evaluate
-1	exceed
-1	expire
-1	extend	延長する
-1	facilitate
-1	finalize
-1	fulfill
-1	generate
-1	implement
-1	inspect
-1	launch
-1	merge
-1	modify
-1	monitor
-1	negotiate
-1	notify
-1	obtain
-1	oversee
-1	postpone
-1	proceed
-1	pursue
-1	recruit
-1	reimburse
-1	relocate
-1	renew
-1	renovate
-1	resolve
-1	resume
-1	retain
-1	revise
-1	secure	確保する
-1	submit
-1	supervise
-1	terminate
-1	undergo
-1	utilize
-1	verify
-1	withdraw
-1	agenda
-1	applicant
-1	appliance
-1	attendee
-1	banquet
-1	candidate
-1	component
-1	convention	大会・会議
-1	deposit
-1	estimate	見積もり
-1	expense
-1	facility
-1	inventory
-1	invoice
-1	itinerary
-1	merchandise
-1	obligation
-1	opening	（職の）欠員
-1	procedure
-1	qualification
-1	quarter	四半期
-1	receipt
-1	reference	推薦状・照会先
-1	refreshments
-1	regulation
-1	replacement	後任・交換品
-1	representative
-1	revenue
-1	shipment
-1	supplier
-1	venue
-1	warranty
-1	complimentary
-1	confidential
-1	defective
-1	eligible
-1	extensive
-1	mandatory
-1	numerous
-1	outstanding	未払いの・未解決の
-1	potential
-1	prior
-1	reliable
-1	substantial
-1	sufficient
-1	temporary
-1	upcoming
-1	valid
-1	vacant
-1	accordingly
-1	approximately
-1	promptly
-1	shortly
-1	prior to
-1	on behalf of
-1	in advance
-1	due to
-1	in charge of
-1	out of stock
-1	ahead of schedule
-1	free of charge
-1	regardless of
-1	as of
-1	fill out
-2	accelerate
-2	accumulate
-2	adhere
-2	administer
-2	alleviate
-2	alter
-2	amend
-2	assemble
-2	attain
-2	attribute
-2	audit
-2	boost
-2	certify
-2	clarify
-2	collaborate
-2	commemorate
-2	commence
-2	commend
-2	compile
-2	complement
-2	comprise
-2	consolidate
-2	constitute
-2	convene
-2	convey
-2	correspond
-2	deduct
-2	defer
-2	demolish
-2	deteriorate
-2	devise
-2	diminish
-2	disclose
-2	discontinue
-2	dispatch
-2	dispose
-2	disrupt
-2	diversify
-2	divert
-2	draft	（文書を）起草する
-2	elaborate	（動詞）詳しく述べる
-2	eliminate
-2	emphasize
-2	encounter
-2	endorse
-2	enforce
-2	enroll
-2	entitle
-2	evacuate
-2	expedite
-2	fluctuate
-2	formulate
-2	foster
-2	grant	（許可・補助金を）与える
-2	halt
-2	hinder
-2	illustrate
-2	impose
-2	incorporate
-2	incur
-2	initiate
-2	inquire
-2	integrate
-2	intervene
-2	justify
-2	minimize
-2	nominate
-2	offset
-2	omit
-2	optimize
-2	outline
-2	outsource
-2	overlook
-2	pledge
-2	precede
-2	preside
-2	prevail
-2	prohibit
-2	prolong
-2	publicize
-2	reassure
-2	redeem
-2	refrain
-2	refurbish
-2	reinforce
-2	restrict
-2	retrieve
-2	specify
-2	stimulate
-2	streamline
-2	strive
-2	subsidize
-2	substitute
-2	surpass
-2	suspend
-2	sustain
-2	tailor
-2	transform
-2	unveil
-2	validate
-2	withhold
-2	yield	（利益・結果を）生む
-2	acquisition
-2	adjustment
-2	admission
-2	affiliate
-2	allowance
-2	alternative
-2	amenity
-2	assortment
-2	attire
-2	authorization
-2	bid
-2	blueprint
-2	breakthrough
-2	bulk
-2	capacity
-2	circulation	発行部数・流通
-2	clearance	在庫一掃・許可
-2	commitment
-2	commodity
-2	compliance
-2	congestion
-2	consensus
-2	consent
-2	constraint
-2	contractor
-2	correspondence
-2	courier
-2	credentials
-2	criteria
-2	deficit
-2	delegation
-2	demographic
-2	detour
-2	dividend
-2	downturn
-2	duration
-2	endeavor
-2	enrollment
-2	entrepreneur
-2	excerpt
-2	expenditure
-2	expertise
-2	feasibility
-2	forecast
-2	franchise
-2	hazard
-2	incentive
-2	infrastructure
-2	initiative
-2	inquiry
-2	insight
-2	installment
-2	intermission
-2	landlord
-2	lease
-2	liability
-2	logistics
-2	malfunction
-2	margin	利ざや・差
-2	merger
-2	milestone
-2	mortgage
-2	outage
-2	outlet	販売店・コンセント
-2	outlook
-2	patent
-2	patron
-2	payroll
-2	pension
-2	personnel
-2	premises
-2	prescription
-2	privilege
-2	proceeds
-2	proficiency
-2	prospect
-2	provision	（契約の）条項・供給
-2	proximity
-2	publicity
-2	quota
-2	recession
-2	recipient
-2	recognition
-2	remainder
-2	remedy
-2	reputation
-2	retention
-2	shareholder
-2	shortage
-2	specification
-2	subsidiary
-2	surcharge
-2	surplus
-2	tenant
-2	testimonial
-2	turnover	離職率・売上高
-2	utility	（電気・ガスなどの）公共料金・公益事業
-2	vacancy
-2	vendor
-2	venture
-2	voucher
-2	workforce
-2	accessible
-2	adequate
-2	adjacent
-2	adverse
-2	affordable
-2	ample
-2	authentic
-2	comparable
-2	compatible
-2	competent
-2	comprehensive
-2	concise
-2	consecutive
-2	considerable
-2	consistent
-2	crucial
-2	customary
-2	distinctive
-2	diverse
-2	durable
-2	economical
-2	exceptional
-2	exclusive
-2	exempt
-2	feasible
-2	fiscal
-2	fragile
-2	genuine
-2	hands-on
-2	hazardous
-2	innovative
-2	intact
-2	integral
-2	interim
-2	knowledgeable
-2	marginal
-2	moderate
-2	mutual
-2	notable
-2	ongoing
-2	optimal
-2	outdated
-2	overdue
-2	perishable
-2	preliminary
-2	prestigious
-2	prominent
-2	prospective
-2	punctual
-2	redundant
-2	relevant
-2	reluctant
-2	renowned
-2	respective
-2	rigorous
-2	sophisticated
-2	spacious
-2	state-of-the-art
-2	steady
-2	subsequent
-2	tentative
-2	thorough
-2	unanimous
-2	unprecedented
-2	versatile
-2	viable
-2	vital
-2	vulnerable
-2	alternatively
-2	apparently
-2	consequently
-2	considerably
-2	consistently
-2	dramatically
-2	exclusively
-2	formerly
-2	gradually
-2	increasingly
-2	initially
-2	nevertheless
-2	occasionally
-2	otherwise
-2	periodically
-2	presumably
-2	primarily
-2	readily
-2	relatively
-2	respectively
-2	seemingly
-2	solely
-2	steadily
-2	strictly
-2	ultimately
-2	virtually
-2	in accordance with
-2	in compliance with
-2	in light of
-2	with regard to
-2	subject to
-2	in the event of
-2	provided that
-2	on account of
-2	owing to
-2	in terms of
-2	given that
-2	whereas
-2	in conjunction with
-2	in a timely manner
-2	until further notice
-2	at your earliest convenience
-2	on short notice
-2	take into account
-2	account for	（割合を）占める・（原因を）説明する
-2	carry out
-2	come up with
-2	draw up
-2	fill in for
-2	follow up on
-2	look into
-2	phase out
-2	set aside
-2	step down
-2	take over
-2	turn down
-2	call off
-2	lay off
-2	cut back on
-2	keep track of
-2	take effect
-2	make up for
-2	bring about
-2	rule out
-2	wrap up
-2	on a first-come, first-served basis
-3	cover	（費用を）賄う・（人の）代わりを務める
-3	carry	（店が商品を）取り扱う
-3	observe	（規則を）順守する
-3	practice	（医師・弁護士の）業務・開業、慣行
-3	party	（契約の）当事者
-3	sound	（形容詞）健全な・堅実な
-3	room	余地
-3	fine	罰金（を科す）
-3	story	（建物の）階
-3	term	（契約の）条件・期間
-3	interest	利子・権益
-3	figure	数値・人物
-3	run	（広告・記事を）掲載する、（期間）続く
-3	meet	（要求・期限を）満たす
-3	raise	昇給、（資金を）集める
-3	charge	（代金を）請求する・料金
-3	balance	残高・差額
-3	board	取締役会
-3	minutes	議事録
-3	plant	工場
-3	post	（職の）地位、掲示する
-3	draw	（客・注目を）引きつける
-3	suit	（都合・好みに）合う
-3	honor	（約束・契約を）守る、（割引券を）受け付ける
-3	bear	（費用・責任を）負う
-3	critical	重大な・不可欠な
-3	appreciate	（資産の価値が）上がる
-3	assume	（責任・役職を）引き受ける
-3	commission	歩合・手数料、（作品を）委託する
-3	land	（契約・仕事を）獲得する
-3	settle	（請求を）支払う・解決する
-3	volume	（販売・取引の）量
-3	due	支払期日の・〜する予定で
-3	reservation	懸念・ためらい
-3	credit	（功績を）〜のおかげとする
-3	deliver	（演説を）行う
-3	grounds	根拠・敷地
-3	capital	資本
-3	bill	法案
-3	present	（形容詞）現在の・出席して
-3	stock	株式
-3	fair	見本市・博覧会
-3	copy	（本・雑誌の）部
-3	serve	（任期を）務める
-3	line	製品群・ラインナップ
-3	mark	（節目を）記念する・示す
-3	abide by
-3	adjourn
-3	allot
-3	ascertain
-3	augment
-3	avert
-3	bolster
-3	culminate
-3	curtail
-3	deem
-3	deliberate	（動詞）審議する
-3	deplete
-3	deviate
-3	disseminate
-3	embark
-3	encompass
-3	entail
-3	envision
-3	escalate
-3	exemplify
-3	forfeit
-3	forgo
-3	garner
-3	hamper
-3	impede
-3	jeopardize
-3	leverage
-3	liquidate
-3	mitigate
-3	outweigh
-3	overhaul
-3	plummet
-3	procure
-3	prompt	（動詞）〜を促す・引き起こす
-3	reconcile
-3	rectify
-3	reiterate
-3	relinquish
-3	remit
-3	render
-3	replenish
-3	revamp
-3	scrutinize
-3	soar
-3	solicit
-3	spearhead
-3	stipulate
-3	surge
-3	thrive
-3	underscore
-3	undermine
-3	uphold
-3	vacate
-3	waive
-3	warrant	（動詞）正当化する・保証する
-3	weather	（動詞）乗り切る
-3	withstand
-3	accrue
-3	concede
-3	contemplate
-3	enact
-3	mandate
-3	patronize
-3	concur
-3	confer
-3	defray
-3	delegate	（動詞）委任する
-3	itemize
-3	oblige
-3	amass
-3	elicit
-3	attest
-3	reap
-3	tout
-3	appraisal
-3	aptitude
-3	backlog
-3	benchmark
-3	clientele
-3	concession
-3	contingency
-3	depreciation
-3	discrepancy
-3	discretion
-3	grievance
-3	implication
-3	inception
-3	influx
-3	lapse
-3	liaison
-3	momentum
-3	negligence
-3	oversight	監督・見落とし
-3	patronage
-3	perk
-3	plaque
-3	precaution
-3	predecessor
-3	prerequisite
-3	proprietor
-3	protocol
-3	rapport
-3	rebate
-3	remuneration
-3	setback
-3	shortfall
-3	stipend
-3	tariff
-3	tenure
-3	turnout
-3	upkeep
-3	vicinity
-3	keynote
-3	overhead	間接費・諸経費
-3	markup
-3	niche
-3	ordinance
-3	leeway
-3	threshold
-3	tier
-3	collateral
-3	consignment
-3	repercussion
-3	recourse
-3	hallmark
-3	forefront
-3	proponent
-3	quote	見積もり
-3	track record
-3	word of mouth
-3	bottom line
-3	lump sum
-3	fine print
-3	grace period
-3	red tape
-3	attrition
-3	adept
-3	commensurate
-3	conducive
-3	contingent
-3	courteous
-3	culinary
-3	cumbersome
-3	detrimental
-3	diligent
-3	exemplary
-3	exorbitant
-3	exquisite
-3	forthcoming
-3	foremost
-3	impeccable
-3	impending
-3	imperative
-3	inaugural
-3	incidental
-3	indispensable
-3	instrumental
-3	intermittent
-3	intricate
-3	lucrative
-3	meticulous
-3	municipal
-3	nominal
-3	obsolete
-3	paramount
-3	pertinent
-3	premier
-3	provisional
-3	prudent
-3	robust
-3	seasoned
-3	sluggish
-3	stagnant
-3	steep	（上昇・下落が）急激な、（値段が）法外な
-3	stringent
-3	sturdy
-3	succinct
-3	tangible
-3	tedious
-3	upscale
-3	vibrant
-3	wary
-3	affluent
-3	apprehensive
-3	lenient
-3	plausible
-3	preferential
-3	reciprocal
-3	resilient
-3	susceptible
-3	picturesque
-3	secluded
-3	hefty
-3	staggering
-3	proactive
-3	cordially
-3	inadvertently
-3	incrementally
-3	markedly
-3	predominantly
-3	exponentially
-3	sparingly
-3	overwhelmingly
-3	painstakingly
-3	notwithstanding
-3	pertaining to
-3	in lieu of
-3	barring
-3	on the verge of
-3	in the wake of
-3	with the exception of
-3	in the interest of
-3	slated	（be slated to/for）予定されている
-3	poised	（be poised to）〜する態勢にある
-3	across the board
-3	in its entirety
-3	pending	〜の結果が出るまで・未決の
-3	amid
-3	thereafter
-3	albeit
-3	whereby
+# レベル 1=〜400点（基礎の頻出語） 2=〜500点 3=〜600点 4=730〜800点（取りこぼし防止） 5=860点 6=900点以上（多義語・難語・言い回し）
+1	save	節約する・保存する
+1	expect	見込む・予期する
+1	parking	駐車（場）
+1	cart	カート
+1	weekly	毎週の
+1	public	公共の・一般の
+1	online	オンラインの
+1	usual	いつもの
+1	confirm	確認する
+1	cancel	取り消す
+1	contact	連絡する
+1	purchase	購入する
+1	hire	雇う
+1	repair	修理する
+1	arrange	手配する・並べる
+1	prepare	準備する
+1	organize	企画する・整理する
+1	register	登録する
+1	include	含む
+1	provide	提供する
+1	require	必要とする
+1	offer	提供する・申し出る
+1	borrow	借りる
+1	lend	貸す
+1	rent	（料金を払って）借りる
+1	improve	改善する
+1	reduce	減らす
+1	recommend	勧める
+1	remind	思い出させる
+1	suggest	提案する
+1	inform	知らせる
+1	invite	招待する
+1	celebrate	祝う
+1	explain	説明する
+1	describe	説明する・描写する
+1	compare	比較する
+1	decide	決める
+1	discuss	話し合う
+1	mention	言及する
+1	announce	発表する
+1	advertise	広告する
+1	display	展示する
+1	park	駐車する
+1	reply	返信する
+1	share	共有する
+1	sign	署名する
+1	pack	荷造りする・詰める
+1	update	最新にする
+1	review	見直す・検討する
+1	interview	面接する
+1	retire	退職する
+1	manage	管理する・何とかする
+1	introduce	紹介する・導入する
+1	earn	稼ぐ・得る
+1	prefer	〜のほうを好む
+1	print	印刷する
+1	fix	修理する
+1	return	返却する・戻る
+1	order	注文する
+1	join	加わる
+1	refund	払い戻し
+1	schedule	予定（表）
+1	customer	顧客
+1	client	（専門職の）顧客
+1	price	価格
+1	discount	割引
+1	product	製品
+1	item	品物・項目
+1	staff	職員（全体）
+1	employee	従業員
+1	department	部署
+1	conference	会議・協議会
+1	event	行事・催し
+1	ticket	切符・チケット
+1	flight	（飛行機の）便
+1	passenger	乗客
+1	luggage	手荷物
+1	platform	（駅の）ホーム
+1	traffic	交通（量）
+1	delay	遅れ
+1	fare	運賃
+1	aisle	通路
+1	counter	カウンター・売り場
+1	cashier	レジ係
+1	shelf	棚
+1	package	小包
+1	document	書類
+1	form	用紙・書式
+1	equipment	機器・設備
+1	budget	予算
+1	cost	費用
+1	fee	料金・手数料
+1	salary	給料
+1	position	職・地位
+1	vacation	休暇
+1	training	研修
+1	branch	支店
+1	headquarters	本社
+1	factory	工場
+1	warehouse	倉庫
+1	instruction	指示・説明書
+1	direction	道順・指示
+1	notice	通知・掲示
+1	memo	社内連絡票
+1	deadline	締め切り
+1	appointment	（面会の）予約
+1	reception	受付・歓迎会
+1	guest	客・宿泊客
+1	tour	見学・ツアー
+1	souvenir	みやげ
+1	lobby	ロビー
+1	ladder	はしご
+1	available	利用できる・手が空いた
+1	crowded	混雑した
+1	local	地元の
+1	nearby	近くの
+1	convenient	便利な・都合のよい
+1	comfortable	快適な
+1	reasonable	手ごろな・妥当な
+1	popular	人気のある
+1	recent	最近の
+1	current	現在の
+1	regular	定期の・通常の
+1	annual	年1回の
+1	monthly	毎月の
+1	extra	追加の
+1	latest	最新の
+1	previous	以前の
+1	necessary	必要な
+1	international	国際的な
+1	professional	専門的な
+1	successful	成功した
+1	excellent	優れた
+1	helpful	役に立つ
+1	broken	壊れた
+1	overseas	海外の・海外へ
+1	downtown	中心街の・中心街へ
+1	nearly	ほぼ
+1	already	すでに
+1	instead	代わりに
+1	unfortunately	あいにく
+1	directly	直接
+1	daily	毎日の
+1	empty	空の
+1	careful	注意深い
+1	pick up	受け取る・迎えに行く
+1	check in	（ホテルで）受付をする
+1	on time	時間どおりに
+1	on sale	販売中・特価で
+1	sold out	売り切れの
+2	clinic	診療所
+2	attach	添付する
+2	contain	含む
+2	expand	拡大する
+2	install	設置する
+2	operate	操作する・営業する
+2	respond	返答する・応じる
+2	request	要請する
+2	approve	承認する
+2	hesitate	ためらう
+2	apologize	謝罪する
+2	complete	完了する・記入する
+2	establish	設立する
+2	transfer	異動させる・移す
+2	promote	昇進させる・宣伝する
+2	recover	回復する
+2	remove	取り除く
+2	select	選ぶ
+2	maintain	維持する・保守する
+2	manufacture	製造する
+2	publish	出版する
+2	translate	翻訳する
+2	upgrade	性能を上げる
+2	warn	警告する
+2	attract	引きつける
+2	encourage	促す・勧める
+2	examine	調べる
+2	exchange	交換する
+2	gather	集まる・集める
+2	handle	処理する
+2	identify	特定する
+2	indicate	示す
+2	invest	投資する
+2	predict	予測する
+2	protect	保護する
+2	reach	連絡がつく・達する
+2	reflect	反映する
+2	seek	求める
+2	load	積み込む
+2	assist	手伝う
+2	achieve	達成する
+2	analyze	分析する
+2	belong	所属する
+2	calculate	計算する
+2	claim	主張する・請求する
+2	collect	集める
+2	commute	通勤する
+2	delete	削除する
+2	demonstrate	実演する
+2	depart	出発する
+2	determine	決定する
+2	edit	編集する
+2	enable	可能にする
+2	feature	呼び物にする
+2	forward	転送する
+2	host	主催する
+2	involve	伴う・関わらせる
+2	locate	（場所を）見つける
+2	participate	参加する
+2	perform	行う・演じる
+2	permit	許可する
+2	persuade	説得する
+2	recall	回収する・思い出す
+2	reject	却下する
+2	release	発売する・公開する
+2	stack	積み重ねる
+2	hang	掛ける・つるす
+2	lean	もたれる・立てかける
+2	fold	たたむ
+2	pour	注ぐ
+2	sweep	掃く
+2	survey	調査
+2	feedback	意見・反応
+2	proposal	提案（書）
+2	profit	利益
+2	competitor	競合他社
+2	industry	業界
+2	firm	会社
+2	corporation	企業
+2	agency	代理店
+2	association	協会
+2	committee	委員会
+2	executive	重役
+2	colleague	同僚
+2	intern	実習生
+2	workshop	研修会
+2	session	会合・講習
+2	lecture	講義・講演
+2	ceremony	式典
+2	exhibition	展示会
+2	booth	ブース・売り場
+2	brochure	パンフレット
+2	catalog	カタログ
+2	flyer	チラシ
+2	campaign	（宣伝）活動
+2	brand	銘柄・ブランド
+2	device	機器・装置
+2	material	資料・材料
+2	laboratory	研究所
+2	construction	建設・工事
+2	plumber	配管工
+2	technician	技術者
+2	architect	建築家
+2	property	不動産・物件
+2	residence	住居
+2	resident	住民
+2	neighborhood	近所・地域
+2	region	地域
+2	destination	目的地
+2	vehicle	車両
+2	shuttle	送迎バス
+2	route	経路
+2	transportation	交通手段
+2	terminal	ターミナル
+2	arrival	到着
+2	cargo	貨物
+2	label	ラベル
+2	postage	郵便料金
+2	envelope	封筒
+2	parcel	小包
+2	quantity	数量
+2	option	選択肢
+2	variety	種類・多様さ
+2	range	範囲・品ぞろえ
+2	rate	料金・割合
+2	tax	税金
+2	income	収入
+2	loan	融資
+2	savings	貯金
+2	payment	支払い
+2	transaction	取引
+2	fund	資金
+2	donation	寄付
+2	sponsor	後援者
+2	volunteer	ボランティア
+2	award	賞
+2	patient	患者
+2	pharmacy	薬局
+2	ingredient	材料・食材
+2	beverage	飲み物
+2	catering	仕出し
+2	application	申込（書）
+2	contract	契約（書）
+2	additional	追加の
+2	brief	短い・簡潔な
+2	certain	ある・確かな
+2	commercial	商業の
+2	corporate	企業の
+2	domestic	国内の
+2	entire	全体の
+2	essential	不可欠な
+2	financial	財務の
+2	flexible	柔軟な
+2	individual	個々の
+2	internal	社内の
+2	external	外部の
+2	limited	限られた
+2	major	主要な
+2	minor	小さな・軽い
+2	medical	医療の
+2	multiple	複数の
+2	original	元の・独創的な
+2	overall	全体的な
+2	permanent	常勤の・永続の
+2	personal	個人の
+2	positive	前向きな・肯定的な
+2	private	私的な・個室の
+2	rapid	急速な
+2	remote	遠隔の
+2	responsible	責任がある
+2	satisfied	満足した
+2	similar	似ている
+2	standard	標準の
+2	suitable	適した
+2	technical	技術的な
+2	unique	独特の
+2	various	さまざまな
+2	worth	〜の価値がある
+2	immediately	すぐに
+2	frequently	頻繁に
+2	extremely	非常に
+2	especially	特に
+2	slightly	わずかに
+2	rarely	めったに〜ない
+2	mostly	大部分は
+2	eventually	最終的に
+2	automatically	自動的に
+2	highly	非常に・高く
+2	fully	完全に
+2	exactly	正確に
+2	look forward to	〜を楽しみにする
+2	sign up for	〜に申し込む
+2	set up	設置する・設定する
+2	hand in	提出する
+2	get in touch with	〜と連絡を取る
+2	in person	直接・本人が
+2	take place	行われる
+2	drop off	（人・物を）届ける
+2	deal with	〜に対処する
+2	turn off	（電源を）切る
+3	lower	下げる
+3	accompany	同行する・添える
+3	enlarge	拡大する
+3	overcome	克服する
+3	storage	保管・収納
+3	garment	衣服
+3	fountain	噴水
+3	intersection	交差点
+3	fluent	流ちょうな
+3	willing	〜する気がある
+3	adapt	適応する・改作する
+3	adopt	採用する
+3	advise	助言する
+3	broadcast	放送する
+3	browse	見て回る・閲覧する
+3	conclude	締めくくる・結論づける
+3	consult	相談する・参照する
+3	contribute	貢献する・寄稿する
+3	convert	変える・改装する
+3	decline	断る・減少する
+3	dedicate	捧げる・専念させる
+3	detect	検出する
+3	dismiss	退ける・解雇する
+3	explore	探る・調べる
+3	guarantee	保証する
+3	highlight	強調する
+3	interrupt	中断させる
+3	investigate	調査する
+3	lack	欠く
+3	match	一致する・合う
+3	motivate	やる気にさせる
+3	occupy	占める・使用中にする
+3	occur	起こる
+3	possess	所有する
+3	preserve	保存する
+3	prevent	防ぐ
+3	relieve	和らげる・交代する
+3	remodel	改装する
+3	rehearse	リハーサルする
+3	restore	修復する・復旧する
+3	reveal	明らかにする
+3	shift	移す・転換する
+3	specialize	専門にする
+3	strengthen	強化する
+3	summarize	要約する
+3	surround	囲む
+3	urge	強く促す
+3	mop	モップでふく
+3	polish	磨く
+3	trim	刈り込む・削る
+3	rake	熊手でかく
+3	stroll	散歩する
+3	pile	積み上げる
+3	kneel	ひざまずく
+3	greet	出迎える
+3	wipe	ふく
+3	mow	（芝を）刈る
+3	alert	注意喚起する
+3	approach	近づく・取り組む
+3	attempt	試みる
+3	complain	苦情を言う
+3	concentrate	集中する
+3	consist	成る（of）
+3	convince	納得させる
+3	cooperate	協力する
+3	decorate	飾る
+3	define	定義する
+3	deserve	値する
+3	devote	（時間を）充てる
+3	emerge	現れる
+3	entertain	楽しませる・もてなす
+3	forbid	禁じる
+3	ignore	無視する
+3	impress	感銘を与える
+3	insert	差し込む
+3	insist	主張する・言い張る
+3	inspire	刺激を与える
+3	intend	〜するつもりである
+3	misplace	置き忘れる
+3	praise	ほめる
+3	rank	位置する・格付けする
+3	regret	残念に思う
+3	resign	辞職する
+3	reverse	逆にする・覆す
+3	reward	報いる
+3	rotate	交代でする・回す
+3	shorten	短縮する
+3	sort	分類する
+3	split	分ける・分担する
+3	switch	切り替える
+3	weigh	重さを量る・検討する
+3	target	対象にする
+3	tend	〜しがちである
+3	measure	測る
+3	accountant	会計士
+3	agreement	合意・契約
+3	anniversary	記念日
+3	asset	資産・強み
+3	atmosphere	雰囲気
+3	audience	聴衆
+3	auditorium	講堂
+3	benefit	福利厚生・利点
+3	cafeteria	社員食堂
+3	charity	慈善団体
+3	coupon	割引券
+3	cuisine	料理
+3	currency	通貨
+3	demand	需要
+3	duty	職務・関税
+3	emergency	緊急事態
+3	entrance	入り口
+3	evidence	証拠
+3	fabric	布地
+3	goods	商品
+3	gratitude	感謝
+3	guideline	指針
+3	hallway	廊下
+3	handout	配布資料
+3	insurance	保険
+3	landscape	景観・造園
+3	lawn	芝生
+3	layout	配置
+3	license	免許
+3	mayor	市長
+3	manual	説明書
+3	method	方法
+3	objective	目標
+3	outcome	結果
+3	output	生産高
+3	pamphlet	小冊子
+3	panel	討論者団・パネル
+3	pedestrian	歩行者
+3	portfolio	作品集
+3	priority	優先事項
+3	profile	人物紹介
+3	sample	見本・試供品
+3	scenery	景色
+3	sector	部門・業界
+3	statement	明細書・声明
+3	statistics	統計
+3	strategy	戦略
+3	subscription	定期購読
+3	task	業務・作業
+3	technique	技術・手法
+3	trend	傾向
+3	tuition	授業料
+3	wage	賃金
+3	workload	仕事量
+3	auction	競売
+3	cabinet	戸棚
+3	ceiling	天井
+3	crew	作業班・乗務員
+3	drawer	引き出し
+3	faucet	蛇口
+3	furniture	家具
+3	hardware	金物・機器
+3	railing	手すり
+3	rack	棚・ラック
+3	sidewalk	歩道
+3	utensil	調理器具
+3	consumer	消費者
+3	enterprise	企業・事業
+3	opportunity	機会
+3	overtime	残業
+3	paperwork	書類仕事
+3	purpose	目的
+3	questionnaire	アンケート
+3	recipe	調理法
+3	retailer	小売業者
+3	routine	日課・決まった手順
+3	seminar	セミナー
+3	symposium	シンポジウム
+3	timeline	予定表・日程
+3	journalist	記者
+3	physician	医師
+3	landmark	名所・目印
+3	accurate	正確な
+3	advanced	高度な・上級の
+3	ambitious	意欲的な
+3	appropriate	適切な
+3	aware	気づいている
+3	capable	有能な・できる
+3	casual	くだけた
+3	challenging	やりがいのある
+3	complex	複雑な
+3	confident	自信がある
+3	constant	絶え間ない
+3	detailed	詳細な
+3	efficient	効率的な
+3	effective	効果的な・有効な
+3	eager	熱心な
+3	elegant	上品な
+3	enthusiastic	熱心な
+3	environmental	環境の
+3	equivalent	同等の
+3	experienced	経験豊富な
+3	familiar	よく知っている
+3	generous	気前のよい
+3	ideal	理想的な
+3	junior	下級の・若手の
+3	senior	上級の
+3	lengthy	長い・長時間の
+3	loyal	忠実な・常連の
+3	mechanical	機械の
+3	narrow	狭い
+3	nutritious	栄養のある
+3	obvious	明らかな
+3	official	公式の
+3	outdoor	屋外の
+3	indoor	屋内の
+3	packed	満員の
+3	pleased	喜んで
+3	precise	正確な
+3	remarkable	注目すべき
+3	sensitive	機密の・敏感な
+3	severe	厳しい・深刻な
+3	significant	かなりの・重要な
+3	sincere	心からの
+3	spare	予備の
+3	stable	安定した
+3	superior	優れた
+3	tight	厳しい・きつい
+3	typical	典型的な
+3	urgent	緊急の
+3	valuable	貴重な
+3	visible	目に見える
+3	closely	綿密に・密接に
+3	definitely	間違いなく
+3	hardly	ほとんど〜ない
+3	largely	主に
+3	mainly	主に
+3	merely	単に
+3	partially	部分的に
+3	properly	適切に
+3	reportedly	伝えられるところでは
+3	separately	別々に
+3	unexpectedly	予想外に
+3	newly	新たに
+3	put off	延期する
+3	in addition to	〜に加えて
+3	according to	〜によると
+3	as well as	〜も
+3	a number of	いくつかの
+3	run out of	〜を切らす
+3	go over	見直す
+3	pass out	配る
+3	take part in	〜に参加する
+3	make sure	確かめる
+3	be supposed to	〜することになっている
+3	up to date	最新の
+4	accommodate	収容する・（要望に）応じる
+4	acknowledge
+4	acquire
+4	address	（問題に）対処する
+4	allocate
+4	anticipate
+4	assess
+4	assign
+4	authorize
+4	compensate
+4	comply
+4	conduct	（調査などを）実施する
+4	coordinate
+4	designate
+4	distribute
+4	enclose
+4	enhance
+4	ensure
+4	evaluate
+4	exceed
+4	expire
+4	extend	延長する
+4	facilitate
+4	finalize
+4	fulfill
+4	generate
+4	implement
+4	inspect
+4	launch
+4	merge
+4	modify
+4	monitor
+4	negotiate
+4	notify
+4	obtain
+4	oversee
+4	postpone
+4	proceed
+4	pursue
+4	recruit
+4	reimburse
+4	relocate
+4	renew
+4	renovate
+4	resolve
+4	resume
+4	retain
+4	revise
+4	secure	確保する
+4	submit
+4	supervise
+4	terminate
+4	undergo
+4	utilize
+4	verify
+4	withdraw
+4	agenda
+4	applicant
+4	appliance
+4	attendee
+4	banquet
+4	candidate
+4	component
+4	convention	大会・会議
+4	deposit
+4	estimate	見積もり
+4	expense
+4	facility
+4	inventory
+4	invoice
+4	itinerary
+4	merchandise
+4	obligation
+4	opening	（職の）欠員
+4	procedure
+4	qualification
+4	quarter	四半期
+4	receipt
+4	reference	推薦状・照会先
+4	refreshments
+4	regulation
+4	replacement	後任・交換品
+4	representative
+4	revenue
+4	shipment
+4	supplier
+4	venue
+4	warranty
+4	complimentary
+4	confidential
+4	defective
+4	eligible
+4	extensive
+4	mandatory
+4	numerous
+4	outstanding	未払いの・未解決の
+4	potential
+4	prior
+4	reliable
+4	substantial
+4	sufficient
+4	temporary
+4	upcoming
+4	valid
+4	vacant
+4	accordingly
+4	approximately
+4	promptly
+4	shortly
+4	prior to
+4	on behalf of
+4	in advance
+4	due to
+4	in charge of
+4	out of stock
+4	ahead of schedule
+4	free of charge
+4	regardless of
+4	as of
+4	fill out
+5	accelerate
+5	accumulate
+5	adhere
+5	administer
+5	alleviate
+5	alter
+5	amend
+5	assemble
+5	attain
+5	attribute
+5	audit
+5	boost
+5	certify
+5	clarify
+5	collaborate
+5	commemorate
+5	commence
+5	commend
+5	compile
+5	complement
+5	comprise
+5	consolidate
+5	constitute
+5	convene
+5	convey
+5	correspond
+5	deduct
+5	defer
+5	demolish
+5	deteriorate
+5	devise
+5	diminish
+5	disclose
+5	discontinue
+5	dispatch
+5	dispose
+5	disrupt
+5	diversify
+5	divert
+5	draft	（文書を）起草する
+5	elaborate	（動詞）詳しく述べる
+5	eliminate
+5	emphasize
+5	encounter
+5	endorse
+5	enforce
+5	enroll
+5	entitle
+5	evacuate
+5	expedite
+5	fluctuate
+5	formulate
+5	foster
+5	grant	（許可・補助金を）与える
+5	halt
+5	hinder
+5	illustrate
+5	impose
+5	incorporate
+5	incur
+5	initiate
+5	inquire
+5	integrate
+5	intervene
+5	justify
+5	minimize
+5	nominate
+5	offset
+5	omit
+5	optimize
+5	outline
+5	outsource
+5	overlook
+5	pledge
+5	precede
+5	preside
+5	prevail
+5	prohibit
+5	prolong
+5	publicize
+5	reassure
+5	redeem
+5	refrain
+5	refurbish
+5	reinforce
+5	restrict
+5	retrieve
+5	specify
+5	stimulate
+5	streamline
+5	strive
+5	subsidize
+5	substitute
+5	surpass
+5	suspend
+5	sustain
+5	tailor
+5	transform
+5	unveil
+5	validate
+5	withhold
+5	yield	（利益・結果を）生む
+5	acquisition
+5	adjustment
+5	admission
+5	affiliate
+5	allowance
+5	alternative
+5	amenity
+5	assortment
+5	attire
+5	authorization
+5	bid
+5	blueprint
+5	breakthrough
+5	bulk
+5	capacity
+5	circulation	発行部数・流通
+5	clearance	在庫一掃・許可
+5	commitment
+5	commodity
+5	compliance
+5	congestion
+5	consensus
+5	consent
+5	constraint
+5	contractor
+5	correspondence
+5	courier
+5	credentials
+5	criteria
+5	deficit
+5	delegation
+5	demographic
+5	detour
+5	dividend
+5	downturn
+5	duration
+5	endeavor
+5	enrollment
+5	entrepreneur
+5	excerpt
+5	expenditure
+5	expertise
+5	feasibility
+5	forecast
+5	franchise
+5	hazard
+5	incentive
+5	infrastructure
+5	initiative
+5	inquiry
+5	insight
+5	installment
+5	intermission
+5	landlord
+5	lease
+5	liability
+5	logistics
+5	malfunction
+5	margin	利ざや・差
+5	merger
+5	milestone
+5	mortgage
+5	outage
+5	outlet	販売店・コンセント
+5	outlook
+5	patent
+5	patron
+5	payroll
+5	pension
+5	personnel
+5	premises
+5	prescription
+5	privilege
+5	proceeds
+5	proficiency
+5	prospect
+5	provision	（契約の）条項・供給
+5	proximity
+5	publicity
+5	quota
+5	recession
+5	recipient
+5	recognition
+5	remainder
+5	remedy
+5	reputation
+5	retention
+5	shareholder
+5	shortage
+5	specification
+5	subsidiary
+5	surcharge
+5	surplus
+5	tenant
+5	testimonial
+5	turnover	離職率・売上高
+5	utility	（電気・ガスなどの）公共料金・公益事業
+5	vacancy
+5	vendor
+5	venture
+5	voucher
+5	workforce
+5	accessible
+5	adequate
+5	adjacent
+5	adverse
+5	affordable
+5	ample
+5	authentic
+5	comparable
+5	compatible
+5	competent
+5	comprehensive
+5	concise
+5	consecutive
+5	considerable
+5	consistent
+5	crucial
+5	customary
+5	distinctive
+5	diverse
+5	durable
+5	economical
+5	exceptional
+5	exclusive
+5	exempt
+5	feasible
+5	fiscal
+5	fragile
+5	genuine
+5	hands-on
+5	hazardous
+5	innovative
+5	intact
+5	integral
+5	interim
+5	knowledgeable
+5	marginal
+5	moderate
+5	mutual
+5	notable
+5	ongoing
+5	optimal
+5	outdated
+5	overdue
+5	perishable
+5	preliminary
+5	prestigious
+5	prominent
+5	prospective
+5	punctual
+5	redundant
+5	relevant
+5	reluctant
+5	renowned
+5	respective
+5	rigorous
+5	sophisticated
+5	spacious
+5	state-of-the-art
+5	steady
+5	subsequent
+5	tentative
+5	thorough
+5	unanimous
+5	unprecedented
+5	versatile
+5	viable
+5	vital
+5	vulnerable
+5	alternatively
+5	apparently
+5	consequently
+5	considerably
+5	consistently
+5	dramatically
+5	exclusively
+5	formerly
+5	gradually
+5	increasingly
+5	initially
+5	nevertheless
+5	occasionally
+5	otherwise
+5	periodically
+5	presumably
+5	primarily
+5	readily
+5	relatively
+5	respectively
+5	seemingly
+5	solely
+5	steadily
+5	strictly
+5	ultimately
+5	virtually
+5	in accordance with
+5	in compliance with
+5	in light of
+5	with regard to
+5	subject to
+5	in the event of
+5	provided that
+5	on account of
+5	owing to
+5	in terms of
+5	given that
+5	whereas
+5	in conjunction with
+5	in a timely manner
+5	until further notice
+5	at your earliest convenience
+5	on short notice
+5	take into account
+5	account for	（割合を）占める・（原因を）説明する
+5	carry out
+5	come up with
+5	draw up
+5	fill in for
+5	follow up on
+5	look into
+5	phase out
+5	set aside
+5	step down
+5	take over
+5	turn down
+5	call off
+5	lay off
+5	cut back on
+5	keep track of
+5	take effect
+5	make up for
+5	bring about
+5	rule out
+5	wrap up
+5	on a first-come, first-served basis
+6	cover	（費用を）賄う・（人の）代わりを務める
+6	carry	（店が商品を）取り扱う
+6	observe	（規則を）順守する
+6	practice	（医師・弁護士の）業務・開業、慣行
+6	party	（契約の）当事者
+6	sound	（形容詞）健全な・堅実な
+6	room	余地
+6	fine	罰金（を科す）
+6	story	（建物の）階
+6	term	（契約の）条件・期間
+6	interest	利子・権益
+6	figure	数値・人物
+6	run	（広告・記事を）掲載する、（期間）続く
+6	meet	（要求・期限を）満たす
+6	raise	昇給、（資金を）集める
+6	charge	（代金を）請求する・料金
+6	balance	残高・差額
+6	board	取締役会
+6	minutes	議事録
+6	plant	工場
+6	post	（職の）地位、掲示する
+6	draw	（客・注目を）引きつける
+6	suit	（都合・好みに）合う
+6	honor	（約束・契約を）守る、（割引券を）受け付ける
+6	bear	（費用・責任を）負う
+6	critical	重大な・不可欠な
+6	appreciate	（資産の価値が）上がる
+6	assume	（責任・役職を）引き受ける
+6	commission	歩合・手数料、（作品を）委託する
+6	land	（契約・仕事を）獲得する
+6	settle	（請求を）支払う・解決する
+6	volume	（販売・取引の）量
+6	due	支払期日の・〜する予定で
+6	reservation	懸念・ためらい
+6	credit	（功績を）〜のおかげとする
+6	deliver	（演説を）行う
+6	grounds	根拠・敷地
+6	capital	資本
+6	bill	法案
+6	present	（形容詞）現在の・出席して
+6	stock	株式
+6	fair	見本市・博覧会
+6	copy	（本・雑誌の）部
+6	serve	（任期を）務める
+6	line	製品群・ラインナップ
+6	mark	（節目を）記念する・示す
+6	abide by
+6	adjourn
+6	allot
+6	ascertain
+6	augment
+6	avert
+6	bolster
+6	culminate
+6	curtail
+6	deem
+6	deliberate	（動詞）審議する
+6	deplete
+6	deviate
+6	disseminate
+6	embark
+6	encompass
+6	entail
+6	envision
+6	escalate
+6	exemplify
+6	forfeit
+6	forgo
+6	garner
+6	hamper
+6	impede
+6	jeopardize
+6	leverage
+6	liquidate
+6	mitigate
+6	outweigh
+6	overhaul
+6	plummet
+6	procure
+6	prompt	（動詞）〜を促す・引き起こす
+6	reconcile
+6	rectify
+6	reiterate
+6	relinquish
+6	remit
+6	render
+6	replenish
+6	revamp
+6	scrutinize
+6	soar
+6	solicit
+6	spearhead
+6	stipulate
+6	surge
+6	thrive
+6	underscore
+6	undermine
+6	uphold
+6	vacate
+6	waive
+6	warrant	（動詞）正当化する・保証する
+6	weather	（動詞）乗り切る
+6	withstand
+6	accrue
+6	concede
+6	contemplate
+6	enact
+6	mandate
+6	patronize
+6	concur
+6	confer
+6	defray
+6	delegate	（動詞）委任する
+6	itemize
+6	oblige
+6	amass
+6	elicit
+6	attest
+6	reap
+6	tout
+6	appraisal
+6	aptitude
+6	backlog
+6	benchmark
+6	clientele
+6	concession
+6	contingency
+6	depreciation
+6	discrepancy
+6	discretion
+6	grievance
+6	implication
+6	inception
+6	influx
+6	lapse
+6	liaison
+6	momentum
+6	negligence
+6	oversight	監督・見落とし
+6	patronage
+6	perk
+6	plaque
+6	precaution
+6	predecessor
+6	prerequisite
+6	proprietor
+6	protocol
+6	rapport
+6	rebate
+6	remuneration
+6	setback
+6	shortfall
+6	stipend
+6	tariff
+6	tenure
+6	turnout
+6	upkeep
+6	vicinity
+6	keynote
+6	overhead	間接費・諸経費
+6	markup
+6	niche
+6	ordinance
+6	leeway
+6	threshold
+6	tier
+6	collateral
+6	consignment
+6	repercussion
+6	recourse
+6	hallmark
+6	forefront
+6	proponent
+6	quote	見積もり
+6	track record
+6	word of mouth
+6	bottom line
+6	lump sum
+6	fine print
+6	grace period
+6	red tape
+6	attrition
+6	adept
+6	commensurate
+6	conducive
+6	contingent
+6	courteous
+6	culinary
+6	cumbersome
+6	detrimental
+6	diligent
+6	exemplary
+6	exorbitant
+6	exquisite
+6	forthcoming
+6	foremost
+6	impeccable
+6	impending
+6	imperative
+6	inaugural
+6	incidental
+6	indispensable
+6	instrumental
+6	intermittent
+6	intricate
+6	lucrative
+6	meticulous
+6	municipal
+6	nominal
+6	obsolete
+6	paramount
+6	pertinent
+6	premier
+6	provisional
+6	prudent
+6	robust
+6	seasoned
+6	sluggish
+6	stagnant
+6	steep	（上昇・下落が）急激な、（値段が）法外な
+6	stringent
+6	sturdy
+6	succinct
+6	tangible
+6	tedious
+6	upscale
+6	vibrant
+6	wary
+6	affluent
+6	apprehensive
+6	lenient
+6	plausible
+6	preferential
+6	reciprocal
+6	resilient
+6	susceptible
+6	picturesque
+6	secluded
+6	hefty
+6	staggering
+6	proactive
+6	cordially
+6	inadvertently
+6	incrementally
+6	markedly
+6	predominantly
+6	exponentially
+6	sparingly
+6	overwhelmingly
+6	painstakingly
+6	notwithstanding
+6	pertaining to
+6	in lieu of
+6	barring
+6	on the verge of
+6	in the wake of
+6	with the exception of
+6	in the interest of
+6	slated	（be slated to/for）予定されている
+6	poised	（be poised to）〜する態勢にある
+6	across the board
+6	in its entirety
+6	pending	〜の結果が出るまで・未決の
+6	amid
+6	thereafter
+6	albeit
+6	whereby

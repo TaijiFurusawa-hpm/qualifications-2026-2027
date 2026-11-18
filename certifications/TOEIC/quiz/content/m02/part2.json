@@ -1,0 +1,552 @@
+[
+ {
+  "id": "P2-01",
+  "tag": "WH疑問文",
+  "vq": "US-M",
+  "va": "UK-F",
+  "prompt": "Where did you put the signed vendor contracts?",
+  "c": [
+   "Yes, both sides signed them on Monday.",
+   "Ms. Calloway took them to the legal department.",
+   "The contract runs for three years."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "署名済みの業者との契約書はどこに置きましたか。",
+   "c": [
+    "はい、双方が月曜に署名しました。",
+    "キャロウェイさんが法務部へ持って行きました。",
+    "契約期間は3年です。"
+   ]
+  },
+  "e": "キャロウェイさんが法務部へ持って行ったと、契約書の今の居場所を人の行動で伝えている。置き場所を took them to（持って行った先）で示す言い換え。Yesで始まる文はWhere疑問文に合わず、契約期間の話は場所を答えていない。"
+ },
+ {
+  "id": "P2-02",
+  "tag": "WH疑問文",
+  "vq": "UK-F",
+  "va": "US-M2",
+  "prompt": "When will the renovated lobby reopen to visitors?",
+  "c": [
+   "Through the side entrance.",
+   "About two hundred people a day.",
+   "The contractor still has to install the lighting."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "改装したロビーはいつ来訪者向けに再開しますか。",
+   "c": [
+    "横の入口からです。",
+    "1日約200人です。",
+    "業者がまだ照明を取り付けなければなりません。"
+   ]
+  },
+  "e": "業者の照明工事が残っていると述べ、再開はまだ先だと間接的に伝えている。still has to が「まだ終わっていない＝すぐには開かない」の言い換え。入口の場所や来訪者数は、Whenの時期を答えていないひっかけ。"
+ },
+ {
+  "id": "P2-03",
+  "tag": "WH疑問文",
+  "vq": "AU-F",
+  "va": "UK-M",
+  "prompt": "Who's going to handle the Lisbon account after Ms. Aydin transfers?",
+  "c": [
+   "Probably Mr. Bajwa—he knows that client best.",
+   "She's moving to the Seoul branch.",
+   "I'll open a new account next week."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "アイディンさんの異動後、リスボンの取引先は誰が担当しますか。",
+   "c": [
+    "たぶんバジュワさんです。その顧客を一番よく知っていますから。",
+    "彼女はソウル支店に移ります。",
+    "来週新しい口座を開きます。"
+   ]
+  },
+  "e": "バジュワさんの名前を挙げ、その顧客に一番詳しいと理由も添えている。account（取引先）を that client と言い換えている。異動先を述べる文は transfers を言い換えただけで担当者を答えず、account を口座の意味で使う文も無関係。"
+ },
+ {
+  "id": "P2-04",
+  "tag": "WH疑問文",
+  "vq": "US-F2",
+  "va": "UK-M2",
+  "prompt": "Why are the elevators on the east side out of service?",
+  "c": [
+   "Yes, the service was excellent.",
+   "They're undergoing their annual inspection.",
+   "Our offices are on the tenth floor."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "東側のエレベーターはなぜ使えないのですか。",
+   "c": [
+    "はい、サービスはすばらしかったです。",
+    "年に一度の点検中です。",
+    "私たちの事務所は10階にあります。"
+   ]
+  },
+  "e": "年次点検中だと、使えない理由を直接答えている。out of service（運転停止）の理由を undergoing inspection で説明。serviceを繰り返すYesの文はWhy疑問文に合わず、事務所の階数はエレベーターから連想させるだけのひっかけ。"
+ },
+ {
+  "id": "P2-05",
+  "tag": "WH疑問文",
+  "vq": "UK-M",
+  "va": "AU-F",
+  "prompt": "How often should we back up the customer database?",
+  "c": [
+   "In the back of the server room.",
+   "About three thousand customers.",
+   "That's covered in the new IT guidelines."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "顧客データベースはどのくらいの頻度でバックアップすべきですか。",
+   "c": [
+    "サーバー室の奥です。",
+    "約3,000人の顧客です。",
+    "新しいIT指針に定められています。"
+   ]
+  },
+  "e": "頻度は新しいIT指針に定められていると、答えの確認先を示す間接的な応答。文頭の That が「バックアップの頻度」を指す。back を別の意味で使う場所の話や、customer から連想した人数は、How often に答えていない。"
+ },
+ {
+  "id": "P2-06",
+  "tag": "WH疑問文",
+  "vq": "US-F",
+  "va": "US-M",
+  "prompt": "What did you think of the speaker at yesterday's leadership seminar?",
+  "c": [
+   "I had to leave before her talk started.",
+   "In the main auditorium.",
+   "The seminar is held every spring."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "昨日のリーダーシップ研修会の講演者はどうでしたか。",
+   "c": [
+    "講演が始まる前に退席しなければならなかったのです。",
+    "大講堂でです。",
+    "その研修会は毎年春に開かれます。"
+   ]
+  },
+  "e": "講演前に退席したので感想は言えないと、間接的に伝えている。had to leave before が「話を聞いていない」ことの言い換え。会場を述べる文や、seminar を繰り返して開催時期を述べる文は、感想を求める問いに答えていない。"
+ },
+ {
+  "id": "P2-07",
+  "tag": "WH疑問文",
+  "vq": "UK-M2",
+  "va": "US-F2",
+  "prompt": "Which hotel did you book for the Toronto conference?",
+  "c": [
+   "Three nights, starting on the twelfth.",
+   "Ms. Chua's assistant made all the arrangements.",
+   "It was a very useful conference."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "トロントの会議ではどのホテルを予約しましたか。",
+   "c": [
+    "12日から3泊です。",
+    "チュアさんのアシスタントが手配をすべてしました。",
+    "とても有益な会議でした。"
+   ]
+  },
+  "e": "手配したのはチュアさんのアシスタントだと述べ、自分はホテルを知らないことを間接的に伝える。book を made the arrangements と言い換えている。宿泊日数はWhichの答えにならず、conference を繰り返す感想の文も問いとずれている。"
+ },
+ {
+  "id": "P2-08",
+  "tag": "WH疑問文",
+  "vq": "AU-F",
+  "va": "US-M",
+  "prompt": "How many brochures should we print for the trade show?",
+  "c": [
+   "We ran out by noon on the first day last year.",
+   "The printer on the third floor.",
+   "They describe our new product line."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "展示会用のパンフレットは何部印刷すべきでしょうか。",
+   "c": [
+    "昨年は初日の正午までになくなりました。",
+    "3階のプリンターです。",
+    "当社の新製品について説明しています。"
+   ]
+  },
+  "e": "昨年は初日の昼で品切れになったと述べ、昨年より多く刷るべきだと間接的に示す。ran out（使い切った）から部数を増やす必要を推測させる難問。print から連想したプリンターの場所や、パンフレットの内容は部数を答えていない。"
+ },
+ {
+  "id": "P2-09",
+  "tag": "WH疑問文",
+  "vq": "US-M2",
+  "va": "UK-F",
+  "prompt": "Where should we take the clients for dinner on Thursday?",
+  "c": [
+   "At about seven thirty, if that works.",
+   "They enjoyed the meal very much.",
+   "Mr. Castillo knows the restaurants around here better than I do."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "木曜日、顧客をどこへ夕食に連れて行きましょうか。",
+   "c": [
+    "7時半ごろでよければ。",
+    "彼らは食事をとても楽しみました。",
+    "カスティーヨさんのほうが、この辺りの店に私より詳しいですよ。"
+   ]
+  },
+  "e": "カスティーヨさんの方が店に詳しいと、相談相手を示す間接的な応答。どの店かという問いに、詳しい人に聞くよう促す形で答えている。時刻を述べる文はWhereに合わず、食事を楽しんだという過去の感想は木曜の予定と時制が合わない。"
+ },
+ {
+  "id": "P2-10",
+  "tag": "WH疑問文",
+  "vq": "UK-F",
+  "va": "US-M",
+  "prompt": "How do I get access to the shared project folder?",
+  "c": [
+   "Yes, we share an office.",
+   "Just send a request to the IT help desk.",
+   "The project ends in October."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "共有のプロジェクトフォルダにはどうやってアクセスできますか。",
+   "c": [
+    "はい、同じ事務所を使っています。",
+    "ITのヘルプデスクに申請を送るだけです。",
+    "そのプロジェクトは10月に終わります。"
+   ]
+  },
+  "e": "ヘルプデスクに申請を送るという手順を答えている。get access の方法を send a request で具体的に示す。share を繰り返すYesの文はHow疑問文に答えられず、project を使った終了時期の話は方法を答えていない。"
+ },
+ {
+  "id": "P2-11",
+  "tag": "YesNo疑問文",
+  "vq": "US-F",
+  "va": "UK-M2",
+  "prompt": "Did you renew the company's parking permits?",
+  "c": [
+   "The city doesn't issue new ones until next month.",
+   "Two spaces near the main entrance.",
+   "The park closes at sunset."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "会社の駐車許可証は更新しましたか。",
+   "c": [
+    "市は来月まで新しい許可証を発行しません。",
+    "正面入口近くの2台分です。",
+    "その公園は日没に閉まります。"
+   ]
+  },
+  "e": "市が来月まで発行しないと述べ、まだ更新できていないことを間接的に伝える。doesn't issue until が「今は手続きできない」の言い換え。駐車スペースの数や、parking に音が似た park を使う公園の話は、更新したかに答えていない。"
+ },
+ {
+  "id": "P2-12",
+  "tag": "YesNo疑問文",
+  "vq": "UK-M",
+  "va": "US-F",
+  "prompt": "Are you attending the product launch in Vancouver?",
+  "c": [
+   "Attendance has risen every year.",
+   "At a hotel near the harbor.",
+   "My manager wants me to stay and cover the office."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "バンクーバーでの製品発表会に出席しますか。",
+   "c": [
+    "出席者数は毎年増えています。",
+    "港の近くのホテルでです。",
+    "上司から、残って事務所を守るよう言われています。"
+   ]
+  },
+  "e": "上司に残るよう言われていると述べ、出席しないことを間接的に伝える。stay and cover the office が「行けない」の言い換え。attending に音の近い attendance を使う文や、開催場所を述べる文は、出席するかどうかに答えていない。"
+ },
+ {
+  "id": "P2-13",
+  "tag": "YesNo疑問文",
+  "vq": "AU-F",
+  "va": "US-M2",
+  "prompt": "Does the conference package include airport transfers?",
+  "c": [
+   "Yes, but only on the day you arrive.",
+   "The package was delivered this morning.",
+   "The airport has two terminals."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "会議のパッケージには空港への送迎も含まれていますか。",
+   "c": [
+    "はい、ただし到着日だけです。",
+    "その小包は今朝届きました。",
+    "その空港にはターミナルが2つあります。"
+   ]
+  },
+  "e": "Yesで含まれると答え、到着日だけと条件を補足している。transfers（送迎）の範囲を only on the day you arrive で限定。package を「小包」の意味で使う文や、airport から連想したターミナルの数は、送迎が含まれるかに答えていない。"
+ },
+ {
+  "id": "P2-14",
+  "tag": "YesNo疑問文",
+  "vq": "US-M",
+  "va": "AU-F",
+  "prompt": "Has the marketing team seen the new logo design?",
+  "c": [
+   "A design firm in Milan created it.",
+   "They're reviewing it this afternoon.",
+   "I'll sign the form now."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "マーケティングチームは新しいロゴのデザインを見ましたか。",
+   "c": [
+    "ミラノのデザイン会社が作りました。",
+    "今日の午後に検討する予定です。",
+    "今から書類に署名します。"
+   ]
+  },
+  "e": "今日の午後に検討すると述べ、まだ見ていないことを間接的に伝える。reviewing it this afternoon が「これから見る」の言い換え。design を繰り返して作り手を述べる文や、design と音の重なる sign を使う文は、見たかどうかに答えていない。"
+ },
+ {
+  "id": "P2-15",
+  "tag": "否定・付加疑問文",
+  "vq": "UK-F",
+  "va": "UK-M",
+  "prompt": "Shouldn't we confirm the catering order before Friday?",
+  "c": [
+   "A vegetarian option, please.",
+   "It was delicious, thank you.",
+   "I took care of that this morning."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "金曜までに仕出しの注文を確認しておくべきではありませんか。",
+   "c": [
+    "ベジタリアン向けのものをお願いします。",
+    "おいしかったです、ありがとう。",
+    "それなら今朝済ませました。"
+   ]
+  },
+  "e": "今朝済ませたと述べ、確認はもう終わっていることを伝える。took care of that が confirm the order の言い換え。catering から連想した料理の注文や、食べた感想を述べる文は、確認すべきかという問いに答えていない。"
+ },
+ {
+  "id": "P2-16",
+  "tag": "否定・付加疑問文",
+  "vq": "US-M2",
+  "va": "US-F2",
+  "prompt": "The workshop has been moved to a larger room, hasn't it?",
+  "c": [
+   "It's a two-day workshop.",
+   "Yes, more people signed up than expected.",
+   "I moved here last year."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "研修会はもっと広い部屋に移ったんですよね。",
+   "c": [
+    "2日間の研修会です。",
+    "はい、予想より多くの人が申し込んだので。",
+    "私は昨年ここに引っ越してきました。"
+   ]
+  },
+  "e": "Yesで移ったと認め、申込者が予想より多かったと理由を添えている。signed up（申し込んだ）が広い部屋が必要になった理由。workshop を繰り返して日数を述べる文や、moved を「引っ越す」の意味で使う文は、部屋の変更を確かめる問いに答えていない。"
+ },
+ {
+  "id": "P2-17",
+  "tag": "否定・付加疑問文",
+  "vq": "US-F2",
+  "va": "UK-M",
+  "prompt": "Didn't Ms. Achebe already sign the agreement with the shipping company?",
+  "c": [
+   "She's waiting for the legal team's comments.",
+   "Sign here, please.",
+   "They ship to over forty countries."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "アチェベさんは運送会社との契約にもう署名したのではありませんか。",
+   "c": [
+    "法務チームの意見を待っているところです。",
+    "こちらに署名をお願いします。",
+    "その会社は40か国以上に発送しています。"
+   ]
+  },
+  "e": "法務チームの意見待ちだと述べ、まだ署名していないことを間接的に伝える。waiting for comments が「未署名」の理由に当たる。sign を繰り返して署名を求める文や、shipping から連想した発送先の数は、署名したかどうかに答えていない。"
+ },
+ {
+  "id": "P2-18",
+  "tag": "選択疑問文",
+  "vq": "UK-M2",
+  "va": "AU-F",
+  "prompt": "Should I e-mail the agenda or print copies for everyone?",
+  "c": [
+   "There are six items on the agenda.",
+   "I printed my boarding pass yesterday.",
+   "Most people will be joining by video."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "議題はメールで送りましょうか、それとも全員分を印刷しましょうか。",
+   "c": [
+    "議題は6項目あります。",
+    "昨日、搭乗券を印刷しました。",
+    "ほとんどの人はビデオで参加します。"
+   ]
+  },
+  "e": "大半がビデオ参加だと述べ、印刷よりメールがよいと間接的に選ばせる難問。joining by video から紙の資料は不要と推測できる。agenda を繰り返して項目数を述べる文や、print を使う自分の搭乗券の話は、どちらにするかに答えていない。"
+ },
+ {
+  "id": "P2-19",
+  "tag": "選択疑問文",
+  "vq": "US-F",
+  "va": "UK-M2",
+  "prompt": "Are the new laptops being delivered here or to the warehouse?",
+  "c": [
+   "A faster processor and more memory.",
+   "Neither—they're going straight to the remote staff.",
+   "I'll deliver the opening speech."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "新しいノートパソコンはここに届くのですか、それとも倉庫ですか。",
+   "c": [
+    "より速いプロセッサーと大きなメモリです。",
+    "どちらでもなく、在宅勤務の社員に直接届きます。",
+    "開会のあいさつは私がします。"
+   ]
+  },
+  "e": "Neither でどちらでもないと答え、在宅勤務の社員へ直送されると補足している。going straight to が配送先の言い換え。ノートパソコンの性能を述べる文や、deliver を「演説する」の意味で使う文は、配送先の選択に答えていない。"
+ },
+ {
+  "id": "P2-20",
+  "tag": "依頼・提案・申し出",
+  "vq": "UK-M2",
+  "va": "US-F",
+  "prompt": "Would you like me to pick up your visitor badge from the security desk?",
+  "c": [
+   "Thanks, but I already got one this morning.",
+   "I visited their plant last spring.",
+   "Pick a date that works for you."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "警備デスクから来訪者用のバッジを受け取ってきましょうか。",
+   "c": [
+    "ありがとう、でも今朝もう受け取りました。",
+    "昨年の春に先方の工場を訪問しました。",
+    "都合のよい日を選んでください。"
+   ]
+  },
+  "e": "申し出に礼を言いつつ、今朝もう受け取ったので不要だと断っている。already got one の one は visitor badge を指す。visitor に音の近い visited の文や、pick を「選ぶ」の意味で使う文は、申し出への返事になっていない。"
+ },
+ {
+  "id": "P2-21",
+  "tag": "依頼・提案・申し出",
+  "vq": "US-M2",
+  "va": "UK-F",
+  "prompt": "Shall we take a short break before the next presentation?",
+  "c": [
+   "It broke down again yesterday.",
+   "The slides are attached to the e-mail.",
+   "Sure, let's meet back here in ten minutes."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "次の発表の前に少し休憩しましょうか。",
+   "c": [
+    "昨日また故障しました。",
+    "スライドはメールに添付してあります。",
+    "ええ、10分後にここに戻りましょう。"
+   ]
+  },
+  "e": "Sure で提案に賛成し、10分後に戻ると具体的に続けている。meet back here が休憩後の再開を表す言い換え。break に音の近い broke の文や、presentation から連想したスライドの話は、休憩の提案への返事になっていない。"
+ },
+ {
+  "id": "P2-22",
+  "tag": "依頼・提案・申し出",
+  "vq": "US-F2",
+  "va": "UK-M",
+  "prompt": "Could you send me the updated floor plan for the new office?",
+  "c": [
+   "The architect hasn't finished revising it.",
+   "We plan to move in March.",
+   "They installed new carpet on every floor."
+  ],
+  "a": 0,
+  "ja": {
+   "prompt": "新しい事務所の最新の間取り図を送っていただけますか。",
+   "c": [
+    "建築士がまだ修正を終えていません。",
+    "3月に移転する予定です。",
+    "全フロアに新しいカーペットが敷かれました。"
+   ]
+  },
+  "e": "建築士の修正が終わっていないと述べ、まだ送れないことを間接的に伝える。hasn't finished revising が「最新版はまだない」の言い換え。plan を動詞で使う移転時期の話や、floor から連想したカーペットの話は、依頼への返事になっていない。"
+ },
+ {
+  "id": "P2-23",
+  "tag": "平叙文",
+  "vq": "AU-F",
+  "va": "US-M2",
+  "prompt": "The client wants the presentation moved up to Monday.",
+  "c": [
+   "She moved to a new apartment.",
+   "I presented it last week.",
+   "Then we'll have to work this weekend."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "顧客が発表を月曜に早めてほしいそうです。",
+   "c": [
+    "彼女は新しいアパートに引っ越しました。",
+    "先週それを発表しました。",
+    "それなら今週末に作業しないといけませんね。"
+   ]
+  },
+  "e": "発表が早まるなら週末に作業が必要だと、知らせを受けての対応を述べている。moved up（前倒し）で準備期間が減ることを踏まえた応答。moved を「引っ越す」の意味で使う文や、present を過去形で繰り返す文は、話の流れに合わない。"
+ },
+ {
+  "id": "P2-24",
+  "tag": "平叙文",
+  "vq": "US-M",
+  "va": "US-F2",
+  "prompt": "This invoice lists the wrong shipping address.",
+  "c": [
+   "We ship worldwide.",
+   "I'll ask the billing department to correct it.",
+   "Please address the letter to Mr. Correa."
+  ],
+  "a": 1,
+  "ja": {
+   "prompt": "この請求書は配送先の住所が間違っています。",
+   "c": [
+    "当社は世界中に発送しています。",
+    "請求担当部署に直すよう頼みます。",
+    "手紙はコレアさん宛てにしてください。"
+   ]
+  },
+  "e": "請求担当部署に訂正を頼むと、誤りへの対応を述べている。correct it の it は請求書の住所を指す。shipping を繰り返す発送範囲の話や、address を「宛てる」という動詞で使う文は、間違いの指摘への返事になっていない。"
+ },
+ {
+  "id": "P2-25",
+  "tag": "平叙文",
+  "vq": "UK-F",
+  "va": "US-F",
+  "prompt": "We've received more applications for the internship than ever before.",
+  "c": [
+   "He applied the discount at checkout.",
+   "Internships usually last twelve weeks.",
+   "Then we may need more people to review them."
+  ],
+  "a": 2,
+  "ja": {
+   "prompt": "インターンシップにこれまでで最も多くの応募が来ています。",
+   "c": [
+    "彼は会計時に割引を適用しました。",
+    "インターンシップは通常12週間です。",
+    "それなら選考する人を増やす必要があるかもしれませんね。"
+   ]
+  },
+  "e": "応募が多いなら審査する人手が要ると、知らせに応じた対応を述べている。review them の them は applications を指す。applications に音の近い applied の文や、internship を繰り返して期間を述べる文は、発言に応じていない。"
+ }
+]
