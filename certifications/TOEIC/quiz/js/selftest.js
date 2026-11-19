@@ -161,8 +161,9 @@
   function withMem(fn,day){
     const mem=createStore(MemoryBackend(),{delay:0}); mem.init();
     const real={load:window.loadJSON,save:window.saveJSON,today:window.dayNumber};
-    window.loadJSON=k=>mem.load(k); window.saveJSON=(k,v)=>mem.save(k,v); window.dayNumber=()=>day==null?T:day;
-    const end=()=>{ window.loadJSON=real.load; window.saveJSON=real.save; window.dayNumber=real.today; };
+    const realRm=window.removeJSON;
+    window.loadJSON=k=>mem.load(k); window.saveJSON=(k,v)=>mem.save(k,v); window.removeJSON=k=>mem.remove(k); window.dayNumber=()=>day==null?T:day;
+    const end=()=>{ window.loadJSON=real.load; window.saveJSON=real.save; window.removeJSON=realRm; window.dayNumber=real.today; };
     let r; try{ r=fn(mem); }catch(e){ end(); throw e; }
     if(r&&typeof r.then==="function") return r.then(v=>{ end(); return v; },e=>{ end(); throw e; });
     end(); return r;
@@ -181,7 +182,8 @@
     eq([sectionOf(4),sectionOf(5),READ_MIN],["L","R",75],"リーディングは75分");
     const old={schema:"toeic_schema",profile:"toeic_profile_v1",prefs:"toeic_prefs_v1",ent:"toeic_ent_v1",review:"toeic_review_v1",day:"toeic_day_v1",mockhist:"toeic_mockhist_v1",
       stat:"toeic_stat_v1",seen:"toeic_seen_v1",flag:"toeic_flag_v1",vocab:"toeic_vocab_v1",vlog:"toeic_vlog_v1",miss:"toeic_miss_v1",speed:"toeic_speed_v1",vset:"toeic_vset_v1"};
-    eq(K,old,"記述子の一覧から作ったキーは、段階0のキーと1字も違わない（保存データを壊さない）");
+    eq(Object.fromEntries(Object.keys(old).map(k=>[k,K[k]])),old,"記述子の一覧から作ったキーは、段階0のキーと1字も違わない（保存データを壊さない）");
+    eq(Object.keys(K).filter(k=>!(k in old)),["mockrun"],"段階2で足したキーは「模試の途中の状態」だけ（toeic_mockrun_v1:回）");
     ok(KEYS.every(d=>d.key.startsWith(KEY_PREFIX)&&d.what)&&new Set(KEYS.map(d=>d.key)).size===KEYS.length,"キーはすべて toeic_ で始まり、重なりがなく、説明がある");
     eq([PREFS_DEFAULT.tray,PREFS_DEFAULT.reviewOrder],["auto","mix"],"新しい設定の既定：トレイは自動（3段階）・解き直しはPartをまぜる");
     const mk={n:9,part1:[{id:"M09-P1-01",num:1,tag:"x",c:["a","b","c","d"],a:2,e:"e"}],part3:[{id:"M09-P3-01",qs:[{num:32,q:"q1",c:[1,2,3,4],a:0},{num:33,q:"q2",c:[1,2,3,4],a:1}]}]};
@@ -336,7 +338,281 @@
     Router.tab("today");
   });
 
-  asyncTest.then(uiTest).then(render,e=>{ results.push({g:"非同期",ok:false,msg:String(e&&e.stack||e)}); render(); });
+  /* ===== 8. 段階2：模試 ===== */
+  group("模試：MODE・時間の選び方・鍵つきの回");
+  {
+    eq([MODE.mock.sections,MODE.mock.timed,!!MODE.mock.quitAsk],[true,true,true],"模試の MODE：セクション制・時間制・中断の確認の文言を持つ");
+    eq([MODE.practice.sections,MODE.practice.timed,MODE.practice.quitAsk,MODE.review.timed],[false,false,"",false],"練習・解き直しは時間制なし・確認なし");
+    eq(MOCK_MODE_ORDER,["real","x1.5","x2","none"],"時間の選び方は4つ（本番どおり／1.5倍／2倍／なし）");
+    eq([rLimit("real"),rLimit("x1.5"),rLimit("x2"),rLimit("none")],[75*60000,112.5*60000,150*60000,null],"リーディングの時間：75分・112分30秒・150分・制限なし");
+    eq([MOCK_MODES.real.limit,MOCK_MODES["x1.5"].limit,MOCK_MODES.x2.limit,MOCK_MODES.none.limit],[true,false,false,false],"時間が来て自動で採点するのは「本番どおり」だけ");
+    ok(DEV_UNLOCK===false,"自己テストの URL（?unlock なし）では開発用の解放は効かない");
+    withMem(mem=>{
+      ok(!mockOpen({n:2,free:false})&&mockOpen({n:1,free:true}),"鍵つきの回（free:false）は、購入の記録が無ければ開かない");
+      mem.save(K.ent,{unlocked:true}); ok(mockOpen({n:2,free:false}),"購入の記録（toeic_ent_v1.unlocked）があれば開く（段階5で使う）");
+    });
+  }
+  group("模試：目安のスコア（6.2 の式・見本10組を手で計算した値）");
+  {
+    // [L正答, R正答, 使う回数k, 合計の下, 上, L下, L上, R下, R上]（Python で別に計算：中心=5+4.9r、幅=4.9√((1.28²·100p(1−p)+5²)/k+4²)、5点きざみ）
+    const SAMPLES=[[72,64,1,595,765,320,400,275,365],[72,64,2,610,750,325,395,285,355],[72,64,3,620,740,330,390,290,350],[0,0,1,10,70,5,35,5,35],[100,100,1,930,990,465,495,465,495],
+      [50,50,1,410,590,205,295,205,295],[90,85,1,790,940,410,480,380,460],[30,45,2,305,445,115,185,190,260],[95,98,3,905,990,445,495,460,495],[10,5,1,15,155,20,90,5,65]];
+    for(const [l,r,k,...want] of SAMPLES){ const e=estimate(l,r,k); eq([e.lo,e.hi,e.L.lo,e.L.hi,e.R.lo,e.R.hi],want,`L${l}・R${r}・${k}回 → 目安 ${want[0]}〜${want[1]}`); }
+    eq([.3,.5,.7,.9].map(p=>[1,2,3].map(k=>secHalf(p,k))),[[45,35,30],[45,35,30],[45,35,30],[35,30,25]],"6.3 の表（セクションの片側の幅）と一致");
+    eq(estimate(72,64,1).c,680,"中心は2つの中心の和（設計書の例：680）");
+    const h={n:1,L:36,nL:50,R:64,nR:100}; eq(runR(h,"L"),72,"音声が再生できず外した問題があるときは、残りの問題数で100問あたりに直す");
+  }
+  group("模試：「参考」になる3つの条件");
+  {
+    const base={mode:"real",attempt:1,auto:false,unL:0,unR:0};
+    eq(refReasons(base),[],"本番どおり・1回目・未解答が少ない → 目安に使う");
+    eq(refReasons(Object.assign({},base,{mode:"x1.5"})),["ext"],"① 時間を延ばした（1.5倍）→ 参考");
+    eq(refReasons(Object.assign({},base,{mode:"x2"})),["ext"],"① 時間を延ばした（2倍）→ 参考");
+    eq(refReasons(Object.assign({},base,{mode:"none"})),["none"],"① タイマーなし → 参考");
+    eq(refReasons(Object.assign({},base,{attempt:2})),["again"],"② その回の2回目 → 参考");
+    eq(refReasons(Object.assign({},base,{unL:20})),["unanswered"],"③ 自分で終えて、リスニングの未解答が20問 → 参考");
+    eq(refReasons(Object.assign({},base,{unR:25})),["unanswered"],"③ 自分で終えて、リーディングの未解答が25問 → 参考");
+    eq(refReasons(Object.assign({},base,{unL:19,unR:19})),[],"③ 未解答が19問ずつなら参考にしない");
+    eq(refReasons(Object.assign({},base,{auto:true,unR:40})),[],"③ 時間切れで自動で採点した回は、未解答が多くても参考にしない（自分で終えた場合だけ）");
+    eq(refReasons({mode:"x2",attempt:3,auto:false,unL:30,unR:0}),["ext","again","unanswered"],"3つが重なれば理由を全部書く");
+    const day=864e5, now=200*day, mk=(at,L,R,counts)=>({n:1,at,L,R,nL:100,nR:100,counts});
+    const H=[mk(now-100*day,90,90,true),mk(now-30*day,60,60,true),mk(now-20*day,99,99,false),mk(now-10*day,70,70,true),mk(now-5*day,80,80,true),mk(now-1*day,50,50,true)];
+    const ce=currentEstimate(H,now); eq([ce.k,Math.round(ce.L.r)],[3,67],"いまの目安：参考の回と90日より前を除き、直近3回の平均（50・80・70 → 66.7）");
+    eq(currentEstimate([mk(now,70,70,false)],now),null,"参考の回しか無ければ「いまの目安」は出さない");
+  }
+  group("模試：受けた回の記録（histEntry）");
+  {
+    const units=[{part:1,qs:[{qid:"a",a:0},{qid:"b",a:1}]},{part:5,qs:[{qid:"c",a:2},{qid:"d",a:3}]}];
+    const h=histEntry({n:1,mode:"real",attempt:1,ans:{a:{pick:0},b:{pick:0},c:{pick:2}},skip:{b:1},rt:{5:1000},lUsed:5,rUsed:6,pauses:2},units,{auto:true,at:9});
+    eq([h.L,h.nL,h.unL,h.R,h.nR,h.unR],[1,1,0,1,2,1],"正答数・採点した問題数・未解答（音声で外した問題は数えない）");
+    eq([h.byPart[1],h.byPart[5],h.picks,h.pauses,h.counts],[[1,1],[1,2],{a:0,b:0,c:2},2,true],"Part別・選んだ答え・中断の回数・目安に使うか");
+  }
+  group("模試：リスニングの時間割");
+  {
+    const u3={part:3,qs:[1,2,3]}, u1={part:1,qs:[1]}, u2={part:2,qs:[1]};
+    eq([lWindow(u1,"real"),lWindow(u2,"real"),lWindow(u3,"real")],[5000,5000,24000],"解答の間：Part 1・2 は1問5秒、Part 3・4 は1問8秒（3問で24秒）");
+    eq([lWindow(u3,"x1.5"),lWindow(u3,"x2"),lWindow(u3,"none")],[36000,48000,null],"延ばすと1.5倍・2倍、タイマーなしは制限なし");
+    const units=[u1,u2,u3], c=mode=>({last:2,win:ai=>lWindow(units[ai],mode)});
+    let st=TL.start(1000);
+    eq([st.ph,st.until,st.ai,st.vi],["pre",4000,0,0],"「模試を始める」から3秒は音声の前");
+    eq(TL.tick(st,3999,c("real")),st,"3秒たつまでは音声を始めない");
+    st=TL.tick(st,4000,c("real")); eq(st.ph,"play","3秒後に最初の音声");
+    eq(TL.next(TL.start(0),1,c("real")).vi,0,"音声の前は「次へ」で先へ進めない");
+    st=TL.ended(st,20000,c("real")); eq([st.ph,st.until],["answer",25000],"音声が終わると解答の間（5秒）");
+    const pv=TL.next(st,21000,c("real")); eq([pv.vi,pv.ai,pv.ph,pv.until],[1,0,"answer",25000],"「次へ」は先読み：次の設問を見せるが、音声の時間割は変えない");
+    eq(TL.next(pv,21500,c("real")),pv,"先読みは1つ先まで");
+    st=TL.tick(pv,25000,c("real")); eq([st.ai,st.ph,st.vi],[1,"play",1],"解答の間が終わると、次の音声が自動で始まる");
+    st=TL.ended(st,40000,c("real")); st=TL.tick(st,45000,c("real")); eq([st.ai,st.ph],[2,"play"],"時間割どおりに進む");
+    eq(TL.next(st,46000,c("real")),st,"最後の音声の途中は「次へ」で切り替えへ進めない");
+    st=TL.ended(st,90000,c("real")); eq(TL.next(st,91000,c("real")).ph,"done","最後の音声のあとは「次へ」で切り替えへ");
+    eq(TL.tick(st,90000+24000,c("real")).ph,"done","最後の解答の間が終わると切り替えへ");
+    let sx=TL.ended({ai:2,ph:"play",until:0,vi:2},0,c("x2")); eq(sx.until,48000,"2倍：解答の間も2倍");
+    let sn=TL.ended({ai:0,ph:"play",until:0,vi:0},5000,c("none")); eq(sn.ph,"wait","タイマーなし：音声のあとは「次へ」を待つ");
+    eq(TL.tick(sn,5000+3600000,c("none")),sn,"タイマーなし：1時間待っても進まない");
+    sn=TL.next(sn,9000,c("none")); eq([sn.ai,sn.ph,sn.until,sn.vi],[1,"pre",11000,1],"タイマーなし：「次へ」から2秒後に次の音声");
+    let sp=TL.next({ai:0,ph:"play",until:0,vi:0},1000,c("none")); sp=TL.ended(sp,3000,c("none")); eq([sp.ai,sp.ph,sp.until],[1,"pre",5000],"タイマーなし：先に「次へ」を押していれば、音声のあと2秒で次へ");
+    eq(TL.resume({ai:1,ph:"play",vi:1},100),{ai:1,ph:"pre",until:3100,vi:1},"再開：音声の途中で中断 → その音声を最初から（3秒後）");
+    eq(TL.resume({ai:1,ph:"answer",left:4200,vi:2},100),{ai:1,ph:"answer",until:4300,vi:2},"再開：解答の間で中断 → 残りの秒から・見ていた設問のまま");
+  }
+  group("模試：採点の記録は1回の読み書き（recordResults）");
+  withMem(mem=>{
+    const items=[]; for(let i=0;i<200;i++) items.push({unit:{part:1+i%7},q:{qid:"R"+i,a:i%4,tag:"t"+(i%5)},ans:i%3?{pick:i%4,ms:100}:undefined});
+    const real=window.saveJSON; let n=0; window.saveJSON=(k,v)=>{ n++; real(k,v); };
+    try{ recordResults(items); } finally { window.saveJSON=real; }
+    eq(n,3,"200問の記録で、保存は3回（成績・解き直し・旧キー）だけ");
+    const a=JSON.stringify([mem.load(K.stat),mem.load(K.review),mem.load(K.miss)]);
+    withMem(m2=>{ for(const it of items) recordResult(it.unit,it.q,it.ans); eq(JSON.stringify([m2.load(K.stat),m2.load(K.review),m2.load(K.miss)]),a,"1問ずつ記録したときと同じ中身になる"); });
+  });
+
+  /* 模試の流れ（画面を実際に描く。時計は差しかえ、音声は鳴らない偽物の <audio> で確かめる） */
+  class FakeAudio{
+    constructor(src){ this.src=src; this.paused=true; this.ended=false; this.currentTime=0; this.duration=20; this.playbackRate=1; this.readyState=4; this._l={}; FakeAudio.made.push(this); }
+    addEventListener(t,f){ (this._l[t]=this._l[t]||[]).push(f); } removeEventListener(){}
+    _fire(t){ (this._l[t]||[]).slice().forEach(f=>f()); }
+    play(){ this.paused=false; this.ended=false; Promise.resolve().then(()=>this._fire("playing")); return Promise.resolve(); }
+    pause(){ if(this.paused) return; this.paused=true; this._fire("pause"); }
+    load(){} removeAttribute(){}
+    finish(){ this.currentTime=this.duration; this.ended=true; this.paused=true; this._fire("ended"); }
+  }
+  FakeAudio.made=[];
+  const mockTest=()=>withMem(async mem=>{
+    if(!MOCKS.length) return;
+    const realAudio=window.Audio, realNow=Clock.now; let now=1e12;
+    window.Audio=FakeAudio; Clock.now=()=>now;
+    const adv=async ms=>{ now+=ms; Mock.tick(); await fr(); };
+    const fa=()=>FakeAudio.made[FakeAudio.made.length-1];
+    const seen={feedback:0,buy:0}; const watch=()=>{ if(document.querySelector("#page .bnr,#page .is-ok,#page .is-ng,#page .ex")) seen.feedback++; if(/購入|¥|円で/.test((document.getElementById("shell").textContent||""))) seen.buy++; };
+    const sounds=[]; const realSound=Fx.sound, realHap=Fx.haptic; Fx.sound=n=>{ sounds.push([Fx.layer,n]); realSound(n); };
+    try{
+      group("模試：一覧（M1）と準備（M2）");
+      Router.tab("mock"); await fr();
+      ok(document.querySelectorAll("#page .rowb").length>=MOCK_PLANNED,"一覧に10回分の行（データの無い回は「準備中」）");
+      const lockRow=document.querySelector('#page [data-act="mLocked"]');
+      ok(!!lockRow&&/未購入/.test(lockRow.textContent)&&lockRow.querySelector(".ic"),"鍵つきの回は錠の印＋「未購入」");
+      tap('#page [data-act="mLocked"]'); await fr();
+      ok(/準備中/.test((document.getElementById("lockmsg")||{}).textContent||"")&&!document.querySelector("dialog[open]"),"鍵つきの回を押すと「準備中」とだけ出す（シートは開かない）");
+      ok(!!document.querySelector('#page [data-act="none"][disabled]'),"データの無い回は押せない");
+      Router.go("mockprep",{n:1}); await fr();
+      ok(!S&&FakeAudio.made.length===0&&!mem.has(Mock.runKey(1)),"準備の画面では何も始まらない（音声・時間・保存なし）");
+      eq(document.querySelectorAll('#page [data-act="mMode"]').length,4,"時間の選び方は4つ");
+      ok(document.querySelector('[data-act="mMode"][data-v="real"][aria-pressed="true"]'),"既定は「本番どおり」");
+      ok(/目安のスコアの計算に使うのは「本番どおり」の回だけ/.test(document.getElementById("page").textContent),"スコアの扱いを1行で書く");
+      ok(/模試を始める/.test(bottomText()),"主ボタンは「模試を始める」");
+      await adv(10000); ok(!S&&FakeAudio.made.length===0,"待っていても始まらない");
+
+      group("模試：リスニング（M3）");
+      tap('[data-act="mStart"]'); await fr();
+      ok(S&&S.mode==="mock"&&S.run.mode==="real","「模試を始める」で始まる");
+      eq(Fx.layer,"quiet","静かな試験層");
+      eq(FakeAudio.made.length,0,"押した直後はまだ音声を流さない");
+      ok(/音声まで 3秒/.test(document.getElementById("mst").textContent),"「音声まで 3秒」と出す");
+      await adv(2900); eq(FakeAudio.made.length,0,"2.9秒ではまだ流さない");
+      await adv(100); eq(FakeAudio.made.length,1,"3秒で最初の音声");
+      await Promise.resolve(); await fr();
+      ok(!fa().paused,"音声が流れている");
+      // 止める・もどす・速くする操作をすべて試す
+      fa().currentTime=7;
+      ACT.pltoggle(); ACT.plback(); ACT.plspeed(); Player.toggle(); Player.back(5); Player.seekTo(0,true); Player.cycleSpeed();
+      for(const k of [" ","ArrowLeft","k","s","0","p","Spacebar"]) key(k);
+      await fr();
+      ok(!fa().paused&&fa().currentTime===7&&fa().playbackRate===1,"キー・ボタン・関数のどれでも、止める・もどす・速くすることができない");
+      ok(!document.querySelector('#top [data-act="plback"],#top [data-act="plspeed"],#top .pl-seek'),"帯に一時停止・5秒もどる・速さ・再生位置の操作が無い");
+      ok(document.querySelector("#plb").hidden,"「音声を始める」は、自動再生が止められたときだけ");
+      tap('[data-act="menu"]'); await fr();
+      ok(!document.querySelector('#menu [data-act="flag"]'),"⋯ に「この問題はおかしい」が無い（模試中）");
+      tap('#menu [data-act="qset"]'); await fr();
+      tap('#qsetdlg [data-act="qpref"][data-k="text"][data-v="3"]'); await fr();
+      tap('#qsetdlg [data-act="qpref"][data-k="theme"][data-v="dark"]'); await fr();
+      closeDlg("qsetdlg"); setPref("text",1); setPref("theme","auto");
+      ok(!fa().paused&&fa().currentTime===7&&fa().playbackRate===1&&FakeAudio.made.length===1,"表示の設定（文字・外観）を変えても音声は止まらない");
+      const u0=cur(); pick(u0.qs[0].qid,u0.qs[0].a); await fr(); watch();
+      ok(S.ans[u0.qs[0].qid],"解答できる");
+      eq(JSON.stringify(mem.load(Mock.runKey(1)).ans),JSON.stringify(S.ans),"解答のたびに保存");
+      fa().finish(); await fr();
+      eq(S.T.ph,"answer","音声が終わると解答の時間");
+      ok(/解答の時間 あと 5秒/.test(document.getElementById("mst").textContent),"「解答の時間 あと5秒」");
+      const before=FakeAudio.made.length; key("Enter"); await fr();
+      eq([S.i,S.T.ai,FakeAudio.made.length],[1,0,before],"「次へ」で次の設問を先に見せる（音声はまだ）");
+      ok(/音声まで \d+秒/.test(document.getElementById("mst").textContent),"先読み中は「音声まで ◯秒」");
+      key("Enter"); await fr(); eq(S.i,1,"先読みは1つ先まで");
+      await adv(5000); eq([S.T.ai,S.T.ph,FakeAudio.made.length],[1,"play",before+1],"時間割どおりの時刻に次の音声");
+      watch();
+
+      group("模試：中断と再開（リスニング）");
+      fa().finish(); await adv(3000);
+      const leftBefore=S.T.until-now;
+      Mock.interrupt(); await fr();
+      eq(S.view,"resume","裏に回ると音声と時間を止め、「中断していました」の1枚");
+      ok(/中断していました/.test(document.getElementById("page").textContent),"「中断していました」");
+      const sv=mem.load(Mock.runKey(1));
+      eq([sv.phase,sv.L.ph,sv.L.ai,sv.pauses],["L","answer",1,1],"保存：リスニング・解答の時間・同じ問題・中断1回");
+      await adv(60000); eq(mem.load(Mock.runKey(1)).L.left,sv.L.left,"止めている間は時間が進まない");
+      Router.tab("today"); await fr(); ok(!S,"「今日」へ（途中の状態は残る）");
+      ok(/模試 1 の続きから/.test(document.getElementById("page").textContent),"「今日」の主の札が「模試1の続きから」");
+      Mock.open(1); await fr(); tap('[data-act="mResume"]'); await fr();
+      ok(Math.abs((S.T.until-now)-leftBefore)<=2000&&S.T.ph==="answer"&&S.i===1,"再開：同じ問題・解答の時間の残りの差が2秒以内");
+      ok(!!S.ans[u0.qs[0].qid],"再開しても解答が消えない");
+      const nAud=FakeAudio.made.length; Mock.interrupt(); await fr(); Router.tab("today"); await fr();
+      // 再生中に中断 → その音声を最初から
+      Mock.open(1); await fr(); tap('[data-act="mResume"]'); await fr();
+      await adv(5000); await adv(10); fa().finish(); await fr(); // 次の音声
+      const a2=S.T.ai; Mock.interrupt(); await fr(); Mock.resume(); await fr();
+      eq([S.T.ai,S.T.ph],[a2,"answer"],"中断の直後に「続ける」：同じ音声の続き（解答の時間）");
+
+      group("模試：切り替え（M4）");
+      for(let g=0;g<80&&S.run.phase==="L";g++){ if(S.T.ph==="play"){ fa().finish(); await fr(); } await adv(30000); }
+      eq([S.run.phase,S.view],["gate","gate"],"リスニングの最後のあと、切り替えの画面");
+      ok(/リーディングを始める/.test(bottomText())&&/ここで中断する/.test(bottomText()),"「リーディングを始める」と「ここで中断する」");
+      eq(Player.state,"idle","切り替えでは音声を止める");
+      await adv(10*60000); eq(mem.load(Mock.runKey(1)).rUsed,0,"押すまで時間を数えない（10分待っても0）");
+      Mock.suspend(); await fr(); ok(!S&&mem.load(Mock.runKey(1)).phase==="gate","切り替えの画面で中断できる");
+      Mock.open(1); await fr(); tap('[data-act="mResume"]'); await fr();
+      eq(S.view,"gate","再開すると切り替えの画面にもどる");
+      watch();
+
+      group("模試：リーディング（M5）と解答状況（M6）");
+      tap('[data-act="beginReading"]'); await fr();
+      eq([S.run.phase,cur().part],["R",5],"「リーディングを始める」で Part 5 から");
+      ok(/残り 75:00/.test(document.getElementById("top").textContent),"残り 75:00 から数える");
+      ok(document.querySelector('#top [data-act="mGrid"]')&&/101 \/ 200/.test(document.getElementById("top").textContent),"上のバー：残り時間・番号「101 / 200」・一覧・中断");
+      ok(/前へ/.test(bottomText())&&/見直す/.test(bottomText())&&/次へ/.test(bottomText()),"下のバー：前へ・あとで見直す・次へ");
+      key("b"); await fr(); key("ArrowRight"); await fr(); key("f"); await fr();
+      ok(S.mark[cur().qs[0].qid]&&S.i===S.info.firstR+1,"キーで選ぶ・次へ（→）・F で印");
+      key("ArrowLeft"); await fr(); eq(S.i,S.info.firstR,"← で前の問題にもどれる");
+      await adv(10*60000);
+      ok(/残り 65:00/.test(document.getElementById("top").textContent),"10分で残り 65:00");
+      const rLeft=()=>rLimit("real")-mem.load(Mock.runKey(1)).rUsed;
+      Mock.save(); const l1=rLeft(); Mock.interrupt(); await fr(); Mock.resume(); await fr();
+      ok(Math.abs(rLeft()-l1)<=2000&&S.i===S.info.firstR,"中断して再開：同じ問題・残り時間の差2秒以内");
+      key("g"); await fr(); eq(S.view,"grid","G で解答状況");
+      eq(document.querySelectorAll("#page .gq:not(.sw)").length,100,"101〜200 の100問");
+      ok(document.querySelector("#page .gq.done")&&document.querySelector("#page .gq.marked"),"解答ずみ（塗り）・あとで見直す（塗り＋角の印）");
+      ok([...document.querySelectorAll("#page .gq:not(.sw)")].every(b=>b.getBoundingClientRect().height>=47.5&&b.getBoundingClientRect().width>=47.5),"番号のボタンは48px以上");
+      tap('[data-act="mGridF"][data-v="open"]'); await fr();
+      eq(document.querySelectorAll("#page .gq:not(.sw)").length,99,"「未解答だけ」でしぼれる");
+      Mock.interrupt(); await fr(); Mock.resume(); await fr(); eq(S.view,"grid","解答状況の画面で中断 → 再開すると解答状況");
+      const g7=[...document.querySelectorAll("#page .gq:not(.sw)")].find(b=>+b.textContent===150); ACT[g7.dataset.act](g7.dataset,g7); await fr();
+      ok(S.view==="unit"&&cur().part===7&&curQnum()===150,"番号を押すとその問題へ（Part 7 はトレイの設問）");
+      watch();
+      await adv(4*60000); ok(!document.querySelector(".mnote"),"残り61分では知らせなし");
+      await adv(46*60000+1000); ok(/残り15分です/.test((document.querySelector(".mnote")||{}).textContent||""),"残り15分で細い知らせ（閉じるまで残る）");
+      await adv(5000); ok(document.querySelector(".mnote"),"知らせは勝手に消えない");
+      tap('[data-act="mNoteClose"]'); await fr(); ok(!document.querySelector(".mnote"),"閉じると消える");
+      tap('[data-act="mClock"]'); await fr(); ok(!document.getElementById("mclk"),"残り時間は押すと隠せる");
+      tap('[data-act="mClock"]'); await fr();
+      eq(sounds.filter(s=>s[0]==="quiet").length+seen.feedback+seen.buy,0,"ここまで、正誤・効果音・購入の案内は一度も出ていない");
+
+      group("模試：時間切れ（本番どおり）と結果（M7）");
+      Mock.save(); await adv(rLimit("real")-mem.load(Mock.runKey(1)).rUsed-2000); ok(S&&!S.done,"75分の2秒前ではまだ続く");
+      await adv(2500);
+      ok(!S&&Router.top().name==="mockresult","本番どおり：75分で自動的に採点へ");
+      const H=Mock.hist(); eq([H.length,H[0].auto,H[0].mode,H[0].counts],[1,true,"real",true],"受けた回の記録（時間切れ・本番どおり・目安に使う）");
+      ok(!mem.has(Mock.runKey(1)),"採点したら途中の状態を消す");
+      eq(Fx.layer,"expressive","結果は練習の層");
+      const e=histEstimate(H[0]);
+      ok(document.getElementById("estLo")&&new RegExp(`${SECTIONS.L.name} ${e.L.lo}〜${e.L.hi}`).test(document.getElementById("page").textContent),"目安の幅とセクション別の幅を出す");
+      ok(/目安です。本番の点数を保証するものではありません/.test(document.getElementById("page").textContent),"注記をいつも出す");
+      ok(document.querySelector("details.how"),"「どう出したか」は開閉式");
+      ok(/中断/.test(document.getElementById("page").textContent)&&H[0].pauses>=4,"中断の回数を記録して出す");
+      ok(document.querySelectorAll("#page .prow").length===7,"Part別の7本の横棒");
+      ok(document.querySelector('[data-act="reviewThese"]'),"主ボタンは「間違えた◯問を解き直す」");
+      await new Promise(r=>setTimeout(r,1300));
+      ok(Fx.reduced()||document.querySelectorAll(".fx-layer .fx-dot").length>0,"結果の数字に墨のしずく");
+      eq(+document.getElementById("estLo").textContent,e.lo,"数え上がりのあと、数字は目安の下限");
+      ok(mem.load(K.stat)&&Object.keys(mem.load(K.stat)).length>0&&Object.keys(mem.load(K.review)).length>0,"採点の結果を成績と解き直しに記録");
+
+      group("模試：延ばす・タイマーなしは終わらない／未解答の確認／参考");
+      for(const md of ["x1.5","none"]){
+        Mock.prepMode=md; Router.go("mockprep",{n:1}); await fr();
+        tap('[data-act="mStart"]'); await fr();
+        tap('#askdlg [data-k="ok"]'); await fr();   // 2回目の確認
+        eq(S.run.attempt,md==="x1.5"?2:3,md+"：その回の2回目以降として始まる");
+        S.run.phase="gate"; Player.stop(); S.T=null; S.live=false; Mock.save(); Mock.resume(); await fr();
+        tap('[data-act="beginReading"]'); await fr();
+        await adv(76*60000); ok(S&&!S.done,md+"：75分を過ぎても終わらない");
+        if(md==="x1.5"){ await adv(37*60000); ok(S&&!S.done&&/延ばした時間を過ぎました/.test(document.getElementById("top").textContent),"1.5倍：112分30秒を過ぎたら知らせるだけで続けられる"); ok(/超過/.test(document.getElementById("top").textContent),"超過の時間を出す"); }
+        else { await adv(300*60000); ok(S&&!S.done&&/経過/.test(document.getElementById("top").textContent),"タイマーなし：6時間たっても終わらない（経過を数えるだけ）"); }
+        Mock.finish(false); await fr();
+        ok(document.querySelector("dialog#askdlg[open]")&&/未解答が \d+問あります。採点しますか/.test(document.getElementById("askdlg").textContent),"未解答があれば「採点しますか」と確かめる");
+        tap('#askdlg [data-k="alt"]'); await fr();
+        eq([S.view,S.gridF],["grid","open"],"「未解答を見る」で解答状況（未解答だけ）");
+        Mock.finish(false); await fr(); tap('#askdlg [data-k="ok"]'); await fr();
+        const last=Mock.hist().pop();
+        eq(last.reasons,[md==="none"?"none":"ext","again","unanswered"],md+"：参考（時間・2回目・未解答が多い）");
+        ok(/参考/.test(document.getElementById("page").textContent)&&/「いまの目安」には使っていません/.test(document.getElementById("page").textContent),"結果に「参考」の札と理由");
+      }
+      eq(Mock.hist().filter(h=>h.counts).length,1,"「いまの目安」に使うのは本番どおりの1回目だけ");
+      Mock.prepMode="real";
+    } finally {
+      window.Audio=realAudio; Clock.now=realNow; Fx.sound=realSound; Fx.haptic=realHap;
+      if(S) { S.leaving=true; } Router.tab("today");
+    }
+  });
+  /* 押す（二度押しの防止の280msを待たずに、同じ data-act の処理を呼ぶ） */
+  function tap(sel){ const el=document.querySelector(sel); if(!el) throw new Error("見つからない："+sel); ACT[el.dataset.act](el.dataset,el); }
+  const curQnum=()=>{ const u=cur(); return (isReader(u)?u.qs[S.qi]:u.qs[0]).num; };
+
+  asyncTest.then(uiTest).then(mockTest).then(render,e=>{ results.push({g:"非同期",ok:false,msg:String(e&&e.stack||e)}); render(); });
   function render(){
     const n=results.length, bad=results.filter(r=>!r.ok);
     const gs=[...new Set(results.map(r=>r.g))];

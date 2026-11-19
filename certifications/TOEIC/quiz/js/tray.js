@@ -93,10 +93,10 @@ const Tray = (()=>{
   }
   function isWide(){ return !!mqWide.matches; }
 
-  /* 読む領域にトレイをつける。opt = {stage, quiet, onChange} */
+  /* 読む領域にトレイをつける。opt = {stage, mode, onChange}。mode は MODE の1つ（模試＝静かな層：行き過ぎない動き） */
   function mount(reader,opt){
     off(); opt=opt||{};
-    R=reader; T=reader.querySelector(".tray"); quiet=!!opt.quiet; onChange=opt.onChange||null;
+    R=reader; T=reader.querySelector(".tray"); quiet=!!(opt.mode&&opt.mode.layer==="quiet"); onChange=opt.onChange||null;
     if(isWide()){ R.classList.add("wide"); R.style.removeProperty("--tray-h"); return; }
     measure();
     stage=opt.stage?fit(opt.stage):(count===3?"m":"s");   // 既定：3段階は中、2段階は小（文書から読む）

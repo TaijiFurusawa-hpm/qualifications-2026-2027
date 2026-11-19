@@ -1,8 +1,9 @@
 /* ===== Lapis 模試（仮称） for the TOEIC® L&R Test — 本体 =====
    段階0（土台）＋段階1（解く画面）：セッションの枠、Player、解答後の解説の型、設問トレイ（Part 6・7）、解き直しの流れ、練習の量の選択。
+   段階2（模試）は js/mock.js（時間割・自動保存と再開・目安のスコア・一覧／準備／結果の画面）。
    画面の仕様は ux/UX設計書.html、見た目は ux/ビジュアル案.html（紙と墨の答案）。 */
 "use strict";
-const APP_VERSION = "0.3.0";
+const APP_VERSION = "0.4.0";
 const LET = ["A","B","C","D"];
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
 const $ = s=>document.querySelector(s);
@@ -14,7 +15,8 @@ const today = ()=>dayNumber();
    abc：解答前は A B C（D）のボタンだけ（選択肢の文は音声で読まれる）
    size：標準の量（短い＝その半分）。est：練習の1単位の目安の秒数（解説を読む時間を含む・設計判断）。target：上の札の時間の目安
    qs：データの1件 → 設問の並び。segs：音声の組み立て（build.py の audio_plans と同じ順。行からの再生の推定に使う）
-   script：解答後のスクリプト（行・和訳）。trans：和訳・要約（「訳を見る」） */
+   script：解答後のスクリプト（行・和訳）。trans：和訳・要約（「訳を見る」）
+   docTabs：文書の切り替え（Part 7 の複数文書）。doc(u,s)：読む領域の文書の HTML（s＝セッション：いまの設問・解答・文書）。blanks：文書の中に空所の札がある（Part 6） */
 const qOne=(it,q)=>[{qid:it.id,num:it.num,tag:it.tag,q,c:it.c,a:it.a,e:it.e}];
 const qSet=it=>(it.qs||[]).map((q,i)=>({qid:it.id+"."+(i+1),num:q.num,tag:q.tag,q:q.q||"",c:q.c,a:q.a,e:q.e,bi:i+1}));
 const introText=r=>{ const qs=r.qs||[]; return `Questions ${qs[0]&&qs[0].num} through ${qs.length&&qs[qs.length-1].num} refer to the following ${r.intro||""}.`; };
@@ -44,10 +46,24 @@ const PART_SPEC = {
      script:r=>({lines:splitSentences(r.text).map((s,i)=>({lab:String(i+1),en:s,ja:""})), ja:r.ja||""})},
   5:{name:"短文穴埋め", unit:"問", size:10, layout:"single", est:()=>45, target:()=>20,
      qs:it=>qOne(it,it.q), qtext:q=>q.q.replace(/-{3,}/g,"_______"), trans:r=>r.ja||""},
-  6:{name:"長文穴埋め", unit:"セット", size:2, layout:"reader", est:u=>60*u.qs.length, qs:qSet, trans:r=>r.sum||""},
+  6:{name:"長文穴埋め", unit:"セット", size:2, layout:"reader", est:u=>60*u.qs.length, qs:qSet, trans:r=>r.sum||"", blanks:true,
+     doc:(u,s)=>`<div class="doc-h">${esc(u.raw.doc||"")}</div><div class="doc" lang="en">${blankDocHTML(u,s)}</div>`},
   7:{name:"読解問題", unit:"セット", size:3, layout:"reader", est:u=>90*u.qs.length, target:u=>60*u.qs.length,
-     qs:qSet, trans:r=>(r.sum||[]).map((s,i)=>(r.sum.length>1?`文書${i+1}：`:"")+s).join("\n")}
+     qs:qSet, trans:r=>(r.sum||[]).map((s,i)=>(r.sum.length>1?`文書${i+1}：`:"")+s).join("\n"),
+     docTabs:r=>r.docs||[],
+     doc:(u,s)=>{ const d=(u.raw.docs||[])[s.dtab]||{}; return `<div class="doc-h"><span lang="en">${esc(d.type||"")}</span>${d.title?` ・ <span lang="en">${esc(d.title)}</span>`:""}</div><div class="doc" lang="en">${esc(d.text)}</div>`; }}
 };
+/* Part 6 の本文：{{n}} を空所の札（押すとその設問がトレイに出る）に置きかえる */
+const NB=" ";
+function blankLabel(q,on,done){ return `空所 ${q.num!=null?q.num:q.bi}${on?"、表示中":""}${done?"、解答ずみ":""}`; }
+function blankDocHTML(u,s){
+  const byBi={}; u.qs.forEach((q,i)=>{ byBi[q.bi]=i; });
+  return esc(u.raw.text).replace(/\{\{(\d+)\}\}/g,(m,n)=>{
+    const qi=byBi[+n]; if(qi==null) return `<span class="dblank off">${NB}${n}${NB}</span>`;
+    const q=u.qs[qi], on=qi===s.qi, done=!!s.ans[q.qid];
+    return `<span class="dblank pz${on?" cur":""}${done?" done":""}" role="button" tabindex="0" data-act="qi" data-i="${qi}" aria-label="${blankLabel(q,on,done)}">${NB}${q.num!=null?q.num:n}${NB}</span>`;
+  });
+}
 const PARTS = [1,2,3,4,5,6,7];
 const PART_NAME = Object.fromEntries(PARTS.map(p=>[p,PART_SPEC[p].name]));
 /* セクション：リスニングとリーディング（模試の切り替え・時間） */
@@ -56,11 +72,13 @@ const sectionOf = p=>SECTIONS.L.parts.includes(p)?"L":"R";
 const READ_MIN = SECTIONS.R.minutes;
 /* ===== モードごとの違い（MODE）=====
    feedback：1問ごとに正誤と解説を出す／review：解き直し（「解かずに解説を見る」・段階の表示）／lockAudio：音声は1回だけ（止める・もどす・速さなし）
-   layer：Fx の層（模試は静か）／quit：左上のボタン／menu：⋯ に「この問題はおかしい」を出すか */
+   layer：Fx の層（模試は静か）／quit：左上のボタン／flag：⋯ に「この問題はおかしい」を出すか
+   sections：リスニング→切り替え→リーディングの順に進む（リスニングはもどれない）／timed：時間割と制限時間があり、時間と音声は js/mock.js が持つ
+   quitAsk：やめるときの確認の文言（空＝確認しない。模試は「中断」で、続きから再開できる） */
 const MODE = {
-  practice:{label:"練習",     layer:"expressive", feedback:true,  review:false, lockAudio:false, quit:"やめる", flag:true},
-  review:  {label:"解き直し", layer:"expressive", feedback:true,  review:true,  lockAudio:false, quit:"やめる", flag:true},
-  mock:    {label:"模試",     layer:"quiet",      feedback:false, review:false, lockAudio:true,  quit:"中断",   flag:false}
+  practice:{label:"練習",     layer:"expressive", feedback:true,  review:false, lockAudio:false, quit:"やめる", flag:true,  sections:false, timed:false, quitAsk:""},
+  review:  {label:"解き直し", layer:"expressive", feedback:true,  review:true,  lockAudio:false, quit:"やめる", flag:true,  sections:false, timed:false, quitAsk:""},
+  mock:    {label:"模試",     layer:"quiet",      feedback:false, review:false, lockAudio:true,  quit:"中断",   flag:false, sections:true,  timed:true,  quitAsk:"中断しますか。続きから再開できます。"}
 };
 
 /* ===== 設定（prefs）と計画（profile） ===== */
@@ -87,7 +105,13 @@ function buildUnits(mock){
   return U;
 }
 function unitsOf(n){ if(!UNIT_CACHE[n]){ const m=MOCKS.find(x=>x.n===n); UNIT_CACHE[n]=m?buildUnits(m):{}; } return UNIT_CACHE[n]; }
-function availableMocks(){ return MOCKS.filter(m=>m.free); }   // TODO(段階5)：|| 解放ずみ（解放したら invalidateUnits() を呼ぶ）
+/* 鍵つきの回（free:false）を使えるか。正は購入の状態（toeic_ent_v1。段階5でストアと結ぶ。解放したら invalidateUnits() を呼ぶ）。
+   開発の確認用に、手元のサーバー（localhost・127.0.0.1）で ?unlock を付けたときだけ全回を開く。
+   記録には何も書かず、公開先（Vercel・アプリの中）では効かないので、残しても害はない */
+const DEV_UNLOCK = (()=>{ try{ return /[?&]unlock(\b|=|&|$)/.test(location.search)&&/^https?:$/.test(location.protocol)&&/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)&&!isNativeApp(); }catch(e){ return false; } })();
+function unlockedAll(){ return DEV_UNLOCK||loadJSON(K.ent).unlocked===true; }
+function mockOpen(m){ return !!m&&(!!m.free||unlockedAll()); }
+function availableMocks(){ return MOCKS.filter(mockOpen); }
 /* 練習で使える unit の一覧は、データか使える回が変わるまで同じなので覚えておく */
 let PU_MEMO={}, UNIT_BY_ID=null;
 function invalidateUnits(){ PU_MEMO={}; UNIT_BY_ID=null; for(const k in UNIT_CACHE) delete UNIT_CACHE[k]; }
@@ -115,17 +139,20 @@ function reviewNext(r,ok,t,gaps){
   if(r.st>=3) return null;
   const st=r.st+1; return {st, due:t+(gaps||REVIEW_GAP)[st], n:r.n};
 }
-function reviewUpdate(qid,ok){
-  const rv=loadJSON(K.review), t=today(), before=rv[qid]||null;
-  const after=reviewNext(before,ok,t,reviewGaps(t,dayOf(profile().exam)));
+/* 読みこんだ記録（rv＝解き直し、m＝旧キー）に1問ぶんを当てる。保存は呼ぶ側が1回だけ行う */
+function reviewApply(rv,m,qid,ok,t,gaps){
+  const before=rv[qid]||null, after=reviewNext(before,ok,t,gaps);
   if(after===undefined) return {before,after};
   if(after===null) delete rv[qid]; else rv[qid]=after;
-  saveJSON(K.review,rv);
   // 旧キーも同じ意味で更新しておく（元の版にもどしても使えるように）
-  const m=loadJSON(K.miss);
   if(ok){ if(m[qid]){ m[qid]--; if(m[qid]<=0) delete m[qid]; } } else m[qid]=(m[qid]||0)+1;
-  saveJSON(K.miss,m);
   return {before,after};
+}
+function reviewUpdate(qid,ok){
+  const rv=loadJSON(K.review), m=loadJSON(K.miss), t=today();
+  const res=reviewApply(rv,m,qid,ok,t,reviewGaps(t,dayOf(profile().exam)));
+  if(res.after!==undefined){ saveJSON(K.review,rv); saveJSON(K.miss,m); }
+  return res;
 }
 /* 「あとで解き直す」の印（正解した問題も一覧に入れられる。翌日から）。on=false で一覧から外す */
 function reviewMark(qid,on){
@@ -179,15 +206,22 @@ function explainParts(e){
 /* ===== 記録 ===== */
 /* 集計の {n, ok} を1つ数える（無ければ作る）。返り値に他の項目（ms・nw）を足してよい */
 function tally(map,key,good){ const r=map[key]||(map[key]={n:0,ok:0}); r.n++; if(good) r.ok++; return r; }
-/* 1問の結果を記録する。解かずに見た（peek）問題は記録しない。返り値は解き直しの変化 */
-function recordResult(unit,q,ans){
-  if(ans&&ans.peek) return null;
-  const ok=!!ans&&ans.pick===q.a;
-  const st=loadJSON(K.stat), r=tally(st,"P"+unit.part+"|"+(q.tag||"-"),ok);
-  r.ms=(r.ms||0)+((ans&&ans.ms)||0); saveJSON(K.stat,st);
-  return reviewUpdate(q.qid,ok);
+/* 結果をまとめて記録する（模試の採点は200問を1回の読み書きで）。items = [{unit, q, ans}]。
+   解かずに見た（peek）問題は記録しない。返り値は1問ごとの解き直しの変化（peek は null） */
+function recordResults(items){
+  const st=loadJSON(K.stat), rv=loadJSON(K.review), m=loadJSON(K.miss), t=today(), gaps=reviewGaps(t,dayOf(profile().exam));
+  let changed=false;
+  const out=items.map(({unit,q,ans})=>{
+    if(ans&&ans.peek) return null;
+    const ok=!!ans&&ans.pick===q.a, r=tally(st,"P"+unit.part+"|"+(q.tag||"-"),ok);
+    r.ms=(r.ms||0)+((ans&&ans.ms)||0); changed=true;
+    return reviewApply(rv,m,q.qid,ok,t,gaps);
+  });
+  if(changed){ saveJSON(K.stat,st); saveJSON(K.review,rv); saveJSON(K.miss,m); }
+  return out;
 }
-function markSeen(unit){ const s=loadJSON(K.seen); s[unit.id]=(s[unit.id]||0)+1; saveJSON(K.seen,s); }
+function recordResult(unit,q,ans){ return recordResults([{unit,q,ans}])[0]; }
+function markSeen(units){ const s=loadJSON(K.seen); for(const u of [].concat(units)) s[u.id]=(s[u.id]||0)+1; saveJSON(K.seen,s); }
 function flags(){ return loadJSON(K.flag); }
 function toggleFlag(id){ const f=flags(), on=!f[id]; if(on) f[id]=Date.now(); else delete f[id]; saveJSON(K.flag,f);
   document.querySelectorAll(`[data-flagbtn][data-id="${CSS.escape(id)}"]`).forEach(b=>{ b.setAttribute("aria-pressed",on); b.innerHTML=flagInner(on); }); }
@@ -219,11 +253,11 @@ function subTop(title,close){
 const gearBtn=()=>`<button type="button" class="iconbtn pz" data-act="nav" data-to="settings" aria-label="設定">${icon("gear")}</button>`;
 function tabTop(title,right){ return `<div class="topbar gl"><div class="t"><b class="h" style="font-size:1.0625rem">${esc(title)}</b></div>${right||""}${gearBtn()}</div>`; }
 function barHTML(v,attrs){ return `<div class="bar"${attrs?" "+attrs:""}><i style="--v:${v}"></i></div>`; }
-/* セッションの上のバー：やめる／見出し＋進み具合／札（時間など）／その他（⋯） */
-function sessionTop(label,i,n,extra,quitLabel,menu){
+/* セッションの上のバー：やめる／見出し＋進み具合／札（時間など）／右のボタン（模試の「一覧」）／その他（⋯） */
+function sessionTop(label,i,n,extra,quitLabel,menu,right){
   const mb=menu?`<div class="menuw"><button type="button" class="iconbtn pz" data-act="menu" aria-haspopup="true" aria-expanded="false" aria-controls="menu" aria-label="その他">${icon("more")}</button><div class="menu" id="menu" hidden></div></div>`:"";
   return `<div class="topbar ses"><button type="button" class="iconbtn lab pz" data-act="quit" aria-label="${quitLabel||"やめる"}">${icon("x","s")}<span aria-hidden="true">${quitLabel||"やめる"}</span></button>`+
-    `<div class="t"><div class="tl"><b>${label}</b>${extra?`<span class="tchips">${extra}</span>`:""}</div>${barHTML(n?i/n:0,`role="progressbar" aria-label="進み具合" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${i}"`)}</div>${mb}</div>`;
+    `<div class="t"><div class="tl"><b>${label}</b>${extra?`<span class="tchips">${extra}</span>`:""}</div>${barHTML(n?i/n:0,`role="progressbar" aria-label="進み具合" aria-valuemin="0" aria-valuemax="${n}" aria-valuenow="${i}"`)}</div>${right||""}${mb}</div>`;
 }
 /* 一覧の行ボタン。o = {act, data:{…}, no, title, sub, disabled} */
 function rowbHTML(o){
@@ -247,8 +281,9 @@ let S=null, TIMER=null;
 function clearTimer(){ if(TIMER){ clearInterval(TIMER); TIMER=null; } }
 function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 function pickOne(a){ return a[Math.floor(Math.random()*a.length)]; }   // pick() は解答の処理なので別の名前
-function endSession(){ clearTimer(); Player.stop(); Tray.off(); closeMenu(); S=null; }
-function enterQuiz(){ Router.session({ leave:endSession, guard:()=> !(S&&S.mode==="mock"&&!S.done) || confirm("模試を中断します。採点せずにもどります。") }); }
+function endSession(){ clearTimer(); if(S&&S.M.timed) Mock.end(); Player.stop(); Tray.off(); closeMenu(); S=null; }
+/* やめるときの確認（MODE.quitAsk）は Mock.guard が受け持つ（ブラウザ・Android の「もどる」も同じ） */
+function enterQuiz(){ Router.session({ leave:endSession, guard:()=> !(S&&S.M.quitAsk) || Mock.guard() }); }
 function newSession(mode,units,extra){
   return Object.assign({mode, M:MODE[mode], label:MODE[mode].label, units, i:0, qi:0, ans:{}, sched:{}, played:false, dtab:0, dscroll:{}, stage:null, view:"unit"}, extra||{});
 }
@@ -270,25 +305,13 @@ function startReview(qids){
   const plan=reviewPlan(qids?new Set(qids):null); if(!plan.units.length) return;
   enterQuiz(); S=newSession("review",plan.units); showUnit();
 }
-function startMock(n){
-  const U=unitsOf(n), units=PARTS.flatMap(p=>U[p]||[]); if(!units.length) return;
-  enterQuiz(); S=newSession("mock",units,{mock:n,label:"模試 "+n,firstR:units.findIndex(u=>sectionOf(u.part)==="R"),rStarted:false,deadline:0});
-  if(S.firstR===0) readingGate(); else showUnit();
-}
-function readingGate(){
-  clearTimer(); Player.stop(); Tray.off(); S.view="gate";
-  const n=S.units.filter(u=>sectionOf(u.part)==="R").reduce((s,u)=>s+u.qs.length,0);
-  Shell.render({layer:"quiet",tabs:false,
-    top:sessionTop(esc(S.label)+" ・ "+SECTIONS.R.name+"へ",S.i,S.units.length,"","中断"),
-    body:`<div class="card"><h2 class="h h2">${SECTIONS.L.name}はここまで</h2><p>次は${SECTIONS.R.name} ${n}問・制限時間 ${READ_MIN}分です。下のボタンを押した時点から時間を数えます。${SECTIONS.R.name}では前の問題にもどれます。</p><p class="note">本番では休みなく続きます。</p></div>`,
-    bottom:`<button type="button" class="btn pri pz" data-act="beginReading">${SECTIONS.R.name}を始める</button>`});
-}
-
-/* 1画面（unit）を描く。opt.qi＝最初に出す設問、opt.keep＝描き直しだけ（時間・答え・トレイの段階を保つ） */
+/* 1画面（unit）を描く。opt.qi＝最初に出す設問、opt.keep＝描き直しだけ（時間・答え・トレイの段階を保つ）
+   模試（M.timed）では、音声と時間・上のバー・下のバーを Mock が持つ（画面を描きかえても音声は止めない：先読みのため） */
 function showUnit(opt){
   opt=opt||{};
-  clearTimer(); Player.stop(); Tray.off(); closeMenu();
-  const u=cur(), r=u.raw, sp=specOf(u), M=S.M, reader=isReader(u);
+  const M=S.M, own=M.timed;
+  clearTimer(); if(!own) Player.stop(); Tray.off(); closeMenu();
+  const u=cur(), r=u.raw, sp=specOf(u), reader=isReader(u);
   S.view="unit";
   if(!opt.keep){ S.t=S.ut=Date.now(); const o=firstOpen(u); S.qi=opt.qi!=null?opt.qi:Math.max(0,o); S.dtab=0; S.dscroll={}; }
   const qnums=u.qs.map(q=>q.num).filter(x=>x!=null);
@@ -299,63 +322,52 @@ function showUnit(opt){
     const lead=(sp.inst?`<p class="inst">${nr}${sp.inst}</p>`:"")+(sp.media?sp.media(r):"")+(r.graphic?graphicHTML(r.graphic):"");
     body=(lead?`<div class="card">${lead}</div>`:"")+`<div id="qs" class="stack"></div><div id="extra" class="stack"></div>`;
   }
-  const chips=(S.mode==="mock"&&S.rStarted?'<span class="chip ol num" id="mtm"></span>':"")+'<span class="chip ol num" id="tm"></span>';
-  const top=sessionTop(`${esc(S.label)} ・ Part ${u.part} <span class="num mut w5">${S.i+1}/${S.units.length}</span>`,S.i,S.units.length,chips,M.quit,true)+
-    (sp.audio?Player.bandHTML({lock:M.lockAudio}):"");
+  const top=own?Mock.topHTML(u):sessionTop(`${esc(S.label)} ・ Part ${u.part} <span class="num mut w5">${S.i+1}/${S.units.length}</span>`,S.i,S.units.length,'<span class="chip ol num" id="tm"></span>',M.quit,true)+
+    (sp.audio?Player.bandHTML({mode:M}):"");
+  if(own) body=Mock.bodyHTML(u)+body;
   Shell.render({layer:M.layer,tabs:false,fixed:reader,wide:reader,top,body,noAnim:!!opt.keep,focus:!opt.keep});
-  if(sp.audio){ Player.bind(); Player.load(r.audio,{lock:M.lockAudio, autoplay:M.lockAudio||(S.played&&!!prefs().autoplay)}); }
+  if(sp.audio&&!own){ Player.bind(); Player.load(r.audio,{mode:M, autoplay:S.played&&!!prefs().autoplay}); }
   if(reader) paintDoc();
   paintQs();
-  if(reader) Tray.mount($("#reader"),{stage:S.stage, quiet:M.layer==="quiet", onChange:onTrayStage});
+  if(reader) Tray.mount($("#reader"),{stage:S.stage, mode:M, onChange:onTrayStage});
+  if(own){ Mock.afterRender(u); return; }
   // 時間の札：要素と文字の節を覚えておき、tick では変わったときだけ書く
   const tmEl=$("#tm"), txt=document.createTextNode("");
   tmEl.innerHTML=icon("clock","s"); tmEl.appendChild(txt); tmEl.setAttribute("aria-label","この問題の経過時間");
-  S.tk={tm:tmEl,txt,mtm:$("#mtm"),last:{}};
+  S.tk={tm:tmEl,txt,last:{}};
   tick(); if(!(M.feedback&&unitDone(u))) TIMER=setInterval(tick,500);
 }
 function onTrayStage(to){ if(S) S.stage=to; Shell.say(to==="s"?"文書を表示":"設問を表示"); }
 
 /* --- Part 6・7：文書＋設問トレイ（5.4）。DOM の順＝読み上げの順：文書の切り替え → 文書 → つまみ → 設問 → 選択肢 --- */
 function readerHTML(u){
-  const docs=u.part===7?(u.raw.docs||[]):[];
+  const sp=specOf(u), docs=sp.docTabs?sp.docTabs(u.raw):[];
   const sw=docs.length>1?`<div class="dsw" role="group" aria-label="文書の切り替え">`+docs.map((d,i)=>`<button type="button" class="btn sm sec pz" data-act="dtab" data-i="${i}" aria-pressed="${i===S.dtab}">${i+1} <span lang="en">${esc(d.type||"")}</span></button>`).join("")+`</div>`:"";
   return `<div class="reader" id="reader"><div class="dpane">${sw}<div class="docs" id="docs" tabindex="0" role="region" aria-label="文書"></div></div>`+
     `<section class="tray" id="tray" aria-label="設問"><div class="tray-h"><i class="grab" aria-hidden="true"></i><div class="qtabs" id="qtabs" role="group" aria-label="設問の番号"></div>`+
     `<button type="button" class="iconbtn pz tray-t" data-act="trayToggle" aria-controls="trayb" aria-expanded="true" aria-label="設問をたたむ">${icon("down")}</button></div>`+
     `<button type="button" class="tray-peek pz" id="traypeek" data-act="trayOpen"></button><div class="tray-b" id="trayb"></div></section></div>`;
 }
-const NB=" ";
 function paintDoc(){
-  const u=cur(), r=u.raw, el=$("#docs"); if(!el) return;
-  const y=el.scrollTop; let h="";
-  if(u.part===6){
-    const byBi={}; u.qs.forEach((q,i)=>{ byBi[q.bi]=i; });
-    const t=esc(r.text).replace(/\{\{(\d+)\}\}/g,(m,n)=>{
-      const qi=byBi[+n]; if(qi==null) return `<span class="dblank off">${NB}${n}${NB}</span>`;
-      const q=u.qs[qi], lab=q.num!=null?q.num:n, on=qi===S.qi, done=!!S.ans[q.qid];
-      return `<span class="dblank pz${on?" cur":""}${done?" done":""}" role="button" tabindex="0" data-act="qi" data-i="${qi}" aria-label="空所 ${lab}${on?"、表示中":""}${done?"、解答ずみ":""}">${NB}${lab}${NB}</span>`;
-    });
-    h=`<div class="doc-h">${esc(r.doc||"")}</div><div class="doc" lang="en">${t}</div>`;
-  } else {
-    const d=(r.docs||[])[S.dtab]||{};
-    h=`<div class="doc-h"><span lang="en">${esc(d.type||"")}</span>${d.title?` ・ <span lang="en">${esc(d.title)}</span>`:""}</div><div class="doc" lang="en">${esc(d.text)}</div>`;
-  }
-  if(S.M.feedback&&unitDone(u)) h+=transHTML(specOf(u).trans(r),"要約（日本語）を見る");
-  el.innerHTML=h; el.scrollTop=y;
+  const u=cur(), sp=specOf(u), el=$("#docs"); if(!el) return;
+  const y=el.scrollTop;
+  el.innerHTML=sp.doc(u,S)+(S.M.feedback&&unitDone(u)?transHTML(sp.trans(u.raw),"要約（日本語）を見る"):"");
+  el.scrollTop=y;
 }
 /* Part 6 の空所：いまの設問・解答ずみの印だけを付けかえる（文書を描き直さない＝スクロールと文字の選択を保つ） */
 function paintBlanks(){
-  const u=cur(); if(u.part!==6) return;
+  const u=cur(); if(!specOf(u).blanks) return;
   document.querySelectorAll("#docs .dblank[data-i]").forEach(el=>{
-    const qi=+el.dataset.i, q=u.qs[qi], lab=q.num!=null?q.num:q.bi, on=qi===S.qi, done=!!S.ans[q.qid];
+    const qi=+el.dataset.i, q=u.qs[qi], on=qi===S.qi, done=!!S.ans[q.qid];
     el.classList.toggle("cur",on); el.classList.toggle("done",done);
-    el.setAttribute("aria-label",`空所 ${lab}${on?"、表示中":""}${done?"、解答ずみ":""}`);
+    el.setAttribute("aria-label",blankLabel(q,on,done));
   });
 }
+/* 設問の番号の札。模試の「あとで見直す」の印（S.mark）は角の印＋名前で示す */
 function qchipHTML(u,q,i){
-  const a=S.ans[q.qid], fb=S.M.feedback&&a&&!a.peek, ok=fb&&a.pick===q.a, n=q.num!=null?q.num:i+1;
+  const a=S.ans[q.qid], fb=S.M.feedback&&a&&!a.peek, ok=fb&&a.pick===q.a, n=q.num!=null?q.num:i+1, mk=!!(S.mark&&S.mark[q.qid]);
   const st=!a?"未解答":a.peek?"解説を表示ずみ":fb?(a.pick<0?"わからない":ok?"正解":"不正解"):"解答ずみ";
-  return `<button type="button" class="qchip pz${a?" done":""}${fb?(ok?" ok":" ng"):""}" data-act="qi" data-i="${i}" aria-current="${i===S.qi}" aria-label="設問 ${n}、${st}">`+
+  return `<button type="button" class="qchip pz${a?" done":""}${fb?(ok?" ok":" ng"):""}${mk?" marked":""}" data-act="qi" data-i="${i}" aria-current="${i===S.qi}" aria-label="設問 ${n}、${st}${mk?"、あとで見直す":""}">`+
     `<span class="num">${n}</span>${fb?markSvg(ok):""}</button>`;
 }
 function paintTray(){
@@ -373,6 +385,7 @@ function setQi(i,how){
   const u=cur(); if(!u||i<0||i>=u.qs.length) return;
   S.qi=i; S.t=Date.now();
   paintTray(); paintBlanks(); paintNav(u);
+  if(S.M.timed) Mock.onMove();
   if(how==="chip"&&!Tray.isWide()) Tray.expand();
   if(Tray.isWide()){ const c=document.querySelector(`#trayb [data-qcard="${CSS.escape(u.qs[i].qid)}"]`); if(c) c.scrollIntoView({block:"nearest",behavior:Fx.reduced()?"auto":"smooth"}); }
   else Tray.refresh();
@@ -455,7 +468,8 @@ function nextLabel(u){
 function paintNav(u){
   const reader=isReader(u);
   let nav="";
-  if(!S.M.feedback){
+  if(S.M.timed) nav=Mock.navHTML(u);
+  else if(!S.M.feedback){
     const canPrev=(reader&&S.qi>0)||canBackUnit(u);
     nav=`${canPrev?`<button type="button" class="btn sec pz" data-act="prev">${icon("back","s")}前へ</button>`:""}<button type="button" class="btn pri pz" data-act="next">${nextLabel(u)}</button>`;
   } else {
@@ -498,15 +512,17 @@ function repaintAfter(u,q,done){
   if(isReader(u)){ paintTray(); if(done) paintDoc(); else paintBlanks(); Tray.refresh(); }
   else { paintCard(u,q); if(done) paintExtra(u); }
   paintNav(u);
+  if(S.M.timed) Mock.onAnswer(u);
 }
 /* 次へ（下のバー・Enter・→）：トレイでは同じセットの次の設問 → 未解答の設問 → 次の unit */
 function advance(){
   const u=cur(); if(!canAdvance(u)) return;
+  if(S.M.sections&&sectionOf(u.part)==="L"){ Mock.next(); return; }   // リスニングの「次へ」は時間割が決める（先読み）
   if(isReader(u)){
     if(S.qi<u.qs.length-1){ setQi(S.qi+1); return; }
     if(S.M.feedback){ const o=firstOpen(u); if(o>=0){ setQi(o); return; } }
   }
-  if(S.i===S.units.length-1){ if(S.M.feedback) finishPractice(); else finishMock(false); return; }
+  if(S.i===S.units.length-1){ if(S.M.feedback) finishPractice(); else Mock.finish(false); return; }
   go(1);
 }
 function retreat(){
@@ -517,7 +533,6 @@ function retreat(){
 function go(d){
   const u=cur();
   if(specOf(u).audio) S.played=true;   // 1つ聞き終えたら、次からは自動で再生（設定で切れる）
-  if(S.mode==="mock"&&d>0&&S.i+1<S.units.length&&sectionOf(u.part)==="L"&&sectionOf(S.units[S.i+1].part)==="R"&&!S.rStarted){ S.i++; readingGate(); return; }
   S.i=Math.max(0,Math.min(S.units.length-1,S.i+d));
   showUnit({qi:d<0?cur().qs.length-1:undefined});
 }
@@ -527,11 +542,6 @@ function tick(){
   const el_ms=Date.now()-S.ut, tg=specOf(u).target, target=tg?tg(u):0;
   put("t",target?`${fmt(el_ms)} / 目安 ${fmt(target*1000)}`:fmt(el_ms),v=>{ k.txt.data=v; });
   put("c","chip num "+(target&&el_ms>target*1000?"warn":"ol"),v=>{ k.tm.className=v; });
-  if(S.mode==="mock"&&S.rStarted){
-    const rest=S.deadline-Date.now();
-    if(k.mtm){ put("mt","残り "+fmt(rest),v=>{ k.mtm.textContent=v; }); put("mc","chip num "+(rest<5*60000?"red":rest<15*60000?"warn":"ol"),v=>{ k.mtm.className=v; }); }
-    if(rest<=0){ clearTimer(); finishMock(true); }
-  }
 }
 
 /* --- その他（⋯）：この問題はおかしい／キーの一覧 --- */
@@ -547,31 +557,31 @@ function openMenu(btn){
   refocus("#menu button");
 }
 document.addEventListener("click",e=>{ const m=$("#menu"); if(m&&!m.hidden&&!e.target.closest(".menuw")) closeMenu(); },true);
-const KEY_HELP=[["1〜4／A〜D","選択肢を選ぶ"],["0","わからない（練習・解き直し）"],["Enter／→","次へ（解答のあと）"],["Space","再生・一時停止（Part 1〜4）"],["←","5秒もどる（Part 1〜4）／前の設問（Part 6・7）"],
-  ["S","スクリプト・訳を開く"],["T","設問トレイの上げ下げ（Part 6・7）"],["Esc","やめる"],["?","この一覧"]];
+const KEY_HELP=[["1〜4／A〜D","選択肢を選ぶ"],["0","わからない（練習・解き直し）"],["Enter／→","次へ（解答のあと）"],["Space","再生・一時停止（Part 1〜4。模試では使えません）"],["←","5秒もどる（Part 1〜4）／前の設問（Part 6・7）"],
+  ["S","スクリプト・訳を開く"],["T","設問トレイの上げ下げ（Part 6・7）"],["F","あとで見直す の印（模試のリーディング）"],["G","解答状況の一覧（模試のリーディング）"],["Esc","やめる（模試は中断）"],["?","この一覧"]];
 function closeDlg(id){ const d=$("#"+id); if(d) try{ d.close(); }catch(e){ d.removeAttribute("open"); } }
-function showKeys(){
+/* 1枚のシート（<dialog class="sheet">）に中身を入れて開く。Esc で閉じる（ブラウザに任せる） */
+function openSheet(id,html){
   closeMenu();
-  let d=$("#keysdlg"); if(!d){ d=document.createElement("dialog"); d.id="keysdlg"; d.className="sheet"; d.setAttribute("aria-labelledby","keysh"); document.body.appendChild(d); }
-  d.innerHTML=`<h2 class="h h2" id="keysh">キーの一覧</h2><table class="st keys">`+KEY_HELP.map(([k,v])=>`<tr><th scope="row"><kbd>${esc(k)}</kbd></th><td>${esc(v)}</td></tr>`).join("")+`</table>`+
-    `<p class="note">単語特訓：1〜4で解答、0でわからない、Enterで次へ</p><button type="button" class="btn sec pz" data-act="keysClose">閉じる</button>`;
+  let d=$("#"+id); if(!d){ d=document.createElement("dialog"); d.id=id; d.className="sheet"; d.setAttribute("aria-labelledby",id+"-h"); document.body.appendChild(d); }
+  d.innerHTML=html;
   try{ d.showModal(); }catch(e){ d.setAttribute("open",""); }
+  return d;
+}
+function showKeys(){
+  openSheet("keysdlg",`<h2 class="h h2" id="keysdlg-h">キーの一覧</h2><table class="st keys">`+KEY_HELP.map(([k,v])=>`<tr><th scope="row"><kbd>${esc(k)}</kbd></th><td>${esc(v)}</td></tr>`).join("")+`</table>`+
+    `<p class="note">単語特訓：1〜4で解答、0でわからない、Enterで次へ</p><button type="button" class="btn sec pz" data-act="keysClose">閉じる</button>`);
 }
 /* 解いている途中の「表示の設定」：解答・時間・音声は止めずに、見え方だけ変える */
 function quickSetHTML(){
   const p=prefs(), reader=!!(S&&S.view==="unit"&&cur()&&isReader(cur()));
-  return `<h2 class="h h2" id="qseth">表示の設定</h2>`+
+  return `<h2 class="h h2" id="qsetdlg-h">表示の設定</h2>`+
     `<div class="setrow"><b>文字の大きさ</b>${segHTML("text",OPT_TEXT,p.text,"qpref")}</div>`+
     `<div class="setrow"><b>外観</b>${segHTML("theme",OPT_THEME,p.theme,"qpref")}</div>`+
     (reader?`<div class="setrow"><b>Part 6・7 の設問</b>${segHTML("tray",OPT_TRAY,p.tray,"qpref")}</div>`:"")+
     `<button type="button" class="btn sec pz" data-act="qsetClose">閉じる</button>`;
 }
-function showQuickSet(){
-  closeMenu();
-  let d=$("#qsetdlg"); if(!d){ d=document.createElement("dialog"); d.id="qsetdlg"; d.className="sheet"; d.setAttribute("aria-labelledby","qseth"); document.body.appendChild(d); }
-  d.innerHTML=quickSetHTML();
-  try{ d.showModal(); }catch(e){ d.setAttribute("open",""); }
-}
+function showQuickSet(){ openSheet("qsetdlg",quickSetHTML()); }
 function toggleScript(){
   const root=(cur()&&isReader(cur()))?$("#reader"):$("#page"); if(!root) return;
   const b=root.querySelector('[data-act="trans"]'); if(b){ b.click(); return; }
@@ -583,6 +593,7 @@ function sessionKey(ev){
   const k=ev.key, L=k.length===1?k.toLowerCase():k, sp=specOf(u), reader=isReader(u);
   const ae=document.activeElement, inter=!!(ae&&ae.matches&&ae.matches("button,a[href],summary,input,select,textarea,[role=button]"));
   if(k==="Escape"){ ev.preventDefault(); ACT.quit(); return; }
+  if(S.M.timed&&Mock.key(ev,inter)) return;   // 模試：音声の操作は受けつけない・F／G など
   if((k==="Enter"||k===" ")&&inter) return;
   let n="1234".indexOf(L); if(n<0&&L.length===1) n="abcd".indexOf(L);
   if(n>=0&&L.length===1){
@@ -599,52 +610,46 @@ function sessionKey(ev){
 }
 
 /* ===== 結果 ===== */
-function finishPractice(){ clearTimer(); Player.stop(); S.done=true; Fx.haptic("done"); Fx.sound("done"); results(false); }
-function finishMock(auto){
-  if(!auto){
-    const un=S.units.reduce((s,u)=>s+u.qs.filter(q=>!S.ans[q.qid]).length,0);
-    if(un&&!confirm("未解答が "+un+" 問あります。採点しますか？")) return;
-  }
-  clearTimer(); Player.stop();
-  for(const u of S.units){ for(const q of u.qs) recordResult(u,q,S.ans[q.qid]); markSeen(u); }
-  S.done=true; Fx.haptic("grade"); results(true);
-}
-function results(mock){
+function finishPractice(){ clearTimer(); Player.stop(); S.done=true; Fx.haptic("done"); Fx.sound("done"); results(); }
+/* 練習・解き直しの結果（模試の結果は js/mock.js の SCREENS.mockresult） */
+function results(){
   Tray.off(); S.view="results";
-  const by={}, tags={}, wrongs=[]; let tot=0, ok=0, un=0, peeked=0;
+  const by={}, tags={}, wrongs=[]; let tot=0, ok=0, peeked=0;
   for(const u of S.units){
     for(const q of u.qs){
-      const a=S.ans[q.qid]; if(!a&&!mock) continue;
-      if(a&&a.peek){ peeked++; continue; }
-      tot++; const good=!!a&&a.pick===q.a; if(good) ok++; if(!a) un++;
+      const a=S.ans[q.qid]; if(!a) continue;
+      if(a.peek){ peeked++; continue; }
+      tot++; const good=a.pick===q.a; if(good) ok++;
       const pk="P"+u.part; tally(by,pk,good); tally(tags,pk+"|"+(q.tag||"-"),good);
       if(!good) wrongs.push({u,q,a});
     }
   }
-  const pct=(a,b)=>b?Math.round(a/b*100):0;
   let h=`<section class="card score"><span class="chip ol">${esc(S.label)}の結果</span>
     <div class="big" aria-label="${tot}問中${ok}問正解"><span class="num" id="scoreN">${ok}</span><em>/ ${tot}</em></div>
-    <p class="sm mut">正答率 ${pct(ok,tot)}%${un?" ・ 未解答 "+un+" 問":""}${peeked?" ・ 解かずに見た "+peeked+" 問":""}</p></section>`;
-  if(!mock){
-    const wq=wrongs.map(w=>w.q.qid), origin=(Router.stack[0]||{}).name;
-    if(wq.length) h+=`<button type="button" class="btn pri pz" data-act="reviewThese" data-q="${esc(wq.join(" "))}">間違えた${wq.length}問を解き直す</button>`;
-    if(S.M.review){ const rest=reviewPlan().total; if(rest) h+=`<p class="sm mut">今日の解き直しは、あと ${rest}問あります。続けるかどうかは、いま決めなくてかまいません。</p><button type="button" class="btn sec pz" data-act="review">続けて解き直す（${Math.min(rest,REVIEW_MAX)}問まで）</button>`; }
-    h+=`<button type="button" class="btn ${wq.length?"sec":"pri"} pz" data-act="close">${origin==="practice"?"練習にもどる":"閉じる"}</button>`;
-  }
-  if(Object.keys(by).length) h+=`<h2 class="sec-h">パート別</h2><section class="card stack">`+Object.keys(by).sort().map(k=>`<div class="prow"><b>${k.replace("P","Part ")}</b>${barHTML(by[k].ok/by[k].n)}<span>${by[k].ok}/${by[k].n}</span></div>`).join("")+`</section>`;
+    <p class="sm mut">正答率 ${pct(ok,tot)}%${peeked?" ・ 解かずに見た "+peeked+" 問":""}</p></section>`;
+  const wq=wrongs.map(w=>w.q.qid), origin=(Router.stack[0]||{}).name;
+  if(wq.length) h+=`<button type="button" class="btn pri pz" data-act="reviewThese" data-q="${esc(wq.join(" "))}">間違えた${wq.length}問を解き直す</button>`;
+  if(S.M.review){ const rest=reviewPlan().total; if(rest) h+=`<p class="sm mut">今日の解き直しは、あと ${rest}問あります。続けるかどうかは、いま決めなくてかまいません。</p><button type="button" class="btn sec pz" data-act="review">続けて解き直す（${Math.min(rest,REVIEW_MAX)}問まで）</button>`; }
+  h+=`<button type="button" class="btn ${wq.length?"sec":"pri"} pz" data-act="close">${origin==="practice"?"練習にもどる":"閉じる"}</button>`;
+  if(Object.keys(by).length) h+=`<h2 class="sec-h">パート別</h2><section class="card stack">`+Object.keys(by).sort().map(k=>partRowHTML(k.replace("P","Part "),by[k].ok,by[k].n)).join("")+`</section>`;
   if(Object.keys(tags).length) h+=`<h2 class="sec-h">タグ別</h2><section class="card"><table class="st"><tr><th>タグ</th><th>正答</th><th>率</th></tr>`+
     Object.keys(tags).sort().map(k=>{ const [a,b]=k.split("|"); return `<tr><td>${a} ${esc(b)}</td><td class="num">${tags[k].ok} / ${tags[k].n}</td><td class="num">${pct(tags[k].ok,tags[k].n)}%</td></tr>`; }).join("")+`</table></section>`;
-  if(wrongs.length){
-    h+=`<h2 class="sec-h">間違えた問題（${wrongs.length}）</h2><section class="card">`+wrongs.map(({u,q,a})=>
-      `<details class="rev"><summary><span class="num">${q.num!=null?q.num+".":""}</span> ${esc(u.id)} ${q.tag?`<span class="tag">${esc(q.tag)}</span>`:""}</summary><div>
-      ${q.q?`<p class="sm" lang="en">${esc(q.q)}</p>`:""}
-      <p class="sm">あなた：${a&&a.pick>=0?LET[a.pick]+' <span lang="en">'+esc(q.c[a.pick])+"</span>":a?"わからない":"未解答"}<br>正解：${LET[q.a]} <span lang="en">${esc(q.c[q.a])}</span></p>
-      ${explainHTML(q.e)}<div>${flagBtn(u.id)}</div></div></details>`).join("")+`</section>`;
-  }
-  if(mock) h+=`<button type="button" class="btn pri pz" data-act="close">閉じる</button>`;
+  if(wrongs.length) h+=`<h2 class="sec-h">間違えた問題（${wrongs.length}）</h2><section class="card">${wrongListHTML(wrongs)}</section>`;
   Shell.render({layer:"expressive",tabs:false,top:subTop(S.label+"の結果",true),body:h});
   celebrate("#scoreN",ok);
-  document.querySelectorAll("#page .prow .bar>i").forEach((e,i)=>Fx.fill(e,100+i*70));
+  fillBars();
+}
+const pct=(a,b)=>b?Math.round(a/b*100):0;
+/* Part の横棒の行（結果）。正答数／問題数（と％） */
+function partRowHTML(label,ok,n,sub){ return `<div class="prow"><b>${label}</b>${barHTML(n?ok/n:0)}<span>${ok}/${n}${sub||""}</span></div>`; }
+function fillBars(){ document.querySelectorAll("#page .prow .bar>i").forEach((e,i)=>Fx.fill(e,100+i*70)); }
+/* 間違えた問題の一覧（開くと答えと解説）。wrongs = [{u, q, a}] */
+function wrongListHTML(wrongs){
+  return wrongs.map(({u,q,a})=>
+    `<details class="rev"><summary><span class="num">${q.num!=null?q.num+".":""}</span> ${esc(u.id)} ${q.tag?`<span class="tag">${esc(q.tag)}</span>`:""}</summary><div>
+    ${q.q?`<p class="sm" lang="en">${esc(q.q)}</p>`:""}
+    <p class="sm">あなた：${a&&a.pick>=0?LET[a.pick]+' <span lang="en">'+esc(q.c[a.pick])+"</span>":a?"わからない":"未解答"}<br>正解：${LET[q.a]} <span lang="en">${esc(q.c[q.a])}</span></p>
+    ${explainHTML(q.e)}<div>${flagBtn(u.id)}</div></div></details>`).join("");
 }
 /* 結果の数字：数え上がり → 墨のしずく（練習層だけ） */
 function celebrate(sel,to){
@@ -834,6 +839,7 @@ SCREENS.today=()=>{
     `<button type="button" class="iconbtn pz" data-act="nav" data-to="stats" aria-label="記録">${icon("chart")}</button>${gearBtn()}</div>`;
   if(!MOCKS.length&&!VOCAB.length){ Shell.render({tab:"today",top,body:noData()}); return; }
   let h=`<p class="sm mut">${todayLabel()}</p>`;
+  if(MOCKS.length) h+=Mock.resumeHeroHTML();   // 中断した模試があれば、主の札は「続きから」（3.2）
   if(VOCAB.length){
     const {due,nn,c}=vPlan(), tot=due+nn, min=Math.max(1,Math.ceil(tot*12/60));
     const lg=loadJSON(K.vlog)[today()]||{n:0,ok:0,nw:0};
@@ -841,23 +847,13 @@ SCREENS.today=()=>{
     else h+=`<section class="card hero"><div class="eyebrow">今日の単語</div><h1 class="h">今日の分は終わりました</h1><p class="sm mut">今日 ${lg.n}問・正答 ${lg.ok}</p>${c.nw?`<button type="button" class="btn sec pz" data-act="vstart" data-mode="new">新しい語をもう少し</button>`:""}</section>`;
   }
   if(MOCKS.length){
-    const rp=reviewPlan(), m1=availableMocks()[0];
+    const rp=reviewPlan();
     h+=`<div class="list">`;
     if(rp.total) h+=rowbHTML({act:"review",no:icon("redo","s"),title:"苦手の解き直し",sub:`今日 ${rp.count}問 ・ 約${minOf(rp.count*REVIEW_SEC_PER_Q)}分 ・ 解いてから解説`});
-    if(m1) h+=rowbHTML({act:"tab",data:{tab:"mock"},no:m1.n,title:`模試 ${m1.n}　<span class="chip acc">無料</span>`,sub:`${mockQCount(m1.n)}問・約2時間 ・ 本番と同じ順番`});
-    h+=rowbHTML({act:"tab",data:{tab:"practice"},no:"P",title:"Part別の練習",sub:"1問ごとに解説 ・ 何度でも聞ける"})+`</div>`;
+    h+=Mock.todayRowHTML()+rowbHTML({act:"tab",data:{tab:"practice"},no:"P",title:"Part別の練習",sub:"1問ごとに解説 ・ 何度でも聞ける"})+`</div>`;
   }
   h+=`<p class="legal" lang="en">${ETS_NOTE}</p>`;
   Shell.render({tab:"today",top,body:h});
-};
-SCREENS.mock=()=>{
-  const top=tabTop("模試");
-  if(!MOCKS.length){ Shell.render({tab:"mock",top,body:noData()}); return; }
-  const rows=availableMocks().map(m=>rowbHTML({act:"mockstart",data:{n:m.n},no:m.n,title:`模試 ${m.n}${m.free?'　<span class="chip acc">無料</span>':""}`,
-    sub:`${mockQCount(m.n)}問 ・ ${SECTIONS.L.name}→${SECTIONS.R.name} ・ ${SECTIONS.R.name}${READ_MIN}分`})).join("");
-  const h=`<div class="list">${rows}</div>
-    <section class="card"><h2 class="h h2">模試の進み方</h2><p class="sm">${SECTIONS.L.name}（Part 1〜4）は音声が自動で1回だけ流れます。最後の問題のあと、${SECTIONS.R.name}を始めるボタンを押した時点から${READ_MIN}分を数え、時間が来ると自動で採点します。${SECTIONS.R.name}では前の問題にもどれます。途中の解説は出ません。</p><p class="note">途中でやめると、その回の解答は採点されません（続きから再開できるのは次の更新から）。</p></section>`;
-  Shell.render({tab:"mock",top,body:h});
 };
 /* 練習タブ：解き直し（件数・時間・並び）と、Part ごとの行（押すとその場で量の選択が開く：3.3） */
 const PR={open:0, tag:{}};   // 量の選択を開いている Part、Part ごとのタグのしぼり込み
@@ -1001,6 +997,7 @@ Object.assign(ACT,{
   /* やめる：練習・解き直しで1問でも解いていれば、そこまでの結果を出す（記録は1問ごとに保存ずみ） */
   quit:()=>{
     if(V){ vFinish(); return; }
+    if(S&&S.M.quitAsk){ Mock.askQuit(); return; }
     if(S&&S.M.feedback&&S.view==="unit"&&Object.keys(S.ans).length){ finishPractice(); return; }
     if(!Router.back()) Router.tab("today");
   },
@@ -1023,8 +1020,6 @@ Object.assign(ACT,{
   practice:d=>startPractice(+d.p,d.amt||"std",PR.tag[+d.p]||""),
   review:()=>startReview(),
   reviewThese:d=>startReview(String(d.q||"").split(" ").filter(Boolean)),
-  mockstart:d=>startMock(+d.n||1),
-  beginReading:()=>{ S.rStarted=true; S.deadline=Date.now()+READ_MIN*60000; showUnit(); },
   pick:d=>pick(d.q,+d.c),
   unknown:d=>pick(d.q,-1),
   peek:d=>peek(d.q),
@@ -1066,13 +1061,15 @@ document.addEventListener("keydown",ev=>{
     return;
   }
   if(S&&S.view==="unit"&&Router.inSession()){ sessionKey(ev); return; }
+  if(S&&S.M.timed&&Router.inSession()&&Mock.key(ev,false)) return;   // 模試の解答状況・切り替えの画面
   if(ev.key==="Escape"&&Router.stack.length>1){ ev.preventDefault(); ACT.back(); }
 });
 /* 幅840pxをまたいだら、読む画面を左右2画面⇄トレイで描き直す（答え・時間はそのまま） */
 Tray.onWideChange(()=>{ if(S&&S.view==="unit"&&isReader(cur())) showUnit({keep:true}); });
 window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").addEventListener&&matchMedia("(prefers-color-scheme: dark)").addEventListener("change",applyPrefs);
 
-/* ===== 起動 ===== */
+/* ===== 起動 =====
+   boot は全部の <script>（js/mock.js を含む）を読み終えてから呼ぶ（await の続きが次のスクリプトより先に動くため） */
 function loadData(){
   let D=window.TOEIC_DATA||null;
   if(D&&!D.mocks) D={mocks:[Object.assign({n:1,free:true},D)]};   // 旧形式（data.sample.js）
@@ -1098,4 +1095,4 @@ async function boot(){
     navigator.serviceWorker.register("./sw.js").catch(()=>{});
   }
 }
-boot();
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot); else boot();

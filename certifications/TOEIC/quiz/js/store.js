@@ -86,6 +86,7 @@ function createStore(backend, opts){
 const Store = createStore((isNativeApp()&&CapacitorPrefsBackend())||LocalStorageBackend());
 function loadJSON(k){ return Store.load(k); }
 function saveJSON(k,v){ Store.save(k,v); }
+function removeJSON(k){ Store.remove(k); }
 (function(){
   const fl=()=>{ try{ Store.flush(); }catch(e){} };
   document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden") fl(); });
@@ -103,7 +104,8 @@ const KEYS = [
   {id:"ent",      key:"toeic_ent_v1",      since:5, shape:"{unlocked, product, checkedAt, pending}", what:"購入の状態の控え（正はストア）"},
   {id:"review",   key:"toeic_review_v1",   since:0, shape:"{qid:{st:0..3, due:日, n:誤答の回数}}",   what:"解き直しの段階と次に出る日（toeic_miss_v1 から引きつぐ）"},
   {id:"day",      key:"toeic_day_v1",      since:3, shape:"{日:{w,r,p,m}}",                         what:"その日に終えたかたまり"},
-  {id:"mockhist", key:"toeic_mockhist_v1", since:2, shape:"[{n, attempt, mode, L, R, …}]",          what:"受けた模試の結果"},
+  {id:"mockhist", key:"toeic_mockhist_v1", since:2, shape:"[{n, attempt, mode, at, L, R, nL, nR, …}]",  what:"受けた模試の結果（js/mock.js の histEntry）"},
+  {id:"mockrun",  key:"toeic_mockrun_v1",  since:2, perMock:true, shape:"{n, mode, attempt, phase, i, qi, L, ans, mark, …}", what:"回Nの途中の状態。キーは toeic_mockrun_v1:N（回ごとに別キー。採点したら消す）"},
   {id:"stat",     key:"toeic_stat_v1",     since:0, shape:"{'P5|品詞':{n, ok, ms}}",                what:"Part・タグ別の成績"},
   {id:"seen",     key:"toeic_seen_v1",     since:0, shape:"{unitId:回数}",                          what:"解いた回数（まだ解いていない問題を先に出す）"},
   {id:"flag",     key:"toeic_flag_v1",     since:0, shape:"{id:時刻}",                              what:"「この問題はおかしい」の報告"},

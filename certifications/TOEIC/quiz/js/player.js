@@ -1,8 +1,10 @@
 /* ===== Player（音声の再生バー）=====
    UX設計書 7.1-5 ／ P2 ②音声の帯 ／ 3.3「練習セッションの1問の流れ」
    - 状態：idle（なし）| ready（押せば流れる）| loading | playing | paused | ended | error | blocked（自動再生を止められた）
-   - lock：模試。止める・もどす・速さを変える操作を出さない（自動再生が止められたときだけ「音声を始める」を出す）
-   - 外からの一時停止（イヤホン抜け・着信・ほかのアプリ）は onExternalPause で知らせる（段階2で模試の中断につなぐ）
+   - mode：MODE の1つ（app.js）。mode.lockAudio（模試）なら、止める・もどす・速さを変える操作を出さず、呼ばれても何もしない。
+     端末のメディアキー・ロック画面の操作（Media Session）も受けつけない（自動再生が止められたときだけ「音声を始める」）
+   - 外からの一時停止（イヤホン抜け・着信・ほかのアプリ）は onExternalPause で知らせる（模試では中断の流れへ：js/mock.js）
+   - ui:false：帯を描かない（模試のリスニングは、時間割の表示ごと js/mock.js が帯を描く）。onEnded・onError：終わり・失敗の知らせ
    - <audio> を使いつづける。帯（bandHTML）が画面にあれば状態を描き、無ければ #audst の文字だけを書く
    - 行からの再生：データに時刻が無いので、build.py が音声を組み立てる順（話す文と無音の秒数）から割り振って推定する */
 "use strict";
@@ -10,6 +12,13 @@ const Player = (()=>{
   const SPEEDS=[0.8,1,1.2];
   const ST_TEXT={ready:"再生ボタンで流れます", loading:"読み込み中", playing:"再生中", paused:"一時停止", ended:"再生終了", blocked:"再生ボタンを押すと流れます"};
   let a=null, o={}, state="idle", mine=false, ui={}, last={};
+  const locked=()=>!!(o.mode&&o.mode.lockAudio);
+  /* 模試の間は、端末のメディアキー・ロック画面からの一時停止・早送り・巻きもどしを受けつけない（何もしない処理を置く） */
+  const MS_ACTS=["pause","stop","seekbackward","seekforward","seekto","previoustrack","nexttrack"];
+  function lockMedia(on){
+    const ms=navigator.mediaSession; if(!ms||!ms.setActionHandler) return;
+    for(const k of MS_ACTS){ try{ ms.setActionHandler(k,on?()=>{}:null); }catch(e){} }
+  }
 
   const fmtT=s=>fmt(Math.floor(s||0)*1000);   // app.js の fmt（m:ss）
   const curSpeed=()=>prefs().speed;
@@ -17,9 +26,9 @@ const Player = (()=>{
   const spLabel=v=>(+v).toFixed(1)+"×";
   const playInner=on=>icon(on?"pause":"play","s f")+`<span>${on?"一時停止":"再生"}</span>`;
 
-  /* 帯の HTML。o.lock＝模試 */
+  /* 帯の HTML。opt.mode.lockAudio＝模試 */
   function bandHTML(opt){
-    if(opt&&opt.lock) return `<div class="player lock" id="pl" data-state="idle">`+
+    if(opt&&opt.mode&&opt.mode.lockAudio) return `<div class="player lock" id="pl" data-state="idle">`+
       `<button type="button" class="playb pz" data-act="pltoggle" id="plb" hidden>${icon("play","s f")}<span>音声を始める</span></button>`+
       `<span class="pl-st" id="audst" role="status"></span>`+
       `<div class="bar pl-bar" aria-hidden="true"><i id="plbar" style="--v:0"></i></div><span class="pl-tm num" id="pltm"></span></div>`;
@@ -36,25 +45,26 @@ const Player = (()=>{
   function bind(){
     const g=id=>document.getElementById(id);
     ui={root:g("pl"), btn:g("plb"), tm:g("pltm"), seek:g("plseek"), st:g("audst"), sp:g("plsp"), bar:g("plbar")}; last={};
-    if(ui.seek) ui.seek.addEventListener("input",()=>{ if(a&&a.duration&&!o.lock){ a.currentTime=ui.seek.value/1000*a.duration; paintTime(); } });
+    if(ui.seek) ui.seek.addEventListener("input",()=>{ if(a&&a.duration&&!locked()){ a.currentTime=ui.seek.value/1000*a.duration; paintTime(); } });
     paint();
   }
   function paint(){
+    if(o.ui===false) return;
     if(ui.root&&!ui.root.isConnected) ui={};
     if(ui.root) ui.root.dataset.state=state;
     let t=ST_TEXT[state]||"";
-    if(state==="error") t=o.lock?"この問題の音声を再生できません":"音声を再生できません。スクリプトで確認できます";
+    if(state==="error") t=locked()?"この問題の音声を再生できません":"音声を再生できません。スクリプトで確認できます";
     if(state==="idle") t="";
     if(ui.st) ui.st.textContent=t; else { const e=document.getElementById("audst"); if(e) e.textContent=t; }
     if(ui.btn){
       const playing=state==="playing"||state==="loading";
-      if(o.lock){ ui.btn.hidden=state!=="blocked"; }
+      if(locked()){ ui.btn.hidden=state!=="blocked"; }
       else { if(last.playing!==playing){ last.playing=playing; ui.btn.innerHTML=playInner(playing); ui.btn.setAttribute("aria-label",playing?"一時停止":"再生"); } ui.btn.disabled=state==="error"||state==="idle"; }
     }
     paintTime();
   }
   function paintTime(){
-    if(!ui.tm) return;
+    if(o.ui===false||!ui.tm) return;
     const d=a&&isFinite(a.duration)?a.duration:0, c=a?a.currentTime:0, f=d?Math.min(1,c/d):0;
     const k=Math.floor(c)+"/"+Math.floor(d)+"/"+Math.round(f*1000); if(last.t===k) return; last.t=k;   // timeupdate（約4回/秒）では、変わったときだけ書く
     ui.tm.textContent=d?fmtT(c)+" / "+fmtT(d):fmtT(c);
@@ -63,15 +73,19 @@ const Player = (()=>{
   }
   function set(s){ state=s; paint(); }
 
-  /* 音声を読み込む。opt = {autoplay, lock, onExternalPause} */
+  /* 音声を読み込む。opt = {mode, autoplay, ui, onEnded, onError, onExternalPause} */
   function load(src,opt){
     stop(); o=Object.assign({},opt||{});
-    if(!src){ set("error"); return; }
+    lockMedia(locked());
+    if(!src){ set("error"); if(o.onError) setTimeout(o.onError,0); return; }
     const me=new Audio(src); a=me; me.preload="auto"; me.preservesPitch=true;
-    me.playbackRate=o.lock?1:curSpeed();
+    me.playbackRate=locked()?1:curSpeed();
     const on=(ev,f)=>me.addEventListener(ev,()=>{ if(a===me) f(); });   // 古い音声の知らせで表示を上書きしない
     on("loadedmetadata",paintTime); on("timeupdate",paintTime); on("durationchange",paintTime);
-    on("playing",()=>set("playing")); on("ended",()=>set("ended")); on("error",()=>set("error"));
+    on("playing",()=>set("playing"));
+    on("ended",()=>{ set("ended"); if(o.onEnded) o.onEnded(); });
+    on("error",()=>{ set("error"); if(o.onError) o.onError(); });
+    if(locked()) on("ratechange",()=>{ if(me.playbackRate!==1) me.playbackRate=1; });   // 模試はいつも1.0倍
     on("pause",()=>{ if(me.ended) return; const ext=!mine&&state==="playing"; mine=false; set("paused"); if(ext&&o.onExternalPause) o.onExternalPause(); });
     set("ready");
     if(o.autoplay) play();
@@ -87,18 +101,18 @@ const Player = (()=>{
   /* 再生⇄一時停止。模試では、まだ流れていない（止められた）ときに始めるだけ */
   function toggle(){
     if(!a) return;
-    if(o.lock){ if(state==="blocked"||state==="ready") play(); return; }
+    if(locked()){ if(state==="blocked"||state==="ready") play(); return; }
     if(a.paused||a.ended) play(); else pause();
   }
-  function back(sec){ if(!a||o.lock) return; a.currentTime=Math.max(0,a.currentTime-(sec||5)); paintTime(); }
+  function back(sec){ if(!a||locked()) return; a.currentTime=Math.max(0,a.currentTime-(sec||5)); paintTime(); }
   function seekTo(sec,andPlay){
-    if(!a||o.lock) return; const me=a;
+    if(!a||locked()) return; const me=a;
     const go=()=>{ if(a!==me) return; a.currentTime=Math.max(0,Math.min(sec,isFinite(a.duration)?a.duration-0.05:sec)); paintTime(); if(andPlay&&(a.paused||a.ended)) play(); };
     if(a.readyState>=1) go(); else a.addEventListener("loadedmetadata",go,{once:true});
   }
   /* 速さ：0.8 → 1.0 → 1.2 → 0.8。既定（設定）も書きかえる（現行の setSpeed と同じ） */
   function cycleSpeed(){
-    if(o.lock) return;
+    if(locked()) return;
     const cur=curSpeed();
     const nx=SPEEDS[(SPEEDS.findIndex(v=>Math.abs(v-cur)<.01)+1)%SPEEDS.length];
     setPref("speed",nx);
@@ -106,7 +120,7 @@ const Player = (()=>{
     if(ui.sp){ ui.sp.textContent=spLabel(nx); ui.sp.setAttribute("aria-label",spName(nx)); }
     return nx;
   }
-  function stop(){ if(a){ mine=true; const x=a; a=null; try{ x.pause(); x.removeAttribute("src"); x.load(); }catch(e){} } state="idle"; o={}; }   // 読み込み途中の通信とバッファを手放す
+  function stop(){ if(a){ mine=true; const x=a; a=null; try{ x.pause(); x.removeAttribute("src"); x.load(); }catch(e){} } if(locked()) lockMedia(false); state="idle"; o={}; }   // 読み込み途中の通信とバッファを手放す
   function busy(){ return !!(a&&!a.paused&&!a.ended); }
 
   /* 行の始まりの推定。segs = [{say:"文", line:k?}|{sil:秒}]、dur = 音声の長さ（秒）。
@@ -121,6 +135,8 @@ const Player = (()=>{
     return out;
   }
   function duration(){ return a&&isFinite(a.duration)?a.duration:0; }
+  function currentTime(){ return a?a.currentTime:0; }
+  function rate(){ return a?a.playbackRate:1; }
 
-  return { bandHTML, bind, load, toggle, back, seekTo, cycleSpeed, stop, busy, estimateStarts, duration, get state(){ return state; } };
+  return { bandHTML, bind, load, toggle, back, seekTo, cycleSpeed, stop, busy, estimateStarts, duration, currentTime, rate, get state(){ return state; }, get locked(){ return locked(); } };
 })();

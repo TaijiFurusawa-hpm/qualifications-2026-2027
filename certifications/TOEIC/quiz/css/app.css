@@ -514,6 +514,60 @@ kbd{font-family:var(--f-num); font-size:var(--fs-13); font-weight:700; padding:1
 .amt .btn small{display:block}
 .seg button{white-space:normal}
 
+/* ---------- 11c. 模試（段階2：M1〜M7） ---------- */
+/* リスニングの帯：状態の文字（音声まで／再生中／解答の時間）＋進み具合。止める・もどす・速さの操作は置かない */
+.mband .pl-st{flex:none; min-width:8.5em}
+.mband .playb{min-height:var(--tap)}
+@media (max-width:400px){ .mband{flex-wrap:wrap} .mband .pl-st{flex:1 1 100%} }
+/* Part 3・4 の設問の番号（押すとその問いへ） */
+.lq{display:flex; flex-wrap:wrap; gap:6px}
+/* 上のバーの残り時間（押すと隠す）：札の見た目のまま、押せる大きさは48px */
+.tbtn{min-height:var(--tap); min-width:var(--tap); display:inline-flex; align-items:center; justify-content:center; border:0; background:none; color:inherit; padding:0 2px; cursor:pointer; margin:-12px 0}
+.topbar.ses .tchips{align-items:center}
+/* 残り15分・5分の知らせ：閉じるまで残る。点滅しない */
+.mnote{display:flex; align-items:center; gap:var(--sp-2); padding:0 var(--gutter-r) 0 var(--gutter); border-bottom:var(--rule) solid var(--c-rule-strong); background:var(--c-surface); font-size:var(--fs-14); font-weight:700; color:var(--c-attention)}
+.mnote>span{flex:1; min-width:0}
+/* あとで見直す：印の入切（色に頼らず、旗の塗り・aria-pressed で示す） */
+.mmark[aria-pressed="true"]{border-color:var(--c-text); background:var(--c-selected)}
+.bottombar .wrapin>.btn.mmark{flex:0 1 auto; width:auto; padding:6px 12px; white-space:nowrap}
+.bottombar .wrapin>.btn.mmark~.btn.pri{flex:1 1 5em; min-width:0}
+#mqn{white-space:nowrap}
+@media (max-width:400px){ .mmark .lg{display:none}
+  html[data-text="3"] .mmark>span, html[data-text="4"] .mmark>span,
+  html[data-text="3"] #mqn .tot, html[data-text="4"] #mqn .tot{display:none} }   /* 狭い画面で文字が特大以上：印だけ（名前は aria-label） */
+.btn[aria-disabled="true"]{opacity:.45; cursor:default}
+/* 解答状況（M6）：未解答＝白抜き／解答ずみ＝塗り／あとで見直す＝塗り＋角の印。いまの問題は下線。押せる大きさを保つため、狭い幅では列を減らす */
+.mgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(48px,1fr)); gap:6px}
+@media (min-width:600px){ .mgrid{grid-template-columns:repeat(10,minmax(0,1fr))} }
+.gq{position:relative; min-height:var(--tap); min-width:var(--tap); display:grid; place-items:center; padding:0; border:var(--bw) solid var(--c-rule-strong); border-radius:var(--r-m);
+  background:transparent; color:var(--c-text); font-weight:700; font-size:var(--fs-14); cursor:pointer}
+.gq.done{background:var(--c-selected); border-color:var(--c-text)}
+.gq.cur{box-shadow:inset 0 -3px 0 var(--c-text)}
+.gq.marked::after,.qchip.marked::after{content:""; position:absolute; top:0; right:0; width:12px; height:12px; background:linear-gradient(225deg,var(--c-attention) 50%,transparent 50%); border-top-right-radius:inherit}
+.qchip{position:relative}
+.gq.sw{display:inline-block; vertical-align:-3px; width:16px; height:16px; min-width:0; min-height:0; margin:0 4px 0 0; border-radius:var(--r-s); cursor:default}
+.gq.sw::after{width:7px; height:7px}
+.glegend{display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px}
+/* 準備（M2） */
+.rules{margin:0; padding-left:1.2em; display:flex; flex-direction:column; gap:4px; line-height:1.6}
+.lockl{display:flex; align-items:center; gap:6px}
+.lockl .ic{flex:none}
+/* 結果（M7）：目安の幅を大きく。数字は数え上がり、墨のしずく */
+.est .big{font-size:clamp(2.25rem,11vw,3rem); flex-wrap:wrap; row-gap:0}
+.est .big .eye{font-family:var(--f-ui); font-size:var(--fs-14); font-weight:700; color:var(--c-text-2); letter-spacing:.06em; align-self:center}
+.est .big em{font-size:1.5rem}
+.est .rng b{font-family:var(--f-num); font-size:1.0625rem}
+.estl{display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px; margin:0}
+.estl b{font-size:1.5rem; font-weight:600}
+.stats b small{font-size:.8125rem; font-weight:500; color:var(--c-text-2)}
+details.how{width:100%; text-align:left}
+details.how .ja ul{margin:6px 0; padding-left:1.2em}
+details.wl>.card{margin-top:var(--sp-2)}
+.trow{display:flex; align-items:center; gap:var(--sp-2); padding:6px 0; border-top:var(--rule) solid var(--c-rule); flex-wrap:wrap}
+.trow:first-child{border-top:0}
+.trow .m{flex:1 1 10rem; min-width:0; line-height:1.4}
+.trow .m b{display:block; font-size:var(--fs-15)}
+
 /* ---------- 12. 演出の部品 ---------- */
 .fx-layer{position:fixed; inset:0; pointer-events:none; z-index:50; overflow:hidden}
 .fx-dot{position:absolute; left:0; top:0; border-radius:50%; will-change:transform,opacity; pointer-events:none}
