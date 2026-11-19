@@ -215,7 +215,9 @@ const markSvg=ok=>`<svg class="cm" viewBox="0 0 24 24" aria-hidden="true">${ok?M
 function subTop(title,close){
   return `<div class="topbar"><button type="button" class="iconbtn pz" data-act="${close?"close":"back"}" aria-label="${close?"閉じる":"もどる"}">${icon(close?"x":"back")}</button><div class="t"><b>${esc(title)}</b></div></div>`;
 }
-function tabTop(title,right){ return `<div class="topbar gl"><div class="t"><b class="h" style="font-size:1.0625rem">${esc(title)}</b></div>${right||""}</div>`; }
+/* 設定の入口：4つのタブの右上に同じ位置で置く */
+const gearBtn=()=>`<button type="button" class="iconbtn pz" data-act="nav" data-to="settings" aria-label="設定">${icon("gear")}</button>`;
+function tabTop(title,right){ return `<div class="topbar gl"><div class="t"><b class="h" style="font-size:1.0625rem">${esc(title)}</b></div>${right||""}${gearBtn()}</div>`; }
 function barHTML(v,attrs){ return `<div class="bar"${attrs?" "+attrs:""}><i style="--v:${v}"></i></div>`; }
 /* セッションの上のバー：やめる／見出し＋進み具合／札（時間など）／その他（⋯） */
 function sessionTop(label,i,n,extra,quitLabel,menu){
@@ -539,6 +541,7 @@ function openMenu(btn){
   if(!m.hidden){ closeMenu(); return; }
   let h="";
   if(S&&S.M.flag&&S.view==="unit") h+=flagBtn(cur().id,"mi");
+  h+=`<button type="button" class="mi pz" data-act="qset">${icon("gear","s")}表示の設定</button>`;
   h+=`<button type="button" class="mi pz" data-act="keys">${icon("keys","s")}キーの一覧</button>`;
   m.innerHTML=h; m.hidden=false; btn.setAttribute("aria-expanded","true");
   refocus("#menu button");
@@ -546,11 +549,27 @@ function openMenu(btn){
 document.addEventListener("click",e=>{ const m=$("#menu"); if(m&&!m.hidden&&!e.target.closest(".menuw")) closeMenu(); },true);
 const KEY_HELP=[["1〜4／A〜D","選択肢を選ぶ"],["0","わからない（練習・解き直し）"],["Enter／→","次へ（解答のあと）"],["Space","再生・一時停止（Part 1〜4）"],["←","5秒もどる（Part 1〜4）／前の設問（Part 6・7）"],
   ["S","スクリプト・訳を開く"],["T","設問トレイの上げ下げ（Part 6・7）"],["Esc","やめる"],["?","この一覧"]];
+function closeDlg(id){ const d=$("#"+id); if(d) try{ d.close(); }catch(e){ d.removeAttribute("open"); } }
 function showKeys(){
   closeMenu();
   let d=$("#keysdlg"); if(!d){ d=document.createElement("dialog"); d.id="keysdlg"; d.className="sheet"; d.setAttribute("aria-labelledby","keysh"); document.body.appendChild(d); }
   d.innerHTML=`<h2 class="h h2" id="keysh">キーの一覧</h2><table class="st keys">`+KEY_HELP.map(([k,v])=>`<tr><th scope="row"><kbd>${esc(k)}</kbd></th><td>${esc(v)}</td></tr>`).join("")+`</table>`+
     `<p class="note">単語特訓：1〜4で解答、0でわからない、Enterで次へ</p><button type="button" class="btn sec pz" data-act="keysClose">閉じる</button>`;
+  try{ d.showModal(); }catch(e){ d.setAttribute("open",""); }
+}
+/* 解いている途中の「表示の設定」：解答・時間・音声は止めずに、見え方だけ変える */
+function quickSetHTML(){
+  const p=prefs(), reader=!!(S&&S.view==="unit"&&cur()&&isReader(cur()));
+  return `<h2 class="h h2" id="qseth">表示の設定</h2>`+
+    `<div class="setrow"><b>文字の大きさ</b>${segHTML("text",OPT_TEXT,p.text,"qpref")}</div>`+
+    `<div class="setrow"><b>外観</b>${segHTML("theme",OPT_THEME,p.theme,"qpref")}</div>`+
+    (reader?`<div class="setrow"><b>Part 6・7 の設問</b>${segHTML("tray",OPT_TRAY,p.tray,"qpref")}</div>`:"")+
+    `<button type="button" class="btn sec pz" data-act="qsetClose">閉じる</button>`;
+}
+function showQuickSet(){
+  closeMenu();
+  let d=$("#qsetdlg"); if(!d){ d=document.createElement("dialog"); d.id="qsetdlg"; d.className="sheet"; d.setAttribute("aria-labelledby","qseth"); document.body.appendChild(d); }
+  d.innerHTML=quickSetHTML();
   try{ d.showModal(); }catch(e){ d.setAttribute("open",""); }
 }
 function toggleScript(){
@@ -812,7 +831,7 @@ function mockQCount(n){ const U=unitsOf(n); return PARTS.reduce((s,p)=>s+(U[p]||
 
 SCREENS.today=()=>{
   const top=`<div class="topbar gl"><div class="brand" style="flex:1;min-width:0"><span class="logo" aria-hidden="true">L</span><div class="bn"><b>Lapis 模試 <span class="xs mut w5">（仮称）</span></b><small lang="en">for the TOEIC® L&amp;R Test</small></div></div>`+
-    `<button type="button" class="iconbtn pz" data-act="nav" data-to="stats" aria-label="記録">${icon("chart")}</button><button type="button" class="iconbtn pz" data-act="nav" data-to="settings" aria-label="設定">${icon("gear")}</button></div>`;
+    `<button type="button" class="iconbtn pz" data-act="nav" data-to="stats" aria-label="記録">${icon("chart")}</button>${gearBtn()}</div>`;
   if(!MOCKS.length&&!VOCAB.length){ Shell.render({tab:"today",top,body:noData()}); return; }
   let h=`<p class="sm mut">${todayLabel()}</p>`;
   if(VOCAB.length){
@@ -909,16 +928,18 @@ SCREENS.stats=()=>{
 function optBtns(act,k,opts,cur,cls){
   return opts.map(([v,l])=>{ const on=cur===v; return `<button type="button" class="${cls?cls+(on?" on":"")+" ":""}pz" data-act="${act}" data-k="${k}" data-v="${esc(v)}" aria-pressed="${on}">${l}</button>`; }).join("");
 }
+/* 設定画面と「表示の設定」で同じ選択肢を使う */
+const OPT_TEXT=[[0,"小"],[1,"標準"],[2,"大"],[3,"特大"],[4,"最大"]], OPT_THEME=[["auto","端末に合わせる"],["light","明るい"],["dark","暗い"]], OPT_TRAY=[["auto","3段階で上げ下げ"],["switch","文書と切り替え"]];
 function segHTML(k,opts,cur,act){ return `<div class="seg" role="group">${optBtns(act||"pref",k,opts,cur)}</div>`; }
 function optVal(def,s){ return typeof def==="number"?+s:s; }   // 既定値が数なら数に
 SCREENS.settings=(o)=>{ const re=!!(o&&o.rerender);
   const p=prefs(), pf=profile();
   const nwOpts=[5,10,15,20,30]; if(!nwOpts.includes(pf.newPerDay)) nwOpts.push(pf.newPerDay); nwOpts.sort((a,b)=>a-b);
   const h=`<h2 class="sec-h">表示</h2><section class="card plain">
-    <div class="setrow"><b>外観</b>${segHTML("theme",[["auto","端末に合わせる"],["light","明るい"],["dark","暗い"]],p.theme)}</div>
-    <div class="setrow"><b>文字の大きさ</b>${segHTML("text",[[0,"小"],[1,"標準"],[2,"大"],[3,"特大"],[4,"最大"]],p.text)}<p class="vex" lang="en">The quarterly report will be distributed to all department heads.</p></div>
+    <div class="setrow"><b>外観</b>${segHTML("theme",OPT_THEME,p.theme)}</div>
+    <div class="setrow"><b>文字の大きさ</b>${segHTML("text",OPT_TEXT,p.text)}<p class="vex" lang="en">The quarterly report will be distributed to all department heads.</p></div>
     <div class="setrow"><b>動きを減らす</b>${segHTML("motion",[["auto","端末に合わせる"],["reduce","いつも減らす"]],p.motion)}</div>
-    <div class="setrow"><b>Part 6・7 の設問</b>${segHTML("tray",[["auto","3段階で上げ下げ"],["switch","文書と切り替え"]],p.tray)}<p class="note">「3段階」でも、文字が特大以上か画面が低いときは、文書と設問を切り替える2段階になります。</p></div></section>
+    <div class="setrow"><b>Part 6・7 の設問</b>${segHTML("tray",OPT_TRAY,p.tray)}<p class="note">「3段階」でも、文字が特大以上か画面が低いときは、文書と設問を切り替える2段階になります。</p></div></section>
     <h2 class="sec-h">音と触覚</h2><section class="card plain">
     <div class="setrow"><b>効果音</b>${segHTML("sfx",[[1,"入"],[0,"切"]],p.sfx)}<p class="note">模試の最中と、音声が流れている間は鳴りません。</p></div>
     <div class="setrow"><b>触覚</b>${segHTML("haptic",[[1,"入"],[0,"切"]],p.haptic)}<p class="note">アプリ版で働きます（ブラウザでは何も起きません）。</p></div>
@@ -1017,7 +1038,10 @@ Object.assign(ACT,{
   next:()=>advance(), prev:()=>retreat(),
   menu:(d,el)=>openMenu(el),
   keys:()=>showKeys(),
-  keysClose:()=>{ const k=$("#keysdlg"); if(k) try{ k.close(); }catch(e){ k.removeAttribute("open"); } },
+  qset:()=>showQuickSet(),
+  qsetClose:()=>closeDlg("qsetdlg"),
+  qpref:d=>{ setPref(d.k,optVal(PREFS_DEFAULT[d.k],d.v)); const g=$("#qsetdlg"); if(g) g.innerHTML=quickSetHTML(); if(typeof Tray!=="undefined") Tray.refresh(); refocus(`#qsetdlg [data-k="${d.k}"][aria-pressed="true"]`); },
+  keysClose:()=>closeDlg("keysdlg"),
   vstart:d=>startVocab(d.mode),
   vans:d=>vAnswer(+d.c),
   vnext:()=>vNext(),
