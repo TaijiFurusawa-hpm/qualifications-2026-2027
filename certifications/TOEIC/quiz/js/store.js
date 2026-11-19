@@ -99,18 +99,18 @@ function removeJSON(k){ Store.remove(k); }
    since：使い始めた段階／legacy：旧キー（読むだけ。消さない）／shape：中身の形 */
 const KEYS = [
   {id:"schema",   key:"toeic_schema",      since:0, shape:"{v, at, from}",                         what:"形の版。引きつぎの判定に使う"},
-  {id:"profile",  key:"toeic_profile_v1",  since:0, shape:"PROFILE_DEFAULT",                       what:"はじめに・学習の計画"},
+  {id:"profile",  key:"toeic_profile_v1",  since:0, shape:"PROFILE_DEFAULT ＋ lvStart:{段:日}・lvDone:{段:日}", what:"はじめに・学習の計画・段に手をつけた日と修了した日（段階3）"},
   {id:"prefs",    key:"toeic_prefs_v1",    since:0, shape:"PREFS_DEFAULT",                         what:"設定（toeic_speed_v1・toeic_vset_v1 を吸収）"},
   {id:"ent",      key:"toeic_ent_v1",      since:5, shape:"{unlocked, product, checkedAt, pending}", what:"購入の状態の控え（正はストア）"},
   {id:"review",   key:"toeic_review_v1",   since:0, shape:"{qid:{st:0..3, due:日, n:誤答の回数}}",   what:"解き直しの段階と次に出る日（toeic_miss_v1 から引きつぐ）"},
-  {id:"day",      key:"toeic_day_v1",      since:3, shape:"{日:{w,r,p,m}}",                         what:"その日に終えたかたまり"},
+  {id:"day",      key:"toeic_day_v1",      since:3, shape:"{日:{w,r,p:1＝今日の1セットのかたまりを終えた, a:1＝何か解いた, P:{Part:[解いた数,正解]}}}", what:"その日に終えたかたまり・学習した日・Part別（直近30日）"},
   {id:"mockhist", key:"toeic_mockhist_v1", since:2, shape:"[{n, attempt, mode, at, L, R, nL, nR, …}]",  what:"受けた模試の結果（js/mock.js の histEntry）"},
   {id:"mockrun",  key:"toeic_mockrun_v1",  since:2, perMock:true, shape:"{n, mode, attempt, phase, i, qi, L, ans, mark, …}", what:"回Nの途中の状態。キーは toeic_mockrun_v1:N（回ごとに別キー。採点したら消す）"},
   {id:"stat",     key:"toeic_stat_v1",     since:0, shape:"{'P5|品詞':{n, ok, ms}}",                what:"Part・タグ別の成績"},
   {id:"seen",     key:"toeic_seen_v1",     since:0, shape:"{unitId:回数}",                          what:"解いた回数（まだ解いていない問題を先に出す）"},
   {id:"flag",     key:"toeic_flag_v1",     since:0, shape:"{id:時刻}",                              what:"「この問題はおかしい」の報告"},
   {id:"vocab",    key:"toeic_vocab_v1",    since:0, shape:"{wordId:{b, d, n, ok, l}}",              what:"単語の箱と次に出る日"},
-  {id:"vlog",     key:"toeic_vlog_v1",     since:0, shape:"{日:{n, ok, nw}}",                       what:"単語の学習日誌"},
+  {id:"vlog",     key:"toeic_vlog_v1",     since:0, shape:"{日:{n, ok, nw, rn, rok}}",              what:"単語の学習日誌（rn・rok＝復習の数と正解。段階3で足した。無い日は0）"},
   {id:"miss",     key:"toeic_miss_v1",     legacy:true, shape:"{qid:回数}",                         what:"旧：誤答の回数（review と同じ意味で書きつづける）"},
   {id:"speed",    key:"toeic_speed_v1",    legacy:true, shape:"{v}",                                what:"旧：再生の速さ"},
   {id:"vset",     key:"toeic_vset_v1",     legacy:true, shape:"{nw, lv, auto}",                     what:"旧：単語の設定"}
@@ -149,4 +149,13 @@ function migrateStore(st, today){
   st.save(K.prefs,prefs); st.save(K.profile,prof);
   st.save(K.schema,{v:SCHEMA_V, at:Date.now(), from:had?1:0});
   return {ran:true, from:had?1:0, reviewMoved:moved};
+}
+/* 「はじめに」を出すか：まだ済んでいなくても、学習の記録がすでにある人（段階0〜2の版から使っている人）には出さない。
+   出さないと決めたら profile.onboarded=1 を書く（何度呼んでも同じ）。返り値：書いたら true */
+const RECORD_IDS = ["stat","review","miss","seen","vocab","vlog","mockhist","day"];
+function settleOnboarding(st){
+  const p=Object.assign({},PROFILE_DEFAULT,st.load(K.profile)); if(p.onboarded) return false;
+  const has=RECORD_IDS.some(id=>Object.keys(st.load(K[id])).length>0)||st.keys().some(k=>k.startsWith(K.mockrun+":"));
+  if(!has) return false;
+  p.onboarded=1; st.save(K.profile,p); return true;
 }

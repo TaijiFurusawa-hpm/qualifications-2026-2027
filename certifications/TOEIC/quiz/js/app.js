@@ -3,7 +3,7 @@
    段階2（模試）は js/mock.js（時間割・自動保存と再開・目安のスコア・一覧／準備／結果の画面）。
    画面の仕様は ux/UX設計書.html、見た目は ux/ビジュアル案.html（紙と墨の答案）。 */
 "use strict";
-const APP_VERSION = "0.4.0";
+const APP_VERSION = "0.5.0";
 const LET = ["A","B","C","D"];
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"); }
 const $ = s=>document.querySelector(s);
@@ -173,8 +173,8 @@ function scheduleMsg(res,t){
 }
 /* 期限の来た解き直し。qset を渡すと、期限に関係なくその問題だけ（結果画面の「間違えた◯問を解き直す」）
    unit は、出す設問だけに絞った写しを返す。最大 REVIEW_MAX 問（段階の低い順・間違えた回数の多い順に取る） */
-function reviewPlan(qset){
-  const rv=loadJSON(K.review), t=today(), all=[];
+function reviewPlan(qset,max){
+  const rv=loadJSON(K.review), t=today(), all=[], lim=max||REVIEW_MAX;
   const want=q=>qset?qset.has(q.qid):!!(rv[q.qid]&&rv[q.qid].due<=t);
   for(const u of allUnitsFlat()){
     const qs=u.qs.filter(want); if(!qs.length) continue;
@@ -183,7 +183,7 @@ function reviewPlan(qset){
   }
   all.sort((a,b)=>a.st-b.st||b.n-a.n);
   const total=all.reduce((s,x)=>s+x.u.qs.length,0), take=[]; let count=0;
-  for(const x of all){ if(take.length&&count+x.u.qs.length>REVIEW_MAX) break; take.push(x.u); count+=x.u.qs.length; }
+  for(const x of all){ if(take.length&&count+x.u.qs.length>lim) break; take.push(x.u); count+=x.u.qs.length; }
   const units=prefs().reviewOrder==="part"?take.sort((a,b)=>a.part-b.part):shuffle(take);
   let next=null;
   if(!qset) for(const q in rv){ const d=rv[q].due; if(d>t&&unitById(q.replace(/\.\d+$/,""))){ if(!next||d<next.due) next={due:d,n:1}; else if(d===next.due) next.n++; } }
@@ -210,14 +210,20 @@ function tally(map,key,good){ const r=map[key]||(map[key]={n:0,ok:0}); r.n++; if
    解かずに見た（peek）問題は記録しない。返り値は1問ごとの解き直しの変化（peek は null） */
 function recordResults(items){
   const st=loadJSON(K.stat), rv=loadJSON(K.review), m=loadJSON(K.miss), t=today(), gaps=reviewGaps(t,dayOf(profile().exam));
+  const dy=loadJSON(K.day), P={};   // その日の Part 別（記録の「直近30日」に使う）
   let changed=false;
   const out=items.map(({unit,q,ans})=>{
     if(ans&&ans.peek) return null;
     const ok=!!ans&&ans.pick===q.a, r=tally(st,"P"+unit.part+"|"+(q.tag||"-"),ok);
     r.ms=(r.ms||0)+((ans&&ans.ms)||0); changed=true;
+    const pp=P[unit.part]||(P[unit.part]=[0,0]); pp[0]++; if(ok) pp[1]++;
     return reviewApply(rv,m,q.qid,ok,t,gaps);
   });
-  if(changed){ saveJSON(K.stat,st); saveJSON(K.review,rv); saveJSON(K.miss,m); }
+  if(changed){
+    const de=dy[t]||(dy[t]={}), dp=de.P||(de.P={}); de.a=1;
+    for(const p in P){ const x=dp[p]||(dp[p]=[0,0]); x[0]+=P[p][0]; x[1]+=P[p][1]; }
+    saveJSON(K.stat,st); saveJSON(K.review,rv); saveJSON(K.miss,m); saveJSON(K.day,dy);
+  }
   return out;
 }
 function recordResult(unit,q,ans){ return recordResults([{unit,q,ans}])[0]; }
@@ -294,16 +300,17 @@ function firstOpen(u){ return u.qs.findIndex(q=>!S.ans[q.qid]); }
 function unitDone(u){ return u.qs.every(q=>S.ans[q.qid]); }
 
 /* 練習：amt = short（標準の半分）| std（PART_SPEC.size）| all（全部・番号順）。tag でしぼれる */
-function practiceSize(p,amt,avail){ const s=PART_SPEC[p].size; return Math.min(avail, amt==="all"?avail:amt==="short"?Math.max(1,Math.ceil(s/2)):s); }
+function practiceSize(p,amt,avail){ const s=PART_SPEC[p].size; return Math.min(avail, typeof amt==="number"?amt:amt==="all"?avail:amt==="short"?Math.max(1,Math.ceil(s/2)):s); }   // amt が数なら、その数（今日の1セットの弱点）
 function practicePool(p,tag){ const all=practiceUnits(p); return tag?all.filter(u=>u.qs.some(q=>q.tag===tag)):all; }
-function startPractice(part,amt,tag){
-  let units=practicePool(part,tag); if(!units.length) return;
+/* extra：セッションに足す項目（今日の1セットのかたまりは {set:"p"}） */
+function startPractice(part,amt,tag,extra){
+  let units=practicePool(part,tag); if(!units.length) return false;
   if(amt!=="all"){ const seen=loadJSON(K.seen); units=shuffle(shuffle(units).sort((a,b)=>(seen[a.id]||0)-(seen[b.id]||0)).slice(0,practiceSize(part,amt,units.length))); }   // まだ解いていない問題を先に
-  enterQuiz(); S=newSession("practice",units); showUnit();
+  enterQuiz(); S=newSession("practice",units,extra); showUnit(); return true;
 }
-function startReview(qids){
-  const plan=reviewPlan(qids?new Set(qids):null); if(!plan.units.length) return;
-  enterQuiz(); S=newSession("review",plan.units); showUnit();
+function startReview(qids,max,extra){
+  const plan=reviewPlan(qids?new Set(qids):null,max); if(!plan.units.length) return false;
+  enterQuiz(); S=newSession("review",plan.units,extra); showUnit(); return true;
 }
 /* 1画面（unit）を描く。opt.qi＝最初に出す設問、opt.keep＝描き直しだけ（時間・答え・トレイの段階を保つ）
    模試（M.timed）では、音声と時間・上のバー・下のバーを Mock が持つ（画面を描きかえても音声は止めない：先読みのため） */
@@ -522,7 +529,7 @@ function advance(){
     if(S.qi<u.qs.length-1){ setQi(S.qi+1); return; }
     if(S.M.feedback){ const o=firstOpen(u); if(o>=0){ setQi(o); return; } }
   }
-  if(S.i===S.units.length-1){ if(S.M.feedback) finishPractice(); else Mock.finish(false); return; }
+  if(S.i===S.units.length-1){ if(S.M.feedback){ S.complete=true; finishPractice(); } else Mock.finish(false); return; }
   go(1);
 }
 function retreat(){
@@ -570,7 +577,7 @@ function openSheet(id,html){
 }
 function showKeys(){
   openSheet("keysdlg",`<h2 class="h h2" id="keysdlg-h">キーの一覧</h2><table class="st keys">`+KEY_HELP.map(([k,v])=>`<tr><th scope="row"><kbd>${esc(k)}</kbd></th><td>${esc(v)}</td></tr>`).join("")+`</table>`+
-    `<p class="note">単語特訓：1〜4で解答、0でわからない、Enterで次へ</p><button type="button" class="btn sec pz" data-act="keysClose">閉じる</button>`);
+    `<p class="note">単語特訓・実力チェック：1〜4で解答、0でわからない、Enterで次へ。まとめて確認：Spaceでめくる、→ 知ってる、← まだ、Z 1つもどす。今日・模試・練習・単語の画面：1〜4でタブ、Enterで主ボタン</p><button type="button" class="btn sec pz" data-act="keysClose">閉じる</button>`);
 }
 /* 解いている途中の「表示の設定」：解答・時間・音声は止めずに、見え方だけ変える */
 function quickSetHTML(){
@@ -610,7 +617,11 @@ function sessionKey(ev){
 }
 
 /* ===== 結果 ===== */
-function finishPractice(){ clearTimer(); Player.stop(); S.done=true; Fx.haptic("done"); Fx.sound("done"); results(); }
+/* 今日の1セットのかたまり（S.set）を最後まで解いたら、結果の代わりに区切りの1枚（js/daily.js）。途中でやめたら、ふつうの結果 */
+function finishPractice(){ clearTimer(); Player.stop(); S.done=true; Fx.haptic("done"); Fx.sound("done");
+  if(S.set&&S.complete){ Tray.off(); S.view="results"; const r=sessionScore(); Daily.between(S.set,`${r.tot}問中 ${r.ok}問正解`); return; }
+  results(); }
+function sessionScore(){ let tot=0,ok=0; for(const u of S.units) for(const q of u.qs){ const a=S.ans[q.qid]; if(!a||a.peek) continue; tot++; if(a.pick===q.a) ok++; } return {tot,ok}; }
 /* 練習・解き直しの結果（模試の結果は js/mock.js の SCREENS.mockresult） */
 function results(){
   Tray.off(); S.view="results";
@@ -662,8 +673,9 @@ const V_INT=[0,1,3,7,14,30,90];   // 箱ごとの「次に出るまでの日数�
 const V_LV={1:"〜400",2:"〜500",3:"〜600",4:"〜700",5:"〜800",6:"〜900",7:"900〜"};  // 100点刻み（2026-11-19）
 const V_LEVELS=[1,2,3,4,5,6,7];
 const V_TYPE={mean:"意味を選ぶ",listen:"聞いて意味を選ぶ",cloze:"空所に入る語を選ぶ",rev:"英語を選ぶ"};
+const V_DUE_MAX=60, V_SET_DUE=20, V_SEC=12;   // 1回の復習の上限（現行80を下げる：3.8）／今日の1セットの中の復習の上限／1語の目安の秒数
 let VOCAB=[], VBY={}, V=null;
-function vSet(){ const p=profile(), q=prefs(); return {nw:+p.newPerDay||10, lv:+p.curLv||0, auto:q.vAuto?1:0}; }
+function vSet(){ return {nw:+profile().newPerDay||10, auto:prefs().vAuto?1:0}; }   // 段は vCurLv()
 function vState(){ return loadJSON(K.vocab); }
 function vCounts(){
   const st=vState(), t=today(); let nw=0,lr=0,ms=0,due=0,weak=0;
@@ -698,23 +710,44 @@ function vType(e,r){
   if(r.b===5) return pickOne(["cloze","rev"]);
   return pickOne(vTypesFor(e));
 }
+/* いまの段（V1の「いまここ」）：profile.curLv の段から上へ、まだ出していない語が残っている最初の段。
+   上の段まで出し終えたら、下の段の残り。curLv=0（段階0までの「易しい順」）は段1から */
+function vCurLv(st){
+  st=st||vState(); const L=+profile().curLv||1, has=lv=>VOCAB.some(e=>e.lv===lv&&!st[e.id]);
+  return V_LEVELS.filter(l=>l>=L).concat(V_LEVELS.filter(l=>l<L)).find(has)||L;
+}
+/* 新しい語 n 個：いまの段から順に（段の中はまぜる）。出し終えた段は自動で次の段へ（3.8） */
+function vNewWords(st,n){
+  const L=vCurLv(st), out=[];
+  for(const lv of V_LEVELS.filter(l=>l>=L).concat(V_LEVELS.filter(l=>l<L))){ if(out.length>=n) break; out.push(...shuffle(VOCAB.filter(e=>e.lv===lv&&!st[e.id])).slice(0,n-out.length)); }
+  return out;
+}
+/* 今日まだ出せる新しい語の数（1日の計画 − 今日すでに出した数） */
+function vNewLeft(st){ st=st||vState(); const lg=loadJSON(K.vlog)[today()]||{}; return Math.min(Math.max(0,vSet().nw-(lg.nw||0)),VOCAB.reduce((a,e)=>a+(st[e.id]?0:1),0)); }
+/* mode：daily（今日の単語：復習60＋今日の残りの新しい語）／set（今日の1セットの単語：復習20＋同）／review／new（新しい語をもう1日分）／weak（苦手な語・箱は進めない） */
 function startVocab(mode){
-  const st=vState(), t=today(), set=vSet();
-  let due=[], nw=[];
-  if(mode==="daily"||mode==="review"){ due=VOCAB.filter(e=>st[e.id]&&st[e.id].d<=t).sort((a,b)=>st[a.id].d-st[b.id].d).slice(0,80); due=shuffle(due); }
-  if(mode==="daily"||mode==="new"){
-    const pool=VOCAB.filter(e=>!st[e.id]&&(!set.lv||e.lv===set.lv));
-    nw=V_LEVELS.flatMap(lv=>shuffle(pool.filter(e=>e.lv===lv))).slice(0,set.nw);
-  }
-  let queue=due.concat(nw), free=false;
+  const st=vState(), t=today();
+  let queue=[], free=false;
   if(mode==="weak"){ queue=shuffle(VOCAB.filter(e=>st[e.id]&&st[e.id].l>0&&st[e.id].b<6).sort((a,b)=>st[b.id].l-st[a.id].l).slice(0,30)); free=true; }
-  if(!queue.length) return;
+  else {
+    if(mode!=="new") queue=shuffle(VOCAB.filter(e=>st[e.id]&&st[e.id].d<=t).sort((a,b)=>st[a.id].d-st[b.id].d).slice(0,mode==="set"?V_SET_DUE:V_DUE_MAX));
+    if(mode!=="review") queue=queue.concat(vNewWords(st,mode==="new"?vSet().nw:vNewLeft(st)));
+  }
+  if(!queue.length) return false;
+  // 新しい語を出すとき、いまの段を出し終えていたら次の段へ移し、結果で知らせる
+  const was=+profile().curLv||0, now=vCurLv(st), moved=!free&&mode!=="review"&&was&&now!==was;
+  if(moved) setProfile("curLv",now);
+  vBegin(mode,queue,free,{set:mode==="set"?"w":"", lvMoved:moved?[was,now]:null});
+  return true;
+}
+/* 単語のセッションを始める（自己テストの再生でも使う：並びをそのまま渡す） */
+function vBegin(mode,queue,free,extra){
   Router.session({leave:()=>{ Player.stop(); V=null; }});
-  V={mode,free,queue,i:0,n:0,ok:0,nw:0,miss:{},q:null};
+  V=Object.assign({mode,free,queue,i:0,n:0,ok:0,nw:0,miss:{},q:null},extra||{});
   vShow();
 }
 function vShow(){
-  stopAudio();
+  Player.stop();
   const e=V.queue[V.i]; if(!e){ vFinish(); return; }
   const r=vState()[e.id], forced=V.miss[e.id]&&V.miss[e.id].type;
   const type=forced||(V.free?pickOne(vTypesFor(e)):vType(e,r));
@@ -758,20 +791,32 @@ function vCard(e){
     ${vAudBtns(e)}
     <div>${flagBtn("V:"+e.id)}</div></section>`;
 }
+/* 箱と間隔（現行のまま。自己テストで 1565874 の時点と同じ toeic_vocab_v1 になることを確かめている）。
+   r＝その語の記録（無ければ新しい語）。r は書きかえる。返り値 {r, msg} */
+function vApply(r,ok,t,free){
+  let msg;
+  if(!r){
+    r=ok?{b:2,d:t+V_INT[2],n:1,ok:1,l:0}:{b:0,d:t,n:1,ok:0,l:0};
+    msg=ok?"知っている語として3日後に確認します":"このあともう一度出ます";
+  } else {
+    r.n++;
+    if(ok){ r.ok++; if(!free||r.b===0){ r.b=Math.min(6,r.b+1); r.d=t+V_INT[r.b]; } msg=free?"":r.b>=6?"習得。90日後に確認します":"次は"+V_INT[r.b]+"日後"; }
+    else { if(r.b>0) r.l=(r.l||0)+1; r.b=0; r.d=t; msg="このあともう一度出ます"; }
+  }
+  return {r,msg};
+}
+/* 学習日誌（toeic_vlog_v1）に1問。rn・rok＝復習（新しい語でない）の数と正解（記録の「復習での正答率」） */
+function vLog(t,ok,isNew){ const lg=loadJSON(K.vlog), d=tally(lg,t,ok); d.nw=(d.nw||0)+(isNew?1:0); if(!isNew){ d.rn=(d.rn||0)+1; if(ok) d.rok=(d.rok||0)+1; } saveJSON(K.vlog,lg); }
+/* 段に初めて手をつけた日（V5「かかった日数」） */
+function vLvStart(lv,t){ const p=profile(), s=Object.assign({},p.lvStart); if(s[lv]!=null) return; s[lv]=t; setProfile("lvStart",s); }
 function vAnswer(ci){
   const q=V&&V.q; if(!q||q.done) return;
   const e=q.e, ok=ci>=0&&q.opts[ci].ok, st=vState(), t=today();
-  let r=st[e.id]; const again=!!V.miss[e.id];
+  const again=!!V.miss[e.id];
   q.done=true; q.pick=ci;
-  if(!again){ V.n++; if(ok) V.ok++; if(q.isNew) V.nw++; const lg=loadJSON(K.vlog), d=tally(lg,t,ok); d.nw=(d.nw||0)+(q.isNew?1:0); saveJSON(K.vlog,lg); }
-  if(!r){
-    r=st[e.id]=ok?{b:2,d:t+V_INT[2],n:1,ok:1,l:0}:{b:0,d:t,n:1,ok:0,l:0};
-    q.msg=ok?"知っている語として3日後に確認します":"このあともう一度出ます";
-  } else {
-    r.n++;
-    if(ok){ r.ok++; if(!V.free||r.b===0){ r.b=Math.min(6,r.b+1); r.d=t+V_INT[r.b]; } q.msg=V.free?"":r.b>=6?"習得。90日後に確認します":"次は"+V_INT[r.b]+"日後"; }
-    else { if(r.b>0) r.l=(r.l||0)+1; r.b=0; r.d=t; q.msg="このあともう一度出ます"; }
-  }
+  if(!again){ V.n++; if(ok) V.ok++; if(q.isNew) V.nw++; vLog(t,ok,q.isNew); }
+  if(!st[e.id]) vLvStart(e.lv,t);
+  const res=vApply(st[e.id],ok,t,V.free); st[e.id]=res.r; q.msg=res.msg;
   saveJSON(K.vocab,st);
   if(ok) delete V.miss[e.id];
   else { V.miss[e.id]={type:q.type==="listen"?"mean":q.type,w:1}; V.missed=V.missed||{}; V.missed[e.id]=1; V.queue.splice(Math.min(V.queue.length,V.i+5),0,e); }
@@ -783,18 +828,24 @@ function vAnswer(ci){
   if(vSet().auto&&e.au) playAudio(vAud(e,q.type==="cloze"));
 }
 function vNext(){ if(!V||!V.q||!V.q.done) return; V.i++; vShow(); }
+/* 単語の結果（V3）。段を修了していたら先に到達の画面（V5）。今日の1セットのかたまりを最後まで終えたら、結果の代わりに区切りの1枚 */
 function vFinish(){
   Player.stop(); if(!V){ Router.back(); return; }
-  const c=vCounts(), ids=Object.keys(V.missed||{}), set=vSet();
-  let h=`<section class="card score"><span class="chip ol">英単語特訓の結果</span><div class="big" aria-label="${V.n}問中${V.ok}問正解"><span class="num" id="scoreN">${V.ok}</span><em>/ ${V.n}</em></div>
-    <p class="sm mut">1回目の正答率 ${V.n?Math.round(V.ok/V.n*100):0}% ・ 新しい語 ${V.nw}</p>
-    ${statsHTML([[c.ms,"習得"],[c.lr,"学習中"],[c.nw,"未着手"]],"width:100%")}</section>`;
-  if(ids.length) h+=`<h2 class="sec-h">間違えた語（${ids.length}）</h2><section class="card">`+ids.map(id=>vRow(VBY[id])).join("")+`</section>`;
-  const more=V.n>0&&c.nw?`<button type="button" class="btn sec pz" data-act="vstart" data-mode="new">新しい語をもう ${Math.min(set.nw,c.nw)} 語</button>`:"";
-  const n=V.n, ok=V.ok; V=null;
-  if(n>0){ Fx.haptic("done"); Fx.sound("done"); }
-  Shell.render({layer:"expressive",tabs:false,top:subTop("英単語特訓の結果",true),body:h+more+`<button type="button" class="btn pri pz" data-act="close">閉じる</button>`});
-  if(n>0) celebrate("#scoreN",ok);
+  const w=V, complete=w.i>=w.queue.length, c=vCounts(), ids=Object.keys(w.missed||{}), left=vNewLeft(), nw=vSet().nw;
+  V=null;
+  if(w.n>0){ Fx.haptic("done"); Fx.sound("done"); }
+  const moved=w.lvMoved?`<p class="note">${V_LV[w.lvMoved[0]]}の語をすべて出しました。新しい語は${V_LV[w.lvMoved[1]]}の段から出します。</p>`:"";
+  const show=()=>{
+    if(w.set&&complete){ Daily.between(w.set,`${w.n}語 ・ 1回目の正答 ${w.ok}`+(w.nw?` ・ 新しい語 ${w.nw}`:"")); return; }
+    let h=`<section class="card score"><span class="chip ol">英単語特訓の結果</span><div class="big" aria-label="${w.n}問中${w.ok}問正解"><span class="num" id="scoreN">${w.ok}</span><em>/ ${w.n}</em></div>
+      <p class="sm mut">1回目の正答率 ${w.n?Math.round(w.ok/w.n*100):0}% ・ 新しい語 ${w.nw}</p>
+      ${statsHTML([[c.ms,"習得"],[c.lr,"学習中"],[c.nw,"未着手"]],"width:100%")}${moved}</section>`;
+    if(ids.length) h+=`<h2 class="sec-h">間違えた語（${ids.length}）</h2><section class="card">`+ids.map(id=>vRow(VBY[id])).join("")+`</section>`;
+    const more=w.n>0&&c.nw?`<button type="button" class="btn sec pz" data-act="vstart" data-mode="${left?"daily":"new"}">${left?`今日の新しい語の残り ${left}語`:`新しい語をもう ${Math.min(nw,c.nw)} 語`}</button>`:"";
+    Shell.render({layer:"expressive",tabs:false,top:subTop("英単語特訓の結果",true),body:h+more+`<button type="button" class="btn pri pz" data-act="close">閉じる</button>`});
+    if(w.n>0) celebrate("#scoreN",w.ok);
+  };
+  if(w.n>0) Daily.milestone(show); else show();
 }
 function vRow(e,r){
   const b=r?(r.b>=6?'<i class="box m">習得</i>':`<i class="box ${r.l?"l":""}">箱${r.b}${r.l?" ・ ミス"+r.l:""}</i>`):"";
@@ -819,42 +870,23 @@ function vListPaint(){
   const n=$("#vln"), l=$("#vlist"); if(!n||!l) return;
   n.textContent=rows.length+" 語"; l.innerHTML=rows.map(e=>vRow(e,st[e.id])).join("");
 }
-function vLevelCounts(){
-  const st=vState(), o={};
-  for(const lv of V_LEVELS) o[lv]={all:0,nw:0,ms:0};
-  for(const e of VOCAB){ const c=o[e.lv]; if(!c) continue; c.all++; const r=st[e.id]; if(!r) c.nw++; else if(r.b>=6) c.ms++; }
+/* 段ごとの4つの状態：未着手 nw／学習中（箱0〜2）lr／定着中（箱3〜5）fx／習得（箱6）ms（3.8） */
+function vLevelStats(st){
+  st=st||vState(); const o={};
+  for(const lv of V_LEVELS) o[lv]={all:0,nw:0,lr:0,fx:0,ms:0};
+  for(const e of VOCAB){ const c=o[e.lv]; if(!c) continue; c.all++; const r=st[e.id]; if(!r) c.nw++; else if(r.b>=6) c.ms++; else if(r.b>=3) c.fx++; else c.lr++; }
   return o;
 }
 
 /* ===== タブの画面 ===== */
 function todayLabel(){ const d=new Date(); return `${d.getMonth()+1}月${d.getDate()}日（${JWD[d.getDay()]}）`; }
-function vPlan(){ const c=vCounts(), set=vSet(); const left=VOCAB.filter(e=>!vState()[e.id]&&(!set.lv||e.lv===set.lv)).length; return {c,set,due:Math.min(c.due,80),nn:Math.min(set.nw,left)}; }
+function vPlan(){ const c=vCounts(); return {c,due:Math.min(c.due,V_DUE_MAX),nn:vNewLeft()}; }
 const ETS_NOTE="TOEIC is a registered trademark of ETS. This product is not endorsed or approved by ETS.";
 const REVIEW_SEC_PER_Q=40;   // 解き直し1問の目安（解説を読む時間を含む・設計判断）
 const minOf=sec=>Math.max(1,Math.round(sec/60));
 function mockQCount(n){ const U=unitsOf(n); return PARTS.reduce((s,p)=>s+(U[p]||[]).reduce((a,u)=>a+u.qs.length,0),0); }
 
-SCREENS.today=()=>{
-  const top=`<div class="topbar gl"><div class="brand" style="flex:1;min-width:0"><span class="logo" aria-hidden="true">L</span><div class="bn"><b>Lapis 模試 <span class="xs mut w5">（仮称）</span></b><small lang="en">for the TOEIC® L&amp;R Test</small></div></div>`+
-    `<button type="button" class="iconbtn pz" data-act="nav" data-to="stats" aria-label="記録">${icon("chart")}</button>${gearBtn()}</div>`;
-  if(!MOCKS.length&&!VOCAB.length){ Shell.render({tab:"today",top,body:noData()}); return; }
-  let h=`<p class="sm mut">${todayLabel()}</p>`;
-  if(MOCKS.length) h+=Mock.resumeHeroHTML();   // 中断した模試があれば、主の札は「続きから」（3.2）
-  if(VOCAB.length){
-    const {due,nn,c}=vPlan(), tot=due+nn, min=Math.max(1,Math.ceil(tot*12/60));
-    const lg=loadJSON(K.vlog)[today()]||{n:0,ok:0,nw:0};
-    if(tot) h+=`<section class="card hero"><div class="eyebrow">今日の単語</div><h1 class="h">${due?`復習 ${due}語`:""}${due&&nn?" と、<br>":""}${nn?`新しい語 ${nn}語`:""}</h1><p class="sm mut">約${min}分 ・ ${vSet().lv?V_LV[vSet().lv]+"の段":"易しい段から"}</p><button type="button" class="btn pri pz" data-act="vstart" data-mode="daily">はじめる</button></section>`;
-    else h+=`<section class="card hero"><div class="eyebrow">今日の単語</div><h1 class="h">今日の分は終わりました</h1><p class="sm mut">今日 ${lg.n}問・正答 ${lg.ok}</p>${c.nw?`<button type="button" class="btn sec pz" data-act="vstart" data-mode="new">新しい語をもう少し</button>`:""}</section>`;
-  }
-  if(MOCKS.length){
-    const rp=reviewPlan();
-    h+=`<div class="list">`;
-    if(rp.total) h+=rowbHTML({act:"review",no:icon("redo","s"),title:"苦手の解き直し",sub:`今日 ${rp.count}問 ・ 約${minOf(rp.count*REVIEW_SEC_PER_Q)}分 ・ 解いてから解説`});
-    h+=Mock.todayRowHTML()+rowbHTML({act:"tab",data:{tab:"practice"},no:"P",title:"Part別の練習",sub:"1問ごとに解説 ・ 何度でも聞ける"})+`</div>`;
-  }
-  h+=`<p class="legal" lang="en">${ETS_NOTE}</p>`;
-  Shell.render({tab:"today",top,body:h});
-};
+/* 今日（H1）・単語（V1）・記録（T1）の画面は js/daily.js */
 /* 練習タブ：解き直し（件数・時間・並び）と、Part ごとの行（押すとその場で量の選択が開く：3.3） */
 const PR={open:0, tag:{}};   // 量の選択を開いている Part、Part ごとのタグのしぼり込み
 function partAcc(st,p){ let n=0,ok=0; for(const k in st){ if(k.startsWith("P"+p+"|")){ n+=st[k].n; ok+=st[k].ok; } } return n?`正答率 ${Math.round(ok/n*100)}%（${n}問）`:"まだ解いていません"; }
@@ -885,41 +917,7 @@ SCREENS.practice=(o)=>{
   }
   Shell.render({tab:"practice",top,body:h+`</div>`,keepScroll:re,noAnim:re,focus:!re});
 };
-SCREENS.vocab=()=>{
-  const top=tabTop("単語",`<span class="xs mut" style="padding-right:4px">${VOCAB.length.toLocaleString()}語</span>`);
-  if(!VOCAB.length){ Shell.render({tab:"vocab",top,body:`<div class="card"><p>単語データ（data/vocab.js）を読み込めません。</p></div>`}); return; }
-  const {c,set,due,nn}=vPlan(), lg=loadJSON(K.vlog)[today()]||{n:0,ok:0,nw:0}, lc=vLevelCounts();
-  const prog=(c.ms+c.lr*0.4)/VOCAB.length;
-  let h=`<section class="card hero">${statsHTML([[c.due,"復習"],[c.ms,"習得"],[c.lr,"学習中"],[c.nw,"未着手"]])}
-    ${barHTML(prog.toFixed(4),'aria-hidden="true"')}
-    <button type="button" class="btn pri pz col" data-act="vstart" data-mode="daily" ${due+nn?"":"disabled"}>今日の特訓<small>復習 ${due} ＋ 新しい語 ${nn}</small></button>
-    <div class="row"><button type="button" class="btn sm sec pz" data-act="vstart" data-mode="review" ${c.due?"":"disabled"}>復習だけ</button>
-      <button type="button" class="btn sm sec pz" data-act="vstart" data-mode="new" ${nn?"":"disabled"}>新しい語だけ</button>
-      <button type="button" class="btn sm sec pz" data-act="vstart" data-mode="weak" ${c.weak?"":"disabled"}>苦手な語 ${c.weak}</button>
-      <button type="button" class="btn sm sec pz" data-act="nav" data-to="vlist">${icon("list","s")}単語一覧</button></div>
-    <p class="xs mut">今日 ${lg.n}問（正答 ${lg.ok} ・ 新しい語 ${lg.nw}）　キー操作：1〜4で解答、0でわからない、Enterで次へ</p></section>`;
-  h+=`<h2 class="sec-h">新しい語を出す段 <span class="xs mut w5">段の名前は語の難しさの目安です</span></h2>
-    <div class="lvlist" role="group" aria-label="新しい語を出す段"><button type="button" class="lvb pz" data-act="vlv" data-lv="0" aria-pressed="${!set.lv}"><b>易しい順</b><small>全段から</small></button>`+
-    V_LEVELS.map(lv=>{ const k=lc[lv]; return `<button type="button" class="lvb pz" data-act="vlv" data-lv="${lv}" aria-pressed="${set.lv===lv}" ${k.all?"":"disabled"}><b>${V_LV[lv]}</b><small>${k.all?`未着手 ${k.nw}／${k.all}語`:"準備中"}</small></button>`; }).join("")+`</div>
-    <p class="note">1日の新しい語の数（いま ${set.nw}語）と、答えのあとの発音は設定で変えられます。</p>`;
-  Shell.render({tab:"vocab",top,body:h});
-};
-
 /* ===== 下の階層の画面（タブは出したまま） ===== */
-SCREENS.stats=()=>{
-  const st=loadJSON(K.stat), keys=Object.keys(st).sort();
-  let h=`<section class="card"><h2 class="h h2">成績（累計）</h2>`;
-  if(!keys.length) h+=`<p class="sm mut">まだ記録がありません。練習か模試を解くと表示されます。</p>`;
-  else {
-    let tn=0,tok=0; keys.forEach(k=>{ tn+=st[k].n; tok+=st[k].ok; });
-    h+=`<p class="sm mut">全体 ${tok} / ${tn}（${Math.round(tok/tn*100)}%）</p><table class="st"><tr><th>パート・tag</th><th>回答</th><th>正答率</th><th>平均</th></tr>`+
-      keys.map(k=>{ const [a,b]=k.split("|"), r=st[k]; return `<tr><td>${a.replace("P","Part ")} ${esc(b)}</td><td class="num">${r.n}</td><td class="num">${Math.round(r.ok/r.n*100)}%</td><td class="num">${(r.ms/r.n/1000).toFixed(1)}秒</td></tr>`; }).join("")+`</table>`;
-  }
-  h+=`</section>`;
-  if(VOCAB.length){ const c=vCounts(); h+=`<section class="card"><h2 class="h h2">単語</h2>${statsHTML([[c.ms,"習得"],[c.lr,"学習中"],[c.nw,"未着手"],[c.weak,"苦手"]])}</section>`; }
-  h+=`<button type="button" class="btn ghost pz" data-act="resetStats">成績をリセット（苦手と単語は残ります）</button>`;
-  Shell.render({tab:"today",top:subTop("記録"),body:h});
-};
 /* 選択肢のボタン群。opts = [[値, 表示], …]。値は data-v に文字列で入れ、受け取る側で optVal() で型をもどす */
 function optBtns(act,k,opts,cur,cls){
   return opts.map(([v,l])=>{ const on=cur===v; return `<button type="button" class="${cls?cls+(on?" on":"")+" ":""}pz" data-act="${act}" data-k="${k}" data-v="${esc(v)}" aria-pressed="${on}">${l}</button>`; }).join("");
@@ -929,8 +927,7 @@ const OPT_TEXT=[[0,"小"],[1,"標準"],[2,"大"],[3,"特大"],[4,"最大"]], OPT
 function segHTML(k,opts,cur,act){ return `<div class="seg" role="group">${optBtns(act||"pref",k,opts,cur)}</div>`; }
 function optVal(def,s){ return typeof def==="number"?+s:s; }   // 既定値が数なら数に
 SCREENS.settings=(o)=>{ const re=!!(o&&o.rerender);
-  const p=prefs(), pf=profile();
-  const nwOpts=[5,10,15,20,30]; if(!nwOpts.includes(pf.newPerDay)) nwOpts.push(pf.newPerDay); nwOpts.sort((a,b)=>a-b);
+  const p=prefs();
   const h=`<h2 class="sec-h">表示</h2><section class="card plain">
     <div class="setrow"><b>外観</b>${segHTML("theme",OPT_THEME,p.theme)}</div>
     <div class="setrow"><b>文字の大きさ</b>${segHTML("text",OPT_TEXT,p.text)}<p class="vex" lang="en">The quarterly report will be distributed to all department heads.</p></div>
@@ -940,14 +937,16 @@ SCREENS.settings=(o)=>{ const re=!!(o&&o.rerender);
     <div class="setrow"><b>効果音</b>${segHTML("sfx",[[1,"入"],[0,"切"]],p.sfx)}<p class="note">模試の最中と、音声が流れている間は鳴りません。</p></div>
     <div class="setrow"><b>触覚</b>${segHTML("haptic",[[1,"入"],[0,"切"]],p.haptic)}<p class="note">アプリ版で働きます（ブラウザでは何も起きません）。</p></div>
     <div class="setrow"><b>模試中の触覚</b>${segHTML("hapticMock",[[1,"入"],[0,"切"]],p.hapticMock)}</div></section>
-    <h2 class="sec-h">練習の音声</h2><section class="card plain">
+    <h2 class="sec-h">練習と単語の音声</h2><section class="card plain">
     <div class="setrow"><b>速さの既定</b>${segHTML("speed",[[0.8,"0.8×"],[1,"1.0×"],[1.2,"1.2×"]],p.speed)}<p class="note">模試には効きません（模試はいつも1.0×で1回だけ）。</p></div>
-    <div class="setrow"><b>次の問題で自動的に再生</b>${segHTML("autoplay",[[1,"入"],[0,"切"]],p.autoplay)}<p class="note">最初の1問は、再生ボタンを押して始めます。</p></div></section>
-    <h2 class="sec-h">単語</h2><section class="card plain">
-    <div class="setrow"><b>1日の新しい語</b>${segHTML("newPerDay",nwOpts.map(n=>[n,n]),pf.newPerDay,"prof")}</div>
-    <div class="setrow"><b>答えのあとに発音</b>${segHTML("vAuto",[[1,"入"],[0,"切"]],p.vAuto)}</div></section>
+    <div class="setrow"><b>次の問題で自動的に再生</b>${segHTML("autoplay",[[1,"入"],[0,"切"]],p.autoplay)}<p class="note">最初の1問は、再生ボタンを押して始めます。</p></div>
+    <div class="setrow"><b>単語：答えのあとに発音</b>${segHTML("vAuto",[[1,"入"],[0,"切"]],p.vAuto)}</div></section>
+    ${Daily.planSettingsHTML()}
+    <h2 class="sec-h">記録</h2><div class="list">
+    ${rowbHTML({act:"obAgain",no:icon("redo","s"),title:"はじめの案内をもう一度",sub:"目標・受験日・単語の実力チェック（記録は消えません）"})}
+    ${rowbHTML({act:"wipeAsk",no:icon("x","s"),title:"記録を消す",sub:"成績／単語の進み具合／すべて（購入は消えません）"})}
+    ${rowbHTML({act:"nav",data:{to:"flags"},no:icon("flag","s"),title:"報告した問題",sub:`${Object.keys(flags()).length}件 ・ 一覧とコピー`})}</div>
     <h2 class="sec-h">そのほか</h2><div class="list">
-    ${rowbHTML({act:"nav",data:{to:"flags"},no:icon("flag","s"),title:"報告した問題",sub:`${Object.keys(flags()).length}件 ・ 一覧とコピー`})}
     ${rowbHTML({act:"nav",data:{to:"about"},no:icon("info","s"),title:"このアプリについて",sub:"商標・プライバシー・ライセンス・版"})}</div>`;
   Shell.render({tab:"today",top:subTop("設定"),body:h,keepScroll:re,noAnim:re,focus:!re});
 };
@@ -1040,11 +1039,10 @@ Object.assign(ACT,{
   vstart:d=>startVocab(d.mode),
   vans:d=>vAnswer(+d.c),
   vnext:()=>vNext(),
-  vlv:d=>{ setProfile("curLv",+d.lv); SCREENS.vocab(); },
+  vlv:d=>{ setProfile("curLv",+d.lv); rerender(); refocus(`[data-act="vstep"][data-lv="${d.lv}"]`); },
   vl:d=>{ VL[d.k]=optVal(VL_DEFAULT[d.k],d.v); SCREENS.vlist({rerender:true}); },
   pref:d=>{ const v=optVal(PREFS_DEFAULT[d.k],d.v); setPref(d.k,v); if(d.k==="haptic"&&v) Fx.haptic("toggle"); rerender(); refocus(`[data-act="pref"][data-k="${d.k}"][aria-pressed="true"]`); },
-  prof:d=>{ setProfile(d.k,optVal(PROFILE_DEFAULT[d.k],d.v)); rerender(); },
-  resetStats:()=>{ if(confirm("成績の記録を消します（苦手と単語の進み具合は残ります）")){ Store.remove(K.stat); SCREENS.stats(); } }
+  prof:d=>{ setProfile(d.k,d.v===""?null:optVal(PROFILE_DEFAULT[d.k]==null?0:PROFILE_DEFAULT[d.k],d.v)); rerender(); refocus(`[data-act="prof"][data-k="${d.k}"][aria-pressed="true"]`); }
 });
 ACT.close=ACT.back;   // 結果の「×閉じる」と「＜もどる」は同じ動き
 Input.vsearch=v=>{ VL.q=v; vListPaint(); };
@@ -1062,14 +1060,21 @@ document.addEventListener("keydown",ev=>{
   }
   if(S&&S.view==="unit"&&Router.inSession()){ sessionKey(ev); return; }
   if(S&&S.M.timed&&Router.inSession()&&Mock.key(ev,false)) return;   // 模試の解答状況・切り替えの画面
-  if(ev.key==="Escape"&&Router.stack.length>1){ ev.preventDefault(); ACT.back(); }
+  if(Daily.key(ev)) return;   // 実力チェック・まとめて確認
+  if(ev.key==="Escape"&&Router.stack.length>1){ ev.preventDefault(); ACT.back(); return; }
+  // タブの先頭（H1）：1〜4でタブ、Enterで主ボタン（焦点がボタンなどにあるときはその部品に任せる）
+  if(Router.stack.length===1&&!Router.inSession()&&!document.getElementById("tabs").hidden){
+    const n="1234".indexOf(ev.key); if(n>=0){ ev.preventDefault(); Router.tab(TABS[n].id); return; }
+    const ae=document.activeElement, inter=!!(ae&&ae.matches&&ae.matches("button,a[href],summary,input,select,textarea,[role=button]"));
+    if(ev.key==="Enter"&&!inter){ const b=document.querySelector("#page .hero .btn.pri"); if(b){ ev.preventDefault(); b.click(); } }
+  }
 });
 /* 幅840pxをまたいだら、読む画面を左右2画面⇄トレイで描き直す（答え・時間はそのまま） */
 Tray.onWideChange(()=>{ if(S&&S.view==="unit"&&isReader(cur())) showUnit({keep:true}); });
 window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").addEventListener&&matchMedia("(prefers-color-scheme: dark)").addEventListener("change",applyPrefs);
 
 /* ===== 起動 =====
-   boot は全部の <script>（js/mock.js を含む）を読み終えてから呼ぶ（await の続きが次のスクリプトより先に動くため） */
+   boot は全部の <script>（js/mock.js・js/daily.js を含む）を読み終えてから呼ぶ（await の続きが次のスクリプトより先に動くため） */
 function loadData(){
   let D=window.TOEIC_DATA||null;
   if(D&&!D.mocks) D={mocks:[Object.assign({n:1,free:true},D)]};   // 旧形式（data.sample.js）
@@ -1081,7 +1086,7 @@ async function boot(){
   Shell.mount();
   try{ await Store.init(); }catch(e){ console.error(e); }
   const testMode=/[?&]test(\b|=|&|$)/.test(location.search);
-  if(!testMode&&Store.ready) migrateStore(Store);   // 読みこみに失敗したときは引きつがない（既定値で上書きしないため）
+  if(!testMode&&Store.ready){ migrateStore(Store); settleOnboarding(Store); }   // 読みこみに失敗したときは引きつがない（既定値で上書きしないため）。記録のある人には「はじめに」を出さない
   try{ if(history.state&&history.state.lapis) history.replaceState(null,""); }catch(e){}   // 再読みこみ前の「もどる」の印を消す
   applyPrefs();
   if(testMode){ const s=document.createElement("script"); s.src="js/selftest.js"; document.head.appendChild(s); return; }
@@ -1089,7 +1094,7 @@ async function boot(){
     await new Promise(r=>{ const s=document.createElement("script"); s.src="data/data.sample.js"; s.onload=r; s.onerror=r; document.head.appendChild(s); });
   }
   loadData();
-  Router.tab("today");
+  Router.tab(profile().onboarded?"today":"onboard");   // 初回だけ「はじめに」（O1〜O4）
   // Service Worker は Web 版だけで登録する（アプリの中では登録しない：7.1-14）
   if("serviceWorker" in navigator&&/^https?:/.test(location.protocol)&&!isNativeApp()&&!/[?&]sample/.test(location.search)){
     navigator.serviceWorker.register("./sw.js").catch(()=>{});

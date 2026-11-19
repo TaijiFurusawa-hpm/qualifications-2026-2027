@@ -569,7 +569,7 @@ const Mock = (()=>{
   }
   function todayRowHTML(){
     const H=hist(), est=currentEstimate(H);
-    if(est) return rowbHTML({act:"tab",data:{tab:"mock"},no:icon("chart","s"),title:`いまの目安 ${est.lo}〜${est.hi}点`,sub:`直近${est.k}回の模試から ・ 目安です`});
+    if(est) return rowbHTML({act:"nav",data:{to:"stats"},no:icon("chart","s"),title:`いまの目安 ${est.lo}〜${est.hi}点`,sub:`直近${est.k}回の模試から ・ 目安です ・ 記録へ`});
     const m1=availableMocks()[0]; if(!m1) return "";
     if(H.some(x=>x.n===m1.n)) return rowbHTML({act:"tab",data:{tab:"mock"},no:icon("mock","s"),title:"模試の一覧",sub:"「本番どおり」で受けると、目安のスコアが出ます"});
     return rowbHTML({act:"mPrep",data:{n:m1.n},no:m1.n,title:`まず実力を知る：模試 ${m1.n}　<span class="chip acc">無料</span>`,sub:`${mockQCount(m1.n)}問・約2時間 ・ 本番と同じ順番`});

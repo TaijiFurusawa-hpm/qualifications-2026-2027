@@ -145,6 +145,45 @@
   eq(Object.keys(V_LV).map(Number),[1,2,3,4,5,6,7],"レベルは7段");
   eq(Object.values(V_LV),["〜400","〜500","〜600","〜700","〜800","〜900","900〜"],"段の名前");
 
+  /* --- 単語の箱と間隔を、同じ操作の列で再生する（段階3の合格条件）。
+     この囲みの中は、node の検証（scratchpad の replay_node.mjs）がそのまま切り出して、コミット 1565874 の app.js でも動かす。
+     語は合成の24語（データの更新で答えが変わらないように）。並びは渡したまま、答えは「語ごとに何回目に何をするか」で決める
+     （c＝正解、w＝不正解、u＝わからない。書いていなければ正解）。乱数は選択肢の並びと出題形式にしか効かないので、結果は決まる */
+  /*REPLAY-BEGIN*/
+  const REPLAY_VOCAB=Array.from({length:24},(_,i)=>({id:"r"+i,w:"word"+i,pos:["名","動","形"][i%3],lv:1+i%7,ja:"いみ"+String.fromCharCode(0x30a2+i*2),
+    ex:"We saw word"+i+" in the report.",f:"word"+i,exja:"例文",syn:["syn"+i],d:["da"+i,"db"+i,"dc"+i],note:"",au:i%2}));
+  const REPLAY_SESSIONS=[
+    {d:0,  q:"r0 r1 r2 r3 r4 r5 r6 r7 r8 r9", a:{r1:"wc",r3:"uc",r5:"wwc",r7:"wuc"}},
+    {d:1,  q:"r1 r3 r5 r7 r10 r11 r12 r13", a:{r10:"wc",r3:"w",r11:"u"}},
+    {d:3,  q:"r0 r2 r4 r6 r8 r9 r1 r3 r5", a:{r0:"wc",r4:"uuc",r9:"wc"}},
+    {d:4,  q:"r0 r5 r10 r9", free:1, a:{r5:"wc",r10:"w"}},
+    {d:6,  q:"r1 r3 r5 r7 r10 r11 r12 r13 r14 r15", a:{r12:"wc",r14:"uc"}},
+    {d:10, q:"r0 r2 r4 r6 r7 r8 r9 r16 r17", a:{r6:"wc",r17:"wwwc"}},
+    {d:24, q:"r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13", a:{r8:"wc"}},
+    {d:25, q:"r8 r13 r16", free:1, a:{r13:"wc"}},
+    {d:54, q:"r0 r1 r2 r3 r4 r5 r6 r7 r9 r10 r11 r12 r14 r15 r16 r17 r18"},
+    {d:144,q:"r0 r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 r13 r14 r15 r16 r17 r18 r19", a:{r2:"wc",r19:"u"}},
+    {d:150,q:"r2 r20 r21 r22 r23 r0", a:{r21:"wc"}}
+  ];
+  /* api = {setDay(d), begin(queue,free)}。V・vAnswer・vNext はアプリ（新旧どちら）のもの */
+  function replayVocab(api){
+    const by={}; for(const e of REPLAY_VOCAB) by[e.id]=e;
+    for(const s of REPLAY_SESSIONS){
+      api.setDay(s.d); api.begin(s.q.split(" ").map(id=>by[id]),!!s.free);
+      const seen={};
+      for(let g=0;g<1000&&V&&V.q;g++){
+        const q=V.q;
+        if(q.done){ vNext(); continue; }
+        const k=seen[q.e.id]=(seen[q.e.id]||0)+1, c=((s.a||{})[q.e.id]||"")[k-1]||"c";
+        vAnswer(c==="u"?-1:q.opts.findIndex(o=>c==="w"?!o.ok:o.ok));
+      }
+    }
+  }
+  const canonVocab=st=>JSON.stringify(Object.keys(st).sort().map(k=>[k,["b","d","n","ok","l"].map(f=>st[k][f]===undefined?null:st[k][f])]));
+  /*REPLAY-END*/
+  /* コミット 1565874 の app.js で上の再生を行った結果（replay_node.mjs が出した値。日付は T からの日数） */
+  const REPLAY_GOLDEN="[[\"r0\",[6,21016,9,8,1]],[\"r1\",[6,21010,8,7,0]],[\"r10\",[5,20950,8,6,1]],[\"r11\",[5,20950,6,5,0]],[\"r12\",[4,20934,6,5,1]],[\"r13\",[2,20923,6,5,1]],[\"r14\",[3,20927,4,3,0]],[\"r15\",[4,20934,3,3,0]],[\"r16\",[4,20934,4,4,0]],[\"r17\",[3,20927,6,3,0]],[\"r18\",[3,20927,2,2,0]],[\"r19\",[1,20921,2,1,0]],[\"r2\",[2,20929,8,7,1]],[\"r20\",[2,20929,1,1,0]],[\"r21\",[1,20927,2,1,0]],[\"r22\",[2,20929,1,1,0]],[\"r23\",[2,20929,1,1,0]],[\"r3\",[6,21010,9,7,1]],[\"r4\",[5,20950,8,6,1]],[\"r5\",[5,20950,11,8,1]],[\"r6\",[4,20934,7,6,1]],[\"r7\",[6,21010,9,7,0]],[\"r8\",[2,20923,7,6,1]],[\"r9\",[5,20950,8,7,1]]]";
+
   /* ===== 5. Fx の層 ===== */
   group("Fx：層と設定");
   {
@@ -419,7 +458,7 @@
     const items=[]; for(let i=0;i<200;i++) items.push({unit:{part:1+i%7},q:{qid:"R"+i,a:i%4,tag:"t"+(i%5)},ans:i%3?{pick:i%4,ms:100}:undefined});
     const real=window.saveJSON; let n=0; window.saveJSON=(k,v)=>{ n++; real(k,v); };
     try{ recordResults(items); } finally { window.saveJSON=real; }
-    eq(n,3,"200問の記録で、保存は3回（成績・解き直し・旧キー）だけ");
+    eq(n,4,"200問の記録で、保存は4回（成績・解き直し・旧キー・その日の記録）だけ");
     const a=JSON.stringify([mem.load(K.stat),mem.load(K.review),mem.load(K.miss)]);
     withMem(m2=>{ for(const it of items) recordResult(it.unit,it.q,it.ans); eq(JSON.stringify([m2.load(K.stat),m2.load(K.review),m2.load(K.miss)]),a,"1問ずつ記録したときと同じ中身になる"); });
   });
@@ -608,11 +647,277 @@
       if(S) { S.leaving=true; } Router.tab("today");
     }
   });
+  /* ===== 9. 段階3：毎日の流れ ===== */
+  group("計画：目標の段・1日の新しい語・実力チェックの開始の段（純粋な関数）");
+  {
+    eq([500,600,730,860,900,null].map(x=>Daily.targetLv(x)),[2,3,5,6,7,7],"目標 → 上の段（7段への読みかえ：500→〜500、600→〜600、730→〜800、860→〜900、900以上・未定→900〜）");
+    eq(Daily.perDay(600,null),{n:10},"受験日が未定 → 1日10語");
+    eq(Daily.perDay(600,67).n,10,"600語・67日（使える60日）→ 10語");
+    eq(Daily.perDay(600,37).n,20,"600語・37日（使える30日）→ 20語（5語きざみに切り上げ）");
+    eq(Daily.perDay(90,67).n,5,"少なくても5語より下げない");
+    const sh=Daily.perDay(2000,37); eq([sh.n,sh.short],[30,true],"30語でも足りない → 30語で止め、足りないと書く");
+    eq(Daily.perDay(300,6),{n:5,late:true},"受験日まで7日以内 → 新しい語は少なめ（最後の1週間は復習だけ）");
+    const P=(arr)=>arr.map(([lv,ok])=>({lv,ok}));
+    eq(Daily.placeLevel(P([1,2,3,4,5,6,7].flatMap(l=>[[l,1],[l,1]]))),7,"14問すべて正解 → 900〜");
+    eq(Daily.placeLevel(P([[1,1],[1,1],[2,1],[2,0]])),2,"開始の段＝2問とも正解できなかった最初の段");
+    eq(Daily.placeLevel(P([[1,0],[1,1],[2,1],[2,1]])),1,"段1で1問外せば段1から");
+    eq(Daily.placeLevel(P([[1,1],[1,1],[2,1],[2,1],[3,0],[3,0],[4,0]])),3,"3問続けて外れて終わった → その前の段の次");
+    eq([PLACE_PER_LV*V_LEVELS.length,PLACE_PER_LV*V_LEVELS.length*PLACE_SEC<=90],[14,true],"実力チェックは7段×2語＝14問、1問6秒の目安で90秒以内");
+  }
+  group("学習した日：今週の7つの点・累計・連続・再開");
+  {
+    const mon=weekStart(T); const days=new Set([mon,mon+1,mon+3,T-20]);
+    const w=Daily.weekInfo(days,mon+3);
+    eq([w.week.map(x=>x.on?1:0),w.n,w.total,w.streak,w.resumed],[[1,1,0,1,0,0,0],3,4,1,true],"月・火・木に学習：点3つ、累計4日、連続1日、木曜は「再開しました」");
+    eq(Daily.weekInfo(new Set([T,T-1,T-2]),T).streak,3,"3日続ければ連続3日");
+    eq(Daily.weekInfo(new Set([T-1,T-2]),T).streak,2,"今日まだでも、昨日までの連続は数える");
+    eq(new Date(weekStart(T)*864e5).getUTCDay(),1,"週は月曜から");
+  }
+  group("「はじめに」を出すか（既存の利用者には出さない）");
+  {
+    const mk=o=>{ const st=createStore(MemoryBackend(o||{}),{delay:0}); st.init(); return st; };
+    const a=mk(); migrateStore(a,T); ok(!settleOnboarding(a)&&a.load(K.profile).onboarded===0,"記録の無い新しい利用者 → 「はじめに」を出す");
+    const raw=fixture("few"), b=mk(raw); migrateStore(b,T); settleOnboarding(b); eq(b.load(K.profile).onboarded,1,"段階0より前の記録がある人 → 出さない（引きつぎで済み）");
+    const c=mk({toeic_schema:'{"v":2}',toeic_profile_v1:JSON.stringify(Object.assign({},PROFILE_DEFAULT,{onboarded:0})),toeic_stat_v1:'{"P5|品詞":{"n":3,"ok":2,"ms":1}}'});
+    ok(settleOnboarding(c)&&c.load(K.profile).onboarded===1,"段階0〜2の版で記録を作った人（onboarded:0 のまま）→ 出さない");
+    const d=mk({toeic_schema:'{"v":2}',toeic_mockrun_v1_dummy:"1","toeic_mockrun_v1:1":'{"n":1,"ans":{}}'}); ok(settleOnboarding(d),"模試の途中の回だけがある人 → 出さない");
+    const e=mk({toeic_schema:'{"v":2}',toeic_prefs_v1:'{"text":3}'}); ok(!settleOnboarding(e),"設定を変えただけの人 → 出す（学習の記録ではない）");
+    ok(!settleOnboarding(c),"2回目は何もしない");
+  }
+  group("単語の箱と間隔：1565874 と同じ操作の列で同じ toeic_vocab_v1");
+  const realAudio0=window.Audio;
+  /* 画面の流れを同じ1コマの中で何度も切りかえるので、ブラウザの履歴（もどる）には触らない（非同期の history.back が後から効いてページを離れないように） */
+  const noHistory=()=>{ const h={back:history.back,push:history.pushState}; history.back=()=>{}; history.pushState=()=>{}; return ()=>{ history.back=h.back; history.pushState=h.push; }; };
+  const replayTest=()=>withMem(async mem=>{
+    window.Audio=FakeAudio; const unH=noHistory();
+    const v0=VOCAB, b0=VBY; let day=T; const dn=window.dayNumber;
+    VOCAB=REPLAY_VOCAB; VBY={}; for(const e of VOCAB) VBY[e.id]=e; window.dayNumber=()=>day;
+    try{ replayVocab({setDay:d=>{ day=T+d; }, begin:(q,free)=>vBegin("daily",q,free)}); }
+    finally { VOCAB=v0; VBY=b0; window.dayNumber=dn; window.Audio=realAudio0; Router.tab("today"); unH(); }
+    const got=canonVocab(mem.load(K.vocab));
+    eq(got,REPLAY_GOLDEN,"11回のセッション（新しい語・復習・苦手な語、正解・不正解・わからない、同じ回の出し直し）で、24語の箱・次に出る日・回数・正解・ミスが1565874と1つも違わない");
+    ok(JSON.parse(got).some(([,r])=>r[0]===6)&&JSON.parse(got).some(([,r])=>r[4]>0),"再生は箱6（習得）とミスの数えまで届いている");
+  });
+  group("単語：いまの段・自動で次の段へ・段の修了（85%）");
+  withMem(mem=>{
+    loadData(); const words=VOCAB; if(!words.length){ ok(false,"単語データが無い"); return; }
+    mem.save(K.profile,{curLv:2});
+    eq(vCurLv(),2,"いまの段は profile.curLv");
+    const st={}; for(const e of words) if(e.lv===2) st[e.id]={b:0,d:T,n:1,ok:0,l:0}; mem.save(K.vocab,st);
+    eq(vCurLv(),3,"段2の語をすべて出し終えた → 段3へ");
+    ok(vNewWords(mem.load(K.vocab),5).every(e=>e.lv===3),"新しい語は次の段から");
+    mem.save(K.profile,{curLv:0}); mem.save(K.vocab,{}); eq(vCurLv(),1,"curLv=0（段階0までの「易しい順」）は段1から");
+    const one=words.filter(e=>e.lv===1), need=Math.ceil(one.length*LV_DONE_RATE), s2={};
+    one.forEach((e,i)=>{ s2[e.id]={b:i<need-1?3:2,d:T,n:1,ok:1,l:0}; }); mem.save(K.vocab,s2);
+    ok(!Daily.levelsDone(vLevelStats()).includes(1),`段1：${need-1}/${one.length}語が定着中以上 → まだ修了しない`);
+    s2[one[need-1].id].b=6; mem.save(K.vocab,s2);
+    ok(Daily.levelsDone(vLevelStats()).includes(1),`段1：${need}/${one.length}語（85%以上）→ 修了`);
+  });
+  group("今日の1セット：中身（単語→解き直し→弱点）");
+  withMem(mem=>{
+    loadData();
+    mem.save(K.profile,{onboarded:1,newPerDay:10});
+    let ch=Daily.setChunks();
+    eq(ch.map(c=>[c.k,c.n]),[["w",10],["r",0],["p",5]],"新しい利用者：単語10語・解き直しなし・弱点は記録が足りないので Part 5 を5問");
+    const u5=practiceUnits(5), rv={}; u5.slice(0,5).forEach(u=>{ rv[u.qs[0].qid]={st:0,due:T,n:1}; }); mem.save(K.review,rv);
+    eq(Daily.setChunks().find(c=>c.k==="r").n,3,"解き直しは最大3問");
+    const st={}; st["P3|主題"]={n:10,ok:2,ms:1}; st["P5|品詞"]={n:20,ok:15,ms:1}; st["P1|x"]={n:5,ok:0,ms:1}; mem.save(K.stat,st);
+    const p=Daily.setChunks().find(c=>c.k==="p"); eq([p.part,p.n,p.unit],[3,1,"セット"],"弱点＝正答率のいちばん低い Part（8問以上解いた Part だけ）。Part 3 は1セット");
+    mem.save(K.stat,{"P2|a":{n:9,ok:1,ms:1}}); eq(Daily.setChunks().find(c=>c.k==="p").n,5,"Part 2 は5問");
+    mem.save(K.stat,{"P1|a":{n:9,ok:1,ms:1}}); eq(Daily.setChunks().find(c=>c.k==="p").n,3,"Part 1 は3問");
+    const due={}; VOCAB.slice(0,40).forEach(e=>{ due[e.id]={b:1,d:T-1,n:1,ok:1,l:0}; }); mem.save(K.vocab,due);
+    eq(Daily.setChunks().find(c=>c.k==="w").n,20+10,"単語は期限の来た復習を最大20語＋新しい語");
+    const lg={}; lg[T]={n:4,ok:4,nw:4}; mem.save(K.vlog,lg); eq(Daily.setChunks().find(c=>c.k==="w").n,20+6,"今日すでに出した新しい語は、1日の数から引く");
+    mem.save(K.day,{[T]:{w:1,a:1}}); ok(Daily.setChunks().find(c=>c.k==="w").done,"最後まで終えたかたまりは done");
+  });
+
+  /* 画面を実際に描く流れ（記録はメモリの保存先。音声は鳴らない偽物） */
+  const dailyTest=async()=>{
+    window.Audio=FakeAudio; const unH=noHistory();
+    const realSetTimeout=window.setTimeout;
+    const answerAll=async()=>{   // いまのかたまりを最後まで正解で解く
+      for(let g=0;g<400;g++){
+        if(V&&V.q){ if(!V.q.done) vAnswer(V.q.opts.findIndex(o=>o.ok)); else vNext(); continue; }
+        if(S&&S.view==="unit"){ const u=cur(); for(const q of u.qs) if(!S.ans[q.qid]) pick(q.qid,q.a); advance(); await fr(); continue; }
+        break;
+      }
+      await fr();
+    };
+    const answerOne=()=>{ if(V&&V.q) vAnswer(V.q.opts.findIndex(o=>o.ok)); else if(S&&S.view==="unit"){ const q=cur().qs[0]; pick(q.qid,q.a); } };
+    const seed=mem=>{ mem.save(K.profile,{onboarded:1,newPerDay:5}); mem.save(K.prefs,{vAuto:0}); const rv={}; practiceUnits(5).slice(0,2).forEach(u=>{ rv[u.qs[0].qid]={st:0,due:T,n:1}; }); mem.save(K.review,rv); };
+    try{
+      group("初回起動から最初の問題まで（スキップで2タップ）");
+      await withMem(async mem=>{
+        loadData(); mem.save(K.prefs,{vAuto:0});
+        Router.tab(profile().onboarded?"today":"onboard"); await fr();
+        eq(Router.top().name,"onboard","記録の無い初回は「はじめに」（O1）");
+        ok(/目標のスコアは/.test(document.getElementById("page").textContent)&&document.querySelector('#top [data-act="obSkip"]'),"O1：目標のスコア＋右上に「スキップ」");
+        ok(new RegExp(ETS_NOTE.slice(0,30)).test(document.getElementById("page").textContent),"O1：商標の注記（英語の定型文）");
+        let taps=0; tap('[data-act="obSkip"]'); taps++; await fr();
+        eq([Router.top().name,profile().onboarded],["today",1],"スキップ → 今日（既定値で使い始める）");
+        tap('#page [data-act="setGo"]'); taps++; await fr();
+        ok(V&&V.q&&document.querySelector("#page .choices .choice"),"今日の1セット → 最初の単語の問題");
+        eq(taps,2,"最初の問題まで2タップ");
+        ACT.quit(); await fr(); Router.tab("today");
+      });
+
+      group("はじめに：目標 → 受験日 → 実力チェック（約90秒・正誤を出さない）→ 提案");
+      await withMem(async mem=>{
+        loadData(); mem.save(K.prefs,{vAuto:0}); Daily.OB.step=1; Router.tab("onboard"); await fr();
+        tap('[data-act="obTarget"][data-v="730"]'); await fr();
+        eq([profile().target,Router.top().name],[730,"onboard"],"O1：選ぶと自動で次へ");
+        ok(/次に受ける日は/.test(document.getElementById("page").textContent)&&document.querySelector('input[type="date"]'),"O2：受験日（日付）／まだ決めていない");
+        Input.obExam(isoOf(T+67)); tap('[data-act="obNext"]'); await fr();
+        ok(/14問だけ。約90秒/.test(document.getElementById("page").textContent),"O3：「単語を14問だけ。約90秒」");
+        tap('[data-act="plStart"]'); await fr();
+        const P=Daily.OB.pl; eq(P.items.map(x=>x.e.lv),[1,1,2,2,3,3,4,4,5,5,6,6,7,7],"7段から2語ずつ、やさしい順");
+        eq(Fx.layer,"quiet","実力チェックは静かな層");
+        let k=0;
+        while(Daily.OB.pl&&!Daily.OB.pl.done&&k<20){ const it=Daily.OB.pl.items[Daily.OB.pl.i], good=it.e.lv<=2; key(good?String(1+it.opts.findIndex(o=>o.ok)):"0"); k++;
+          ok(!document.querySelector("#page .is-ok,#page .is-ng,#page .bnr"),`${k}問目：正誤を出さない`); await new Promise(r=>realSetTimeout(r,260)); }
+        eq(k,7,"段1・2を正解、段3から外す → 3問続けて外れたところで終わる（7問）");
+        eq([profile().placedLv,profile().curLv],[3,3],"開始の段＝〜600（段3）");
+        const vs=mem.load(K.vocab); eq(Object.keys(vs).length,7,"チェックで解いた7語は通常の解答として記録");
+        ok(Object.values(vs).filter(r=>r.b===2&&r.d===T+3).length===4&&Object.values(vs).filter(r=>r.b===0&&r.d===T).length===3,"正解＝箱2・3日後／不正解＝箱0・今日（初回の解答と同じ）");
+        eq((mem.load(K.vlog)[T]||{}).nw||0,0,"今日の新しい語の枠は使わない（このあとの1セットで計画どおり出る）");
+        ok(/〜600 の段から始めましょう/.test(document.getElementById("page").textContent)&&/受験日まで あと 67日/.test(document.getElementById("page").textContent),"O4：「〜600 の段から始めましょう」「受験日まで あと67日」");
+        tap('[data-act="obOpen"][data-k="lv"]'); await fr(); tap('[data-act="obLv"][data-v="2"]'); await fr();
+        eq(profile().curLv,2,"結果の段を変えられる（O4「変える」）");
+        ok(/〜500 の段から始めましょう/.test(document.getElementById("page").textContent),"変えた段が提案に出る");
+        ok(document.querySelector('[data-act="obMock"]')&&/今日の1セットを始める/.test(bottomText()),"主：今日の1セットを始める／副：先に模試1を受ける");
+        tap('[data-act="obGo"]'); await fr();
+        ok(profile().onboarded===1&&V&&V.q,"「今日の1セットを始める」→ 単語の最初の問題");
+        ACT.quit(); await fr(); Router.tab("today");
+      },T);
+
+      group("今日の1セット：どのかたまりで止めても「やった日」");
+      for(const [k,name] of [[0,"単語"],[1,"解き直し"],[2,"弱点の1セット"]]){
+        await withMem(async mem=>{
+          loadData(); seed(mem); Router.tab("today"); await fr();
+          eq(Daily.setChunks().filter(c=>c.n>0).map(c=>c.k),["w","r","p"],`（${name}）3つのかたまりがある`);
+          ok(!Daily.studyDays().has(T),`（${name}）始める前は「やった日」ではない`);
+          tap('#page [data-act="setGo"]'); await fr();
+          for(let i=0;i<k;i++){ await answerAll(); ok(/おわり/.test(document.getElementById("page").textContent),`区切りの1枚（${CHUNK_NAME[["w","r","p"][i]]}おわり）`); tap('#bottom [data-act="setGo"]'); await fr(); }
+          answerOne(); await fr(); ACT.quit(); await fr();
+          ok(Daily.studyDays().has(T),`${name}の途中で止めた → 今日は「やった日」`);
+          Router.tab("today"); await fr();
+          ok(document.querySelector('#page .wd.now.on'),`${name}で止めても、今週の点に今日が入る`);
+        },T);
+      }
+      await withMem(async mem=>{
+        loadData(); seed(mem); Router.tab("today"); await fr();
+        tap('#page [data-act="setGo"]'); await fr(); await answerAll();
+        const btns=[...document.querySelectorAll("#bottom .btn")];
+        eq(btns.map(b=>b.textContent),["今日はここまで","続ける"],"区切り：「今日はここまで」と「続ける」");
+        ok(Math.abs(btns[0].getBoundingClientRect().width-btns[1].getBoundingClientRect().width)<2&&Math.abs(btns[0].getBoundingClientRect().height-btns[1].getBoundingClientRect().height)<2,"「ここまで」は同じ大きさのボタン");
+        tap('#bottom [data-act="close"]'); await fr();
+        ok(Daily.studyDays().has(T)&&(mem.load(K.day)[T]||{}).w===1,"区切りで「今日はここまで」→ 単語のかたまりは終わり、今日は「やった日」");
+        ok(/解き直し\d+・Part 5 5問/.test(document.querySelector("#page .hero h1").textContent),"今日の主の札は、残りのかたまり（解き直し・Part 5）");
+        tap('#page [data-act="setGo"]'); await fr(); await answerAll(); tap('#bottom [data-act="setGo"]'); await fr(); await answerAll();
+        ok(/今日の分は終わりました/.test(document.getElementById("page").textContent),"3つ終えると「今日の分は終わりました」");
+        tap('#bottom [data-act="close"]'); await fr();
+        const d=mem.load(K.day)[T]; eq([d.w,d.r,d.p],[1,1,1],"3つのかたまりの印");
+        ok(document.querySelector('#page [data-set="done"]')&&/今日の分は終わりました/.test(document.querySelector("#page .hero").textContent),"今日：主の札が完了の表示");
+        ok(document.querySelector('#page [data-set="done"] [data-act="vstart"][data-mode="new"]')||document.querySelector('#page [data-set="done"] [data-act="tab"]'),"「もう少しやる」（単語の新しい語／Part別の練習）");
+      },T);
+
+      group("単語（V1）：7段の階段・いまの段");
+      await withMem(async mem=>{
+        loadData(); mem.save(K.profile,{onboarded:1,curLv:3}); Router.tab("vocab"); await fr();
+        const steps=[...document.querySelectorAll("#page .stairs .stph")];
+        eq(steps.map(b=>+b.dataset.lv),[7,6,5,4,3,2,1],"7段を下から上へ（上が900〜）");
+        eq(document.querySelectorAll("#page .stp.cur").length,1,"いまの段の印は1つ");
+        ok(/いまここ/.test(document.querySelector("#page .stp.cur").textContent)&&document.querySelector("#page .stp.cur [data-lv='3']"),"いまの段（〜600）に「いまここ」");
+        ok(steps.every(b=>/段\d、.*語、習得\d+、定着中\d+、学習中\d+、未着手\d+/.test(b.getAttribute("aria-label"))),"段の名前：語数と4つの状態を数字で読む");
+        tap('[data-act="vstep"][data-lv="5"]'); await fr();
+        ok(document.querySelector('[data-act="vlv"][data-lv="5"]')&&document.querySelector('[data-act="vlistLv"][data-lv="5"]'),"段を押すと「この段から始める」「この段の単語を見る」");
+        tap('[data-act="vlv"][data-lv="5"]'); await fr(); eq(profile().curLv,5,"上の段も最初から選べる（鍵なし）");
+        ok(document.querySelector('[data-act="ckStart"][data-lv="0"]'),"下の段に未着手があれば「まとめて確認」");
+        ok(/明日の復習 約\d+語/.test(document.getElementById("page").textContent),"「明日の復習 約◯語」");
+      },T);
+
+      group("まとめて確認（V6）：知ってる＝初回正解と同じ・まだ＝新しい語のまま・1つもどす");
+      await withMem(async mem=>{
+        loadData(); mem.save(K.profile,{onboarded:1,curLv:3}); Router.tab("vocab"); await fr();
+        tap('[data-act="ckStart"][data-lv="0"]'); await fr();
+        const C=Daily.CK; ok(C&&C.list.length===20&&C.list.every(e=>e.lv<3),"開始の段より下の未着手の語を20枚");
+        const a=C.list[0], b=C.list[1];
+        key(" "); await fr(); ok(Daily.CK.flip&&/押すと意味|、/.test(document.querySelector(".ckcard").getAttribute("aria-label")),"Space でめくる");
+        key("ArrowRight"); await fr(); eq(mem.load(K.vocab)[a.id],{b:2,d:T+3,n:1,ok:1,l:0},"→（知ってる）＝初回正解と同じ：箱2・3日後に4択で確かめる");
+        tap('#bottom [data-act="ckAns"][data-v="0"]'); await fr(); ok(!mem.load(K.vocab)[b.id],"まだ（ボタン）＝新しい語のまま");
+        key("z"); await fr(); key("z"); await fr();
+        ok(!mem.load(K.vocab)[a.id]&&Daily.CK.i===0,"Z で1つずつもどす（記録も元にもどる）");
+        ok(document.querySelectorAll('#bottom [data-act="ckAns"]').length===2,"スワイプと同じ働きのボタンが2つ");
+        key("Escape"); await fr(); ok(/まとめて確認の結果/.test(document.getElementById("top").textContent),"おわると結果");
+        Router.tab("today");
+      },T);
+
+      group("段の到達（V5）");
+      await withMem(async mem=>{
+        loadData(); mem.save(K.prefs,{vAuto:0});
+        const one=VOCAB.filter(e=>e.lv===1), st={}; one.forEach((e,i)=>{ st[e.id]={b:i<Math.ceil(one.length*.85)?4:1,d:i===one.length-1?T:T+9,n:2,ok:1,l:0}; });
+        st[one[one.length-1].id].b=1; mem.save(K.vocab,st);
+        mem.save(K.profile,{onboarded:1,curLv:1,lvDone:{},lvStart:{1:T-22}});
+        startVocab("review"); await fr(); vAnswer(V.q.opts.findIndex(o=>o.ok)); await fr(); vNext(); await fr();
+        ok(/〜400 の段、修了/.test(document.getElementById("page").textContent),"段の語の85%以上が定着中以上になったら「〜400 の段、修了」");
+        ok(new RegExp(`${one.length}語のうち\\d+語が定着中以上`).test(document.getElementById("page").textContent)&&/かかった日数 23日/.test(document.getElementById("page").textContent),"事実だけ：◯語のうち◯語・かかった日数");
+        ok(!/点/.test(document.querySelector("#page h1").textContent),"点数とは結ばない");
+        eq([...document.querySelectorAll("#bottom .btn")].map(b=>b.textContent),["この段をもう少し","次の段へ"],"主「次の段へ」・副「この段をもう少し」");
+        tap('[data-act="msGo"][data-v="next"]'); await fr();
+        ok(profile().curLv===2&&/英単語特訓の結果/.test(document.getElementById("top").textContent),"次の段へ → いまの段が〜500、単語の結果へ");
+        ACT.close(); await fr();
+        startVocab("review"); if(V&&V.q){ vAnswer(V.q.opts.findIndex(o=>o.ok)); vNext(); } await fr();
+        ok(!/修了/.test(document.getElementById("page").textContent),"同じ段で2度は祝わない");
+        Router.tab("today");
+      },T);
+
+      group("記録（T1）：空の欄すべてに、表示される条件");
+      await withMem(async mem=>{
+        loadData(); Router.go("stats"); await fr();
+        const secs=[...document.querySelectorAll("#page [data-sec]")];
+        eq(secs.map(x=>x.dataset.sec),["est","hist","part","tags","time","vocab","days"],"7つの欄（いまの目安・模試の履歴・Part別・弱点のタグ・時間の使い方・単語・学習した日）");
+        for(const x of secs){ const e=x.querySelector("[data-empty]"); ok(e&&/表示されます|並びます|点がつきます/.test(e.textContent),`空の「${x.previousElementSibling.textContent}」：${e?e.textContent:"（条件が無い）"}`); }
+        ok(document.querySelector('#page [data-sec="est"] [data-act="mPrep"]'),"いまの目安の空の欄に「模試1へ」");
+        tap('[data-act="tsPer"][data-v="30"]'); await fr();
+        ok(/直近30日に解いた問題はありません。練習か模試を解くと表示されます/.test(document.querySelector('[data-sec="part"]').textContent),"直近30日に切りかえても条件を書く");
+        TS.per="all";
+        // 記録が入ると、空の文が消える
+        const u=practiceUnits(5).slice(0,10); recordResults(u.map(x=>({unit:x,q:x.qs[0],ans:{pick:x.qs[0].a,ms:20000}})));
+        const vs={}; VOCAB.slice(0,30).forEach((e,i)=>{ vs[e.id]={b:i%7,d:T+1+i%7,n:2,ok:1,l:0}; }); mem.save(K.vocab,vs); mem.save(K.vlog,{[T]:{n:5,ok:4,nw:0,rn:5,rok:4}});
+        SCREENS.stats({rerender:true}); await fr();
+        for(const id of ["part","time","vocab","days"]) ok(!document.querySelector(`[data-sec="${id}"] [data-empty]`),`記録が入ると「${id}」の空の文は消える`);
+        ok(/Part 5/.test(document.querySelector('[data-sec="part"]').textContent)&&/直近30日/.test(document.querySelector('[data-sec="part"]').textContent),"Part別：累計／直近30日の切りかえ");
+        tap('[data-act="tsPer"][data-v="30"]'); await fr(); ok(/10\/10/.test(document.querySelector('[data-sec="part"]').textContent),"直近30日も数える（その日の記録 toeic_day_v1）");
+        TS.per="all"; Router.tab("today");
+      },T);
+
+      group("設定（X1）：学習の計画・はじめの案内・記録を消す");
+      await withMem(async mem=>{
+        loadData(); mem.save(K.profile,{onboarded:1,target:860,exam:isoOf(T+37),newPerDay:10});
+        mem.save(K.ent,{unlocked:false}); mem.save(K.prefs,{text:2}); mem.save(K.vocab,{a:{b:1,d:T,n:1,ok:1,l:0}}); mem.save(K.stat,{"P5|a":{n:1,ok:1,ms:1}});
+        Router.go("settings"); await fr();
+        ok(document.querySelector('[data-act="prof"][data-k="target"][data-v="860"][aria-pressed="true"]')&&document.querySelector('input[data-input="examDate"]'),"目標スコアと受験日");
+        ok(/おすすめ/.test(document.querySelector('[data-act="prof"][data-k="newPerDay"] small')?document.querySelector('[data-act="prof"][data-k="newPerDay"] small').parentNode.textContent:""),"1日の新しい語に「おすすめ」の印");
+        tap('[data-act="prof"][data-k="target"][data-v=""]'); await fr(); eq(profile().target,null,"目標を未定にできる");
+        tap('[data-act="wipeAsk"]'); await fr(); tap('[data-act="wipePick"][data-k="vocab"]'); await fr();
+        ok(document.querySelector('#wipedlg [data-act="wipeDo"]').classList.contains("sec")&&document.querySelector('#wipedlg [data-act="wipeClose"]').classList.contains("pri"),"消す側のボタンは主ボタンにしない");
+        ok(/購入は消えません/.test(document.getElementById("wipedlg").textContent),"購入は消えない、と書く");
+        tap('#wipedlg [data-act="wipeDo"]'); await fr();
+        ok(!mem.has(K.vocab)&&mem.has(K.stat)&&mem.has(K.ent)&&mem.load(K.prefs).text===2,"単語の進み具合だけを消す（成績・購入・設定は残る）");
+        tap('[data-act="obAgain"]'); await fr();
+        ok(Router.top().name==="onboard"&&mem.has(K.stat),"はじめの案内をもう一度（記録は消えない）");
+        tap('[data-act="obSkip"]'); await fr();
+      },T);
+    } finally {
+      window.Audio=realAudio0; Router.tab("today"); unH();
+    }
+  };
+
   /* 押す（二度押しの防止の280msを待たずに、同じ data-act の処理を呼ぶ） */
   function tap(sel){ const el=document.querySelector(sel); if(!el) throw new Error("見つからない："+sel); ACT[el.dataset.act](el.dataset,el); }
   const curQnum=()=>{ const u=cur(); return (isReader(u)?u.qs[S.qi]:u.qs[0]).num; };
 
-  asyncTest.then(uiTest).then(mockTest).then(render,e=>{ results.push({g:"非同期",ok:false,msg:String(e&&e.stack||e)}); render(); });
+  asyncTest.then(uiTest).then(mockTest).then(replayTest).then(dailyTest).then(render,e=>{ results.push({g:"非同期",ok:false,msg:String(e&&e.stack||e)}); render(); });
   function render(){
     const n=results.length, bad=results.filter(r=>!r.ok);
     const gs=[...new Set(results.map(r=>r.g))];

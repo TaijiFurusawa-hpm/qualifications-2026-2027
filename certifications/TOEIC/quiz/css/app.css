@@ -451,7 +451,7 @@ table.st{border-collapse:collapse; width:100%; font-size:var(--fs-14)}
 table.st th,table.st td{padding:8px 6px; border-bottom:var(--rule) solid var(--c-rule); text-align:right; vertical-align:top}
 table.st th:first-child,table.st td:first-child{text-align:left}
 table.st th{color:var(--c-text-2); font-weight:700; font-size:var(--fs-13)}
-.prow{display:grid; grid-template-columns:4rem minmax(0,1fr) 4.5rem; gap:10px; align-items:center; font-size:var(--fs-13)}
+.prow{display:grid; grid-template-columns:4rem minmax(0,1fr) 7.5rem; gap:10px; align-items:center; font-size:var(--fs-13)}
 .prow span:last-child{text-align:right; font-family:var(--f-num); color:var(--c-text-2)}
 details.rev{border-top:var(--rule) solid var(--c-rule); padding:4px 0}
 details.rev summary{cursor:pointer; min-height:var(--tap); display:flex; align-items:center; gap:6px; font-size:var(--fs-15); list-style:none}
@@ -469,13 +469,6 @@ textarea.cp{width:100%; min-height:120px; background:var(--c-surface); color:var
 .vex{font-family:var(--f-en); font-size:1rem; line-height:1.6; margin:0}
 .vex b{color:var(--c-accent)}
 .vq{font-family:var(--f-en); font-size:1.125rem; line-height:1.7; margin:0}
-.lvlist{display:grid; grid-template-columns:repeat(auto-fit,minmax(6.5rem,1fr)); gap:6px}
-.lvb{min-height:max(56px,3.5rem); border-radius:var(--r-s); border:var(--rule) solid var(--c-rule-strong); background:var(--c-surface); color:var(--c-text);
-  display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1.25; padding:4px; cursor:pointer}
-.lvb b{font-family:var(--f-num); font-size:var(--fs-15)}
-.lvb small{font-size:.6875rem; color:var(--c-text-2)}
-.lvb[aria-pressed="true"]{background:var(--c-primary); color:var(--c-on-primary); border-color:var(--c-primary)}
-.lvb[aria-pressed="true"] small{color:inherit; opacity:.85}
 input.vsearch{width:100%; min-height:var(--tap); background:var(--c-surface); color:var(--c-text); border:var(--bw) solid var(--c-rule-strong); border-radius:var(--r-m); padding:8px 12px; font-size:1rem}
 details.vrow{border-bottom:var(--rule) solid var(--c-rule)}
 details.vrow summary{cursor:pointer; display:flex; gap:10px; align-items:center; list-style:none; min-height:var(--tap); padding:4px 0}
@@ -567,6 +560,86 @@ details.wl>.card{margin-top:var(--sp-2)}
 .trow:first-child{border-top:0}
 .trow .m{flex:1 1 10rem; min-width:0; line-height:1.4}
 .trow .m b{display:block; font-size:var(--fs-15)}
+
+/* ---------- 11d. 毎日の流れ（段階3：はじめに・今日・単語の階段・まとめて確認・段の到達・記録） ---------- */
+/* 今日：日付と受験日まで／3つのかたまり／今週の7つの点 */
+.tday{justify-content:space-between}
+.setp{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px 14px; font-size:var(--fs-14)}
+.setp li{display:inline-flex; align-items:center; gap:4px; color:var(--c-text-2)}
+.setp li.done{color:var(--c-text)}
+.setp li small{font-size:.6875rem; color:var(--c-text-2)}
+.setp .dot{width:10px; height:10px; border-radius:50%; border:1.5px solid var(--c-rule-strong); flex:none}
+.wk{gap:var(--sp-2)}
+.wdots{display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; text-align:center}
+.wd{display:flex; flex-direction:column; align-items:center; gap:2px; padding:4px 0; border-radius:var(--r-s); border:var(--rule) solid transparent}
+.wd i{width:14px; height:14px; border-radius:50%; border:1.5px solid var(--c-rule-strong)}           /* 未学習：白抜き */
+.wd.on i{background:var(--c-text); border-color:var(--c-text)}                                       /* 学習した日：塗り */
+.wd.now{border-color:var(--c-rule-strong)}                                                            /* 今日：枠 */
+.wd small{font-size:.6875rem; color:var(--c-text-2); line-height:1.2}
+/* 単語の階段（V1）：下から上へ。上の段ほど右へずらす（段の印だけ。飾りの帯は付けない） */
+.stairs{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px}
+.stp{margin-left:calc(var(--i) * 2%); border:var(--rule) solid var(--c-rule-strong); border-radius:var(--r-m); background:var(--c-surface)}
+.stp.cur{border-color:var(--c-text); box-shadow:inset 0 0 0 1px var(--c-text)}
+.stph{display:flex; align-items:center; gap:var(--sp-3); width:100%; min-height:max(60px,3.75rem); padding:var(--sp-2) var(--sp-3); border:0; background:none; color:var(--c-text); text-align:left; cursor:pointer; border-radius:inherit}
+.stph:disabled{opacity:.5; cursor:default}
+.stn{flex:none; width:3.6em; font-weight:700; font-size:var(--fs-15)}
+.stm{flex:1; min-width:0; display:flex; flex-direction:column; gap:4px; line-height:1.35}
+.stt{display:flex; align-items:center; justify-content:space-between; gap:6px; flex-wrap:wrap}
+.stt b{font-size:var(--fs-14)}
+.stph>.ic{color:var(--c-text-2)}
+.sto{display:flex; flex-wrap:wrap; gap:var(--sp-2); padding:0 var(--sp-3) var(--sp-3)}
+/* 4つの状態の積み上げ棒：習得＝墨／定着中＝藍／学習中＝斜線／未着手＝溝（数字でも書く） */
+.sbar{display:flex; height:8px; border-radius:var(--r-s); overflow:hidden; background:var(--c-surface-2); box-shadow:inset 0 0 0 1px var(--c-rule)}
+.sbar i,.sw{display:block; min-width:2px}
+.sbar .ms,.sw.ms{background:var(--c-text)}
+.sbar .fx,.sw.fx{background:var(--c-accent)}
+.sbar .lr,.sw.lr{background:repeating-linear-gradient(-58deg,var(--c-rule-strong) 0 1.5px,transparent 1.5px 4px); box-shadow:inset 0 0 0 1px var(--c-rule-strong)}
+.sbar .nw,.sw.nw{background:transparent}
+.sw{display:inline-block; width:12px; height:8px; vertical-align:0; border-radius:1px; box-shadow:inset 0 0 0 1px var(--c-rule-strong)}
+.vlrow{display:grid; grid-template-columns:3.6em minmax(0,1fr); gap:2px 10px; align-items:center; font-size:var(--fs-14)}
+.vlrow .xs{grid-column:2}
+/* 段の到達（V5）：小さな階段と、1段上がる印 */
+.v5st{position:relative; display:flex; align-items:flex-end; gap:3px; height:64px; margin:4px auto}
+.v5st i{width:16px; height:calc(var(--i) * 8px); border-radius:1px; box-shadow:inset 0 0 0 1px var(--c-rule-strong)}
+.v5st i.on{background:var(--c-text); box-shadow:none}
+.v5mk{position:absolute; left:calc((var(--i) - 1) * 19px + 4px); bottom:calc(var(--i) * 8px + 4px); width:8px; height:8px; border-radius:50%; background:var(--c-attention)}
+/* まとめて確認（V6）：めくるカード。送る向きに合わせて枠の色と文字 */
+.ckwrap{display:flex; justify-content:center; perspective:900px}
+.ckcard{width:100%; max-width:26rem; min-height:14rem; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; padding:var(--sp-6) var(--sp-4);
+  border:var(--bw) solid var(--c-rule-strong); border-radius:var(--r-l); background:var(--c-surface); color:var(--c-text); text-align:center; cursor:pointer; touch-action:pan-y; will-change:transform}
+.ckcard .vw{font-size:2.25rem}
+.ckja{font-size:1.25rem; font-weight:700; line-height:1.45}
+.ckcard[data-dir="r"]{border-color:var(--c-correct)} .ckcard[data-dir="l"]{border-color:var(--c-attention)}
+/* はじめに（O1〜O4） */
+.obopt[aria-pressed="true"]{border-color:var(--c-text); background:var(--c-selected); box-shadow:inset 0 0 0 1px var(--c-text)}
+.obrow{display:flex; align-items:center; gap:var(--sp-2); padding:var(--sp-2) 0; border-top:var(--rule) solid var(--c-rule); flex-wrap:wrap}
+.obrow:first-child{border-top:0; padding-top:0}
+.obrow .m{flex:1 1 12rem; min-width:0; line-height:1.4}
+.obrow .m b{display:block; font-size:var(--fs-15)}
+.obmore{padding:0 0 var(--sp-2)}
+.seg button small{display:block; font-size:.625rem; font-weight:500; line-height:1.1}
+.pdots{display:flex; flex-wrap:wrap; gap:6px; justify-content:center; padding:4px 0}
+.pdots i{width:10px; height:10px; border-radius:50%; border:1.5px solid var(--c-rule-strong)}
+.pdots i.on{background:var(--c-text); border-color:var(--c-text)}
+.pdots i.cur{border-color:var(--c-text); box-shadow:0 0 0 2px var(--c-selected)}
+/* 記録（T1）：目安の帯・カレンダー */
+svg.ech{width:100%; height:auto; display:block}
+svg.ech text{fill:var(--c-text-2); font-family:var(--f-num); font-size:10px}
+svg.ech .ax{stroke:var(--c-rule-strong); stroke-width:1}
+svg.ech .bd{fill:var(--c-accent); stroke:var(--c-accent); stroke-width:1.25}
+svg.ech .bd.ref{fill:none; stroke-dasharray:3 2}
+svg.ech .tg{stroke:var(--c-attention); stroke-width:1.25; stroke-dasharray:5 3}
+svg.ech .tgl{fill:var(--c-attention)}
+table.st.nx th,table.st.nx td{padding:6px 2px; text-align:center}
+table.st.nx th:first-child,table.st.nx td:first-child{text-align:left}
+.cal{display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:2px; text-align:center; font-family:var(--f-num); font-size:var(--fs-13)}
+.cal b{font-family:var(--f-ui); font-size:.6875rem; color:var(--c-text-2)}
+.cal span{display:flex; flex-direction:column; align-items:center; gap:1px; padding:3px 0; border-radius:var(--r-s); border:var(--rule) solid transparent; color:var(--c-text-2)}
+.cal span i{width:6px; height:6px; border-radius:50%}
+.cal span.on{color:var(--c-text); font-weight:700}
+.cal span.on i{background:var(--c-text)}
+.cal span.now{border-color:var(--c-rule-strong)}
+input.vsearch.dt{flex:1 1 10rem; width:auto; min-width:0}
 
 /* ---------- 12. 演出の部品 ---------- */
 .fx-layer{position:fixed; inset:0; pointer-events:none; z-index:50; overflow:hidden}

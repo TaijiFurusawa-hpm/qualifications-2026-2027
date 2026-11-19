@@ -5,7 +5,7 @@
    - 音声(audio/): 再生時にキャッシュ。Rangeリクエスト(Safari等)はキャッシュ済み全体から切り出して返す
    - Web 版だけで登録する（Capacitor のアプリの中では登録しない。js/app.js の boot()）
    - 書体（Google Fonts）は別オリジンなので保存しない。オフラインでは端末の書体で表示（TODO：同梱したら CORE に足す） */
-const VERSION = 'toeic-quiz-v11';
+const VERSION = 'toeic-quiz-v12';
 /* 本体の一覧は index.html から作る（<script src> と <link href> の同じオリジンのファイル）。
    ファイルを足しても SW を書きかえ忘れないように。index.html に書かれないもの（アイコン・紙の質感・自己テスト）だけをここに置く */
 const CORE_STATIC = ['./','./index.html','./manifest.webmanifest','./img/paper.png','./js/selftest.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
