@@ -1,0 +1,9 @@
+# Vercel に載せないもの（答えの検証ファイル・問題の正本・作業用スクリプト・控え）
+blind/
+content/
+tools/
+ux/backup/
+ux/screens/
+ux/*.md
+SPEC.md
+*.log

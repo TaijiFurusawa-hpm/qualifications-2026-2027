@@ -9,6 +9,7 @@ RATE = "165"
 # Mac標準の Shelley/Reed/Eddy は高音が弱くこもるので使わない（2026-11-12）。豪州の声は Kokoro に無いので Karen を残す。
 TTS_VER = "kokoro-v1"
 SR = "24000"
+BITRATE = "48k"  # 話し声は48kで96kと聞き取り・高域が同等（2026-11-19 比較）。32kは s/sh が弱まるので使わない
 NARR = "k:af_sarah:0.87"
 VOICES = {
     "US-F": "k:af_heart:0.88", "US-F2": "k:af_bella:0.9", "US-M": "k:am_michael:0.98",
@@ -394,7 +395,7 @@ def render(seg, out):
         Path(lst).write_text("".join(f"file '{p}'\n" for p in parts))
         tmpout = out.with_suffix(".tmp.mp3")
         run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", lst,
-             "-ar", SR, "-ac", "1", "-b:a", "96k", str(tmpout)])
+             "-ar", SR, "-ac", "1", "-b:a", BITRATE, str(tmpout)])
         os.replace(tmpout, out)
 
 
@@ -415,7 +416,7 @@ def audio(root, only=None):
     made = skipped = 0
     for id_, seg in plans.items():
         if only and id_ != only: continue
-        h = hashlib.sha1(json.dumps([RATE, TTS_VER, seg], ensure_ascii=False).encode()).hexdigest()
+        h = hashlib.sha1(json.dumps([RATE, TTS_VER, BITRATE, seg], ensure_ascii=False).encode()).hexdigest()
         out = adir / f"{id_}.mp3"
         if out.exists() and hashes.get(id_) == h: skipped += 1; continue
         print("audio:", id_, flush=True)

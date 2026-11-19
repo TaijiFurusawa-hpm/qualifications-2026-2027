@@ -13,7 +13,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-LEVELS = range(1, 7)  # 1=〜400 2=〜500 3=〜600 4=730 5=860 6=900+
+LEVELS = range(1, 8)  # 1=〜400 2=〜500 3=〜600 4=〜700 5=〜800 6=〜900 7=900〜
 import build
 
 POS = ["動", "名", "形", "副", "前・接", "句"]
@@ -164,7 +164,7 @@ def audio(root, only=None):
             name, sp = voice_for(e["w"])
             if key == i and e["w"] in over:  # 1語だと発音が崩れた語は、声を指定して作り直す（tools/vocab_voice.json）
                 _, name, sp = build.VOICES[over[e["w"]]].split(":"); sp = float(sp)
-            h = hashlib.sha1(json.dumps([build.TTS_VER, name, sp, text]).encode()).hexdigest()
+            h = hashlib.sha1(json.dumps([build.TTS_VER, build.BITRATE, name, sp, text]).encode()).hexdigest()
             if (adir / f"{key}.mp3").exists() and hashes.get(key) == h: continue
             jobs.append((key, name, sp, text, h))
     print(f"== vocab audio: 作成 {len(jobs)} 件 ==", flush=True)
@@ -188,7 +188,7 @@ def audio(root, only=None):
                 tmpout = adir / f"{k}.tmp.mp3"
                 build.run(["ffmpeg", "-y", "-loglevel", "error", "-i", j["out"], "-af",
                            f"volume={gain:.1f}dB,alimiter=limit=0.9,adelay=120,apad=pad_dur=0.25",
-                           "-ar", build.SR, "-ac", "1", "-b:a", "64k", str(tmpout)])
+                           "-ar", build.SR, "-ac", "1", "-b:a", build.BITRATE, str(tmpout)])
                 os.replace(tmpout, adir / f"{k}.mp3")
                 with lock: hashes[k] = h
             with lock:

@@ -2,9 +2,11 @@
    - 本体・data.js: ネット優先→失敗時キャッシュ
    - 写真(img/): インストール時に data.js に書かれた写真をすべて保存し、以後はキャッシュ優先
      （ファイル名が問題IDで固定のため。差し替え時は VERSION を上げる）
-   - 音声(audio/): 再生時にキャッシュ。Rangeリクエスト(Safari等)はキャッシュ済み全体から切り出して返す */
-const VERSION = 'toeic-quiz-v6';
-const CORE = ['./index.html','./manifest.webmanifest','./data/data.js','./data/vocab.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
+   - 音声(audio/): 再生時にキャッシュ。Rangeリクエスト(Safari等)はキャッシュ済み全体から切り出して返す
+   - Web 版だけで登録する（Capacitor のアプリの中では登録しない。js/app.js の boot()）
+   - 書体（Google Fonts）は別オリジンなので保存しない。オフラインでは端末の書体で表示（TODO：同梱したら CORE に足す） */
+const VERSION = 'toeic-quiz-v8';
+const CORE = ['./','./index.html','./manifest.webmanifest','./css/app.css','./img/paper.png','./js/icons.js','./js/store.js','./js/fx.js','./js/shell.js','./js/app.js','./data/data.js','./data/vocab.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
 
 async function precache() {
   const c = await caches.open(VERSION);
