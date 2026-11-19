@@ -94,16 +94,30 @@ function saveJSON(k,v){ Store.save(k,v); }
   // TODO(段階4)：Capacitor の App 'pause' でも fl() を呼ぶ
 })();
 
-/* ===== キーの一覧（7.2） ===== */
-const K = {
-  schema:"toeic_schema", profile:"toeic_profile_v1", prefs:"toeic_prefs_v1", ent:"toeic_ent_v1",
-  review:"toeic_review_v1", day:"toeic_day_v1", mockhist:"toeic_mockhist_v1",
-  stat:"toeic_stat_v1", seen:"toeic_seen_v1", flag:"toeic_flag_v1", vocab:"toeic_vocab_v1", vlog:"toeic_vlog_v1",
-  // 旧キー（読むだけ。消さない）
-  miss:"toeic_miss_v1", speed:"toeic_speed_v1", vset:"toeic_vset_v1"
-};
+/* ===== 保存キーの記述子（7.2）。K.名前 → キー。形を変えるときは、ここと migrateStore と自己テストを同時に直す =====
+   since：使い始めた段階／legacy：旧キー（読むだけ。消さない）／shape：中身の形 */
+const KEYS = [
+  {id:"schema",   key:"toeic_schema",      since:0, shape:"{v, at, from}",                         what:"形の版。引きつぎの判定に使う"},
+  {id:"profile",  key:"toeic_profile_v1",  since:0, shape:"PROFILE_DEFAULT",                       what:"はじめに・学習の計画"},
+  {id:"prefs",    key:"toeic_prefs_v1",    since:0, shape:"PREFS_DEFAULT",                         what:"設定（toeic_speed_v1・toeic_vset_v1 を吸収）"},
+  {id:"ent",      key:"toeic_ent_v1",      since:5, shape:"{unlocked, product, checkedAt, pending}", what:"購入の状態の控え（正はストア）"},
+  {id:"review",   key:"toeic_review_v1",   since:0, shape:"{qid:{st:0..3, due:日, n:誤答の回数}}",   what:"解き直しの段階と次に出る日（toeic_miss_v1 から引きつぐ）"},
+  {id:"day",      key:"toeic_day_v1",      since:3, shape:"{日:{w,r,p,m}}",                         what:"その日に終えたかたまり"},
+  {id:"mockhist", key:"toeic_mockhist_v1", since:2, shape:"[{n, attempt, mode, L, R, …}]",          what:"受けた模試の結果"},
+  {id:"stat",     key:"toeic_stat_v1",     since:0, shape:"{'P5|品詞':{n, ok, ms}}",                what:"Part・タグ別の成績"},
+  {id:"seen",     key:"toeic_seen_v1",     since:0, shape:"{unitId:回数}",                          what:"解いた回数（まだ解いていない問題を先に出す）"},
+  {id:"flag",     key:"toeic_flag_v1",     since:0, shape:"{id:時刻}",                              what:"「この問題はおかしい」の報告"},
+  {id:"vocab",    key:"toeic_vocab_v1",    since:0, shape:"{wordId:{b, d, n, ok, l}}",              what:"単語の箱と次に出る日"},
+  {id:"vlog",     key:"toeic_vlog_v1",     since:0, shape:"{日:{n, ok, nw}}",                       what:"単語の学習日誌"},
+  {id:"miss",     key:"toeic_miss_v1",     legacy:true, shape:"{qid:回数}",                         what:"旧：誤答の回数（review と同じ意味で書きつづける）"},
+  {id:"speed",    key:"toeic_speed_v1",    legacy:true, shape:"{v}",                                what:"旧：再生の速さ"},
+  {id:"vset",     key:"toeic_vset_v1",     legacy:true, shape:"{nw, lv, auto}",                     what:"旧：単語の設定"}
+];
+const K = Object.fromEntries(KEYS.map(d=>[d.id,d.key]));
 const SCHEMA_V = 2;
-const PREFS_DEFAULT = { text:1, theme:"auto", sfx:0, haptic:1, hapticMock:0, motion:"auto", speed:1, autoplay:1, vAuto:1 };
+/* tray：Part 6・7 の設問の出し方。"auto"＝3段階（文字が特大以上か読む領域が480px未満なら2段階）／"switch"＝いつも2段階（型C：切り替え）
+   reviewOrder：解き直しの並び。"mix"＝Partとタグをまぜる／"part"＝Partをそろえる（3.7） */
+const PREFS_DEFAULT = { text:1, theme:"auto", sfx:0, haptic:1, hapticMock:0, motion:"auto", speed:1, autoplay:1, vAuto:1, tray:"auto", reviewOrder:"mix" };
 const PROFILE_DEFAULT = { target:null, exam:null, onboarded:0, placedLv:null, curLv:0, newPerDay:10 };
 
 function dayNumber(d){ d=d||new Date(); return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/86400000); }

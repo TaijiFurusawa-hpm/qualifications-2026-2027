@@ -3,7 +3,10 @@
 "use strict";
 const ICON_PATHS = {
   play:'<path d="M8 5.5v13l11-6.5z"/>',
-  pause:'<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>',   // まだ使っていない：再生部品の一時停止（UX設計書の音声部品）で使う
+  pause:'<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>',
+  back5:'<path d="M5 12a7 7 0 1 0 2.4-5.3"/><path d="M4.5 4v4.6h4.6"/>',
+  more:'<path d="M5.5 12h.01M12 12h.01M18.5 12h.01" stroke-width="3"/>',
+  keys:'<rect x="3" y="6" width="18" height="12" rx="1.5"/><path d="M7 10h.01M11 10h.01M15 10h.01M8 14h8"/>',
   replay:'<path d="M4.5 12a7.5 7.5 0 1 0 2.6-5.7"/><path d="M4 4.5v4.6h4.6"/>',
   speaker:'<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.8 7.8 0 0 1 0 11"/>',
   flag:'<path d="M5.5 21V4"/><path d="M5.5 4.5h11l-2.2 4 2.2 4h-11"/>',
@@ -13,6 +16,8 @@ const ICON_PATHS = {
   x:'<path d="M6 6l12 12M18 6L6 18"/>',
   chev:'<path d="M9 6l6 6-6 6"/>',
   back:'<path d="M15 6l-6 6 6 6"/>',
+  up:'<path d="M6 15l6-6 6 6"/>',
+  down:'<path d="M6 9l6 6 6-6"/>',
   today:'<rect x="4" y="5" width="16" height="15" rx="1.5"/><path d="M4 9.5h16M8.5 3v4M15.5 3v4"/><path d="M8.5 14.5l2.2 2.2 4.6-4.6"/>',
   mock:'<path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><ellipse cx="10.5" cy="12" rx="1.6" ry="1.1"/><ellipse cx="10.5" cy="16.5" rx="1.6" ry="1.1"/><path d="M14 12h2.5M14 16.5h2.5"/>',
   practice:'<path d="M4 19.5h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 16.5z"/><path d="M13.5 7.5l3 3"/>',

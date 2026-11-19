@@ -19,11 +19,13 @@ const Shell = {
     this.el={top:$("top"), body:$("body"), bottom:$("bottom"), tabs:$("tabs")};
     this.el.tabs.innerHTML=TABS.map(t=>`<button class="tab pz" type="button" data-act="tab" data-tab="${t.id}">${icon(t.icon)}<span>${t.label}</span></button>`).join("");
   },
-  /* 画面を描く。o = {top, body, bottom, tabs:true|false, tab, layer, wide, keepScroll} */
+  /* 画面を描く。o = {top, body, bottom, tabs:true|false, tab, layer, wide, fixed, keepScroll, noAnim, focus}
+     fixed：本体をスクロールさせない（Part 6・7 の読む画面。文書と設問トレイがそれぞれスクロールする：5.4） */
   render(o){
     const E=this.el;
     Fx.setLayer(o.layer||"expressive");
     E.top.innerHTML=o.top||"";
+    E.body.classList.toggle("fixed",!!o.fixed);
     E.body.innerHTML=`<div class="page${o.wide?" wide":""}" id="page">${o.body||""}</div>`;
     this.setBottom(o.bottom);
     const showTabs=o.tabs!==false;
@@ -34,7 +36,9 @@ const Shell = {
     // 読み上げ：画面が替わったら本体へ焦点を移す（スクロールはしない）
     if(o.focus!==false){ try{ E.body.focus({preventScroll:true}); }catch(e){} }
   },
-  setBottom(h){ this.el.bottom.innerHTML=h?`<div class="bottombar"><div class="wrapin">${h}</div></div>`:""; }
+  setBottom(h){ this.el.bottom.innerHTML=h?`<div class="bottombar"><div class="wrapin">${h}</div></div>`:""; },
+  /* 読み上げへの知らせ（画面には出さない）。同じ文を続けて出しても読まれるよう、いったん空にする */
+  say(t){ const e=document.getElementById("sr"); if(!e) return; e.textContent=""; setTimeout(()=>{ e.textContent=t; },30); }
 };
 
 /* 画面（SCREENS[name] = function(arg) → Shell.render を呼ぶ）。セッションは name:"session" で中身を自分で描く */
@@ -118,6 +122,11 @@ const Input = {};
     const h=el.dataset.hap||(el.classList.contains("choice")?"select":el.classList.contains("pri")?"press":"");
     if(h) Fx.haptic(h);
     try{ fn(el.dataset,el,e); }catch(err){ console.error(err); }
+  });
+  /* role="button" の要素（文書の中の空所など）も Enter・Space で押せるように */
+  document.addEventListener("keydown",e=>{
+    const el=e.target; if(!(el&&el.getAttribute&&el.getAttribute("role")==="button"&&el.dataset&&el.dataset.act&&el.tagName!=="BUTTON")) return;
+    if(e.key==="Enter"||e.key===" "){ e.preventDefault(); e.stopImmediatePropagation(); el.click(); }   // 後ろのキー操作（Enter＝次へ）に渡さない
   });
   document.addEventListener("input",e=>{ const el=e.target; const f=el&&el.dataset&&Input[el.dataset.input]; if(f) f(el.value,el); });
 })();

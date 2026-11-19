@@ -3,10 +3,10 @@
    本物の記録（localStorage）には一切さわらない：テストはすべてメモリの保存先（MemoryBackend）で行う。 */
 "use strict";
 (function(){
-  const results=[]; let cur="";
-  const ok=(c,msg)=>results.push({g:cur,ok:!!c,msg});
+  const results=[]; let grp="";
+  const ok=(c,msg)=>results.push({g:grp,ok:!!c,msg});
   const eq=(a,b,msg)=>ok(JSON.stringify(a)===JSON.stringify(b),msg+(JSON.stringify(a)===JSON.stringify(b)?"":` （期待 ${JSON.stringify(b)} ／ 実際 ${JSON.stringify(a)}）`));
-  const group=g=>{ cur=g; };
+  const group=g=>{ grp=g; };
   const T=20776;   // 固定の「今日」
 
   /* --- 現行版（v1）で作られる記録の見本：空／少し／多い --- */
@@ -156,7 +156,187 @@
     eq(PREFS_DEFAULT.sfx,0,"効果音は既定で切");
   }
 
-  asyncTest.then(render,e=>{ results.push({g:"非同期",ok:false,msg:String(e)}); render(); });
+  /* ===== 6. 段階1：表と純粋な関数 ===== */
+  /* app.js の記録の関数は全体の Store を使うので、テストの間だけメモリの保存先へ差しかえる */
+  function withMem(fn,day){
+    const mem=createStore(MemoryBackend(),{delay:0}); mem.init();
+    const real={load:window.loadJSON,save:window.saveJSON,today:window.dayNumber};
+    window.loadJSON=k=>mem.load(k); window.saveJSON=(k,v)=>mem.save(k,v); window.dayNumber=()=>day==null?T:day;
+    const end=()=>{ window.loadJSON=real.load; window.saveJSON=real.save; window.dayNumber=real.today; };
+    let r; try{ r=fn(mem); }catch(e){ end(); throw e; }
+    if(r&&typeof r.then==="function") return r.then(v=>{ end(); return v; },e=>{ end(); throw e; });
+    end(); return r;
+  }
+  group("表：PART_SPEC・MODE・SECTIONS・保存キー");
+  {
+    eq(PARTS.map(p=>PART_SPEC[p].size),[6,10,4,4,10,2,3],"標準の量は現行の PART_SIZE と同じ（1:6, 2:10, 3・4:4, 5:10, 6:2, 7:3）");
+    ok(PARTS.every(p=>["single","multi","reader"].includes(PART_SPEC[p].layout)&&typeof PART_SPEC[p].qs==="function"&&typeof PART_SPEC[p].est==="function"),"どの Part にも layout・qs・est がある");
+    eq(PARTS.filter(p=>PART_SPEC[p].audio),[1,2,3,4],"音声があるのは Part 1〜4");
+    eq(PARTS.filter(p=>PART_SPEC[p].layout==="reader"),[6,7],"設問トレイは Part 6・7");
+    ok(PARTS.filter(p=>PART_SPEC[p].audio).every(p=>typeof PART_SPEC[p].segs==="function"&&typeof PART_SPEC[p].script==="function"),"音声の Part は、行からの再生の材料（segs・script）を持つ");
+    eq(Object.keys(MODE),["practice","review","mock"],"モードは3つ");
+    eq([MODE.practice.feedback,MODE.review.feedback,MODE.mock.feedback],[true,true,false],"正誤を出すのは練習と解き直しだけ（模試は出さない）");
+    eq([MODE.mock.layer,MODE.mock.lockAudio,MODE.mock.flag],["quiet",true,false],"模試：静かな層・音声は1回だけ・報告ボタンなし");
+    eq(SECTIONS.L.parts.concat(SECTIONS.R.parts),PARTS,"セクションは Part 1〜4 と 5〜7");
+    eq([sectionOf(4),sectionOf(5),READ_MIN],["L","R",75],"リーディングは75分");
+    const old={schema:"toeic_schema",profile:"toeic_profile_v1",prefs:"toeic_prefs_v1",ent:"toeic_ent_v1",review:"toeic_review_v1",day:"toeic_day_v1",mockhist:"toeic_mockhist_v1",
+      stat:"toeic_stat_v1",seen:"toeic_seen_v1",flag:"toeic_flag_v1",vocab:"toeic_vocab_v1",vlog:"toeic_vlog_v1",miss:"toeic_miss_v1",speed:"toeic_speed_v1",vset:"toeic_vset_v1"};
+    eq(K,old,"記述子の一覧から作ったキーは、段階0のキーと1字も違わない（保存データを壊さない）");
+    ok(KEYS.every(d=>d.key.startsWith(KEY_PREFIX)&&d.what)&&new Set(KEYS.map(d=>d.key)).size===KEYS.length,"キーはすべて toeic_ で始まり、重なりがなく、説明がある");
+    eq([PREFS_DEFAULT.tray,PREFS_DEFAULT.reviewOrder],["auto","mix"],"新しい設定の既定：トレイは自動（3段階）・解き直しはPartをまぜる");
+    const mk={n:9,part1:[{id:"M09-P1-01",num:1,tag:"x",c:["a","b","c","d"],a:2,e:"e"}],part3:[{id:"M09-P3-01",qs:[{num:32,q:"q1",c:[1,2,3,4],a:0},{num:33,q:"q2",c:[1,2,3,4],a:1}]}]};
+    const U=buildUnits(mk);
+    eq(U[1][0].qs.map(q=>q.qid),["M09-P1-01"],"1問の Part は unit の id がそのまま設問の id");
+    eq(U[3][0].qs.map(q=>[q.qid,q.bi]),[["M09-P3-01.1",1],["M09-P3-01.2",2]],"セットの設問の id は「unit.番号」（現行と同じ）");
+  }
+  group("練習の量（短い・標準・全部）");
+  eq([practiceSize(5,"short",30),practiceSize(5,"std",30),practiceSize(5,"all",30)],[5,10,30],"Part 5：短い5・標準10・全部30");
+  eq([practiceSize(7,"short",15),practiceSize(6,"short",4),practiceSize(1,"std",3)],[2,1,3],"短いは半分を切り上げ。残りが少なければその数まで");
+  group("解き直しの段階（reviewNext：純粋な関数）");
+  {
+    const G=REVIEW_GAP;
+    eq(reviewNext(undefined,false,T,G),{st:0,due:T,n:1},"一覧にない問題を間違えた → 段階0・当日から");
+    eq(reviewNext({st:0,due:T,n:1},false,T,G),{st:0,due:T+1,n:2},"段階0で間違えた → 段階0のまま翌日");
+    eq(reviewNext({st:0,due:T,n:1},true,T,G),{st:1,due:T+1,n:1},"段階0 → 正解で段階1（翌日）");
+    eq(reviewNext({st:1,due:T,n:1},true,T,G),{st:2,due:T+3,n:1},"段階1 → 正解で段階2（3日後）");
+    eq(reviewNext({st:2,due:T,n:1},true,T,G),{st:3,due:T+7,n:1},"段階2 → 正解で段階3（7日後）");
+    eq(reviewNext({st:3,due:T,n:1},true,T,G),null,"段階3 → 正解で一覧から外れる");
+    for(const s of [1,2,3]) eq(reviewNext({st:s,due:T,n:2},false,T,G),{st:0,due:T+1,n:3},`段階${s}で間違えた → 段階0へ（翌日）、誤答の回数を足す`);
+    eq(reviewNext(undefined,true,T,G),undefined,"一覧にない問題の正解は何も変えない");
+    eq([reviewGaps(T,null),reviewGaps(T,T+15),reviewGaps(T,T+14),reviewGaps(T,T),reviewGaps(T,T-1)],[G,G,REVIEW_GAP_NEAR,REVIEW_GAP_NEAR,G],"受験日まで14日以内だけ間隔を縮める（過ぎたら元にもどす）");
+    eq(REVIEW_GAP_NEAR,[0,1,2,4],"縮めた間隔：3日後→2日後、7日後→4日後");
+    eq(reviewNext({st:1,due:T,n:1},true,T,REVIEW_GAP_NEAR).due,T+2,"受験日が近いとき、段階2は2日後");
+    eq(reviewNext({st:2,due:T,n:1},true,T,REVIEW_GAP_NEAR).due,T+4,"受験日が近いとき、段階3は4日後");
+    eq([dayOf("2027-01-24")-dayOf("2027-01-10"),dayOf(""),dayOf(null)],[14,null,null],"受験日の文字（YYYY-MM-DD）→ 日の番号");
+    eq([dayLabel(T,T),dayLabel(T+1,T),dayLabel(T+3,T).startsWith("3日後（")],["今日","明日",true],"次に出る日の言い方");
+  }
+  group("解き直し：記録と一言（reviewUpdate・scheduleMsg・印）");
+  withMem(mem=>{
+    mem.save(K.profile,{exam:null});
+    const r1=reviewUpdate("Z1",false); eq(scheduleMsg(r1,T),"解き直しの一覧に入れました（今日から出します）","初めて間違えた → 「今日から出します」");
+    const r2=reviewUpdate("Z1",true);  eq(scheduleMsg(r2,T),"次は明日に出します","正解して段階が進んだ → 次に出る日");
+    const r3=reviewUpdate("Z1",false); eq(scheduleMsg(r3,T),"明日にもう一度出します","解き直しでまた間違えた → 翌日にもう一度");
+    eq(scheduleMsg(reviewUpdate("Z9",true),T),"","一覧にない問題の正解は何も言わない");
+    mem.save(K.review,{Z2:{st:3,due:T,n:1}}); eq(scheduleMsg(reviewUpdate("Z2",true),T),"解き直しの一覧から外れました","段階3で正解 → 一覧から外れた、と言う");
+    const exam=Math.floor(Date.UTC(2027,0,1)/86400000);
+    withMem(m3=>{ m3.save(K.profile,{exam:"2027-01-01"}); m3.save(K.review,{Z3:{st:1,due:exam-10,n:1}}); reviewUpdate("Z3",true); eq(m3.load(K.review).Z3,{st:2,due:exam-10+2,n:1},"受験日の10日前：段階2は2日後（記録でも縮む）"); },exam-10);
+    reviewMark("Z4",true); eq([mem.load(K.review).Z4,mem.load(K.miss).Z4],[{st:0,due:T+1,n:0},1],"「あとで解き直す」→ 翌日から出す（旧キーにも入れる）");
+    reviewMark("Z4",false); ok(!mem.load(K.review).Z4&&!mem.load(K.miss).Z4,"印を外すと一覧から外れる");
+    const st0=JSON.stringify(mem.load(K.stat)), rv0=JSON.stringify(mem.load(K.review));
+    eq(recordResult({part:5},{qid:"Z5",a:1,tag:"t"},{pick:-1,peek:true,ms:10}),null,"解かずに見た（peek）問題は記録しない");
+    ok(JSON.stringify(mem.load(K.stat))===st0&&JSON.stringify(mem.load(K.review))===rv0,"peek では成績も解き直しの段階も変わらない（段階が進まない）");
+    recordResult({part:5},{qid:"Z6",a:1,tag:"t"},{pick:-1,ms:10});
+    eq([mem.load(K.review).Z6.st,mem.load(K.stat)["P5|t"].ok],[0,0],"「わからない」は不正解として記録し、解き直しの一覧に入れる");
+  });
+  group("解き直し：旧キー toeic_miss_v1 からの引きつぎ → 段階の計算");
+  {
+    const be=MemoryBackend({toeic_miss_v1:JSON.stringify({"P5-03":2,"P7S-02.1":1,"P2-09":0})}), st=createStore(be,{delay:0}); st.init();
+    migrateStore(st,T);
+    const rv=st.load(K.review);
+    eq(rv,{"P5-03":{st:0,due:T,n:2},"P7S-02.1":{st:0,due:T,n:1}},"誤答の回数 → 段階0・今日（回数0の記録は引きつがない）");
+    eq(reviewNext(rv["P5-03"],true,T,REVIEW_GAP),{st:1,due:T+1,n:2},"引きついだ記録も、正解で段階1（翌日）へ進む");
+    eq(reviewNext(rv["P7S-02.1"],false,T,REVIEW_GAP),{st:0,due:T+1,n:2},"引きついだ記録で間違えたら、翌日にもう一度");
+    eq(be.getItem("toeic_miss_v1"),JSON.stringify({"P5-03":2,"P7S-02.1":1,"P2-09":0}),"旧キーは消さず、中身も変えない");
+  }
+  group("解説の型（根拠・言い換え・ひっかけ）");
+  {
+    const e="東の入口が閉鎖される間は正面入口を使うよう案内する内容。つまり一時的な変更を知らせる告知。開館時間の変更や寄付の依頼は本文に述べられていない。";
+    eq(explainParts(e),[["根拠","東の入口が閉鎖される間は正面入口を使うよう案内する内容。"],["言い換え","つまり一時的な変更を知らせる告知。"],["ひっかけ","開館時間の変更や寄付の依頼は本文に述べられていない。"]],"1文目＝根拠、否定の文から後＝ひっかけ、その間＝言い換え");
+    eq(explainParts("be successful in で「〜に成功する」。名詞 success は補語にならない。").map(x=>x[0]),["根拠","ひっかけ"],"言い換えの文が無ければ出さない");
+    eq(explainParts("1文だけの解説。"),[["根拠","1文だけの解説。"]],"1文だけなら根拠だけ");
+    eq(explainParts({basis:"a",para:"",trap:"c"}),[["根拠","a"],["ひっかけ","c"]],"データ側で分けてあれば、そのまま使う");
+    eq(explainParts(e).map(x=>x[1]).join(""),e,"分けても文は1字も変えない・落とさない");
+  }
+  group("音声：行の始まりの推定・文の分け方");
+  {
+    eq(Player.estimateStarts([{say:"aaaa",line:0},{sil:1},{say:"bbbb",line:1}],5),{0:0,1:3},"無音を除いた時間を字数で割り振る（4字=2秒、無音1秒）");
+    eq(Player.estimateStarts([{say:"Number 1."},{sil:.8},{say:"A."},{say:"xx",line:0}],0),{0:0.8},"長さが分からないときは無音だけで数える");
+    eq(splitSentences("Mr. Lee will arrive at 3 p.m. today. Please greet him. Thanks!"),["Mr. Lee will arrive at 3 p.m. today.","Please greet him.","Thanks!"],"Mr. や p.m. の後では文を切らない");
+    const r={num:7,prompt:"Where?",c:["x","y","z"],a:1};
+    eq(PART_SPEC[2].segs(r).filter(g=>g.line!=null).map(g=>g.line),[0,1,2,3],"Part 2：問いかけ＋3つの応答が行になる");
+    eq(PART_SPEC[2].script(r).lines.map(l=>[l.lab,!!l.ok]),[["Q",false],["A",false],["B",true],["C",false]],"スクリプトの行と正解の印");
+  }
+  group("設問トレイの段階（UX設計書 5.4）");
+  eq([Tray.countFor(600,1,"auto"),Tray.countFor(480,2,"auto")],[3,3],"ふつうは3段階（小・中・大）");
+  eq([Tray.countFor(479,1,"auto"),Tray.countFor(700,3,"auto"),Tray.countFor(700,4,"auto")],[2,2,2],"読む領域が480px未満、または文字が特大以上なら2段階");
+  eq(Tray.countFor(900,0,"switch"),2,"設定「文書と切り替え」ならいつも2段階（型C）");
+  eq([Tray.stagesOf(3),Tray.stagesOf(2)],[["s","m","l"],["s","l"]],"段階の並び");
+  eq(TRAY_MID,0.46,"中は読む領域の46%");
+
+  /* ===== 7. 段階1：解く画面の流れ（画面を実際に描く。記録はメモリの保存先） ===== */
+  const fr=()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+  const key=k=>document.dispatchEvent(new KeyboardEvent("keydown",{key:k,bubbles:true,cancelable:true}));
+  const bottomText=()=>(document.getElementById("bottom").textContent||"").replace(/\s+/g," ");
+  const uiTest=()=>withMem(async mem=>{
+    loadData();
+    if(!MOCKS.length){ ok(false,"問題データが読めない（画面の流れのテストを省略）"); return; }
+    group("練習（Part 5）：解答前に「次へ」が出ない・解説の型");
+    startPractice(5,"std"); await fr();
+    eq(S.units.length,10,"標準の量は10問");
+    ok(!/次へ|結果を見る/.test(bottomText()),"解答前は下のバーに「次へ」が無い");
+    ok(/わからない/.test(bottomText()),"解答前の下のバーは「わからない」だけ");
+    const q=cur().qs[0], wrong=(q.a+1)%q.c.length;
+    pick(q.qid,wrong); await fr();
+    ok(/次へ/.test(bottomText()),"解答すると「次へ」が現れる");
+    const af=[...document.querySelector(".after").children].map(e=>e.className.split(" ")[0]);
+    eq([af[0],af[af.length-1]],["bnr",""],"解説の順：①判定が先頭、④「あとで解き直す」が最後");
+    ok(af.indexOf("ex")>af.indexOf("bnr")&&af.indexOf("trans")<af.indexOf("ex"),"②訳（スクリプト）→ ③解説（根拠・言い換え・ひっかけ）の順");
+    ok(document.querySelector(".choice.is-ok .mk path")&&document.querySelector(".choice.is-ng .mk path"),"正解は✓、選んだ誤答は×の形でも示す（色に頼らない）");
+    ok(/不正解/.test(document.querySelector(".bnr").textContent)&&/正解 [A-D]/.test(document.querySelector(".bnr").textContent),"判定は文字でも「不正解・正解 B」と書く");
+    eq(mem.load(K.review)[q.qid],{st:0,due:T,n:1},"間違えた問題は段階0・今日で一覧に入る");
+    key("Enter"); await fr();
+    eq(S.i,1,"Enter で次の問題へ");
+    ok(!/次へ/.test(bottomText()),"次の問題でも、解答前は「次へ」が無い");
+    const q2=cur().qs[0]; key("ABCD"[q2.a].toLowerCase()); await fr();
+    ok(S.ans[q2.qid]&&S.ans[q2.qid].pick===q2.a,"キー（a〜d）で選べる");
+    ok(/正解/.test(document.querySelector(".bnr").textContent),"正解の判定");
+    key("Enter"); await fr(); key("0"); await fr();
+    ok(S.ans[cur().qs[0].qid].pick===-1&&/答えを確認/.test(document.querySelector(".bnr").textContent),"0 で「わからない」→ 中立の判定");
+    key("Enter"); await fr();
+    for(let i=S.i;i<10;i++){ key("1"); await fr(); key("Enter"); await fr(); }
+    ok(S.view==="results","キーだけで10問を終えて結果へ");
+    ok(document.querySelector('[data-act="reviewThese"]'),"結果の主ボタンは「間違えた◯問を解き直す」");
+
+    group("解き直し：解く前に前回の答え・正解が見えない");
+    startReview([q.qid]); await fr();
+    const card=document.querySelector(`[data-qcard="${CSS.escape(q.qid)}"]`);
+    ok(card&&!card.querySelector(".is-ok,.is-ng,.sel,[aria-pressed='true']"),"前に選んだ答えも正解も印が無い");
+    ok(!document.querySelector("#page .bnr,#page .ex,#page .cmp"),"判定・解説も出ていない");
+    ok(/解き直し/.test(document.getElementById("top").textContent),"札は「解き直し」");
+    ok(card&&/解かずに解説を見る/.test(card.textContent),"逃げ道「解かずに解説を見る」がある");
+    ok(!/次へ/.test(bottomText()),"解答前に「次へ」が無い（解き直し）");
+    pick(q.qid,wrong); await fr();
+    ok(document.querySelector(".cmp .ng")&&document.querySelector(".cmp .ok"),"また不正解 →「選んだ答え」と「正解」を上下に並べる");
+    eq(mem.load(K.review)[q.qid],{st:0,due:T+1,n:2},"また不正解 → 段階0のまま翌日");
+    ok(/明日にもう一度出します/.test(document.querySelector(".bnr").textContent),"「明日にもう一度出します」と書く");
+    startReview([q.qid]); await fr();
+    pick(q.qid,q.a); await fr();
+    eq(mem.load(K.review)[q.qid],{st:1,due:T+1,n:2},"今度は正解 → 段階1（翌日）");
+    ok(/解けました/.test(document.querySelector(".bnr").textContent)&&/次は明日に出します/.test(document.querySelector(".bnr").textContent),"「解けました」と次に出る日");
+    startReview([q.qid]); await fr();
+    const before=JSON.stringify(mem.load(K.review)[q.qid]);
+    peek(q.qid); await fr();
+    eq(JSON.stringify(mem.load(K.review)[q.qid]),before,"「解かずに解説を見る」では段階が進まない");
+    ok(document.querySelector(".bnr.neutral")&&document.querySelector(".ex"),"見たときは中立の判定と解説");
+
+    group("設問トレイ（Part 7）：キーだけで1セット");
+    PR.tag={}; startPractice(7,"all"); await fr();
+    const u=cur();
+    ok(document.getElementById("tray")&&document.getElementById("docs"),"文書と設問トレイを別々に置く");
+    eq(document.querySelectorAll("#qtabs .qchip").length,u.qs.length,"番号の札は設問の数");
+    ok(!/次/.test(bottomText()),"解答前は「次の設問」「次へ」が無い");
+    for(let k=0;k<u.qs.length;k++){ key(String(1+(k%4))); await fr(); key("Enter"); await fr(); }
+    ok(u.qs.every(x=>S.ans[x.qid]),"1〜4 と Enter だけで、セットのすべての設問に答えた");
+    eq(S.i,1,"セットの最後で Enter → 次の文書へ");
+    ok(document.querySelectorAll("#qtabs .qchip .cm").length===0,"次の文書の札には、まだ✓／×が無い");
+    S.i=0; showUnit({keep:true}); await fr();
+    ok([...document.querySelectorAll("#qtabs .qchip")].every(c=>c.querySelector(".cm")&&/正解|不正解/.test(c.getAttribute("aria-label"))),"解いた札には✓／×の形と「正解／不正解」の名前（色に頼らない）");
+    const pad=parseFloat(getComputedStyle(document.getElementById("docs")).paddingBottom), th=document.getElementById("tray").getBoundingClientRect().height;
+    ok(Tray.isWide()||Math.abs(pad-(th+16))<1.5,"文書の下の余白＝トレイの高さ＋16px");
+    Router.tab("today");
+  });
+
+  asyncTest.then(uiTest).then(render,e=>{ results.push({g:"非同期",ok:false,msg:String(e&&e.stack||e)}); render(); });
   function render(){
     const n=results.length, bad=results.filter(r=>!r.ok);
     const gs=[...new Set(results.map(r=>r.g))];

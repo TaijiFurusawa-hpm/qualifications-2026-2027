@@ -5,12 +5,26 @@
    - 音声(audio/): 再生時にキャッシュ。Rangeリクエスト(Safari等)はキャッシュ済み全体から切り出して返す
    - Web 版だけで登録する（Capacitor のアプリの中では登録しない。js/app.js の boot()）
    - 書体（Google Fonts）は別オリジンなので保存しない。オフラインでは端末の書体で表示（TODO：同梱したら CORE に足す） */
-const VERSION = 'toeic-quiz-v8';
-const CORE = ['./','./index.html','./manifest.webmanifest','./css/app.css','./img/paper.png','./js/icons.js','./js/store.js','./js/fx.js','./js/shell.js','./js/app.js','./data/data.js','./data/vocab.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
+const VERSION = 'toeic-quiz-v9';
+/* 本体の一覧は index.html から作る（<script src> と <link href> の同じオリジンのファイル）。
+   ファイルを足しても SW を書きかえ忘れないように。index.html に書かれないもの（アイコン・紙の質感・自己テスト）だけをここに置く */
+const CORE_STATIC = ['./','./index.html','./manifest.webmanifest','./img/paper.png','./js/selftest.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
+function coreFromIndex(html) {
+  const out = [];
+  for (const m of html.matchAll(/<(?:script[^>]*\ssrc|link[^>]*\shref)="([^"]+)"/g)) {
+    const u = m[1];
+    if (/^(?:[a-z]+:)?\/\//i.test(u) || u.startsWith('data:')) continue;   // 別オリジン（Google Fonts など）は保存しない
+    out.push(u.startsWith('./') ? u : './' + u.replace(/^\//, ''));
+  }
+  return out;
+}
 
 async function precache() {
   const c = await caches.open(VERSION);
-  await Promise.allSettled(CORE.map(u => c.add(u)));
+  await Promise.allSettled(CORE_STATIC.map(u => c.add(u)));
+  const idx = await c.match('./index.html');
+  const core = idx ? coreFromIndex(await idx.text()) : [];
+  await Promise.allSettled(core.map(u => c.add(u)));
   // 写真は少量（1枚約0.1MB）なので、オフラインで初めて開いても出るよう先に保存する
   const res = await c.match('./data/data.js');
   const imgs = res ? [...new Set((await res.text()).match(/img\/[\w.-]+\.jpg/g) || [])] : [];

@@ -47,7 +47,7 @@ const Fx = (()=>{
   function ctx(){ if(!ac){ const C=window.AudioContext||window.webkitAudioContext; if(!C) return null; ac=new C(); } if(ac.state==="suspended") ac.resume(); return ac; }
   function sound(name){
     const p=P(); if(!p.sfx||layer==="quiet") return;
-    if(typeof audioBusy==="function"&&audioBusy()) return;
+    if(Player.busy()) return;   // リスニングの音声が流れている間は鳴らさない
     const notes=SND[name]; if(!notes) return; const a=ctx(); if(!a) return; const t0=a.currentTime+.01;
     for(const [f,d,type,g,dl] of notes){
       const t=t0+(dl||0)/1000, dur=d/1000, gn=a.createGain();
