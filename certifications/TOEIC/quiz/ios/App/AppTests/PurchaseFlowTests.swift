@@ -162,7 +162,7 @@ final class PurchaseFlowTests: XCTestCase {
         await shot("ios_06_failed")
         try await session.setSimulatedError(nil, forAPI: .purchase)
         try await js("ACT.buy()")   // もう一度 → 価格を取り直してから買える状態にもどる
-        try await waitJS("/で開く$/.test(document.querySelector('#buydlg [data-act=buy]').textContent)||Purchase.unlocked", "もう一度")
+        try await waitJS("Purchase.unlocked||/で開く$/.test(document.querySelector('#buydlg [data-act=buy]')?.textContent||'')", "もう一度")
     }
 
     // MARK: - 保留（承認待ち）→ 承認で自動で開く

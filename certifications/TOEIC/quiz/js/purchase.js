@@ -137,7 +137,7 @@ const Purchase = (()=>{
     if(!was&&(st==="pending"||sheetOpen())) { st="success"; if(sheetOpen()){ paint(); Fx.haptic("buy"); } }
   }
   function use(s){
-    store=s||null; prod=null; prodSt="idle"; slow=false; st=""; rst=""; busy=false; clearTimeout(prodTimer);
+    store=s||null; prod=null; prodSt="idle"; slow=false; st=""; rst=""; busy=false; lastErr=""; clearTimeout(prodTimer);
     if(store&&store.listen) store.listen(onTx);
     return store;
   }
@@ -151,7 +151,7 @@ const Purchase = (()=>{
   async function buy(){
     if(!canBuy()||busy) return;
     if(prodSt!=="ok"){ await loadProduct(true); return; }   // 「もう一度」：価格から取り直す
-    busy=true; st=""; rst=""; paint();
+    busy=true; st=""; rst=""; lastErr=""; paint();
     let r; try{ r=await store.buy(); }catch(e){ r="failed"; lastErr=String(e&&(e.message||e.errorMessage)||e); }
     busy=false;
     if(r==="purchased"){ grant(); st="success"; Fx.haptic("buy"); }
