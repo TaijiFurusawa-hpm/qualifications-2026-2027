@@ -1,0 +1,45 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.13.0'
+        classpath 'com.google.gms:google-services:4.4.4'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply from: "variables.gradle"
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+// SDK に android-36（platform）や build-tools 35.0.0 が無く、android-36.1・build-tools 36.1.0 だけがある環境（2026-11 の作者の Mac）向け。
+// 無いときだけ 36.1 で組み立てる（targetSdk は 36 のまま）。標準どおり入っている環境では何もしない
+subprojects {
+    afterEvaluate { p ->
+        def a = p.extensions.findByName('android')
+        if (a == null) return
+        def sdk = a.sdkDirectory
+        if (!new File(sdk, 'platforms/android-36').exists() && new File(sdk, 'platforms/android-36.1').exists()) {
+            a.compileSdkMinor = 1
+        }
+        if (!new File(sdk, 'build-tools/35.0.0').exists() && new File(sdk, 'build-tools/36.1.0').exists()) {
+            a.buildToolsVersion = '36.1.0'
+        }
+    }
+}

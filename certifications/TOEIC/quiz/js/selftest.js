@@ -74,6 +74,51 @@
     group("Store：非同期の保存先（Capacitor Preferences 想定）");
     eq(st.load("toeic_x"),{v:5},"init を待つと全キーが読める");
     st.save("toeic_x",{v:6}); await st.flush(); eq(m.toeic_x,'{"v":6}',"flush で非同期に書く");
+
+    /* アプリ：Preferences が正、localStorage は控え（段階4）。Preferences は偽物（同じ形の Promise を返す）、localStorage は MemoryBackend */
+    group("Store：アプリの二重化（Preferences が正＋localStorage）と記録の引きつぎ");
+    const fakePrefs=(init,fail)=>{ const d=Object.assign({},init||{}); return { d,
+      keys:async()=>{ if(fail==="keys") throw new Error("x"); return {keys:Object.keys(d)}; },
+      get:async({key})=>({value:key in d?d[key]:null}),
+      set:async({key,value})=>{ if(fail==="set") throw new Error("x"); d[key]=value; },
+      remove:async({key})=>{ delete d[key]; } }; };
+    const open=async(P,ls)=>{ const be=MirroredBackend(CapacitorPrefsBackend(P),ls), s=createStore(be,{delay:0}); await s.init(); return {be,s}; };
+    for(const kind of ["few","many"]){
+      const raw=fixture(kind), ref=createStore(MemoryBackend(raw)); ref.init();
+      const want=counts(ref), ls=MemoryBackend(raw), P=fakePrefs();
+      const {be,s}=await open(P,ls);
+      eq(counts(s),want,`${kind}：段階3の記録（localStorage）から Preferences に移っても件数が同じ`);
+      eq(Object.keys(P.d).sort(),Object.keys(raw).sort(),`${kind}：全キーが Preferences に写る`);
+      ok(Object.keys(raw).every(k=>P.d[k]===raw[k]),`${kind}：値は文字列のまま同じ`);
+      eq(ls.keys().length,Object.keys(raw).length,`${kind}：localStorage からは消さない`);
+      eq(be.imported,Object.keys(raw).length,`${kind}：写した数`);
+      migrateStore(s,T); await s.flush();
+      const again=await open(P,ls);
+      eq(again.be.imported,0,`${kind}：2回目の起動では写さない（何度起動しても同じ）`);
+      eq(counts(again.s),want,`${kind}：引きつぎ（migrateStore）後に開き直しても件数が同じ`);
+      const lost=await open(P,MemoryBackend());   // WKWebView が localStorage を消した
+      eq(counts(lost.s),want,`${kind}：localStorage が消されても Preferences から読める`);
+      eq(lost.be.mirror.keys().length,Object.keys(P.d).length,`${kind}：読んだ値で localStorage を書きなおす`);
+    }
+    {
+      const P=fakePrefs({toeic_a:'{"v":"prefs"}'}), ls=MemoryBackend({toeic_a:'{"v":"ls"}',toeic_b:'{"v":1}'});
+      const {s}=await open(P,ls);
+      eq(s.load("toeic_a"),{v:"prefs"},"両方にあって違えば Preferences が正");
+      eq(ls.getItem("toeic_a"),'{"v":"prefs"}',"localStorage を Preferences の値にそろえる");
+      s.save("toeic_c",[1]); s.remove("toeic_b"); await s.flush();
+      ok(P.d.toeic_c==="[1]"&&ls.getItem("toeic_c")==="[1]","書くときは両方へ");
+      ok(!("toeic_b" in P.d)&&ls.getItem("toeic_b")==null,"消すときも両方から");
+    }
+    {
+      const ls=MemoryBackend({toeic_a:'{"v":1}'}), {be,s}=await open(fakePrefs({},"keys"),ls);
+      ok(be.down&&s.load("toeic_a").v===1,"Preferences が読めないときは localStorage で動く（記録を空にしない）");
+      const ls2=MemoryBackend({toeic_a:'{"v":2}'}), r2=await open(fakePrefs({},"set"),ls2);
+      eq(r2.s.load("toeic_a"),{v:2},"Preferences へ写せなくても、記録は localStorage から読める");
+      const ls3=MemoryBackend(); ls3.setItem=()=>{ throw new Error("QuotaExceeded"); };
+      const P3=fakePrefs(), r3=await open(P3,ls3); r3.s.save("toeic_q",{a:1}); await r3.s.flush();
+      ok(P3.d.toeic_q==='{"a":1}'&&r3.s.pending()===0,"localStorage が容量オーバーでも Preferences には書ける");
+    }
+    eq(Store.backend.name,isNativeApp()?"capacitor-preferences+localStorage":"localStorage","アプリでは Preferences＋localStorage、Web では localStorage のまま");
   })();
 
   /* ===== 2. 引きつぎ ===== */
@@ -540,7 +585,9 @@
       group("模試：中断と再開（リスニング）");
       fa().finish(); await adv(3000);
       const leftBefore=S.T.until-now;
+      ok(Native.awake,"リスニングの最中は画面を自動で消さない（keep-awake）");
       Mock.interrupt(); await fr();
+      ok(!Native.awake,"中断したら画面を消してよい");
       eq(S.view,"resume","裏に回ると音声と時間を止め、「中断していました」の1枚");
       ok(/中断していました/.test(document.getElementById("page").textContent),"「中断していました」");
       const sv=mem.load(Mock.runKey(1));
@@ -563,6 +610,7 @@
       eq([S.run.phase,S.view],["gate","gate"],"リスニングの最後のあと、切り替えの画面");
       ok(/リーディングを始める/.test(bottomText())&&/ここで中断する/.test(bottomText()),"「リーディングを始める」と「ここで中断する」");
       eq(Player.state,"idle","切り替えでは音声を止める");
+      ok(!Native.awake,"切り替えの画面では画面を消してよい");
       await adv(10*60000); eq(mem.load(Mock.runKey(1)).rUsed,0,"押すまで時間を数えない（10分待っても0）");
       Mock.suspend(); await fr(); ok(!S&&mem.load(Mock.runKey(1)).phase==="gate","切り替えの画面で中断できる");
       Mock.open(1); await fr(); tap('[data-act="mResume"]'); await fr();
@@ -572,6 +620,13 @@
       group("模試：リーディング（M5）と解答状況（M6）");
       tap('[data-act="beginReading"]'); await fr();
       eq([S.run.phase,cur().part],["R",5],"「リーディングを始める」で Part 5 から");
+      ok(Native.awake,"リーディングの最中も画面を消さない");
+      {
+        const pop=()=>new Promise(r=>setTimeout(r,80));   // history.back の popstate を待つ
+        ok(Native.back()&&(await pop(),document.querySelector("#askdlg[open]"))&&S&&S.run.phase==="R","もどるボタン（Android）：模試の最中は「中断しますか」の確認");
+        ok(Native.back()&&!document.querySelector("dialog[open]")&&S&&S.view==="unit","もう一度もどるボタン：確認を閉じて模試にもどる");
+        await pop(); ok(Router.inSession()&&Native.awake,"模試は続いている");
+      }
       ok(/残り 75:00/.test(document.getElementById("top").textContent),"残り 75:00 から数える");
       ok(document.querySelector('#top [data-act="mGrid"]')&&/101 \/ 200/.test(document.getElementById("top").textContent),"上のバー：残り時間・番号「101 / 200」・一覧・中断");
       ok(/前へ/.test(bottomText())&&/見直す/.test(bottomText())&&/次へ/.test(bottomText()),"下のバー：前へ・あとで見直す・次へ");

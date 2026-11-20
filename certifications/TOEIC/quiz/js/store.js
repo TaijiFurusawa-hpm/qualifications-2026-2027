@@ -2,7 +2,8 @@
    UX設計書 7.1-1 / 7.2
    - 起動時に toeic_ で始まる全キーをメモリへ読みこみ、loadJSON はメモリから返す（呼び出し側は変えない）
    - saveJSON はメモリへ書き、保存先へは300msまとめて書く（write-behind）。裏に回る瞬間（visibilitychange / pagehide）に必ず流す
-   - 保存先は差しかえ式：いまは localStorage、アプリでは Capacitor Preferences（下の CapacitorPrefsBackend）
+   - 保存先は差しかえ式：Web は localStorage。アプリ（Capacitor）は Preferences を正とし、localStorage へも同じ値を書く（MirroredBackend）。
+     WKWebView では空き容量が減ると localStorage が消されうるため（7.3）。裏に回る（App の pause）ときの flush は js/native.js
 */
 "use strict";
 const KEY_PREFIX = "toeic_";
@@ -25,15 +26,48 @@ function MemoryBackend(init){
     keys(){ return Object.keys(m).filter(k=>k.startsWith(KEY_PREFIX)); },
     getItem(k){ return k in m?m[k]:null; }, setItem(k,v){ m[k]=String(v); }, removeItem(k){ delete m[k]; } };
 }
-/* TODO(段階4)：@capacitor/preferences を入れたら有効になる。値は文字列（JSON）。すべて Promise を返す */
-function CapacitorPrefsBackend(){
-  const P=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.Preferences;
+/* Capacitor Preferences（端末の設定の保存領域：iOS は UserDefaults、Android は SharedPreferences）。値は文字列（JSON）。すべて Promise を返す
+   P：Preferences の部品（省略時は window.Capacitor.Plugins.Preferences。自己テストでは偽物を渡す） */
+function CapacitorPrefsBackend(P){
+  P=P||(window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.Preferences);
   if(!P) return null;
   return { name:"capacitor-preferences", async:true,
     async keys(){ const r=await P.keys(); return (r.keys||[]).filter(k=>k.startsWith(KEY_PREFIX)); },
     async getItem(k){ const r=await P.get({key:k}); return r.value==null?null:r.value; },
     setItem(k,v){ return P.set({key:k,value:v}); },
     removeItem(k){ return P.remove({key:k}); } };
+}
+/* 二重化：primary（Preferences）が正、mirror（localStorage）は控え。
+   - 起動時（keys）：mirror にだけあるキーを primary へ写す＝それまでの記録の引きつぎ（mirror からは消さない。何度起動しても同じ）
+   - 両方にあって値が違えば primary が正（読んだとき mirror を primary の値で書きなおす）
+   - 書く・消すは両方へ。mirror の失敗（容量オーバー等）は無視する
+   - primary が読めないときは、その回は mirror だけで動く（記録を空にしない） */
+function MirroredBackend(primary, mirror){
+  let down=false;
+  const B={ name:primary.name+"+"+mirror.name, async:true, primary, mirror, imported:0,
+    get down(){ return down; },
+    async keys(){
+      let list; try{ list=await primary.keys(); }catch(e){ down=true; return mirror.keys(); }
+      const have=new Set(list);
+      for(const k of mirror.keys()){
+        if(have.has(k)) continue;
+        const v=mirror.getItem(k); if(v==null) continue;
+        have.add(k);   // 写すのに失敗しても getItem が mirror から返すので、記録は欠けない
+        try{ await primary.setItem(k,v); B.imported++; }catch(e){}
+      }
+      return Array.from(have);
+    },
+    async getItem(k){
+      if(down) return mirror.getItem(k);
+      let v=null; try{ v=await primary.getItem(k); }catch(e){}
+      if(v==null) return mirror.getItem(k);
+      try{ if(mirror.getItem(k)!==v) mirror.setItem(k,v); }catch(e){}
+      return v;
+    },
+    setItem(k,v){ try{ mirror.setItem(k,v); }catch(e){} return down?undefined:primary.setItem(k,v); },
+    removeItem(k){ try{ mirror.removeItem(k); }catch(e){} return down?undefined:primary.removeItem(k); }
+  };
+  return B;
 }
 function isNativeApp(){ return !!(window.Capacitor&&(typeof window.Capacitor.isNativePlatform==="function"?window.Capacitor.isNativePlatform():window.Capacitor.platform&&window.Capacitor.platform!=="web")); }
 
@@ -83,7 +117,10 @@ function createStore(backend, opts){
 }
 
 /* --- アプリ全体で使う Store --- */
-const Store = createStore((isNativeApp()&&CapacitorPrefsBackend())||LocalStorageBackend());
+const Store = createStore((()=>{
+  const ls=LocalStorageBackend(), pr=isNativeApp()&&CapacitorPrefsBackend();
+  return pr?MirroredBackend(pr,ls):ls;
+})());
 function loadJSON(k){ return Store.load(k); }
 function saveJSON(k,v){ Store.save(k,v); }
 function removeJSON(k){ Store.remove(k); }
@@ -92,7 +129,6 @@ function removeJSON(k){ Store.remove(k); }
   document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="hidden") fl(); });
   window.addEventListener("pagehide",fl);
   window.addEventListener("storage",e=>{ if(e.storageArea===window.localStorage&&Store.backend.name==="localStorage") Store.external(e.key,e.newValue); });
-  // TODO(段階4)：Capacitor の App 'pause' でも fl() を呼ぶ
 })();
 
 /* ===== 保存キーの記述子（7.2）。K.名前 → キー。形を変えるときは、ここと migrateStore と自己テストを同時に直す =====

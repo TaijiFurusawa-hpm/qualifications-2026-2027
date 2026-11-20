@@ -172,7 +172,7 @@ const Mock = (()=>{
   }
 
   /* --- リスニング（M3） --- */
-  function runL(){ S.view="unit"; S.live=true; startSeg("l"); S.i=S.T.vi; showUnit(); if(S.T.ph==="play") playL(); paintBand(); save(); }
+  function runL(){ S.view="unit"; live(true); startSeg("l"); S.i=S.T.vi; showUnit(); if(S.T.ph==="play") playL(); paintBand(); save(); }
   function step(nx){
     const old=S.T; if(nx===old) return;
     S.T=nx;
@@ -219,7 +219,7 @@ const Mock = (()=>{
 
   /* --- 切り替え（M4） --- */
   function toGate(){
-    Player.stop(); stopSeg("l"); S.T=null; S.live=false;
+    Player.stop(); stopSeg("l"); S.T=null; live(false);
     S.run.phase="gate"; S.run.L=null; S.i=Math.max(0,S.info.firstR); S.qi=0;
     renderGate(); save();
   }
@@ -235,7 +235,7 @@ const Mock = (()=>{
   function beginReading(){ if(!active()||S.run.phase!=="gate") return; S.run.phase="R"; S.i=S.info.firstR; S.qi=0; startR("unit"); }
 
   /* --- リーディング（M5）・解答状況（M6） --- */
-  function startR(view){ S.live=true; startSeg("r"); S.lastTick=Clock.now(); if(view==="grid") showGrid(); else showUnit({qi:S.qi}); save(); }
+  function startR(view){ live(true); startSeg("r"); S.lastTick=Clock.now(); if(view==="grid") showGrid(); else showUnit({qi:S.qi}); save(); }
   function clockState(){
     const used=usedNow("r"), lim=rLimit(S.run.mode);
     if(lim==null) return {t:"経過 "+fmt(used), cls:"ol", say:"経過時間"};
@@ -360,11 +360,13 @@ const Mock = (()=>{
   }
 
   /* --- 中断・再開（3.4(e)） --- */
+  /* 音声と時間が動いている間（live）は、画面を自動で消さない（7.3：リスニングは操作のない時間が続く。リーディングも長文を読む間に消えると中断になるため、両方） */
+  function live(on){ S.live=on; Native.keepAwake(on); }
   function pauseLive(){
     if(!S||!S.live) return;
     const now=Clock.now(), r=S.run;
     if(r.phase==="L"&&S.T){ r.L={ai:S.T.ai, ph:S.T.ph, vi:S.i, left:S.T.until?Math.max(0,S.T.until-now):0}; S.T=null; }
-    Player.stop(); stopSeg("l"); stopSeg("r"); S.live=false;
+    Player.stop(); stopSeg("l"); stopSeg("r"); live(false);
   }
   /* 自分で「中断」：保存して「今日」へ。時間は止まる */
   function suspend(){
@@ -430,7 +432,7 @@ const Mock = (()=>{
     Router.tab("mock"); Router.go("mockresult",{n:h.n,at:h.at});
     Fx.haptic("grade");   // 結果へ移る瞬間（練習の層になってから）
   }
-  function end(){ if(MT){ clearInterval(MT); MT=0; } ASK={}; closeDlg("askdlg"); }
+  function end(){ if(MT){ clearInterval(MT); MT=0; } ASK={}; closeDlg("askdlg"); Native.keepAwake(false); }
 
   /* --- 確認の1枚（中断・採点・やり直し）。勝手には開かない。Esc・「もどる」で閉じる --- */
   function ask(o){

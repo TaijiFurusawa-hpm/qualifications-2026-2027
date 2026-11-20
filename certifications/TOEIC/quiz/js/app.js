@@ -93,7 +93,9 @@ function applyPrefs(){
   r.dataset.text=String(p.text);
   Fx.syncMotion();
   const m=document.querySelector('meta[name="theme-color"]');
-  if(m){ const dark=p.theme==="dark"||(p.theme!=="light"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches); m.content=dark?"#181816":"#F6F2EA"; }
+  const dark=p.theme==="dark"||(p.theme!=="light"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
+  if(m) m.content=dark?"#181816":"#F6F2EA";
+  Native.bars(dark);   // アプリ：上のバーの文字色
 }
 
 /* ===== 問題データ：MOCKS = DATA.mocks、unitsOf(n) が回ごとに unit を作って覚える =====
@@ -1089,12 +1091,13 @@ async function boot(){
   if(!testMode&&Store.ready){ migrateStore(Store); settleOnboarding(Store); }   // 読みこみに失敗したときは引きつがない（既定値で上書きしないため）。記録のある人には「はじめに」を出さない
   try{ if(history.state&&history.state.lapis) history.replaceState(null,""); }catch(e){}   // 再読みこみ前の「もどる」の印を消す
   applyPrefs();
-  if(testMode){ const s=document.createElement("script"); s.src="js/selftest.js"; document.head.appendChild(s); return; }
+  if(testMode){ const s=document.createElement("script"); s.src="js/selftest.js"; document.head.appendChild(s); Native.ready(); return; }
   if(!window.TOEIC_DATA&&/[?&]sample/.test(location.search)){
     await new Promise(r=>{ const s=document.createElement("script"); s.src="data/data.sample.js"; s.onload=r; s.onerror=r; document.head.appendChild(s); });
   }
   loadData();
   Router.tab(profile().onboarded?"today":"onboard");   // 初回だけ「はじめに」（O1〜O4）
+  Native.ready();   // アプリ：最初の画面を描いたら起動画面を消す
   // Service Worker は Web 版だけで登録する（アプリの中では登録しない：7.1-14）
   if("serviceWorker" in navigator&&/^https?:/.test(location.protocol)&&!isNativeApp()&&!/[?&]sample/.test(location.search)){
     navigator.serviceWorker.register("./sw.js").catch(()=>{});

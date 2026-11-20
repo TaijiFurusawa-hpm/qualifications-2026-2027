@@ -3,3 +3,8 @@ blind/
 __pycache__/
 tools/.venv/
 tools/.tts/
+
+# アプリ（Capacitor）
+node_modules/
+www/
+.build/

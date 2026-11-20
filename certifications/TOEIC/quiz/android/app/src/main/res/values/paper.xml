@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 紙の色（起動画面・Webビューの下地）。暗い外観は values-night/paper.xml。UX設計書 7.3「起動画面」 -->
+<resources>
+    <color name="paper">#F6F2EA</color>
+</resources>

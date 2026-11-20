@@ -7,3 +7,12 @@ ux/screens/
 ux/*.md
 SPEC.md
 *.log
+# アプリ（Capacitor）の部品と生成物：Web には載せない
+node_modules/
+www/
+ios/
+android/
+scripts/
+package.json
+package-lock.json
+capacitor.config.json
