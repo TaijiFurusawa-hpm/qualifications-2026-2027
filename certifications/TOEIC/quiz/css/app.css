@@ -5,6 +5,12 @@
    決まり：カードの縁や角に色の帯・飾りを付けない／罫は1本だけ／全画面で同じ書体
    ===================================================================== */
 
+/* ---------- 0. 同梱の書体（fonts/ ＝ tools/fonts.py で作る。SIL OFL 1.1） ---------- */
+@font-face{font-family:"Zen Kaku Gothic New"; src:url("../fonts/zen-kaku-500.woff2") format("woff2"); font-weight:500; font-display:swap}
+@font-face{font-family:"Zen Kaku Gothic New"; src:url("../fonts/zen-kaku-700.woff2") format("woff2"); font-weight:700; font-display:swap}
+@font-face{font-family:"Inter"; src:url("../fonts/inter.woff2") format("woff2"); font-weight:400 700; font-display:swap}
+@font-face{font-family:"Literata"; src:url("../fonts/literata.woff2") format("woff2"); font-weight:400 600; font-display:swap}
+
 /* ---------- 1. 役割の名前の変数（明るい外観） ---------- */
 :root{
   color-scheme:light;
@@ -31,9 +37,7 @@
   --paper-tex:url("../img/paper.png");
   --mk-ok:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='%23000' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 
-  /* 書体：UI はすべて Inter＋Zen Kaku Gothic New、英文（問題文・選択肢・単語）だけ Literata
-     TODO(フォント同梱)：製品版では Google Fonts をやめ、使用文字だけのサブセット woff2 を
-     fonts/ に置いて @font-face で読む（Zen Kaku 500/700・Inter 400〜700・Literata 400/600、SIL OFL 1.1）。 */
+  /* 書体：UI はすべて Inter＋Zen Kaku Gothic New、英文（問題文・選択肢・単語）だけ Literata（同梱：0. の @font-face） */
   --sys:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif;
   --f-ui:"Inter","Zen Kaku Gothic New",var(--sys);
   --f-en:"Literata",Georgia,"Times New Roman",serif;

@@ -4,19 +4,20 @@
      （ファイル名が問題IDで固定のため。差し替え時は VERSION を上げる）
    - 音声(audio/): 再生時にキャッシュ。Rangeリクエスト(Safari等)はキャッシュ済み全体から切り出して返す
    - Web 版だけで登録する（Capacitor のアプリの中では登録しない。js/app.js の boot()）
-   - 書体（Google Fonts）は別オリジンなので保存しない。オフラインでは端末の書体で表示（TODO：同梱したら CORE に足す） */
-const VERSION = 'toeic-quiz-v13';
-/* 本体の一覧は index.html から作る（<script src> と <link href> の同じオリジンのファイル）。
-   ファイルを足しても SW を書きかえ忘れないように。index.html に書かれないもの（アイコン・紙の質感・自己テスト）だけをここに置く */
-const CORE_STATIC = ['./','./index.html','./manifest.webmanifest','./img/paper.png','./js/selftest.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
+   - 書体（fonts/）は同梱。css の url(...) から拾って保存する */
+const VERSION = 'toeic-quiz-v14';
+/* 本体の一覧は index.html（<script src>・<link href>）と、そこで読む css の url(...)（書体・紙の質感）から作る。
+   ファイルを足しても SW を書きかえ忘れないように。どこにも書かれないもの（アイコン・自己テスト）だけをここに置く */
+const CORE_STATIC = ['./','./index.html','./manifest.webmanifest','./js/selftest.js','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png'];
+const sameOrigin = u => !/^(?:[a-z]+:)?\/\//i.test(u) && !u.startsWith('data:');   // 別オリジン・data: は保存しない
 function coreFromIndex(html) {
-  const out = [];
-  for (const m of html.matchAll(/<(?:script[^>]*\ssrc|link[^>]*\shref)="([^"]+)"/g)) {
-    const u = m[1];
-    if (/^(?:[a-z]+:)?\/\//i.test(u) || u.startsWith('data:')) continue;   // 別オリジン（Google Fonts など）は保存しない
-    out.push(u.startsWith('./') ? u : './' + u.replace(/^\//, ''));
-  }
-  return out;
+  return [...html.matchAll(/<(?:script[^>]*\ssrc|link[^>]*\shref)="([^"]+)"/g)].map(m => m[1]).filter(sameOrigin)
+    .map(u => u.startsWith('./') ? u : './' + u.replace(/^\//, ''));
+}
+// css の中の url(...) は css のある場所からの相対
+function urlsFromCss(css, cssPath) {
+  return [...css.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)].map(m => m[1]).filter(sameOrigin)
+    .map(u => new URL(u, new URL(cssPath, self.registration.scope)).href);
 }
 
 async function precache() {
@@ -25,6 +26,12 @@ async function precache() {
   const idx = await c.match('./index.html');
   const core = idx ? coreFromIndex(await idx.text()) : [];
   await Promise.allSettled(core.map(u => c.add(u)));
+  const fromCss = [];
+  for (const u of core.filter(u => u.endsWith('.css'))) {
+    const r = await c.match(u);
+    if (r) fromCss.push(...urlsFromCss(await r.text(), u));
+  }
+  await Promise.allSettled([...new Set(fromCss)].map(u => c.add(u)));
   // 写真は少量（1枚約0.1MB）なので、オフラインで初めて開いても出るよう先に保存する
   const res = await c.match('./data/data.js');
   const imgs = res ? [...new Set((await res.text()).match(/img\/[\w.-]+\.jpg/g) || [])] : [];

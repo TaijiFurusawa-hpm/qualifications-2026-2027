@@ -13,12 +13,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Lapis 模試">
-<!-- 書体：Web の試作では Google Fonts を読む（オフラインや読めないときは端末の書体で表示）。
-     TODO(フォント同梱)：アプリ版では使用文字だけに絞ったサブセット woff2 を fonts/ に同梱し、この <link> を外す。
-     css/app.css の --f-ui / --f-en / --f-num の先頭名と合わせること。 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Literata:opsz,wght@7..72,400;7..72,600&amp;family=Zen+Kaku+Gothic+New:wght@500;700&amp;display=swap">
+<!-- 書体は同梱（fonts/・css/app.css の @font-face）。日本語の書体を先に読み始める -->
+<link rel="preload" href="./fonts/zen-kaku-500.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="./css/app.css">
 </head>
 <body>
