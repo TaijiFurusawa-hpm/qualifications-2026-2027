@@ -107,7 +107,7 @@ function dateLabel(at){ const d=new Date(at); return `${d.getMonth()+1}月${d.ge
 
 /* ===== 模試の進行 ===== */
 const Mock = (()=>{
-  let MT=0, ASK={}, PREP_MODE="real", LOCK_MSG=0, sampleT=0;
+  let MT=0, ASK={}, PREP_MODE="real", sampleT=0;
   const runKey=n=>K.mockrun+":"+n;
   function loadRun(n){ const r=loadJSON(runKey(n)); return r&&r.n===n&&r.ans?r:null; }
   function runs(){ return availableMocks().map(m=>loadRun(m.n)).filter(Boolean); }   // 鍵のかかった回の途中の状態は出さない（消さずに残す）
@@ -472,7 +472,7 @@ const Mock = (()=>{
   function rowFor(n,H){
     const m=MOCKS.find(x=>x.n===n);
     if(!m) return rowbHTML({act:"none",no:n,title:`模試 ${n}`,sub:"準備中",disabled:true});
-    if(!mockOpen(m)) return rowbHTML({act:"mLocked",data:{n},no:icon("lock","s"),title:`模試 ${n}`,sub:`未購入 ・ ${mockQCount(n)}問・約2時間・Part 1〜7`});
+    if(!mockOpen(m)) return rowbHTML({act:"mLocked",data:{n},no:icon("lock","s"),cls:"lk",title:`模試 ${n}`,sub:`未購入 ・ ${mockQCount(n)}問・約2時間・Part 1〜7`,label:`模試${n}、未購入、押すと購入の案内`});
     const run=loadRun(n), last=H.filter(x=>x.n===n).pop();
     if(run) return rowbHTML({act:"mOpen",data:{n},no:n,title:`模試 ${n}　<span class="chip ol">途中</span>`,sub:`${esc(summary(run).text)} ・ 続きから`});
     if(last){ const e=histEstimate(last); return rowbHTML({act:"mPrep",data:{n},no:n,title:`模試 ${n}`,sub:`目安 ${e.lo}〜${e.hi}${last.counts?"":"（参考）"} ・ ${dateLabel(last.at)}に受験`}); }
@@ -484,16 +484,14 @@ const Mock = (()=>{
   }
   SCREENS.mock=(o)=>{
     const re=!!(o&&o.rerender), top=tabTop("模試");
-    if(!re) LOCK_MSG=0;   // 「準備中」の一言は、押したその場だけ
     if(!MOCKS.length){ Shell.render({tab:"mock",top,body:noData()}); return; }
     const H=hist(), locked=MOCKS.filter(m=>!mockOpen(m)), maxN=Math.max(MOCK_PLANNED,...MOCKS.map(m=>m.n));
     let h=estLine(currentEstimate(H));
-    if(locked.length) h+=`<p class="sm mut lockl">${icon("lock","s")}<span>模試 ${locked.map(m=>m.n).join("・")} は鍵つきです（開く手続きは準備中です）</span></p>`;
+    if(locked.length) h+=offerHTML();   // 未購入のときだけ：解放の案内1行＋ボタン1つ（3.6・M1）
     if(DEV_UNLOCK) h+=`<p class="note">開発用：?unlock ですべての回を開いています（記録には残りません。公開先では効きません）</p>`;
     h+=`<div class="list">`;
     for(let n=1;n<=maxN;n++) h+=rowFor(n,H);
     h+=`</div>`;
-    if(LOCK_MSG) h+=`<p class="sm" role="status" id="lockmsg">模試 ${LOCK_MSG} は鍵つきです。開く手続きは、いま準備中です。</p>`;
     h+=`<section class="card"><h2 class="h h2">模試の進み方</h2><p class="sm">${SECTIONS.L.name}（Part 1〜4）は音声が1回だけ流れ、止められません。${SECTIONS.R.name}は「${SECTIONS.R.name}を始める」を押した時点から時間を数え、前の問題にもどれます。途中の正誤や解説は出ません。途中でやめても、続きから再開できます。</p></section>`;
     Shell.render({tab:"mock",top,body:h,keepScroll:re,noAnim:re,focus:!re});
   };
@@ -556,15 +554,24 @@ const Mock = (()=>{
       s+=`<button type="button" class="btn pri pz" data-act="reviewThese" data-q="${esc(wrongs.map(w=>w.q.qid).join(" "))}">間違えた${wrongs.length}問を解き直す</button>`+
         `<details class="trans wl"><summary class="pz">解説の一覧を見る（${wrongs.length}問）</summary><div class="card">${wrongListHTML(wrongs)}</div></details>`;
     } else s+=`<section class="card"><p>間違いはありません。</p></section>`;
-    const nx=MOCKS.find(m=>m.n===h.n+1);
-    if(nx&&mockOpen(nx)) s+=`<button type="button" class="btn sec pz" data-act="mPrep" data-n="${nx.n}">模試 ${nx.n} の準備へ</button>`;
-    else if(nx) s+=`<p class="sm mut lockl">${icon("lock","s")}<span>次の模試 ${nx.n} は鍵つきです（開く手続きは準備中です）</span></p>`;
-    s+=`<button type="button" class="btn sec pz" data-act="close">閉じる</button>`;
+    s+=nextHTML(h.n)+`<button type="button" class="btn sec pz" data-act="close">閉じる</button>`;
     Shell.render({tab:"mock",top:subTop(`模試 ${h.n} の結果`,true),body:s});
     // 数字の数え上がり → 墨のしずく（練習の層。押せば即座に終わる）
     Fx.countUp($("#estHi"),est.hi,0); celebrate("#estLo",est.lo);
     fillBars();
   };
+  /* 解放の案内（M1 の上・M7 の札）：価格はストアから受け取った表示（Purchase.offerLine）。購入ずみの人には出さない */
+  function offerHTML(id){
+    return `<section class="card"${id?` id="${id}"`:""}><p class="sm lockl">${icon("lock","s lk")}<span id="offerl">${esc(Purchase.offerLine())}</span></p>`+
+      `<button type="button" class="btn sec pz" data-act="buyOpen">模試をすべて開く</button></section>`;
+  }
+  /* 結果（M7）のいちばん下：次の回が開いていれば「準備へ」、鍵つきなら解放の札（3.5・3.6 の入口①）。購入で入れかえるので id="nextm" */
+  function nextHTML(n){
+    const nx=MOCKS.find(m=>m.n===n+1);
+    if(nx&&mockOpen(nx)) return `<button type="button" class="btn sec pz" id="nextm" data-act="mPrep" data-n="${nx.n}">模試 ${nx.n} の準備へ</button>`;
+    if(nx) return offerHTML("nextm");
+    return `<span id="nextm" hidden></span>`;
+  }
   function resumeHeroHTML(){
     const r=runs().sort((a,b)=>(b.savedAt||0)-(a.savedAt||0))[0]; if(!r) return "";
     return `<section class="card hero"><div class="eyebrow">模試の続き</div><h1 class="h">模試 ${r.n} の続きから</h1><p class="sm mut">${esc(summary(r).text)}</p><button type="button" class="btn pri pz" data-act="mOpen" data-n="${r.n}">続きから</button></section>`;
@@ -581,7 +588,7 @@ const Mock = (()=>{
   Object.assign(ACT,{
     mPrep:d=>Router.go("mockprep",{n:+d.n}),
     mOpen:d=>open(+d.n),
-    mLocked:d=>{ LOCK_MSG=+d.n; SCREENS.mock({rerender:true}); refocus("#lockmsg"); },
+    mLocked:()=>Purchase.open(),   // 鍵つきの回を押す → B1（3.6 の入口②）
     mMode:d=>{ PREP_MODE=d.v; const t=Router.top(); SCREENS.mockprep(Object.assign({},t&&t.arg,{rerender:true})); refocus(`[data-act="mMode"][aria-pressed="true"]`); },
     mSample:()=>sample(),
     mStart:d=>{ const n=+d.n, go=()=>start(n,PREP_MODE);
@@ -611,6 +618,6 @@ const Mock = (()=>{
 
   return { start, open, resume, next, finish, grade, guard, askQuit, suspend, interrupt, key, save, tick, end,
     topHTML, bodyHTML, navHTML, afterRender, onAnswer, onMove, showGrid, beginReading, toggleMark,
-    resumeHeroHTML, todayRowHTML, summary, loadRun, runKey, hist, info,
+    resumeHeroHTML, todayRowHTML, nextHTML, summary, loadRun, runKey, hist, info,
     /* 自己テスト用 */ endAudio:()=>{ if(active()&&S.T) step(TL.ended(S.T,Clock.now(),cfg())); }, get prepMode(){ return PREP_MODE; }, set prepMode(v){ PREP_MODE=v; } };
 })();

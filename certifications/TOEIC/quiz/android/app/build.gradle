@@ -1,10 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace = "jp.co.hpmnagoya.lapismock"
+    namespace = "jp.co.hpmnagoya.enpitsu"
     compileSdk = rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "jp.co.hpmnagoya.lapismock"
+        applicationId "jp.co.hpmnagoya.enpitsu"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

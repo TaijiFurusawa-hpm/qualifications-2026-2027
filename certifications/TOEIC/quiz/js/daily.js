@@ -134,7 +134,7 @@ function weekHTML(){
     w.week.map((x,i)=>`<span class="wd${x.on?" on":""}${x.d===t?" now":""}"><i></i><small>${WD[i]}</small></span>`).join("")+`</div><p class="sm mut">${line}</p></section>`;
 }
 SCREENS.today=()=>{
-  const top=`<div class="topbar gl"><div class="brand" style="flex:1;min-width:0"><span class="logo" aria-hidden="true">L</span><div class="bn"><b>Lapis 模試 <span class="xs mut w5">（仮称）</span></b><small lang="en">for the TOEIC® L&amp;R Test</small></div></div>`+
+  const top=`<div class="topbar gl"><div class="brand" style="flex:1;min-width:0"><span class="logo" aria-hidden="true">え</span><div class="bn"><b>えんぴつ模試</b><small lang="en">for the TOEIC® L&amp;R Test</small></div></div>`+
     `<button type="button" class="iconbtn pz" data-act="nav" data-to="stats" aria-label="記録">${icon("chart")}</button>${gearBtn()}</div>`;
   if(!MOCKS.length&&!VOCAB.length){ Shell.render({tab:"today",top,body:noData()}); return; }
   const p=profile(), ex=dayOf(p.exam), left=ex==null?null:ex-today();

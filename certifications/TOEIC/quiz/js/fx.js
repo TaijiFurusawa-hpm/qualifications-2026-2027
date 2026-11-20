@@ -21,7 +21,7 @@ const Fx = (()=>{
   const HAP = {
     select:{impact:"LIGHT"}, press:{impact:"LIGHT"}, correct:{notify:"SUCCESS"}, wrong:{notify:"WARNING"},
     toggle:{impact:"LIGHT"}, done:{impact:"MEDIUM"}, milestone:{notify:"SUCCESS", then:"MEDIUM"},
-    error:{notify:"ERROR"}, grade:{impact:"MEDIUM"}
+    error:{notify:"ERROR"}, grade:{impact:"MEDIUM"}, buy:{notify:"SUCCESS"}
   };
   function haptic(name){
     const spec=HAP[name]; if(!spec) return;

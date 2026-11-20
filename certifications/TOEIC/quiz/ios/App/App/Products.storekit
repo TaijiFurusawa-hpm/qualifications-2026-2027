@@ -1,0 +1,42 @@
+{
+  "appPolicies": {
+    "eula": "",
+    "policies": [
+      {
+        "locale": "en_US",
+        "policyText": "",
+        "policyURL": ""
+      }
+    ]
+  },
+  "identifier": "C2900006-07AF-4CB9-B2C3-FAF1F2E1C2C3",
+  "nonRenewingSubscriptions": [],
+  "products": [
+    {
+      "displayPrice": "300",
+      "familyShareable": false,
+      "internalID": "6755000001",
+      "localizations": [
+        {
+          "description": "模試をすべて開きます（買い切り）",
+          "displayName": "模試をすべて開く",
+          "locale": "ja"
+        }
+      ],
+      "productID": "jp.co.hpmnagoya.enpitsu.allmocks",
+      "referenceName": "All mocks (non-consumable)",
+      "type": "NonConsumable"
+    }
+  ],
+  "settings": {
+    "_failTransactionsEnabled": false,
+    "_locale": "ja",
+    "_storefront": "JPN",
+    "_storeKitErrors": []
+  },
+  "subscriptionGroups": [],
+  "version": {
+    "major": 3,
+    "minor": 0
+  }
+}

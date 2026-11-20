@@ -1,6 +1,6 @@
 {
-  "appId": "jp.co.hpmnagoya.lapismock",
-  "appName": "Lapis 模試",
+  "appId": "jp.co.hpmnagoya.enpitsu",
+  "appName": "えんぴつ模試",
   "webDir": "www",
   "ios": {
     "contentInset": "never"

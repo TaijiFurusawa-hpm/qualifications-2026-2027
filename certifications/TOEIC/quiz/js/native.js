@@ -6,6 +6,7 @@
    - もどるボタン（Android）：開いているシート・メニューを閉じる → Router の履歴で1つもどる（popstate と同じ処理：
      セッション中は guard の確認）→ 先頭ならアプリを閉じる
    - 裏に回る（App の pause）：書き残しを保存先へ流し、模試の最中なら中断の扱い（3.4(e)）
+   - 前面にもどる（App の resume）：購入の状態をストアに確かめる（js/purchase.js）
    部品は scripts/build-web.mjs が www/index.html に足す（Web 版の index.html には入らない） */
 "use strict";
 const Native = (()=>{
@@ -56,6 +57,7 @@ const Native = (()=>{
   if(A){
     quiet(A.addListener("backButton",()=>{ if(!back()) quiet(A.exitApp()); }));
     quiet(A.addListener("pause",onPause));
+    quiet(A.addListener("resume",()=>{ try{ if(typeof Purchase!=="undefined") Purchase.check(); }catch(e){} }));   // 前面にもどるたび購入を確かめる（7.3）
   }
 
   return { native, ready, bars, keepAwake, back, get awake(){ return awake; } };

@@ -22,7 +22,8 @@ const CAP = [
   ["preferences.js", "@capacitor/preferences/dist/plugin.js"],
   ["haptics.js", "@capacitor/haptics/dist/plugin.js"],
   ["splash-screen.js", "@capacitor/splash-screen/dist/plugin.js"],
-  ["keep-awake.js", "@capacitor-community/keep-awake/dist/plugin.js"]
+  ["keep-awake.js", "@capacitor-community/keep-awake/dist/plugin.js"],
+  ["native-purchases.js", "@capgo/native-purchases/dist/plugin.js"]
 ];
 
 // 同梱の日本語書体は使う文字だけに絞ってある（tools/fonts.py）。問題を足して控えに無い字が出たら、作り直しを促して止める

@@ -1,5 +1,5 @@
 /* =====================================================================
-   Lapis 模試（仮称） — 見た目「紙と墨の答案」
+   えんぴつ模試 — 見た目「紙と墨の答案」
    出典：ux/ビジュアル案.html の決定候補（kettei）＝「紙の答案」の配色・書体
          ＋「生成りの答案」の角の丸み（2〜5px）・墨が流れる塗り・墨のしずく
    決まり：カードの縁や角に色の帯・飾りを付けない／罫は1本だけ／全画面で同じ書体
@@ -494,6 +494,12 @@ dialog.sheet{width:min(28rem, calc(100vw - 32px)); max-height:calc(100dvh - 48px
   background:var(--c-surface); color:var(--c-text); display:none; flex-direction:column; gap:var(--sp-3)}
 dialog.sheet[open]{display:flex}
 dialog.sheet::backdrop{background:var(--c-scrim)}
+/* B1 解放シート（段階5）：「開く」と「あとで」は同じ高さ・同じ幅（3.6）。狭い・文字が大きいときは縦に積む */
+#buydlg{padding-top:calc(var(--sp-4) + 6px)}
+.buyrow{display:grid; grid-template-columns:repeat(auto-fit,minmax(8.5rem,1fr)); gap:var(--sp-2)}
+.price{margin:0; font-size:var(--fs-15)}
+.price b{font-size:1.375rem; margin-right:2px}
+.lk,.rowb .no.lk{color:var(--c-lock)}
 table.keys th{text-align:left; white-space:nowrap; width:1%}
 table.keys td{text-align:left}
 kbd{font-family:var(--f-num); font-size:var(--fs-13); font-weight:700; padding:1px 6px; border:var(--rule) solid var(--c-rule-strong); border-radius:var(--r-s); background:var(--c-bg)}

@@ -534,7 +534,8 @@
       const lockRow=document.querySelector('#page [data-act="mLocked"]');
       ok(!!lockRow&&/未購入/.test(lockRow.textContent)&&lockRow.querySelector(".ic"),"鍵つきの回は錠の印＋「未購入」");
       tap('#page [data-act="mLocked"]'); await fr();
-      ok(/準備中/.test((document.getElementById("lockmsg")||{}).textContent||"")&&!document.querySelector("dialog[open]"),"鍵つきの回を押すと「準備中」とだけ出す（シートは開かない）");
+      ok(document.querySelector("dialog#buydlg[open]"),"鍵つきの回を押すと解放シート（B1）が開く");
+      closeDlg("buydlg"); await fr();
       ok(!!document.querySelector('#page [data-act="none"][disabled]'),"データの無い回は押せない");
       Router.go("mockprep",{n:1}); await fr();
       ok(!S&&FakeAudio.made.length===0&&!mem.has(Mock.runKey(1)),"準備の画面では何も始まらない（音声・時間・保存なし）");
@@ -968,11 +969,184 @@
     }
   };
 
+  /* ===== 10. 段階5：購入（3.6 の状態の表・7.2 の控え・8.1 リスク4） =====
+     ストアの口は偽物（Purchase.use）。返事の中身・遅れ・失敗を差しかえて、すべての状態を描いて確かめる */
+  function FakeStore(){
+    const f={kind:"native", calls:[], price:"¥300", prodErr:false, prodDelay:0, buyR:"purchased", ownedR:{owned:false,pending:null}, ownedErr:false, ls:[],
+      product(){ f.calls.push("product"); return new Promise((res,rej)=>setTimeout(()=>f.prodErr?rej(new Error("offline")):res({price:f.price}),f.prodDelay)); },
+      buy(){ f.calls.push("buy"); const r=typeof f.buyR==="function"?f.buyR():f.buyR; return r==="throw"?Promise.reject(new Error("failed")):Promise.resolve(r); },
+      owned(){ f.calls.push("owned"); return f.ownedErr?Promise.reject(new Error("offline")):Promise.resolve(f.ownedR); },
+      restore(){ f.calls.push("restore"); return f.ownedErr?Promise.reject(new Error("offline")):Promise.resolve(f.ownedR); },
+      listen(fn){ f.ls.push(fn); }, emit(t){ f.ls.forEach(fn=>fn(t)); } };
+    return f;
+  }
+  const purchaseTest=()=>withMem(async mem=>{
+    const unH=noHistory(), hs=[], realHap=Fx.haptic, M0=MOCKS, wait=ms=>new Promise(r=>setTimeout(r,ms));
+    Fx.haptic=n=>hs.push(n);
+    const dlg=()=>document.querySelector("dialog#buydlg[open]"), dt=()=>(dlg()||{}).textContent||"", pt=()=>document.getElementById("page").textContent;
+    const mainBtn=()=>dlg()&&dlg().querySelector('[data-act="buy"]');
+    const settle=async()=>{ for(let i=0;i<3;i++){ await Promise.resolve(); await fr(); } };
+    try{
+      loadData(); mem.save(K.profile,{onboarded:1});
+      group("購入：控え（toeic_ent_v1）と収録データから数える回数");
+      eq(KEYS.find(k=>k.id==="ent").shape,"{unlocked, product, checkedAt, pending}","控えの形は 7.2 のまま（形を変えないので引きつぎは不要）");
+      let f=FakeStore(); Purchase.use(f);
+      eq(Purchase.ent(),{unlocked:false,product:PRODUCT_ID,checkedAt:0,pending:false},"控えが無ければ未購入");
+      const L=Purchase.lockInfo(), locked=MOCKS.filter(m=>!m.free);
+      eq([L.n,L.a],[locked.length,locked[0].n],"鍵つきの回数は収録データから数える");
+      MOCKS=[{n:1,free:true}].concat([2,3,4,5,6,7,8,9,10].map(n=>({n,free:false})));
+      invalidateUnits(); const L10=Purchase.lockInfo();
+      Purchase.open(); await settle();
+      ok(/模試2〜10を開く/.test(dt())&&/あと9回分/.test(dt()),"10回そろったとき：「模試2〜10を開く」「あと9回分」");
+      Purchase.close(); MOCKS=[{n:1,free:true},{n:2,free:false},{n:3,free:false}]; invalidateUnits();
+      Purchase.open(); await settle();
+      ok(/いま2回分。残りは更新で追加します（追加料金なし）/.test(dt())&&!/あと\d+回分/.test(dt()),"収録が途中なら「いま2回分。残りは更新で追加」（「あと9回分」と書かない）");
+      Purchase.close(); MOCKS=M0; invalidateUnits(); eq(L10.n,9,"9回分を数える");
+
+      group("購入：価格の取得（0.15秒以内なら何も見せない・遅ければ「読み込み中…」）");
+      f=FakeStore(); f.prodDelay=400; Purchase.use(f);
+      Router.tab("today"); Router.tab("mock"); await fr();
+      ok(/1回の購入ですべて開きます（買い切り）/.test(pt())&&!/¥/.test(pt()),"一覧の案内は、価格が取れるまで金額を書かない");
+      ok(!dlg(),"一覧を開いただけではシートは開かない");
+      tap('#page [data-act="buyOpen"]'); await fr();
+      ok(dlg()&&mainBtn().disabled&&mainBtn().style.visibility==="hidden"&&!/価格を読み込んでいます/.test(dt()),"押した直後（0.15秒未満）は何も見せない");
+      await wait(220); await fr();
+      ok(mainBtn().disabled&&mainBtn().style.visibility!=="hidden"&&/読み込み中…/.test(mainBtn().textContent),"0.15秒を超えたら「読み込み中…」で押せない");
+      await wait(300); await settle();
+      eq(mainBtn().textContent,"¥300で開く","取れたらストアの表示で「¥300で開く」");
+      ok(/¥300（買い切り・お支払いは1回だけ）/.test(dt()),"価格の行（買い切り・1回だけ）");
+      ok(/¥300 ですべて開きます（買い切り）/.test(pt()),"一覧の案内にも同じ価格の表示");
+      const order=["#buydlg-h","p:not(.price):not(.sm)",".price",".rules",'[data-act="buy"]','[data-act="buyClose"]','[data-act="buyRestore"]'].map(q=>dlg().querySelector(q));
+      ok(order.every(Boolean)&&order.every((e,i)=>i===0||(order[i-1].compareDocumentPosition(e)&Node.DOCUMENT_POSITION_FOLLOWING)),"読み上げの順：見出し→中身→価格→注意→開く→あとで→復元");
+      ok(/月額や自動更新はありません/.test(dt())&&/「購入を復元」で元にもどせます/.test(dt())&&/この端末の中だけに保存されます/.test(dt()),"注意の3行");
+      const r1=mainBtn().getBoundingClientRect(), r2=dlg().querySelector('[data-act="buyClose"]').getBoundingClientRect();
+      ok(Math.abs(r1.height-r2.height)<1&&(Math.abs(r1.width-r2.width)<1),"「開く」と「あとで」は同じ高さ・同じ幅");
+      eq(dlg().querySelector('[data-act="buyClose"]').textContent,"あとで","「あとで」は中立の文面");
+      Purchase.close(); await fr();
+      f=FakeStore(); f.price="$2.99"; Purchase.use(f); Purchase.open(); await settle();
+      eq(mainBtn().textContent,"$2.99で開く","価格はストアから受け取った文字のまま（アプリに金額を書きこまない）");
+      Purchase.close();
+
+      group("購入：オフライン／ストアにつながらない");
+      f=FakeStore(); f.prodErr=true; Purchase.use(f); Purchase.open(); await settle();
+      ok(/いまストアにつながりません。通信できる場所でもう一度お試しください/.test(dt()),"「いまストアにつながりません…」");
+      ok(/模試1と単語は、このまま使えます/.test(dt()),"模試1と単語はそのまま使える、と添える");
+      eq(mainBtn().textContent,"もう一度","ボタンは「もう一度」");
+      f.prodErr=false; tap('#buydlg [data-act="buy"]'); await settle(); await wait(20); await settle();
+      ok(mainBtn().textContent==="¥300で開く"&&!f.calls.includes("buy"),"「もう一度」で価格を取り直す（購入はまだ始めない）");
+
+      group("購入：手続き中・取り消し・失敗");
+      let release; f.buyR=()=>new Promise(r=>{ release=r; }).then(v=>v);
+      f.buy=()=>{ f.calls.push("buy"); return new Promise(r=>{ release=r; }); };
+      tap('#buydlg [data-act="buy"]'); await fr();
+      ok(mainBtn().getAttribute("aria-busy")==="true"&&/手続き中…/.test(mainBtn().textContent),"手続き中：ボタンが進行表示に");
+      ok(dlg().querySelector('[data-act="buyClose"]')&&!dlg().hasAttribute("closedby"),"手続き中もシートは閉じられる");
+      tap('#buydlg [data-act="buy"]'); eq(f.calls.filter(c=>c==="buy").length,1,"手続き中に押しても二重に買わない");
+      release("cancelled"); await settle();
+      ok(dlg()&&mainBtn().textContent==="¥300で開く"&&dlg().querySelector("#buyst").hidden&&!Purchase.unlocked,"取り消した：何も言わずに元のシートへ");
+      f=Object.assign(FakeStore(),{}); f.buyR="throw"; Purchase.use(f); Purchase.close(); Purchase.open(); await settle();
+      tap('#buydlg [data-act="buy"]'); await settle();
+      ok(/購入できませんでした。料金はかかっていません/.test(dt())&&mainBtn().textContent==="もう一度","失敗：「購入できませんでした。料金はかかっていません」＋「もう一度」");
+      ok(hs.includes("error")&&!Purchase.unlocked,"失敗：エラーの触覚・鍵のまま");
+      f.buyR="purchased"; tap('#buydlg [data-act="buy"]'); await settle();
+      ok(Purchase.unlocked,"失敗のあと「もう一度」で買える");
+      mem.save(K.ent,{unlocked:false}); Purchase.close();
+
+      group("購入：保留（承認待ち）→ 完了すると自動で開く");
+      f=FakeStore(); f.buyR="pending"; Purchase.use(f); Purchase.open(); await settle();
+      tap('#buydlg [data-act="buy"]'); await settle();
+      ok(/手続きの完了を待っています。完了すると自動で開きます/.test(dt()),"「手続きの完了を待っています。完了すると自動で開きます」");
+      ok(mem.load(K.ent).pending===true&&!Purchase.unlocked,"控えに保留を書く（まだ開かない）");
+      f.emit({productIdentifier:PRODUCT_ID,transactionId:"1"}); await settle();
+      ok(Purchase.unlocked&&/が開きました/.test(dt())&&mem.load(K.ent).pending===false,"ストアの知らせで開き、シートが成功に変わる");
+      Purchase.close(); mem.save(K.ent,{unlocked:false,pending:true}); f.emit({productIdentifier:PRODUCT_ID}); await settle();
+      ok(Purchase.unlocked&&!dlg(),"シートを閉じていても開く（シートは自動で開かない）");
+      mem.save(K.ent,{unlocked:false}); invalidateUnits();
+
+      group("購入：成功 → 模試2〜の準備へ・購入ボタンが消える");
+      f=FakeStore(); Purchase.use(f); hs.length=0;
+      Router.tab("today"); Router.tab("mock"); await fr();
+      ok(document.querySelector('#page [data-act="mLocked"][aria-label*="未購入、押すと購入の案内"]')&&document.querySelector("#page .rowb .no.lk"),"鍵つきの回：錠の印＋「未購入」、読み上げは「模試2、未購入、押すと購入の案内」");
+      eq(document.querySelectorAll('#page [data-act="buyOpen"]').length,1,"一覧の案内とボタンは上に1か所だけ");
+      ok(!/¥|\$/.test([...document.querySelectorAll('#page [data-act="mLocked"]')].map(e=>e.textContent).join("")),"行ごとに価格を書かない");
+      tap('#page [data-act="mLocked"]'); await settle();
+      tap('#buydlg [data-act="buy"]'); await settle();
+      const rg=Purchase.lockInfo().range;
+      ok(new RegExp(rg+"が開きました").test(dt())&&dlg().querySelector(".bnr .mk"),`成功：✓「${rg}が開きました」`);
+      eq(dlg().querySelector(".btn.pri").textContent,`模試${Purchase.lockInfo().a}の準備へ`,"主ボタンは「模試2の準備へ」");
+      eq(hs,["buy"],"成功の触覚（1回だけ）");
+      ok(mockOpen(MOCKS.find(m=>!m.free))&&mem.load(K.ent).unlocked===true&&mem.load(K.ent).checkedAt>0,"控えに購入ずみを書き、鍵つきの回が開く");
+      ok(!document.querySelector('#page [data-act="mLocked"],#page [data-act="buyOpen"]'),"一覧が描き直され、鍵と購入の案内が消える");
+      ok(practiceUnits(5).some(u=>u.mock!==1),"練習にも開いた回の問題が入る");
+      tap('#buydlg [data-act="buyGo"]'); await fr();
+      ok(!dlg()&&Router.top().name==="mockprep"&&Router.top().arg.n===Purchase.lockInfo().a,"「模試2の準備へ」で準備の画面");
+      Router.go("settings"); await fr();
+      ok(!document.querySelector('#page [data-act="buyOpen"]')&&/購入ずみ/.test(document.querySelector('#page [data-act="buyRestore"]').textContent),"設定：購入ずみの人に「模試をすべて開く」を出さない。「購入を復元」に「購入ずみ」");
+      ok(/模試 \d+ の準備へ/.test(Mock.nextHTML(1))&&!/buyOpen/.test(Mock.nextHTML(1)),"結果（M7）の札：購入ずみなら「模試2の準備へ」");
+      Purchase.open(); await settle(); ok(!mainBtn()&&/購入ずみです/.test(dt()),"購入ずみでシートを開いても購入ボタンは出ない"); Purchase.close();
+
+      group("購入：払いもどし後は鍵にもどす・オフラインでは控えを保つ");
+      mem.save(K.stat,{"P5|語彙":{n:3,ok:2,ms:9000}}); mem.save(K.mockhist,[{n:2,at:1}]);
+      f.emit({productIdentifier:PRODUCT_ID,revocationDate:"2026-11-20T00:00:00Z"}); await settle();
+      ok(!Purchase.unlocked&&!mockOpen(MOCKS.find(m=>!m.free)),"払いもどしの知らせ：鍵にもどす");
+      ok(mem.load(K.stat)["P5|語彙"].n===3&&mem.load(K.mockhist).length===1,"払いもどしでも記録（成績・模試2の結果）は消さない");
+      mem.save(K.ent,{unlocked:true}); f.ownedR={owned:false,pending:null}; await Purchase.check(); await settle();
+      ok(!Purchase.unlocked,"起動時の確認で「持っていない」とはっきり返ったら鍵にもどす");
+      mem.save(K.ent,{unlocked:true,checkedAt:5}); f.ownedErr=true; const rr=await Purchase.check();
+      ok(rr===null&&Purchase.unlocked&&mem.load(K.ent).checkedAt===5,"ストアに聞けない（オフライン）ときは控えを変えない＝購入ずみのまま");
+      ok(MOCKS.filter(m=>!m.free).every(mockOpen),"オフラインでも購入ずみの人は全部の回が使える");
+      f.ownedErr=false; f.ownedR={owned:true,pending:null}; mem.save(K.ent,{unlocked:false}); await Purchase.check();
+      ok(Purchase.unlocked&&!dlg(),"入れ直し（控えなし）でも、起動時の確認だけで開く（シートは開かない）");
+      f.ownedR={owned:false,pending:true}; mem.save(K.ent,{unlocked:false}); await Purchase.check(); ok(mem.load(K.ent).pending===true,"Android：保留中の購入は控えに保留として残す");
+
+      group("購入：復元（あり・なし・つながらない）");
+      mem.save(K.ent,{unlocked:false}); f=FakeStore(); Purchase.use(f); Router.tab("today"); Router.tab("mock"); await fr(); Purchase.open(); await settle();
+      f.ownedR={owned:false,pending:null}; tap('#buydlg [data-act="buyRestore"]'); await settle();
+      ok(/このアカウントでの購入は見つかりませんでした/.test(dt())&&!Purchase.unlocked,"復元：なかった");
+      f.ownedErr=true; tap('#buydlg [data-act="buyRestore"]'); await settle();
+      ok(/いまストアにつながりません/.test(dt()),"復元：つながらないときはオフラインの文");
+      f.ownedErr=false; f.ownedR={owned:true,pending:null}; hs.length=0; tap('#buydlg [data-act="buyRestore"]'); await settle();
+      ok(/購入を確認しました。模試がすべて開きました/.test(dt())&&Purchase.unlocked&&hs.includes("buy"),"復元：見つかった（成功の触覚）");
+      Purchase.close();
+      mem.save(K.ent,{unlocked:false}); invalidateUnits(); Purchase.use(f); f.ownedR={owned:false,pending:null};
+      Router.go("settings"); await fr();
+      ok(document.querySelector('#page [data-act="buyOpen"]')&&document.querySelector('#page [data-act="buyRestore"]'),"設定：未購入なら「模試をすべて開く」と「購入を復元」");
+      await ACT.buyRestore(); await settle();
+      ok(/このアカウントでの購入は見つかりませんでした/.test(pt())&&!dlg(),"設定から復元：結果は設定の画面に書く（シートは開かない）");
+      f.ownedR={owned:true,pending:null}; await ACT.buyRestore(); await settle();
+      ok(/購入を確認しました/.test(pt())&&/購入ずみ/.test(pt())&&!document.querySelector('#page [data-act="buyOpen"]'),"設定から復元：見つかった → 「購入ずみ」");
+      mem.save(K.ent,{unlocked:false}); invalidateUnits();
+
+      group("購入：入口は3つ・自動で開かない・学習の途中には出さない");
+      Purchase.use(FakeStore()); Router.tab("today"); Router.tab("mock"); await fr();
+      ok(/buyOpen/.test(Mock.nextHTML(1))&&/id="nextm"/.test(Mock.nextHTML(1)),"入口①：模試1の結果のいちばん下に解放の札");
+      ok(document.querySelector('#page [data-act="mLocked"]')&&document.querySelector('#page [data-act="buyOpen"]'),"入口②：模試の一覧の鍵つきの回と案内");
+      Router.go("settings"); await fr(); ok(document.querySelector('#page [data-act="buyOpen"]'),"入口③：設定の「模試をすべて開く」");
+      const rin=Router.inSession; Router.inSession=()=>true;
+      try{ Purchase.open(); ok(!dlg(),"学習の途中（セッション中）はシートを開かない"); } finally { Router.inSession=rin; }
+      Purchase.open(); await settle();
+      const d=dlg(), rc=d.getBoundingClientRect(); d.dispatchEvent(new MouseEvent("click",{bubbles:true,clientX:rc.left-5,clientY:rc.top-5}));
+      ok(!dlg(),"外側を押すと閉じる");
+      Purchase.open(); await settle(); dlg().dispatchEvent(new MouseEvent("click",{bubbles:true,clientX:rc.left+20,clientY:rc.top+20})); ok(!!dlg(),"シートの中の余白を押しても閉じない"); Purchase.close();
+
+      group("購入：Web 版（ブラウザ）では買えない");
+      Purchase.use(WebStore()); Router.tab("today"); Router.tab("mock"); await fr();
+      ok(/アプリ版での購入ですべて開きます/.test(pt()),"一覧：アプリ版で開ける、と控えめに");
+      Purchase.open(); await settle();
+      ok(/この版（ブラウザ）では購入できません/.test(dt())&&!mainBtn()&&!dlg().querySelector('[data-act="buyRestore"]'),"シート：購入・復元のボタンを出さない");
+      ok(!/¥|\$/.test(dt()),"Web 版では価格を書かない"); Purchase.close();
+      Router.go("settings"); await fr(); ok(!document.querySelector('#page [data-act="buyRestore"]')&&document.querySelector('#page [data-act="buyOpen"]'),"設定：Web 版では「購入を復元」を出さない");
+      ok(isNativeApp()?NativeStore()!==null:NativeStore()===null,isNativeApp()?"アプリでは NativeStore（StoreKit / Play Billing）を使う":"ブラウザでは NativeStore を作らない");
+    } finally {
+      MOCKS=M0; invalidateUnits(); Fx.haptic=realHap; Purchase.close(); Purchase.use(null); Router.tab("today"); unH();
+    }
+  });
+
   /* 押す（二度押しの防止の280msを待たずに、同じ data-act の処理を呼ぶ） */
   function tap(sel){ const el=document.querySelector(sel); if(!el) throw new Error("見つからない："+sel); ACT[el.dataset.act](el.dataset,el); }
   const curQnum=()=>{ const u=cur(); return (isReader(u)?u.qs[S.qi]:u.qs[0]).num; };
 
-  asyncTest.then(uiTest).then(mockTest).then(replayTest).then(dailyTest).then(render,e=>{ results.push({g:"非同期",ok:false,msg:String(e&&e.stack||e)}); render(); });
+  asyncTest.then(uiTest).then(mockTest).then(replayTest).then(dailyTest).then(purchaseTest).then(render,e=>{ results.push({g:"非同期",ok:false,msg:String(e&&e.stack||e)}); render(); });
   function render(){
     const n=results.length, bad=results.filter(r=>!r.ok);
     const gs=[...new Set(results.map(r=>r.g))];

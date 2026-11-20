@@ -1,4 +1,4 @@
-package jp.co.hpmnagoya.lapismock;
+package jp.co.hpmnagoya.enpitsu;
 
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;

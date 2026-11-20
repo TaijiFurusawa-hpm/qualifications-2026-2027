@@ -1,7 +1,7 @@
 {
   "id": "./",
-  "name": "Lapis 模試（仮称） for the TOEIC® L&R Test",
-  "short_name": "Lapis 模試",
+  "name": "えんぴつ模試 for the TOEIC® L&R Test",
+  "short_name": "えんぴつ模試",
   "description": "TOEIC® L&R の模試と英単語の学習アプリ。オフライン対応。TOEIC is a registered trademark of ETS. This product is not endorsed or approved by ETS.",
   "lang": "ja",
   "start_url": "./",

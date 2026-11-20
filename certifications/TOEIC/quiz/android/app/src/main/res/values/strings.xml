@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Lapis 模試</string>
-    <string name="title_activity_main">Lapis 模試</string>
-    <string name="package_name">jp.co.hpmnagoya.lapismock</string>
-    <string name="custom_url_scheme">jp.co.hpmnagoya.lapismock</string>
+    <string name="app_name">えんぴつ模試</string>
+    <string name="title_activity_main">えんぴつ模試</string>
+    <string name="package_name">jp.co.hpmnagoya.enpitsu</string>
+    <string name="custom_url_scheme">jp.co.hpmnagoya.enpitsu</string>
 </resources>

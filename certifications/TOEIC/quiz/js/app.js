@@ -1,4 +1,4 @@
-/* ===== Lapis 模試（仮称） for the TOEIC® L&R Test — 本体 =====
+/* ===== えんぴつ模試 for the TOEIC® L&R Test — 本体 =====
    段階0（土台）＋段階1（解く画面）：セッションの枠、Player、解答後の解説の型、設問トレイ（Part 6・7）、解き直しの流れ、練習の量の選択。
    段階2（模試）は js/mock.js（時間割・自動保存と再開・目安のスコア・一覧／準備／結果の画面）。
    画面の仕様は ux/UX設計書.html、見た目は ux/ビジュアル案.html（紙と墨の答案）。 */
@@ -107,11 +107,11 @@ function buildUnits(mock){
   return U;
 }
 function unitsOf(n){ if(!UNIT_CACHE[n]){ const m=MOCKS.find(x=>x.n===n); UNIT_CACHE[n]=m?buildUnits(m):{}; } return UNIT_CACHE[n]; }
-/* 鍵つきの回（free:false）を使えるか。正は購入の状態（toeic_ent_v1。段階5でストアと結ぶ。解放したら invalidateUnits() を呼ぶ）。
+/* 鍵つきの回（free:false）を使えるか。正は購入の状態の控え toeic_ent_v1（js/purchase.js がストアに聞いて書く。変わったら invalidateUnits()）。
    開発の確認用に、手元のサーバー（localhost・127.0.0.1）で ?unlock を付けたときだけ全回を開く。
    記録には何も書かず、公開先（Vercel・アプリの中）では効かないので、残しても害はない */
 const DEV_UNLOCK = (()=>{ try{ return /[?&]unlock(\b|=|&|$)/.test(location.search)&&/^https?:$/.test(location.protocol)&&/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname)&&!isNativeApp(); }catch(e){ return false; } })();
-function unlockedAll(){ return DEV_UNLOCK||loadJSON(K.ent).unlocked===true; }
+function unlockedAll(){ return DEV_UNLOCK||Purchase.unlocked; }   // 控えを読むのは Purchase だけ
 function mockOpen(m){ return !!m&&(!!m.free||unlockedAll()); }
 function availableMocks(){ return MOCKS.filter(mockOpen); }
 /* 練習で使える unit の一覧は、データか使える回が変わるまで同じなので覚えておく */
@@ -270,7 +270,7 @@ function sessionTop(label,i,n,extra,quitLabel,menu,right){
 /* 一覧の行ボタン。o = {act, data:{…}, no, title, sub, disabled} */
 function rowbHTML(o){
   const da=dataAttrs(o.data);
-  return `<button type="button" class="rowb pz" data-act="${o.act}"${da}${o.disabled?" disabled":""}><span class="no">${o.no}</span><span class="m"><b>${o.title}</b><span class="xs mut">${o.sub}</span></span>${icon("chev")}</button>`;
+  return `<button type="button" class="rowb pz" data-act="${o.act}"${da}${o.disabled?" disabled":""}${o.label?` aria-label="${esc(o.label)}"`:""}><span class="no${o.cls?" "+o.cls:""}">${o.no}</span><span class="m"><b>${o.title}</b><span class="xs mut">${o.sub}</span></span>${icon("chev")}</button>`;
 }
 /* 数字の並び（習得・学習中…）。items = [[数, 名前], …] */
 function statsHTML(items,style){ return `<div class="stats"${style?` style="${style}"`:""}>`+items.map(([v,l])=>`<div><b>${v}</b><span>${l}</span></div>`).join("")+`</div>`; }
@@ -944,6 +944,7 @@ SCREENS.settings=(o)=>{ const re=!!(o&&o.rerender);
     <div class="setrow"><b>次の問題で自動的に再生</b>${segHTML("autoplay",[[1,"入"],[0,"切"]],p.autoplay)}<p class="note">最初の1問は、再生ボタンを押して始めます。</p></div>
     <div class="setrow"><b>単語：答えのあとに発音</b>${segHTML("vAuto",[[1,"入"],[0,"切"]],p.vAuto)}</div></section>
     ${Daily.planSettingsHTML()}
+    ${Purchase.settingsHTML()}
     <h2 class="sec-h">記録</h2><div class="list">
     ${rowbHTML({act:"obAgain",no:icon("redo","s"),title:"はじめの案内をもう一度",sub:"目標・受験日・単語の実力チェック（記録は消えません）"})}
     ${rowbHTML({act:"wipeAsk",no:icon("x","s"),title:"記録を消す",sub:"成績／単語の進み具合／すべて（購入は消えません）"})}
@@ -953,7 +954,7 @@ SCREENS.settings=(o)=>{ const re=!!(o&&o.rerender);
   Shell.render({tab:"today",top:subTop("設定"),body:h,keepScroll:re,noAnim:re,focus:!re});
 };
 SCREENS.about=()=>{
-  const h=`<section class="card"><div class="brand"><span class="logo" aria-hidden="true">L</span><div class="bn"><b>Lapis 模試（仮称）</b><small lang="en">for the TOEIC® L&amp;R Test</small></div></div>
+  const h=`<section class="card"><div class="brand"><span class="logo" aria-hidden="true">え</span><div class="bn"><b>えんぴつ模試</b><small lang="en">for the TOEIC® L&amp;R Test</small></div></div>
     <p class="sm">版 ${APP_VERSION} ・ 収録：模試 ${MOCKS.length}回（いま使えるのは${availableMocks().length}回）・ 単語 ${VOCAB.length.toLocaleString()}語</p></section>
     <h2 class="sec-h">商標について</h2><section class="card"><p lang="en">${ETS_NOTE}</p><p class="sm mut">TOEIC は ETS の登録商標です。このアプリは ETS の認定・承認を受けたものではありません。問題はすべて独自に作成しています。</p></section>
     <h2 class="sec-h">プライバシー</h2><section class="card"><p class="sm">学習の記録は端末の中だけに保存し、外へ送りません。</p></section>
@@ -1096,6 +1097,7 @@ async function boot(){
     await new Promise(r=>{ const s=document.createElement("script"); s.src="data/data.sample.js"; s.onload=r; s.onerror=r; document.head.appendChild(s); });
   }
   loadData();
+  Purchase.init();   // 購入：控え（toeic_ent_v1）で先に描き、ストアの答えは後から（待たない）
   Router.tab(profile().onboarded?"today":"onboard");   // 初回だけ「はじめに」（O1〜O4）
   Native.ready();   // アプリ：最初の画面を描いたら起動画面を消す
   // Service Worker は Web 版だけで登録する（アプリの中では登録しない：7.1-14）
