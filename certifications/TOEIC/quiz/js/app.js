@@ -242,12 +242,27 @@ function playAudio(src){ Player.load(src,{autoplay:true}); }
 
 /* ===== 共通の部品 ===== */
 function dataAttrs(d){ return Object.entries(d||{}).map(([k,v])=>` data-${k}="${esc(v)}"`).join(""); }
+/* 鉛筆で円を描いて塗ったマーク（楕円の縁から中心へ約5周）。seed が同じなら同じ線（描き直しても形が変わらない）。
+   動き（書く速さ）は js/fx.js の Fx.select / Fx.mark。楕円の外は .badge の丸い角で切れる */
+const PEN_CACHE=new Map();   // seed → 線（同じ seed は同じ形なので一度だけ計算する）
+function penHTML(seed){
+  seed=String(seed); if(PEN_CACHE.has(seed)) return PEN_CACHE.get(seed);
+  let h=2166136261; for(const ch of String(seed)) h=Math.imul(h^ch.charCodeAt(0),16777619);
+  const r=()=>((h=Math.imul(h^h>>>15,0x2c1b3c6d)+0x297a2d39|0)>>>0)/4294967296;
+  const turns=5, steps=140, T=turns*Math.PI*2, ph=r()*Math.PI*2; let d="";
+  for(let i=0;i<=steps;i++){ const t=i/steps*T, f=1-(i/steps)*.93, j=(r()-.5)*.7;
+    d+=(i?"L":"M")+(21+(19.5*f+j)*Math.cos(t+ph)).toFixed(1)+" "+(13+(11.5*f+j*.6)*Math.sin(t+ph)).toFixed(1); }
+  const html=`<svg class="pen" viewBox="0 0 42 26" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="${d}"/></svg>`;
+  PEN_CACHE.set(seed,html); return html;
+}
+/* o.picked＝利用者が選んだ（採点後も鉛筆の跡を残す。"sel" は選んだ印そのもの）。設定「マークの塗り方」が すばやく なら鉛筆の線は描かない */
 function choiceHTML(o){
   const mk=o.state==="is-ok"?MARK_OK:o.state==="is-ng"?MARK_NG:"";
+  const pen=prefs().mark!=="quick"&&(o.state==="sel"||(!!o.state&&o.picked));
   const da=dataAttrs(o.data);
   return `<button type="button" class="choice pz ${o.state||""}" data-act="${o.act}"${da}${o.hap?` data-hap="${o.hap}"`:""}${o.disabled?" disabled":""}`+
     `${o.state==="sel"?' aria-pressed="true"':""}${o.label?` aria-label="${esc(o.label)}"`:""}>`+
-    `<i class="wash"></i><span class="badge"><i></i><b>${o.letter}</b></span>${o.inner||""}<svg class="mk" viewBox="0 0 24 24" aria-hidden="true">${mk}</svg></button>`;
+    `<i class="wash"></i><span class="badge${pen?" pen":""}"><i></i>${pen?penHTML((o.data&&Object.values(o.data).join("-"))+o.letter):""}<b>${o.letter}</b></span>${o.inner||""}<svg class="mk" viewBox="0 0 24 24" aria-hidden="true">${mk}</svg></button>`;
 }
 function verdict(kind,title,sub){   // kind: ok | ng | neutral
   return `<div class="bnr ${kind==="ok"?"":kind}" role="status"><span class="bic"><svg viewBox="0 0 24 24" aria-hidden="true">${kind==="ok"?MARK_OK:kind==="ng"?MARK_NG:'<path d="M12 7v6M12 16.5v.5"/>'}</svg></span><div class="bt"><b>${title}</b>${sub?`<span class="sm">${sub}</span>`:""}</div></div>`;
@@ -412,7 +427,7 @@ function qCardHTML(u,q,qi,inTray,rv){
   const ch=`<div class="choices${sp.abc?" abc":""}" role="group" aria-label="${q.num!=null?"設問 "+q.num+" の":""}選択肢">`+q.c.map((c,ci)=>{
     let st=""; if(shown){ if(ci===q.a) st="is-ok"; else if(a.pick===ci) st="is-ng"; } else if(a&&a.pick===ci) st="sel";
     const label=sp.abc?LET[ci]+(st==="is-ok"?"、正解":st==="is-ng"?"、選んだ答え":st==="sel"?"、選択中":""):null;
-    return choiceHTML({act:"pick",data:{q:q.qid,c:ci},letter:LET[ci],state:st,disabled:shown,hap,label,inner:sp.abc?"":`<span class="ct" lang="en">${esc(c)}</span>`});
+    return choiceHTML({act:"pick",data:{q:q.qid,c:ci},letter:LET[ci],state:st,picked:!!a&&a.pick===ci,disabled:shown,hap,label,inner:sp.abc?"":`<span class="ct" lang="en">${esc(c)}</span>`});
   }).join("")+`</div>`;
   const peek=!a&&M.review?`<div><button type="button" class="btn ghost sm pz peekb" data-act="peek" data-q="${esc(q.qid)}">解かずに解説を見る</button></div>`:"";
   const after=shown?`<div class="stack after">${verdictFor(q,a)}${sp.layout==="single"?unitScript(u):""}${explainHTML(q.e)}${markBtn(q,rv)}</div>`:"";
@@ -774,7 +789,7 @@ function vPaint(fresh){
   const enOpt=q.type==="rev"||q.type==="cloze";
   const ch=`<div class="choices">`+q.opts.map((o,ci)=>{
     let st=""; if(q.done){ if(o.ok) st="is-ok"; else if(q.pick===ci) st="is-ng"; }
-    return choiceHTML({act:"vans",data:{c:ci},letter:String(ci+1),state:st,disabled:q.done,hap:"none",
+    return choiceHTML({act:"vans",data:{c:ci},letter:String(ci+1),state:st,picked:q.pick===ci,disabled:q.done,hap:"none",
       inner:`<span class="ct"><span${enOpt?' lang="en"':""}>${esc(o.t)}</span>${q.done&&o.sub?`<small${enOpt?"":' lang="en"'}>＝ ${esc(o.sub)}</small>`:""}</span>`});
   }).join("")+`</div>`;
   let after="";
@@ -933,6 +948,7 @@ SCREENS.settings=(o)=>{ const re=!!(o&&o.rerender);
   const h=`<h2 class="sec-h">表示</h2><section class="card plain">
     <div class="setrow"><b>外観</b>${segHTML("theme",OPT_THEME,p.theme)}</div>
     <div class="setrow"><b>文字の大きさ</b>${segHTML("text",OPT_TEXT,p.text)}<p class="vex" lang="en">The quarterly report will be distributed to all department heads.</p></div>
+    <div class="setrow"><b>マークの塗り方</b>${segHTML("mark",[["pencil","鉛筆"],["quick","すばやく"]],p.mark)}<p class="note">鉛筆：円を描いて塗ります。すばやく：短く塗ります。どちらも、押した瞬間に答えは記録されます。</p></div>
     <div class="setrow"><b>動きを減らす</b>${segHTML("motion",[["auto","端末に合わせる"],["reduce","いつも減らす"]],p.motion)}</div>
     <div class="setrow"><b>Part 6・7 の設問</b>${segHTML("tray",OPT_TRAY,p.tray)}<p class="note">「3段階」でも、文字が特大以上か画面が低いときは、文書と設問を切り替える2段階になります。</p></div></section>
     <h2 class="sec-h">音と触覚</h2><section class="card plain">

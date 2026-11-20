@@ -355,7 +355,7 @@ function plAnswer(ci,el){
   const ok=ci>=0&&it.opts[ci].ok; P.busy=true;
   P.res.push({lv:it.e.lv,ok}); P.run=ok?0:P.run+1;
   plRecord(it.e,ok);
-  if(el&&ci>=0) Fx.select(el);   // 正誤は出さない（選んだ印だけ）
+  if(el&&ci>=0) Fx.select(el);   // 正誤は出さない（選んだ印だけ）。線の無い楕円なので短く塗る（すぐ次へ進む）
   setTimeout(()=>{ if(OB.pl!==P) return; P.i++; P.busy=false; plPaint(); }, Fx.reduced()?60:200);
 }
 function plEnd(){

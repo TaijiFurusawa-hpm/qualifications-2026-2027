@@ -1,7 +1,7 @@
 /* =====================================================================
    えんぴつ模試 — 見た目「紙と墨の答案」
    出典：ux/ビジュアル案.html の決定候補（kettei）＝「紙の答案」の配色・書体
-         ＋「生成りの答案」の角の丸み（2〜5px）・墨が流れる塗り・墨のしずく
+         ＋「生成りの答案」の角の丸み（2〜5px）・墨のしずく／マークは鉛筆で円を描いて塗る（ux/マーク演出_比較.html）
    決まり：カードの縁や角に色の帯・飾りを付けない／罫は1本だけ／全画面で同じ書体
    ===================================================================== */
 
@@ -24,7 +24,8 @@
   --c-primary:#3A3F47;     /* 主ボタン（黒鉛色） */
   --c-on-primary:#FDFBF6;
   --c-accent:#2F4468;      /* 藍：リンク・進み具合・焦点 */
-  --c-selected:#E6E8EA;    /* 選択中の淡い塗り（墨の流れ） */
+  --c-selected:#E6E8EA;    /* 選択中の淡い面 */
+  --c-lead:#34333A;        /* 鉛筆（2B）の黒鉛：選んだマーク */
   --c-attention:#A5471F;   /* 注意・印（朱） */
   --c-correct:#2F6B45;
   --c-correct-soft:#E2EEE4;
@@ -75,7 +76,7 @@
     --c-bg:#181816; --c-surface:#201F1D; --c-surface-2:#2A2926; --c-text:#E6E1D6; --c-text-2:#A8A397;
     --c-rule:#37352F; --c-rule-strong:#807A6E; --c-primary:#C9CCD1; --c-on-primary:#1C1E22; --c-accent:#A9BCDC;
     --c-selected:#2A2E36; --c-attention:#E39A76; --c-correct:#8FCB9E; --c-correct-soft:#1F3225;
-    --c-wrong:#EE978A; --c-wrong-soft:#3A2320; --c-lock:#A8A397; --c-scrim:rgba(0,0,0,.6);
+    --c-wrong:#EE978A; --c-wrong-soft:#3A2320; --c-lock:#A8A397; --c-scrim:rgba(0,0,0,.6); --c-lead:#D9D5CC;
   }
 }
 :root[data-theme="dark"]{
@@ -83,7 +84,7 @@
   --c-bg:#181816; --c-surface:#201F1D; --c-surface-2:#2A2926; --c-text:#E6E1D6; --c-text-2:#A8A397;
   --c-rule:#37352F; --c-rule-strong:#807A6E; --c-primary:#C9CCD1; --c-on-primary:#1C1E22; --c-accent:#A9BCDC;
   --c-selected:#2A2E36; --c-attention:#E39A76; --c-correct:#8FCB9E; --c-correct-soft:#1F3225;
-  --c-wrong:#EE978A; --c-wrong-soft:#3A2320; --c-lock:#A8A397; --c-scrim:rgba(0,0,0,.6);
+  --c-wrong:#EE978A; --c-wrong-soft:#3A2320; --c-lock:#A8A397; --c-scrim:rgba(0,0,0,.6); --c-lead:#D9D5CC;
 }
 
 /* ---------- 3. 土台 ---------- */
@@ -277,21 +278,30 @@ html[data-rm="1"] .bar>i{transition:none}
   border-radius:var(--r-m); border:var(--bw) solid var(--c-rule-strong); background:var(--c-surface); color:var(--c-text);
   text-align:left; position:relative; overflow:hidden; font-size:1rem; cursor:pointer}
 .choice>*{position:relative; z-index:1}
-.choice .wash{position:absolute; inset:0; z-index:0; transform-origin:left; background:transparent; pointer-events:none}
+.choice .wash{position:absolute; inset:0; z-index:0; background:transparent; pointer-events:none}
 .choice .ct{flex:1; min-width:0; line-height:1.45}
 .choice .ct small{display:block; font-size:var(--fs-13); color:var(--c-text-2); font-family:var(--f-ui)}
 .choice .mk{width:26px; height:26px; flex:none; opacity:0}
 .choice .mk path{fill:none; stroke:currentColor; stroke-width:3; stroke-linecap:round; stroke-linejoin:round}
 .badge{flex:none; width:42px; height:26px; display:grid; place-items:center; border-radius:50%; border:1.5px solid var(--c-rule-strong); position:relative; overflow:hidden;
   font-family:var(--f-num); font-weight:700; font-size:var(--fs-15); transition:background-color .12s, border-color .12s}
-.badge i{position:absolute; inset:0; background:transparent; transform-origin:left;
+.badge i{position:absolute; inset:0; background:transparent; transform-origin:left}
+/* 塗った楕円（平らな塗り）にだけ鉛筆の筋。塗っていない楕円には出さない（暗い外観で白い筋が透けて見えていた） */
+.choice.sel .badge i,.choice.is-ok .badge i,.choice.is-ng .badge i{
   background-image:repeating-linear-gradient(-58deg,transparent 0 1.3px,rgba(255,255,255,.2) 1.3px 1.9px,transparent 1.9px 3.4px,rgba(0,0,0,.1) 3.4px 3.9px)}
 .badge b{position:relative; font-family:var(--f-num)}
 .choice.sel{border-color:var(--c-text)}
-.choice.sel .wash{background:var(--c-selected)}
 .choice.sel .badge{border-color:var(--c-text)}
 .choice.sel .badge i{background-color:var(--c-text); opacity:.86}
 .choice.sel .badge b{color:var(--c-surface)}
+/* 鉛筆のマーク（js/app.js penHTML）：線の色＝黒鉛／採点後は正誤の色。平らな塗り（.badge i）は使わない */
+/* ざらつき＝48px の継ぎ目なしの粒（img/grain.png・アルファ 45〜100%）を型抜きに使う。SVG の feTurbulence は書く動きの毎コマ計算しなおして重いため */
+.badge .pen{position:absolute; inset:0; width:100%; height:100%; color:var(--c-lead);
+  -webkit-mask-image:url("../img/grain.png"); mask-image:url("../img/grain.png"); -webkit-mask-size:24px 24px; mask-size:24px 24px}
+.badge .pen path{fill:none; stroke:currentColor; stroke-width:4.2; stroke-linecap:round; stroke-linejoin:round}
+.badge.pen i{display:none}
+.choice.is-ok .badge .pen{color:var(--c-correct)}
+.choice.is-ng .badge .pen{color:var(--c-wrong)}
 .choice.is-ok{border-color:var(--c-correct)}
 .choice.is-ok .wash{background:var(--c-correct-soft)}
 .choice.is-ok .badge{border-color:var(--c-correct)}

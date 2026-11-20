@@ -155,7 +155,7 @@ const K = Object.fromEntries(KEYS.map(d=>[d.id,d.key]));
 const SCHEMA_V = 2;
 /* tray：Part 6・7 の設問の出し方。"auto"＝3段階（文字が特大以上か読む領域が480px未満なら2段階）／"switch"＝いつも2段階（型C：切り替え）
    reviewOrder：解き直しの並び。"mix"＝Partとタグをまぜる／"part"＝Partをそろえる（3.7） */
-const PREFS_DEFAULT = { text:1, theme:"auto", sfx:0, haptic:1, hapticMock:0, motion:"auto", speed:1, autoplay:1, vAuto:1, tray:"auto", reviewOrder:"mix" };
+const PREFS_DEFAULT = { text:1, theme:"auto", sfx:0, mark:"pencil", haptic:1, hapticMock:0, motion:"auto", speed:1, autoplay:1, vAuto:1, tray:"auto", reviewOrder:"mix" };
 const PROFILE_DEFAULT = { target:null, exam:null, onboarded:0, placedLv:null, curLv:0, newPerDay:10 };
 
 function dayNumber(d){ d=d||new Date(); return Math.floor((d.getTime()-d.getTimezoneOffset()*60000)/86400000); }

@@ -238,6 +238,21 @@
     Fx.setLayer("expressive"); Fx.haptic("correct"); eq(Fx.lastHaptic,"correct","練習の層では出す");
     Fx.setLayer(before);
     eq(PREFS_DEFAULT.sfx,0,"効果音は既定で切");
+    /* マーク：鉛筆（既定）は選んだ楕円にだけ線を描く。採点後は選んだものだけ跡が残る。すばやく なら線なし */
+    eq(PREFS_DEFAULT.mark,"pencil","マークの塗り方は既定で鉛筆");
+    const ch=(st,picked)=>choiceHTML({act:"pick",data:{q:"T1",c:0},letter:"A",state:st,picked});
+    eq(/class="pen"/.test(ch("sel")),true,"選んだ楕円に鉛筆の線");
+    eq(/class="pen"/.test(ch("")),false,"選んでいない楕円には線なし");
+    eq(/class="pen"/.test(ch("is-ok",false)),false,"選ばなかった正解には線なし（平らな塗り）");
+    eq(/class="pen"/.test(ch("is-ok",true)),true,"選んだ正解には鉛筆の跡");
+    eq(/class="pen"/.test(ch("is-ng",true)),true,"選んだ不正解には鉛筆の跡");
+    eq(ch("sel")===ch("sel"),true,"描き直しても同じ線（形が変わらない）");
+    eq(penHTML("a")!==penHTML("b"),true,"楕円ごとに少し違う線");
+    const pts=(penHTML("x").match(/[ML](-?[\d.]+) (-?[\d.]+)/g)||[]).map(t=>t.slice(1).split(" ").map(Number));
+    eq(pts.length>100&&pts.every(([x,y])=>x>-1&&x<43&&y>-1&&y<27),true,"線は楕円の中（42×26）に収まる");
+    const pm=prefs().mark; setPref("mark","quick");
+    eq(/class="pen"/.test(ch("sel")),false,"すばやく：鉛筆の線を描かない");
+    setPref("mark",pm||"pencil");
   }
 
   /* ===== 6. 段階1：表と純粋な関数 ===== */

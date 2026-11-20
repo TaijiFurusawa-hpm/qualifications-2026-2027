@@ -1,0 +1,452 @@
+<title>マーク演出の比較</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* 配置：アプリと同じ「紙と墨の答案」の色と部品で、4つの塗り方を縦に並べて触り比べる。下に連続回答のテスト */
+:root{
+  --c-bg:#F6F2EA; --c-surface:#FDFBF6; --c-surface-2:#EDE8DD; --c-text:#2A2826; --c-text-2:#5C5850;
+  --c-rule:#DAD3C5; --c-rule-strong:#857E70; --c-accent:#2F4468; --c-selected:#E6E8EA;
+  --c-lead:#34333A;          /* 鉛筆（HB）の黒鉛 */
+  --c-correct:#2F6B45;
+  --f-ui:"Inter","Zen Kaku Gothic New",-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
+  --f-en:"Literata",Georgia,"Times New Roman",serif;
+  --r-m:4px; --r-l:5px; --bw:1.25px;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  color-scheme:dark; --c-bg:#181816; --c-surface:#201F1D; --c-surface-2:#2A2926; --c-text:#E6E1D6; --c-text-2:#A8A397;
+  --c-rule:#37352F; --c-rule-strong:#807A6E; --c-accent:#A9BCDC; --c-selected:#2A2E36; --c-lead:#D9D5CC; --c-correct:#8FCB9E }}
+:root[data-theme="dark"]{
+  color-scheme:dark; --c-bg:#181816; --c-surface:#201F1D; --c-surface-2:#2A2926; --c-text:#E6E1D6; --c-text-2:#A8A397;
+  --c-rule:#37352F; --c-rule-strong:#807A6E; --c-accent:#A9BCDC; --c-selected:#2A2E36; --c-lead:#D9D5CC; --c-correct:#8FCB9E }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--c-bg); color:var(--c-text); font:15px/1.7 var(--f-ui); margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px)); padding-block:20px 48px}
+main{max-width:1180px; margin:0 auto; display:flex; flex-direction:column; gap:28px}
+h1{font-size:1.5rem; margin:0; text-wrap:balance}
+h2{font-size:1.125rem; margin:0 0 4px}
+p{margin:0}
+.lead{color:var(--c-text-2); max-width:44em}
+.bar{display:flex; flex-wrap:wrap; gap:8px 20px; align-items:center; padding:12px 14px; border:1px solid var(--c-rule); border-radius:var(--r-l); background:var(--c-surface)}
+.bar label{display:flex; gap:6px; align-items:center; cursor:pointer}
+.seg{display:inline-flex; border:var(--bw) solid var(--c-rule-strong); border-radius:var(--r-m); overflow:hidden}
+.seg button{border:0; background:transparent; color:var(--c-text); padding:6px 12px; font:inherit; cursor:pointer; min-height:36px}
+.seg button[aria-pressed="true"]{background:var(--c-text); color:var(--c-surface)}
+.grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:16px}
+.card{border:1px solid var(--c-rule); border-radius:var(--r-l); background:var(--c-surface); padding:14px; display:flex; flex-direction:column; gap:10px; min-width:0}
+.card h3{margin:0; font-size:1rem; display:flex; gap:8px; align-items:baseline; flex-wrap:wrap}
+.card h3 .tag{font-weight:700; font-size:.8125rem; border:1px solid var(--c-rule-strong); border-radius:2px; padding:0 6px}
+.card .ms{font-size:.8125rem; color:var(--c-text-2); font-variant-numeric:tabular-nums}
+.card .note{font-size:.8125rem; color:var(--c-text-2)}
+.q{font-family:var(--f-en); font-size:1rem; line-height:1.55}
+.q u{text-decoration:none; border-bottom:1.5px solid var(--c-text); padding:0 1.2em}
+
+/* 選択肢：アプリ（css/app.css の .choice/.badge）と同じ形 */
+.choices{display:flex; flex-direction:column; gap:8px}
+.choice{display:flex; align-items:center; gap:12px; width:100%; min-height:52px; padding:8px 12px; margin:0;
+  border-radius:var(--r-m); border:var(--bw) solid var(--c-rule-strong); background:var(--c-surface); color:var(--c-text);
+  text-align:left; position:relative; overflow:hidden; font:1rem var(--f-en); cursor:pointer; -webkit-tap-highlight-color:transparent}
+.choice:focus-visible{outline:2px solid var(--c-accent); outline-offset:2px}
+.choice>*{position:relative; z-index:1}
+.choice .wash{position:absolute; inset:0; z-index:0; transform-origin:left; background:transparent; pointer-events:none}
+.choice .ct{flex:1; min-width:0}
+.badge{flex:none; width:42px; height:26px; display:grid; place-items:center; border-radius:50%; border:1.5px solid var(--c-rule-strong); position:relative; overflow:hidden;
+  font:700 .9375rem var(--f-ui)}
+.badge i{position:absolute; inset:0; background:transparent; transform-origin:left;
+  background-image:repeating-linear-gradient(-58deg,transparent 0 1.3px,rgba(255,255,255,.2) 1.3px 1.9px,transparent 1.9px 3.4px,rgba(0,0,0,.1) 3.4px 3.9px)}
+.badge b{position:relative; transition:color .1s}
+.badge svg{position:absolute; inset:-1.5px; width:42px; height:26px; overflow:visible}
+.choice.sel{border-color:var(--c-text)}
+.choice.sel .badge{border-color:var(--c-text)}
+.choice.sel .badge i{background-color:var(--c-text); opacity:.86}
+.choice.sel .badge b{color:var(--c-surface)}
+/* 墨あり（A）だけ行に淡い色 */
+.v-ink .choice.sel .wash{background:var(--c-selected)}
+/* 鉛筆（C・D）：文字は黒鉛の下で淡く透ける（本物のマークシートでも字は塗りの下に残る） */
+.pen .choice.sel .badge b{color:var(--c-surface); opacity:.9}
+.pen .badge b{transition:color .12s linear var(--bdelay,0ms)}
+
+.fx-erase{position:absolute; inset:-1.5px; pointer-events:none}
+
+/* 連続回答 */
+.run{display:grid; grid-template-columns:minmax(0,1fr); gap:12px; max-width:560px}
+.runhead{display:flex; justify-content:space-between; align-items:baseline; gap:8px; flex-wrap:wrap}
+.btn{border:var(--bw) solid var(--c-text); background:var(--c-text); color:var(--c-surface); border-radius:var(--r-m); padding:10px 16px; font:700 1rem var(--f-ui); cursor:pointer; min-height:48px}
+.btn.ghost{background:transparent; color:var(--c-text)}
+.btn:disabled{opacity:.4; cursor:default}
+.row{display:flex; gap:8px; flex-wrap:wrap}
+.row .btn{flex:1 1 8em}
+.result{border:1px solid var(--c-rule); border-radius:var(--r-l); background:var(--c-surface); padding:12px 14px}
+table{border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; font-size:.875rem}
+th,td{border-bottom:1px solid var(--c-rule); padding:6px 8px; text-align:left}
+th{color:var(--c-text-2); font-weight:500}
+.tw{overflow-x:auto}
+ul.look{margin:0; padding-left:1.2em; display:flex; flex-direction:column; gap:4px; max-width:46em}
+@media (prefers-reduced-motion:reduce){ .pen .badge b{transition:none} }
+</style>
+
+<main>
+  <header style="display:flex;flex-direction:column;gap:8px">
+    <h1>マーク演出の比較</h1>
+    <p class="lead">選択肢を押すと、左の楕円が塗られます。4つの塗り方を、同じ問題で押し比べてください。答えを変えるときの消え方も確かめられます。アプリの中の判定は、どの案でも押した瞬間に済みます。演出は見た目だけで、次の操作を待たせません。</p>
+  </header>
+
+  <section class="bar" aria-label="比べる条件">
+    <span>場面</span>
+    <span class="seg" role="group" aria-label="場面">
+      <button type="button" id="lay-p" aria-pressed="true" data-layer="practice">練習</button>
+      <button type="button" id="lay-m" aria-pressed="false" data-layer="mock">模試（静か）</button>
+    </span>
+    <label><input type="checkbox" id="snd"> 鉛筆の音（練習だけ・イヤホンで）</label>
+    <span class="seg" role="group" aria-label="芯の硬さ（音）">
+      <button type="button" id="tone-hb" aria-pressed="false" data-tone="hb">HB</button>
+      <button type="button" id="tone-2b" aria-pressed="true" data-tone="2b">2B（より柔らかい）</button>
+    </span>
+    <label>音量 <input type="range" id="vol" min="-63" max="-39" step="3" value="-51" aria-describedby="volv"> <span id="volv" class="ms">-51dB（リスニングの約1/10）</span></label>
+    <label>鉛筆の速さ <input type="range" id="spd" min="60" max="160" step="10" value="100" aria-describedby="spdv"> <span id="spdv" class="ms">100%</span></label>
+  </section>
+
+  <section>
+    <h2>4つの塗り方</h2>
+    <div class="grid" id="cards"></div>
+  </section>
+
+  <section class="run" aria-labelledby="runh">
+    <div class="runhead">
+      <h2 id="runh">続けて10問</h2>
+      <span class="seg" role="group" aria-label="試す塗り方" id="runpick"></span>
+    </div>
+    <p class="note" style="color:var(--c-text-2)">Part 5 を解くつもりで、答えを選んで「次へ」を押してください。塗り終わる前に次へ進んだ回数（演出が途中で切れた回数）と、1問にかかった時間を数えます。</p>
+    <div class="card" id="runbox"></div>
+    <div class="result" id="runres" hidden></div>
+  </section>
+
+  <section aria-labelledby="sndh">
+    <h2 id="sndh">正解・不正解の音</h2>
+    <p class="note" style="color:var(--c-text-2);margin-bottom:10px">練習で答えたときに鳴る音です。鉛筆の音と同じ 2B のこすれで作り、音量も上の「音量」のつまみに合わせます。比べるために、いまのアプリの音（高い音を細かく区切った音）も鳴らせます。イヤホンで聞いてください。</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))">
+      <div class="card"><h3>新しい音（柔らかめ）</h3>
+        <div class="row"><button type="button" class="btn ghost" data-snd="correct">正解（✓）</button><button type="button" class="btn ghost" data-snd="wrong">不正解（×）</button><button type="button" class="btn ghost" data-snd="done">終わり</button></div>
+        <p class="note">正解＝短く下ろして長く払う「✓」の2画（少し明るく上がる）。不正解＝同じ長さで2回交差させる「×」（少し低く下がる）。終わり＝ゆっくり引く下線1本。</p></div>
+      <div class="card"><h3>いまのアプリの音</h3>
+        <div class="row"><button type="button" class="btn ghost" data-old="correct">正解</button><button type="button" class="btn ghost" data-old="wrong">不正解</button><button type="button" class="btn ghost" data-old="done">終わり</button></div>
+        <p class="note">js/fx.js の SND と同じ作り（3kHz 前後の雑音を短く区切る）。音量もアプリのまま。</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>見てほしいところ</h2>
+    <ul class="look">
+      <li>押した瞬間に「押せた」とわかるか（枠が黒くなるのは、どの案も即座です）</li>
+      <li>鉛筆の案で、塗り終わりを待つ気持ちになるか。次へ進むときに、じゃまに感じるか</li>
+      <li>答えを変えたとき、前のマークが消しゴムで消える感じは自然か</li>
+      <li>「模試（静か）」にすると、どの案も速く短くなります。2時間続けて押す場面で気にならないか</li>
+      <li>暗い外観（端末の設定）でも、鉛筆らしく見えるか</li>
+    </ul>
+  </section>
+</main>
+
+<script>
+"use strict";
+const VARIANTS = [
+  {id:"A", name:"いまの演出", sub:"墨が流れる＋楕円を左から塗る", kind:"ink",   ms:{practice:[320,200], mock:[120,120]}},
+  {id:"B", name:"墨なし",     sub:"楕円を左から塗るだけ",         kind:"plain", ms:{practice:[0,200],   mock:[0,120]}},
+  {id:"C", name:"鉛筆・速い", sub:"鉛筆の往復で塗る",             kind:"pen",   ms:{practice:[0,260],   mock:[0,160]}, passes:1},
+  {id:"D", name:"鉛筆・じっくり", sub:"往復＋重ね塗り・筆圧のむら", kind:"pen", ms:{practice:[0,480],  mock:[0,220]}, passes:2},
+  {id:"E", name:"麉筆・円を描く", sub:"外から内へぐるぐる塗る", kind:"pen", ms:{practice:[0,520], mock:[0,240]}, passes:1, shape:"circle"}
+];
+const QS = [
+  ["The new policy will take effect ___ next Monday.", ["at","on","starting","until"]],
+  ["Ms. Tanaka asked her team to submit the report ___.", ["prompt","promptly","prompted","promptness"]],
+  ["All visitors must sign in ___ entering the lab.", ["before","during","among","since"]],
+  ["The shipment was delayed ___ the heavy snow.", ["because","due to","although","whereas"]],
+  ["Please keep your receipt ___ you need a refund.", ["in case","so that","as if","unless"]],
+  ["The hotel offers a shuttle ___ the airport.", ["of","to","by","with"]],
+  ["Our sales rose ___ in the third quarter.", ["sharp","sharpen","sharply","sharpness"]],
+  ["Mr. Ruiz is ___ for the training sessions.", ["responsible","responsibly","response","respond"]],
+  ["The meeting room is ___ booked on Fridays.", ["usual","usually","use","usage"]],
+  ["Applicants ___ have at least two years of experience.", ["should","would","are","has"]]
+];
+const $=s=>document.querySelector(s);
+const rm=()=>window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+let layer="practice", speed=1, sndOn=false, ac=null, noise=null;
+
+/* ---- 鉛筆の線：楕円（42×26）の中を、左上→右下へ斜めに往復する1本の線 ---- */
+function rnd(seed){ let s=seed; return ()=>((s=Math.imul(s^s>>>15,0x2c1b3c6d)+0x297a2d39|0)>>>0)/4294967296; }
+function zig(seed,step,jit,x0,x1){
+  const r=rnd(seed); let d="", x=x0, up=true;
+  d+=`M${x.toFixed(1)} ${(4+r()*2).toFixed(1)}`;
+  while(x<x1){
+    x+=step*(0.8+r()*0.4);
+    const y=up? 23-r()*jit : 3+r()*jit;
+    d+=` L${(x+ (up?2.2:-2.2)).toFixed(1)} ${y.toFixed(1)}`;
+    up=!up;
+  }
+  return d;
+}
+const NS="http://www.w3.org/2000/svg";
+let uid=0;
+/* 円を描く塗り：楕円の縁から中心へ、約5周のうず巻き（手のゆらぎつき） */
+function spiral(seed,turns){
+  const r=rnd(seed), ph=r()*Math.PI*2, steps=Math.round(turns*28), T=turns*Math.PI*2;
+  let d="";
+  for(let i=0;i<=steps;i++){
+    const t=i/steps*T, f=1-(i/steps)*.93, j=(r()-.5)*.7;
+    const x=21+(19.5*f+j)*Math.cos(t+ph), y=13+(11.5*f+j*.6)*Math.sin(t+ph);
+    d+=(i?" L":"M")+x.toFixed(1)+" "+y.toFixed(1);
+  }
+  return d;
+}
+function penSVG(passes,seed,shape){
+  const id="cl"+(++uid), f="gr"+uid;
+  const svg=document.createElementNS(NS,"svg");
+  svg.setAttribute("viewBox","0 0 42 26"); svg.setAttribute("aria-hidden","true");
+  svg.innerHTML=
+    `<defs><clipPath id="${id}"><ellipse cx="21" cy="13" rx="20.2" ry="12.2"/></clipPath>`+
+    `<filter id="${f}" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="1.6" numOctaves="1" seed="${seed}" result="n"/>`+
+    `<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.1 1.15" result="m"/>`+
+    `<feComposite in="SourceGraphic" in2="m" operator="in"/></filter></defs>`+
+    `<g clip-path="url(#${id})" filter="url(#${f})" fill="none" style="stroke:var(--c-lead)" stroke-linecap="round" stroke-linejoin="round">`+
+    (shape==="circle"?`<path class="p1" stroke-width="4.2" d="${spiral(seed,5)}"/>`:`<path class="p1" stroke-width="3.6" d="${zig(seed,2.7,1.5,-1,43)}"/>`)+
+    (passes>1?`<path class="p2" stroke-width="3" opacity=".75" d="${zig(seed+7,3.4,2.5,0,42)}"/>`:"")+
+    `</g>`;
+  return svg;
+}
+
+/* ---- 鉛筆の音：芯が紙をなでる、途切れない柔らかいこすれ（イヤホン前提） ----
+   - ピンクノイズ（高い音が弱い雑音）を1本だけ流し、なだらかに絞る（粒を立てない＝カサカサにしない）
+   - 音量は「リスニング音声のおよそ1/10に聞こえる」大きさ。リスニング音声（audio/*.mp3）は話している部分で約 -18dBFS（実測）。
+     聞こえ方が1/10 ≒ 約 -33dB なので、目標は約 -51dBFS（RMS）。合成の音を一度だけ裏で鳴らして（OfflineAudioContext）実際の大きさを測り、
+     目標に合わせて倍率を決める（フィルターの設定を変えても目標の大きさが保たれる）
+   - 左右は真ん中（イヤホンで片耳に寄らない）。低いうなり（350Hz 以下）は切る（イヤホンでこもって聞こえるため） */
+let tone="2b", targetDb=-51, PINK=null;
+const cal={};   // 硬さ・形ごとの倍率（測った結果）
+function pinkData(sr){
+  if(PINK&&PINK.sr===sr) return PINK.d;
+  const n=Math.round(sr*.6), d=new Float32Array(n); let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+  for(let i=0;i<n;i++){ const w=Math.random()*2-1;
+    b0=.99886*b0+w*.0555179; b1=.99332*b1+w*.0750759; b2=.969*b2+w*.153852; b3=.8665*b3+w*.3104856;
+    b4=.55*b4+w*.5329522; b5=-.7616*b5-w*.016898; d[i]=(b0+b1+b2+b3+b4+b5+b6+w*.5362)*.11; b6=w*.115926; }
+  PINK={sr,d}; return d;
+}
+/* 音の組み立て（本番の再生と、大きさの測定の両方で使う）。scale＝倍率、T＝長さ（秒） */
+function build(a,t0,T,shape,soft,scale){
+  const buf=a.createBuffer(1,pinkData(a.sampleRate).length,a.sampleRate); buf.copyToChannel(pinkData(a.sampleRate),0);
+  const s=a.createBufferSource(); s.buffer=buf; s.loop=true;
+  const hp=a.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=soft?350:500; hp.Q.value=.5;
+  const bp=a.createBiquadFilter(); bp.type="bandpass"; bp.frequency.value=soft?1400:1900; bp.Q.value=.35;
+  if(shape==="circle") bp.frequency.setTargetAtTime((soft?1400:1900)*.85, t0+T*.3, T*.4);   // 中心へ寄るほど少し低く
+  const lp=a.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=soft?3800:5000; lp.Q.value=.3;
+  const g=a.createGain();
+  // 形：ゆっくり立ち上がり（驚かせない）、往復＝2回の強弱／円＝周ごとのごく弱い波（5周）、ふわっと消える
+  const N=256, curve=new Float32Array(N);
+  for(let i=0;i<N;i++){ const x=i/(N-1);
+    const env=Math.pow(Math.min(1,x/.2),1.5)*Math.min(1,(1-x)/.25);
+    const wave=shape==="circle"? .82+.18*Math.sin(x*5*Math.PI*2) : .6+.4*Math.abs(Math.sin(x*2*Math.PI));
+    curve[i]=Math.max(.00001,scale*env*wave); }
+  g.gain.setValueAtTime(.00001,t0); g.gain.setValueCurveAtTime(curve,t0,T);
+  s.connect(hp); hp.connect(bp); bp.connect(lp); lp.connect(g); g.connect(a.destination);
+  s.start(t0,Math.random()*.4); s.stop(t0+T+.03);
+}
+/* 倍率1で鳴らしたときの大きさ（鳴っている部分の RMS）を測る */
+async function measure(shape,soft){
+  const O=window.OfflineAudioContext||window.webkitOfflineAudioContext; if(!O) return null;
+  const sr=44100, T=.5, o=new O(1,Math.ceil(sr*(T+.1)),sr);
+  build(o,0,T,shape,soft,1);
+  const r=await o.startRendering(), d=r.getChannelData(0);
+  let sum=0,n=0; for(let i=Math.floor(sr*.1);i<Math.floor(sr*(T-.1));i++){ sum+=d[i]*d[i]; n++; }
+  return Math.sqrt(sum/n);
+}
+async function scaleFor(shape,soft){
+  const k=shape+(soft?"2b":"hb");
+  if(!(k in cal)){ try{ cal[k]=await measure(shape,soft); }catch(e){ cal[k]=null; } }
+  const rms=cal[k]||.3;
+  return Math.pow(10,targetDb/20)/rms;
+}
+async function scratch(dur,shape){
+  if(!sndOn||layer==="mock") return;
+  const C=window.AudioContext||window.webkitAudioContext; if(!C) return;
+  if(!ac) ac=new C(); if(ac.state==="suspended") ac.resume();
+  const soft=tone==="2b", scale=await scaleFor(shape,soft);
+  build(ac,ac.currentTime+.005,dur/1000,shape,soft,scale);
+}
+
+/* ---- 選んだときの演出（アプリでは js/fx.js の Fx.select に当たる） ---- */
+const live=new WeakMap();   // 選択肢ごとの動いている演出（途中で切れたかを数える）
+function animate(choice,v){
+  const [washMs,badgeMsBase]=v.ms[layer];
+  const badgeMs=v.kind==="pen"? Math.round(badgeMsBase/speed) : badgeMsBase;
+  const badge=choice.querySelector(".badge");
+  const anims=[];
+  if(v.kind==="pen"){
+    badge.querySelector("svg")?.remove();
+    const svg=penSVG(v.passes,1+Math.floor(Math.random()*90),v.shape);
+    badge.insertBefore(svg,badge.querySelector("b"));
+    badge.style.setProperty("--bdelay",Math.round(badgeMs*.45)+"ms");
+    if(rm()) return 0;
+    const p1=svg.querySelector(".p1"), p2=svg.querySelector(".p2");
+    const L1=p1.getTotalLength(); p1.style.strokeDasharray=L1;
+    // 手の速さ：書き出しは少しためて、途中は一定、最後は抜ける
+    anims.push(p1.animate({strokeDashoffset:[L1,0]},{duration:p2?badgeMs*.62:badgeMs,easing:"cubic-bezier(.35,.05,.55,.95)",fill:"backwards"}));
+    if(p2){ const L2=p2.getTotalLength(); p2.style.strokeDasharray=L2;
+      anims.push(p2.animate({strokeDashoffset:[L2,0]},{duration:badgeMs*.42,delay:badgeMs*.58,easing:"cubic-bezier(.4,0,.6,1)",fill:"backwards"})); }
+    // 鉛筆の先が紙に当たる、ごく小さな沈み（墨の流れの代わりの手ごたえ）
+    anims.push(badge.animate({transform:["scale(1)","scale(.965)","scale(1)"]},{duration:Math.min(160,badgeMs*.5),easing:"ease-out"}));
+    scratch(badgeMs, v.shape==="circle"?"circle":"zig");
+    live.set(choice,{anims,end:performance.now()+badgeMs});
+    return badgeMs;
+  }
+  if(rm()) return 0;
+  const grow={transform:["scaleX(0)","scaleX(1)"]};
+  if(v.kind==="ink"&&washMs) anims.push(choice.querySelector(".wash").animate(grow,{duration:washMs,easing:"cubic-bezier(.3,0,.1,1)"}));
+  anims.push(badge.querySelector("i").animate(grow,{duration:badgeMs,easing:"linear"}));
+  const total=Math.max(washMs,badgeMs);
+  live.set(choice,{anims,end:performance.now()+total});
+  return total;
+}
+/* 答えを変えたとき：前のマークを消しゴムで消す（鉛筆の案だけ。墨の案はすぐ消える＝いまのアプリと同じ） */
+function erase(choice,v){
+  const badge=choice.querySelector(".badge");
+  if(v.kind!=="pen"){ return; }
+  const old=badge.querySelector("svg"); if(!old) return;
+  if(rm()||layer==="mock"){ old.remove(); return; }
+  old.classList.add("fx-erase");
+  const a=old.animate({opacity:[1,.25,0],transform:["translateX(0)","translateX(-1px)","translateX(1px)"]},{duration:160,easing:"ease-out"});
+  a.onfinish=()=>old.remove();
+}
+function wasCut(group){
+  let cut=false; const now=performance.now();
+  group.querySelectorAll(".choice").forEach(c=>{ const l=live.get(c); if(l&&l.end>now+16) cut=true; });
+  return cut;
+}
+
+function choicesHTML(opts){
+  return `<div class="choices" role="group" aria-label="選択肢">`+opts.map((o,i)=>
+    `<button type="button" class="choice" data-i="${i}" aria-pressed="false"><i class="wash"></i><span class="badge"><i></i><b>${"ABCD"[i]}</b></span><span class="ct">${o}</span></button>`).join("")+`</div>`;
+}
+function wire(group,v,onPick){
+  group.addEventListener("click",e=>{
+    const c=e.target.closest(".choice"); if(!c) return;
+    const prev=group.querySelector(".choice.sel");
+    if(prev===c) return;
+    if(prev){ prev.classList.remove("sel"); prev.setAttribute("aria-pressed","false"); erase(prev,v); live.delete(prev); }
+    c.classList.add("sel"); c.setAttribute("aria-pressed","true");   // 判定はここで済む（演出を待たない）
+    const ms=animate(c,v);
+    onPick&&onPick(+c.dataset.i,ms);
+  });
+}
+
+/* ---- 4つのカード ---- */
+function msText(v){
+  const [w,b]=v.ms[layer]; const bb=v.kind==="pen"?Math.round(b/speed):b;
+  return w? `行 ${w}ms ／ 楕円 ${bb}ms` : `楕円 ${bb}ms`;
+}
+function renderCards(){
+  const box=$("#cards"); box.innerHTML="";
+  VARIANTS.forEach((v,k)=>{
+    const card=document.createElement("article");
+    card.className="card v-"+v.kind+(v.kind==="pen"?" pen":"");
+    const q=QS[k];
+    card.innerHTML=`<h3><span class="tag">${v.id}</span>${v.name}</h3><p class="note">${v.sub}<br><span class="ms">${msText(v)}</span></p>`+
+      `<p class="q">${q[0].replace("___","<u></u>")}</p>`+choicesHTML(q[1]);
+    box.appendChild(card);
+    wire(card.querySelector(".choices"),v);
+  });
+  // はじめから1つ選んだ状態で見せる（何をするページかがすぐわかる）
+  requestAnimationFrame(()=>box.querySelectorAll(".choices").forEach((g,i)=>{ const c=g.querySelectorAll(".choice")[[1,1,0,0,2][i]]; c.click(); }));
+}
+
+/* ---- 続けて10問 ---- */
+let runV=VARIANTS[0], runIdx=0, runPicked=false, runT0=0, runTimes=[], runCuts=0, runChanges=0;
+const history=[];
+function renderPick(){
+  $("#runpick").innerHTML=VARIANTS.map(v=>`<button type="button" aria-pressed="${v===runV}" data-v="${v.id}">${v.id}</button>`).join("");
+}
+function runStart(){
+  runIdx=0; runTimes=[]; runCuts=0; runChanges=0; $("#runres").hidden=true; runQ();
+}
+function runQ(){
+  const box=$("#runbox"); const q=QS[runIdx];
+  box.className="card v-"+runV.kind+(runV.kind==="pen"?" pen":"");
+  box.innerHTML=`<p class="ms">${runV.id}・${runV.name}　問 ${runIdx+1} / ${QS.length}</p><p class="q">${q[0].replace("___","<u></u>")}</p>`+choicesHTML(q[1])+
+    `<div class="row"><button type="button" class="btn" id="next" disabled>次へ</button></div>`;
+  runPicked=false; runT0=performance.now();
+  const g=box.querySelector(".choices");
+  wire(g,runV,()=>{ if(runPicked) runChanges++; runPicked=true; $("#next").disabled=false; });
+  $("#next").onclick=()=>{
+    if(wasCut(g)) runCuts++;
+    runTimes.push(performance.now()-runT0);
+    runIdx++;
+    if(runIdx<QS.length) runQ(); else runEnd();
+  };
+}
+function runEnd(){
+  const avg=runTimes.reduce((a,b)=>a+b,0)/runTimes.length/1000;
+  history.unshift({v:runV.id+"・"+runV.name, layer:layer==="mock"?"模試":"練習", spd:runV.kind==="pen"?Math.round(speed*100)+"%":"—", avg, cuts:runCuts, chg:runChanges});
+  const box=$("#runbox");
+  box.innerHTML=`<p>10問おわりました。ほかの塗り方でも続けて試すと、下の表で比べられます。</p><div class="row"><button type="button" class="btn" id="again">もう一度（${runV.id}）</button></div>`;
+  $("#again").onclick=runStart;
+  const r=$("#runres"); r.hidden=false;
+  r.innerHTML=`<div class="tw"><table><thead><tr><th>塗り方</th><th>場面</th><th>鉛筆の速さ</th><th>1問の平均</th><th>塗り途中で次へ</th><th>答えの変更</th></tr></thead><tbody>`+
+    history.map(h=>`<tr><td>${h.v}</td><td>${h.layer}</td><td>${h.spd}</td><td>${h.avg.toFixed(1)}秒</td><td>${h.cuts} / 10</td><td>${h.chg}</td></tr>`).join("")+`</tbody></table></div>`;
+}
+
+/* ---- 条件の切りかえ ---- */
+document.querySelectorAll("[data-layer]").forEach(b=>b.onclick=()=>{
+  layer=b.dataset.layer; document.querySelectorAll("[data-layer]").forEach(x=>x.setAttribute("aria-pressed",x===b)); renderCards(); runStart();
+});
+$("#spd").oninput=e=>{ speed=e.target.value/100; $("#spdv").textContent=e.target.value+"%"; document.querySelectorAll(".card .ms").forEach((el,i)=>{ if(VARIANTS[i]) el.textContent=msText(VARIANTS[i]); }); };
+$("#spd").onchange=()=>{ renderCards(); };
+$("#snd").onchange=e=>{ sndOn=e.target.checked; };
+document.querySelectorAll("[data-tone]").forEach(b=>b.onclick=()=>{ tone=b.dataset.tone; document.querySelectorAll("[data-tone]").forEach(x=>x.setAttribute("aria-pressed",x===b)); if(!sndOn){ sndOn=true; $("#snd").checked=true; } scratch(520,"circle"); });
+$("#vol").oninput=e=>{ targetDb=+e.target.value; const d=targetDb+51; $("#volv").textContent=`${targetDb}dB（${d===0?"リスニングの約1/10":d>0?"1/10より大きい":"1/10より小さい"}）`; };
+$("#vol").onchange=()=>{ if(!sndOn){ sndOn=true; $("#snd").checked=true; } scratch(520,"circle"); };
+$("#runpick").addEventListener("click",e=>{ const b=e.target.closest("[data-v]"); if(!b) return; runV=VARIANTS.find(v=>v.id===b.dataset.v); renderPick(); runStart(); });
+
+/* ---- 正解・不正解・終わりの音：鉛筆の「画」をつなげる ----
+   画＝{at:始まり秒, d:長さ秒, f0→f1:中心の高さ（倍率）, a:強さ}。どの画も鉛筆の音と同じ 2B のこすれ・同じ目標の大きさ */
+const STROKES={
+  correct:[{at:0,d:.07,f0:1,f1:1.05,a:.8},{at:.085,d:.16,f0:1.02,f1:1.25,a:1}],          // ✓：短く下ろす→長く払い上げる
+  wrong:[{at:0,d:.11,f0:1,f1:.88,a:.9},{at:.16,d:.11,f0:.98,f1:.85,a:.9}],               // ×：同じ長さで2画、少し下がる
+  done:[{at:0,d:.38,f0:.95,f1:1.05,a:1}]                                                   // 終わり：ゆっくり1本
+};
+function strokeSeg(a,t0,g0,seg,scale){
+  const buf=a.createBuffer(1,pinkData(a.sampleRate).length,a.sampleRate); buf.copyToChannel(pinkData(a.sampleRate),0);
+  const s=a.createBufferSource(); s.buffer=buf; s.loop=true;
+  const hp=a.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=350; hp.Q.value=.5;
+  const bp=a.createBiquadFilter(); bp.type="bandpass"; bp.Q.value=.35;
+  const t=t0+seg.at, T=seg.d;
+  bp.frequency.setValueAtTime(1400*seg.f0,t); bp.frequency.linearRampToValueAtTime(1400*seg.f1,t+T);
+  const lp=a.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=3800; lp.Q.value=.3;
+  const g=a.createGain(), N=64, c=new Float32Array(N);
+  for(let i=0;i<N;i++){ const x=i/(N-1); c[i]=Math.max(.00001,scale*seg.a*Math.pow(Math.min(1,x/.25),1.3)*Math.min(1,(1-x)/.4)); }
+  g.gain.setValueAtTime(.00001,t); g.gain.setValueCurveAtTime(c,t,T);
+  s.connect(hp); hp.connect(bp); bp.connect(lp); lp.connect(g); g.connect(g0);
+  s.start(t,Math.random()*.4); s.stop(t+T+.03);
+}
+async function softSound(name){
+  const C=window.AudioContext||window.webkitAudioContext; if(!C) return;
+  if(!ac) ac=new C(); if(ac.state==="suspended") ac.resume();
+  const scale=await scaleFor("circle",true), t0=ac.currentTime+.01;
+  for(const seg of STROKES[name]) strokeSeg(ac,t0,ac.destination,seg,scale);
+}
+/* いまのアプリの音（js/fx.js の SND をそのまま） */
+const OLD_DONE=[[3000,70,.07],[3400,60,.06,100],[3000,90,.07,200]];
+const OLD={correct:[[3000,70,.07],[3400,60,.06,90]], wrong:[[1800,60,.06]], done:OLD_DONE};
+let white=null;
+function oldSound(name){
+  const C=window.AudioContext||window.webkitAudioContext; if(!C) return;
+  if(!ac) ac=new C(); if(ac.state==="suspended") ac.resume();
+  if(!white){ white=ac.createBuffer(1,ac.sampleRate*.2,ac.sampleRate); const ch=white.getChannelData(0); for(let i=0;i<ch.length;i++) ch[i]=Math.random()*2-1; }
+  const t0=ac.currentTime+.01;
+  for(const [f,d,gv,dl] of OLD[name]){
+    const t=t0+(dl||0)/1000, dur=d/1000, gn=ac.createGain();
+    gn.gain.setValueAtTime(.0001,t); gn.gain.linearRampToValueAtTime(gv,t+.004); gn.gain.exponentialRampToValueAtTime(.0001,t+dur+.02); gn.connect(ac.destination);
+    const s=ac.createBufferSource(), bp=ac.createBiquadFilter(); s.buffer=white; bp.type="bandpass"; bp.frequency.value=f; bp.Q.value=1.2;
+    s.connect(bp); bp.connect(gn); s.start(t); s.stop(t+dur+.03);
+  }
+}
+document.querySelectorAll("[data-snd]").forEach(b=>b.onclick=()=>softSound(b.dataset.snd));
+document.querySelectorAll("[data-old]").forEach(b=>b.onclick=()=>oldSound(b.dataset.old));
+
+renderCards(); renderPick(); runStart();
+</script>
